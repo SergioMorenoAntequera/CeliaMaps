@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateHotspotsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('hotspots', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('image', 250);
+            $table->string('title', 50);
+            $table->string('description', 600);
+            $table->unsignedInteger('point_x');
+            $table->unsignedInteger('point_y');
+            $table->unsignedInteger('map_id');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('hotspots');
+    }
+}
