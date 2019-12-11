@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+// MAPS /////////////////////////////////////////////////////////////////////////////////////
+Route::resource('map', 'MapController');
