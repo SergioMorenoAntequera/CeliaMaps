@@ -17,3 +17,4 @@ Route::get('/', function () {
 
 // MAPS /////////////////////////////////////////////////////////////////////////////////////
 Route::resource('map', 'MapController');
+Route::resource('user', 'UserController');
