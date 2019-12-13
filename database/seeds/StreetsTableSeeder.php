@@ -13,10 +13,19 @@ class StreetsTableSeeder extends Seeder
     public function run()
     {
         DB::table('streets')->insert([
-            'tipe'=> 'avenida',
+            'type'=> 'avenida',
             'name'=> 'mar, del',
            
         ]);
-        
+        DB::table('streets')->insert([
+            'type'=> 'calle',
+            'name'=> 'celia viñas',
+           
+        ]);
+        DB::table('streets')->insert([
+            'type'=> 'paseo',
+            'name'=> 'almeria, de',
+           
+        ]);
     }
 }
