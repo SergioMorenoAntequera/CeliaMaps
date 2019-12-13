@@ -18,6 +18,8 @@ class UsersTableSeeder extends Seeder
             'email'=> 'carmen@mail.com',
             'password'=> '1234',
             'level'=> 1,
+            'created_at' => date('Y-m-d H-m-s'),
+            'updated_at' => date('Y-m-d H-m-s'),
             //'password'=> Hash::make('1234'), para encriptar la contraseña
         ]);
         DB::table('users')->insert([
@@ -25,6 +27,8 @@ class UsersTableSeeder extends Seeder
             'email'=> 'paula@mail.com',
             'password'=> '1234',
             'level'=> 1 ,
+            'created_at' => date('Y-m-d H-m-s'),
+            'updated_at' => date('Y-m-d H-m-s'),
             
         ]);
         DB::table('users')->insert([
@@ -32,6 +36,8 @@ class UsersTableSeeder extends Seeder
             'email'=> 'csergio@mail.com',
             'password'=> '1234',
             'level'=> 1,
+            'created_at' => date('Y-m-d H-m-s'),
+            'updated_at' => date('Y-m-d H-m-s'),
             
         ]);
         DB::table('users')->insert([
@@ -39,7 +45,8 @@ class UsersTableSeeder extends Seeder
             'email'=> 'luis@mail.com',
             'password'=> '1234',
             'level'=> 1,
-           
+            'created_at' => date('Y-m-d H-m-s'),
+            'updated_at' => date('Y-m-d H-m-s'),
         ]);
 
     }

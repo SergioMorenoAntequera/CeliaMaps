@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(MapsTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(StreetsTableSeeder::class);
+        $this->call(HotspotTableSeeder::class);
     }
 }
