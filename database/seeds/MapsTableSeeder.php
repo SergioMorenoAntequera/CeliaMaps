@@ -75,5 +75,21 @@ class MapsTableSeeder extends Seeder
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
+
+        DB::table('maps')->insert([    
+            //La id no se pone porque se autoincrementa sola
+            'title' => 'Tabernas XXI',
+            'description' => 'Mapa de la ciudad de Tabernas en el siglo XXI',
+            'city' => 'Tabernas',
+            'date' => '2001',
+            'image' => 'Tabernas2001.png',
+            'level' => '1',
+            'width' => '1080',
+            'height' => '720',
+            'deviation_x' => '90',
+            'deviation_y' => '10',
+            'created_at' => date('Y-m-d H-m-s'),
+            'updated_at' => date('Y-m-d H-m-s'),
+        ]);
     }
 }

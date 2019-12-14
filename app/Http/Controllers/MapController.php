@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Map;
 
 class MapController extends Controller
 {
@@ -27,8 +28,8 @@ class MapController extends Controller
      * @return View
      */
     public function index(){
-        //$data['genres'] = Genre::all();
-        //return view("genre.index", $data);
+        $data['maps'] = Map::all();
+        return view("map.index", $data);
     }
 
     // SHOW A SOMETHING ///////////////////////////////////////////////////////////////////////
@@ -40,7 +41,8 @@ class MapController extends Controller
      * @return View
      */
     public function show($id){
-
+        $data['map'] = Map::find($id);
+        return view("map.show", $data);
     }
     
     ///////////////////////////////////////////////////////////////////////////////////////////
