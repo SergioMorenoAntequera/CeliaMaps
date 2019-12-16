@@ -53,7 +53,7 @@ class MapController extends Controller
      * @return View
      */
     public function create(){
-
+        return view("map.create");
     }
     
     // STORE FUNCTION ///////////////////////////////////////////////////////////////////////
@@ -65,7 +65,19 @@ class MapController extends Controller
      * @return View
      */
     public function store(Request $r){
+        $map = new Map($r->all());
+        $map->id = Map::max('id')+1;
+        
+        if($r->hasFile('image')){
+            $file = $r->file('image');
+            $file->move(public_path("/img/maps/"), $map->id.$file->getClientOriginalName());
+            $map->image = $map->id.$file->getClientOriginalName();
+        } else {
+            $map->image = "NoMap.png";
+        }
 
+        $map->save();
+        return redirect(route('map.index'));
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -76,7 +88,8 @@ class MapController extends Controller
      * @return View
      */
     public function edit($id){
-
+        $data['map'] = Map::find($id);
+        return view('map.edit', $data);
     }
 
     // UPDATE FUNCTION //////////////////////////////////////////////////////////////////////////////
@@ -87,8 +100,18 @@ class MapController extends Controller
      * @param r
      * @return View
      */
-    public function update(Request $r){
+    public function update(Request $r, $id){
+        $map = Map::find($id);
+        
+        $map->fill($r->all());
+        if($r->hasFile('image')){
+            $file = $r->file('image');
+            $file->move(public_path("/img/maps/"), $map->id.$file->getClientOriginalName());
+            $map->image = $map->id.$file->getClientOriginalName();
+        }
 
+        $map->update();
+        return redirect(route("map.index"));
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -101,6 +124,7 @@ class MapController extends Controller
      * @return View
      */
     public function destroy($id){
-
+        Map::destroy($id);
+        return redirect(route("map.index"));
     }
 }
