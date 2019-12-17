@@ -11,8 +11,13 @@ class Street extends Model
         return $this->belongsToMany('App\Map');
     }
 
+    public function type()
+    {
+        return $this->hasOne('App\StreetType');
+    }
+
     //The attributes that are mass assignable.
     protected $fillable = [
-        'type', 'name', 'city',
+        'type_id', 'name', 'city',
     ];
 }
