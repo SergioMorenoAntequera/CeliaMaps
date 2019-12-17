@@ -15,12 +15,12 @@ class CreateHotspotsTable extends Migration
     {
         Schema::create('hotspots', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('image', 250);
+            $table->string('image', 250)->nullable();
             $table->string('title', 50);
             $table->string('description', 600);
             $table->unsignedInteger('point_x');
             $table->unsignedInteger('point_y');
-            $table->unsignedInteger('map_id');
+            $table->unsignedInteger('map_id')->nullable();
             $table->timestamps();
         });
     }
