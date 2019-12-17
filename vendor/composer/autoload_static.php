@@ -3456,6 +3456,7 @@ class ComposerStaticInit3bc63085752e602f437e2a014d1e5b3a
         'SebastianBergmann\\Type\\UnknownType' => __DIR__ . '/..' . '/sebastian/type/src/UnknownType.php',
         'SebastianBergmann\\Type\\VoidType' => __DIR__ . '/..' . '/sebastian/type/src/VoidType.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
+        'StreetTypeTableSeeder' => __DIR__ . '/../..' . '/database/seeds/StreetTypeTableSeeder.php',
         'StreetsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/StreetsTableSeeder.php',
         'Symfony\\Component\\Console\\Application' => __DIR__ . '/..' . '/symfony/console/Application.php',
         'Symfony\\Component\\Console\\CommandLoader\\CommandLoaderInterface' => __DIR__ . '/..' . '/symfony/console/CommandLoader/CommandLoaderInterface.php',
