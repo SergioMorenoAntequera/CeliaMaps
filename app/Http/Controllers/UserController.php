@@ -8,6 +8,11 @@ use App\User;
 
 class UserController extends Controller
 {
+
+    public function construct(){
+        //$this->middleware("auth")->only("create","edit","destroy");
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +30,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('user/form');
     }
 
     /**
@@ -34,9 +39,18 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $r)
     {
-        //
+        $user = new User();
+
+        $user->name = $r->name;
+        $user->email = $r->email;
+        $user->password = $r->password;
+        $user->type = $r->type;
+
+        $user->save();
+
+       // return redirect()->route("user.index");
     }
 
     /**
@@ -58,7 +72,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find();
+
+        return view('user/form', array('user'=>$user));
     }
 
     /**
@@ -68,9 +84,19 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $r, $id)
     {
-        //
+       $user = User::find($r->$id);
+
+        $user->name = $r->name;
+        $user->email = $r->email;
+        $user->password = $r->password;
+        $user->type = $r->type;
+
+        $user->save();
+
+        //return redirect()->route('user.index');
+
     }
 
     /**
@@ -81,6 +107,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+       $user = User::find($id);
+       $user->delete();
+
+       //return redirect()->route('user.index');
     }
 }
