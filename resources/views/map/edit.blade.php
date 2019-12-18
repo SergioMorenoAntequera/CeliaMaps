@@ -14,7 +14,7 @@
                 Modificar mapa
             </div>
 
-            <div class="card-body">
+            <div class="card-body text-secondary">
                 <form method="POST" action="{{route('map.update', $map->id)}}" enctype="multipart/form-data">
                     @csrf
                     @method("PATCH")
@@ -38,6 +38,10 @@
                     <div class="form-group">
                         <label>Image</label>
                         <input type="file" class="form-control" name="image" value="{{$map->image}}">
+                    </div>
+                    <div class="form-group">
+                        <label>Miniature</label>
+                        <input type="file" class="form-control" name="miniature" value="{{$map->miniature}}">
                     </div>
                     <div class="form-group">
                         <label>Level</label>

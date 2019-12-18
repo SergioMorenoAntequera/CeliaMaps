@@ -21,6 +21,7 @@ class CreateMapsTable extends Migration
             $table->string('city',75); 
             $table->integer('date');
             $table->string('image',75);
+            $table->string('miniature',75);
             $table->integer('level');
             $table->integer('width');
             $table->integer('height');
