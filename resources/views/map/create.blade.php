@@ -14,7 +14,7 @@
                 Registar mapa
             </div>
 
-            <div class="card-body">
+            <div class="card-body text-secondary">
                 <form method="POST" action="{{route('map.store')}}" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
@@ -36,6 +36,10 @@
                     <div class="form-group">
                         <label>Image</label>
                         <input type="file" class="form-control" name="image" placeholder="File of the map">
+                    </div>
+                    <div class="form-group">
+                        <label>Miniature</label>
+                        <input type="file" class="form-control" name="miniature" placeholder="Miniature ile of the map">
                     </div>
                     <div class="form-group">
                         <label>Level</label>

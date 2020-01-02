@@ -11,24 +11,34 @@
     <!-- One div to get all the maps -->
     <div class="container text-center">
         <p>Estaría bien poner aqui una serie de opciones por las cuales se pueda filtrar el mapa que sale</p>
-        <a href="{{route('map.create')}}"> <button> Crear nuevo </button> </a>
+        <a href="{{route('map.create')}}"> 
+            <button> 
+                Crear nuevo 
+            </button> 
+        </a>
+
         <!-- La fila para agrupar todas las columnas -->
         <div class="row allElements justify-content-center">
             <!-- Por cada mapa guardado en la base de datos -->
             @foreach ($maps as $map)
                 <!-- Creamos una de las columnas (Si no caben se bajan) -->
-                <div class="oneElement col-md-3 p-1">
+                <div class="oneElement col-8">
                     <!-- Aqui sacamos la información de un solo mapa  -->
-                    <div class="textElement bg-secondary">
-                        <p><b>{{$map->title}}</b></p>
+                    <div class="textElement bg-primary">
+                        <!-- Titulo -->
+                        <p><b class="text-white">{{$map->title}}</b></p>
+                        <!-- Foto/miniatura -->
                         <a href="{{route("map.show", $map->id)}}">
-                            <p><img src="{{$map->image}}" alt="Mapa"></p>
+                            <p><img style="width: 100px" src="{{url("img/miniatures/$map->miniature")}}" alt="Miniatura"></p>
                         </a>
-                        <p>{{$map->city}} - {{$map->date}}</p>
+                        <!-- Algunos detalles -->
+                        <p class="text-white">{{$map->city}} - {{$map->date}}</p>
 
                         <!-- Boton para modificar -->
                         <a href="{{route('map.edit', $map->id)}}"> 
-                            <button> Editar </button>
+                            <button class="cornerUpdateButton bg-secondary">
+                                <img src="{{url("img/icons/editWhite.png")}}" alt=""> 
+                            </button>
                         </a>
                     
                         <!-- Boton para borrar -->
@@ -36,7 +46,9 @@
                             @csrf
                             @method("DELETE")
 
-                            <input type="submit" value="Eliminar"> 
+                            <button class="cornerDeleteButton bg-secondary" type="submit" value="Eliminar">
+                                <img src="{{url("img/icons/deleteWhite.png")}}" alt="">    
+                            </button>
                         </form>
                     </div>
                 </div> <!-- FINAL .oneElement -->

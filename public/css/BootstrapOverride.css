@@ -1,0 +1,64 @@
+/* Esta todo en verde por poner algo */
+
+/********* PRIMARY *********/
+.text-primary{
+    color: #293e64 !important;
+}
+.bg-primary {
+    background-color: #293e64 !important;
+}
+
+/********* SECONDARY *********/
+.text-secondary{
+    color: #0062cc !important;
+}
+.bg-secondary {
+    background-color: #0062cc !important;
+}
+
+/********* DANGER *********/
+.text-warning{
+    color: #a03525 !important;
+}
+.bg-warning{
+    background-color: #a03525 !important;
+}
+
+/********* WARNING *********/
+.text-warning{
+    color: #f79502 !important;
+}
+.bg-warning{
+    background-color: #f79502 !important;
+}
+
+/********* SUCCESS *********/
+.text-success{
+    color: #25945c !important;
+}
+.bg-success{
+    background-color: #25945c !important;
+}
+
+/********* LIGHT *********/
+.text-light{
+    color: #c9959f !important;
+}
+.bg-light{
+    background-color: #c9959f !important;
+}
+
+/********* DARK *********/
+.text-dark{
+    color: #1d242c !important;
+}
+.bg-dark{
+    background-color: #1d242c !important;
+}
+
+
+/*
+    SIN MODIFICAR:
+    - info
+    - white
+*/

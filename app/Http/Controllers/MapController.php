@@ -76,6 +76,14 @@ class MapController extends Controller
             $map->image = "NoMap.png";
         }
 
+        if($r->hasFile('miniature')){
+            $file = $r->file('miniature');
+            $file->move(public_path("/img/miniatures/"), $map->id.$file->getClientOriginalName());
+            $map->miniature = $map->id.$file->getClientOriginalName();
+        } else {
+            $map->miniature = "NoMiniature.png";
+        }
+
         $map->save();
         return redirect(route('map.index'));
     }
@@ -110,6 +118,12 @@ class MapController extends Controller
             $map->image = $map->id.$file->getClientOriginalName();
         }
 
+        if($r->hasFile('miniature')){
+            $file = $r->file('miniature');
+            $file->move(public_path("/img/miniatures/"), $map->id.$file->getClientOriginalName());
+            $map->miniature = $map->id.$file->getClientOriginalName();
+        }
+
         $map->update();
         return redirect(route("map.index"));
     }
@@ -124,7 +138,7 @@ class MapController extends Controller
      * @return View
      */
     public function destroy($id){
-        Map::destroy($id);
+        Map::destroy($id);  
         return redirect(route("map.index"));
     }
 }
