@@ -8,16 +8,16 @@ class Street extends Model
 {
 
     public function maps() {
-        return $this->belongsToMany('App\Map');
+        return $this->belongsToMany('App\Map', 'maps_streets');
     }
 
     public function type()
     {
-        return $this->hasOne('App\StreetType');
+        return $this->belongsTo('App\StreetType');
     }
 
     //The attributes that are mass assignable.
     protected $fillable = [
-        'type_id', 'name', 'city',
+        'type_id', 'name', 
     ];
 }

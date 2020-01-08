@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class StreetType extends Model
 {
     public function streets() {
-        return $this->belongsToMany('App\Street');
+        return $this->hasMany('App\Street');
     }
 }
