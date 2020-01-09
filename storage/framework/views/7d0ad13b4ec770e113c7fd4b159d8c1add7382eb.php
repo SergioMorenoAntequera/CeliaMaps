@@ -7,10 +7,11 @@
         
         <!--CDN-->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" integrity="sha384-SI27wrMjH3ZZ89r4o+fGIJtnzkAnFs3E4qz9DIYioCQ5l9Rd/7UAa8DHcaL8jkWt" crossorigin="anonymous">
-    
+        <link rel="stylesheet" href="<?php echo e(url('/css/Backend.css')); ?>">
+        <link rel="stylesheet" href="<?php echo e(url('/css/BootstrapOverride.css')); ?>">
     </head>
     
-    <body>
+    <body class="bg-dark text-white">
         
         <!-- Header -->
         <header>

@@ -1,4 +1,4 @@
-<?php $__env->startSection('title', 'Crear Hotspot'); ?>
+<?php $__env->startSection('title', 'Crear Hotspot'); ?> 
 
 <?php $__env->startSection('content'); ?>
     <br>

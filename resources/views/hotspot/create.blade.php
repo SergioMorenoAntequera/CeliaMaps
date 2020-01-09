@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Crear Hotspot')
+@section('title', 'Crear Hotspot') 
 
 @section('content')
     <br>

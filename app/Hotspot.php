@@ -10,4 +10,8 @@ class Hotspot extends Model
     protected $fillable = [
         'title', 'description', 'point_x', 'point_y', 'map_id',
     ];
+
+    public function maps() {
+        return $this->belongsToMany('App\Map', 'maps_hotspots');
+    }
 }

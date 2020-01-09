@@ -11,6 +11,10 @@ class Map extends Model
         return $this->belongsToMany('App\Street');
     }
 
+    public function hotspots() {
+        return $this->belongsToMany('App\Hotspot');
+    }
+
     //The attributes that are mass assignable.
     protected $fillable = [
         'title', 'description', 'city', 'date', 'image', 'level', 'width', 'height',
