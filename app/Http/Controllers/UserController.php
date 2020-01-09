@@ -21,7 +21,7 @@ class UserController extends Controller
     public function index()
     {
         $userList = User::all();
-        return view('user/index',['userLlist'->$userList]);
+        return view('user/index',['userList'=>$userList]);
     }
 
     /**
@@ -47,11 +47,11 @@ class UserController extends Controller
         $user->name = $r->name;
         $user->email = $r->email;
         $user->password = $r->password;
-        $user->type = $r->type;
+        $user->level = $r->level;
 
         $user->save();
 
-       // return redirect()->route("user.index");
+        return redirect()->route("user.index");
     }
 
     /**
@@ -73,7 +73,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find();
+        $user = User::find($id);
 
         return view('user/form', array('user'=>$user));
     }
@@ -85,18 +85,19 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $r, $id)
+    public function update(Request $r,$id)
     {
-       $user = User::find($r->$id);
-
+       //dd($r);
+        $user = User::find($id);
+     //dd($user);
         $user->name = $r->name;
         $user->email = $r->email;
         $user->password = $r->password;
-        $user->type = $r->type;
+        $user->level = $r->level;
 
         $user->save();
 
-        //return redirect()->route('user.index');
+        return redirect()->route('user.index');
 
     }
 
@@ -111,6 +112,6 @@ class UserController extends Controller
        $user = User::find($id);
        $user->delete();
 
-       //return redirect()->route('user.index');
+       return redirect()->route('user.index');
     }
 }

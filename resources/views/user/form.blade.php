@@ -8,7 +8,7 @@
 @section('content')
 
 <br>
-    <div class="container w-50 text-center">
+    <div class="container w-50 text-center  text-dark">
     @isset($user)
         <div class="card">
             <div class="card-header">
@@ -17,7 +17,7 @@
 
             <div class="card-body">
                
-                <form action="{{route('user.update', ['id' => $user->id])}}" method="POST">
+                <form class="form-inline" action="{{route('user.update', $user->id)}}" method="POST">
                 @method("PUT")
     @else
                     <div class="card">
@@ -35,11 +35,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="text" name="email" id="email" value="{{$user->email??''}}">
+                                <input type="email" name="email" id="email" value="{{$user->email??''}}">
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input type="text" name="password" id="password" value="{{$user->password??''}}">
+                                <input type="password" name="password" id="password" value="{{$user->password??''}}">
                             </div>
                             <div class="form-group">
                                 <label for="level">Level</label>

@@ -4,7 +4,15 @@
     
 @section('content')
 
-<table class="table table-bordered table-hover">
+<div class="insertar float-right" style="padding: 80px 80px 15px 0px">
+        <form action= "{{route('user.create')}}" method= "GET">
+                @csrf
+                @method("GET|HEAD")
+                <input type="submit" value="Insertar">
+        </form>
+</div>
+
+<table class="table table-bordered table-hover text-white">
     <thead>
         <tr>
             <th>Id</th><th>Nombre</th><th>Email</th><th>Contraseña</th><th>Nivel</th><th>accion1</th><th>accion2</th>
@@ -21,6 +29,7 @@
                 <form action="{{route('user.edit',$user->id)}}" method="GET">
                 @csrf
                 @method("GET|HEAD")
+                <input type="submit" margin=" 0 auto" value="Modificar">
                 </form>
             </td>
 
@@ -36,6 +45,8 @@
         
     @endforeach
 </table>
+
+
 @endsection
-                    @method("GET|HEAD")
-                    <input type="submit" margin=" 0 auto" value="Modificar">
+                   
+                    
