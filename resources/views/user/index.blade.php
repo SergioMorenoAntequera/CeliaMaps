@@ -11,7 +11,6 @@
         </tr>
     </thead>
     @foreach ($userList as $user)
-        <tr>
             <td>{{$user->id}}</td>
             <td>{{$user->name}}</td>
             <td>{{$user->email}}</td>
@@ -22,7 +21,6 @@
                 <form action="{{route('user.edit',$user->id)}}" method="GET">
                 @csrf
                 @method("GET|HEAD")
-                <input type="submit" margin=" 0 auto" value="Modificar">
                 </form>
             </td>
 
@@ -38,6 +36,6 @@
         
     @endforeach
 </table>
-
-    
 @endsection
+                    @method("GET|HEAD")
+                    <input type="submit" margin=" 0 auto" value="Modificar">

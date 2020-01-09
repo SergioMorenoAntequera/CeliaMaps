@@ -21,7 +21,7 @@ class UserController extends Controller
     public function index()
     {
         $userList = User::all();
-        return view('user.index', ['userList'=>$userList]);
+        return view('user/index',['userLlist'->$userList]);
     }
 
     /**
