@@ -21,6 +21,7 @@
 					<div class="textElement bg-primary">
 						<p><b class="text-white">{{$hotspot->id}} <a href="{{route("hotspot.show", $hotspot->id)}}"> {{$hotspot->title}} </a></b></p>
 						<p><b class="text-white">Point X: {{$hotspot->point_x}}   Point Y: {{$hotspot->point_y}}</b></p>
+						<p><b class="text-white">{{$hotspot->map_id}}</b></p>
 					
 						<!-- Boton para modificar -->
                         <a href="{{route('hotspot.edit', $hotspot->id)}}"> 

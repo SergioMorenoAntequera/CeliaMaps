@@ -19,6 +19,7 @@
 					<div class="textElement bg-primary">
 						<p><b class="text-white"><?php echo e($hotspot->id); ?> <a href="<?php echo e(route("hotspot.show", $hotspot->id)); ?>"> <?php echo e($hotspot->title); ?> </a></b></p>
 						<p><b class="text-white">Point X: <?php echo e($hotspot->point_x); ?>   Point Y: <?php echo e($hotspot->point_y); ?></b></p>
+						<p><b class="text-white"><?php echo e($hotspot->map_id); ?></b></p>
 					
 						<!-- Boton para modificar -->
                         <a href="<?php echo e(route('hotspot.edit', $hotspot->id)); ?>"> 

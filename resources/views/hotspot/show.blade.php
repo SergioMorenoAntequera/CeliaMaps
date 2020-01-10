@@ -13,6 +13,9 @@
         <p>Description: {{$hotspot->description}}</p>
         <p>point_x: {{$hotspot->point_x}}</p>
         <p>point_y: {{$hotspot->point_y}}</p>
+        @foreach ($hotspot->maps as $map)
+            <p>{{$map->title}}</p>
+        @endforeach
     </div>
 @endsection
 

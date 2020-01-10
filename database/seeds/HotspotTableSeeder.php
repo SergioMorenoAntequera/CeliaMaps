@@ -19,7 +19,6 @@ class HotspotTableSeeder extends Seeder
             'description' => 'CAtedral de la ciudad de Almeria',
             'point_x' => 100,
             'point_y' => 150,
-            'map_id' => 1,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -31,7 +30,6 @@ class HotspotTableSeeder extends Seeder
             'description' => 'Alcazaba de la ciudad de Almeria',
             'point_x' => 50,
             'point_y' => 190,
-            'map_id' => 2,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -43,7 +41,6 @@ class HotspotTableSeeder extends Seeder
             'description' => 'Mercado del paseo',
             'point_x' => 500,
             'point_y' => 63,
-            'map_id' => 3,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -55,7 +52,6 @@ class HotspotTableSeeder extends Seeder
             'description' => 'Refugios de la segunda guerra mundial',
             'point_x' => 100,
             'point_y' => 150,
-            'map_id' => 4,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -67,7 +63,6 @@ class HotspotTableSeeder extends Seeder
             'description' => 'Atracción del oeste y zoo para toda la familia',
             'point_x' => 10,
             'point_y' => 500,
-            'map_id' => 5,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);

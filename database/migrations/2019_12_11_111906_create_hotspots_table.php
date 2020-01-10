@@ -20,7 +20,6 @@ class CreateHotspotsTable extends Migration
             $table->string('description', 600);
             $table->unsignedInteger('point_x');
             $table->unsignedInteger('point_y');
-            $table->unsignedInteger('map_id')->nullable();
             $table->timestamps();
         });
     }
