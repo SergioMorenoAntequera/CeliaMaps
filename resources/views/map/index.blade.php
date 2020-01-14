@@ -4,6 +4,7 @@
 
 @section('header')
     (En teoría)Aquí se enseñan todos los mapas
+    
 @endsection
 
 @section('content')
@@ -21,15 +22,26 @@
         <div class="row allElements justify-content-center">
             <!-- Por cada mapa guardado en la base de datos -->
             @foreach ($maps as $map)
-                <!-- Creamos una de las columnas (Si no caben se bajan) -->
-                <div class="oneElement col-8">
+                <!--Por cada mapa creamos el cuadrado para las flechas -->
+                <div class="oneElement bg-danger col-1">
+                    <a href="{{route('map.up', $map->id)}}"> <button>Arriba</button></a>
+                    <br>
+                    <p id="test"> {{$map->level}} </p>
+                    
+                    <br>
+                    <a href="{{route('map.down', $map->id)}}"> <button>Down</button></a>
+                </div>
+
+                
+                <!--Por cada mapa creamos el cuadrado para los mapas -->
+                <div class="oneElement col-11 text-left">
                     <!-- Aqui sacamos la información de un solo mapa  -->
                     <div class="textElement bg-primary">
                         <!-- Titulo -->
-                        <p><b class="text-white">{{$map->title}}</b></p>
+                        <p><b class="text-white text-6">{{$map->title}}</b></p>
                         <!-- Foto/miniatura -->
                         <a href="{{route("map.show", $map->id)}}">
-                            <p><img style="width: 100px" src="{{url("img/miniatures/$map->miniature")}}" alt="Miniatura"></p>
+                            <img style="width: 100px" src="{{url("img/miniatures/$map->miniature")}}" alt="Miniatura">
                         </a>
                         <!-- Algunos detalles -->
                         <p class="text-white">{{$map->city}} - {{$map->date}}</p>

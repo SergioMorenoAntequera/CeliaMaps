@@ -141,4 +141,28 @@ class MapController extends Controller
         Map::destroy($id);  
         return redirect(route("map.index"));
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    // MOVE UP //////////////////////////////////////////////////////////////////////////////
+    /**
+     * Method that moves a map up
+     * 
+     * @param id
+     * @return View
+     */
+    public function moveUp($id){
+        echo("Arriba".$id);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    // MOVE DOWN //////////////////////////////////////////////////////////////////////////////
+    /**
+     * Method that moves a map down
+     * 
+     * @param id
+     * @return View
+     */
+    public function moveDown($id){
+        echo("Abajo".$id);
+    }
 }

@@ -22,7 +22,7 @@ class CreateMapsTable extends Migration
             $table->integer('date');
             $table->string('image',75);
             $table->string('miniature',75);
-            $table->integer('level');
+            $table->integer('level')->unique();
             $table->integer('width');
             $table->integer('height');
             // Aquí falta la fecha de subida pero eso lo hace la función final
