@@ -27,3 +27,8 @@ Route::resource('street', 'StreetController');
 Route::resource('point', 'PointController');
 // HOTSPOT /////////////////////////////////////////////////////////////////////////////////////
 Route::resource('hotspot', 'HotspotController');
+// AUTH SE MODIFICA LA RUTA PARA ELIMINAR LA OPCIÓN DE REGISTRO //////////////////////////////////
+//Auth::routes();
+Auth::routes(['register' => false]);
+
+Route::get('/home', 'HomeController@index')->name('home');
