@@ -1,4 +1,16 @@
 
+/******* ONE ELEMENT OF THE LIST *******/
+.oneElement {
+    margin-bottom: 20px;
+}
+
+.textElement {
+    padding-top: 20px;
+    padding-right: 40px;
+    padding-bottom: 20px;
+    padding-left: 40px;
+}
+
 /******* DELETE BUTTON *******/
 .cornerDeleteButton{
     position: absolute;
