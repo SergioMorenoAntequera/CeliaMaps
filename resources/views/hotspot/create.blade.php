@@ -3,7 +3,7 @@
 @section('title', 'Crear Hotspot') 
 
 @section('content')
-    <br>
+    <br>  
     <div class="container w-50 text-center">
         <div class="card">
             <div class="card-header">

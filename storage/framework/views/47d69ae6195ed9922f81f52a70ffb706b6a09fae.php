@@ -6,6 +6,28 @@
 
 <?php $__env->startSection('content'); ?>
 
+	<div class="container">
+		<div class="table-responsive">
+			<table class="table text-white">
+				<caption>Lista de Mapas</caption>
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Mapa</th>
+						<th scope="col">Titulo</th>
+						<th scope="col">Fecha</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+
+
+
+
+
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
 	<div class="container text-center">
 		<a href="<?php echo e(route('hotspot.create')); ?>">
 			<button>

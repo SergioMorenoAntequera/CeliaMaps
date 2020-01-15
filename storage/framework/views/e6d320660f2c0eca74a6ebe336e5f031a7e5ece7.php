@@ -1,7 +1,7 @@
 <?php $__env->startSection('title', 'Crear Hotspot'); ?> 
 
 <?php $__env->startSection('content'); ?>
-    <br>
+    <br>  
     <div class="container w-50 text-center">
         <div class="card">
             <div class="card-header">
