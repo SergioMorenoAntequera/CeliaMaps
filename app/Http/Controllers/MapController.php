@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Map;
+use DB;
+
 
 class MapController extends Controller
 {
@@ -29,6 +31,7 @@ class MapController extends Controller
      */
     public function index(){
         $data['maps'] = Map::all();
+        $data['mapMaxLevel'] = Map::max('level');
         return view("map.index", $data);
     }
 
@@ -151,7 +154,29 @@ class MapController extends Controller
      * @return View
      */
     public function moveUp($id){
-        echo("Arriba".$id);
+        //We get the map that we are going to move
+        $map = Map::find($id);
+        //We chech that it's not the first one
+        if($map->level > 1){
+            //We get the next map(The one that now has to go down)
+            $mapNext = DB::table('maps')->where('level', $map->level-1)->first();
+            $mapNext = Map::find($mapNext->id);
+            
+            //We leave some space so the character dosent repeat
+            $mapNext->level = 0;
+            $map->level--;
+            
+            $mapNext->update();
+            $map->update();
+            
+            $mapNext->level = $map->level + 1;
+            $mapNext->update();
+        } else {
+            echo("Error al subir mapa");
+            return redirect(route("map.index"));
+        }
+        echo("Mapa clickado ahora en el level: ". $map->level ."<br>");
+        echo("Mapa siguiete ahora en el level: ". $mapNext->level);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -163,6 +188,26 @@ class MapController extends Controller
      * @return View
      */
     public function moveDown($id){
-        echo("Abajo".$id);
+        //We get the map that we are going to move
+        $map = Map::find($id);
+        //We chech that it's not the last one
+        $maps = Map::all();
+        $lastMap = $maps->last();
+        if($map->level < $lastMap->level){
+            //We get the next map(The one that now has to go down)
+            $mapNext = DB::table('maps')->where('level', $map->level+1)->first();
+            $map->level++;
+            $mapNext->level--;
+            //$mapNext->level = 0;
+            //$levelAux = $map->level;
+            //$map->level += 1;
+            //$mapNext->level = $levelAux;
+        } else {
+            echo("Error al bajar mapa");
+            return redirect(route("map.index"));
+        }
+        echo("Mapa clickado ahora en el level: ". $map->level ."<br>");
+        echo("Mapa siguiete ahora en el level: ". $mapNext->level);
+        dd();
     }
 }

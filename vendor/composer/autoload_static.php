@@ -422,6 +422,7 @@ class ComposerStaticInit3bc63085752e602f437e2a014d1e5b3a
         'App\\Http\\Controllers\\Auth\\ResetPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ResetPasswordController.php',
         'App\\Http\\Controllers\\Auth\\VerificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerificationController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Controllers\\HotspotController' => __DIR__ . '/../..' . '/app/Http/Controllers/HotspotController.php',
         'App\\Http\\Controllers\\MapController' => __DIR__ . '/../..' . '/app/Http/Controllers/MapController.php',
         'App\\Http\\Controllers\\PointController' => __DIR__ . '/../..' . '/app/Http/Controllers/PointController.php',
