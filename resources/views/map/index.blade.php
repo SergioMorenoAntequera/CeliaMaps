@@ -24,12 +24,16 @@
             @foreach ($maps as $map)
                 <!--Por cada mapa creamos el cuadrado para las flechas -->
                 <div class="oneElement bg-danger col-1">
-                    <a href="{{route('map.up', $map->id)}}"> <button>Arriba</button></a>
+                    @if ($map->level != 1)
+                        <a href="{{route('map.up', $map->id)}}"> <button>Arriba</button></a>
+                    @endif
                     <br>
                     <p id="test"> {{$map->level}} </p>
                     
                     <br>
-                    <a href="{{route('map.down', $map->id)}}"> <button>Down</button></a>
+                    @if ($map->level != $mapMaxLevel)
+                        <a href="{{route('map.down', $map->id)}}"> <button>Down</button></a>
+                    @endif
                 </div>
 
                 
