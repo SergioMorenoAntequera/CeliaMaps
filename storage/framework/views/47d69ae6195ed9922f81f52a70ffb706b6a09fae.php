@@ -4,7 +4,7 @@
     (En teoría)Aquí se crean modifican los mapas
 <?php $__env->stopSection(); ?>
 
-<?php $__env->startSection('content'); ?>
+<?php $__env->startSection('content'); ?>	
 
 	<div class="container text-center">
 		<a href="<?php echo e(route('hotspot.create')); ?>">

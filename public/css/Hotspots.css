@@ -1,0 +1,25 @@
+body, html {
+    height: 100%;
+}
+
+#frame{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+#frame .mapImg{
+    position: absolute;
+}
+
+#frame #token{
+    position: absolute;
+    display: none;
+    width: 30px;
+}
+
+.modal-dialog{
+    max-width: 600px;
+}
