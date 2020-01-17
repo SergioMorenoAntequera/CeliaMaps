@@ -6,6 +6,8 @@
     (En teoría)Aquí se crean modifican los mapas
 @endsection
 
+@section('content')	
+
 	<div class="container text-center">
 		<a href="{{route('hotspot.create')}}">
 			<button>
