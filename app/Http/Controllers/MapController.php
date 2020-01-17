@@ -30,7 +30,15 @@ class MapController extends Controller
      * @return View
      */
     public function index(){
-        $data['maps'] = Map::all();
+        $maps = Map::all();
+        //We sort the maps depending on the level
+        $mapsSorted = Array();
+        for ($i = 0; $i < sizeof($maps); $i++) {
+            $mapsSorted[$maps[$i]->level - 1] = $maps[$i];
+        }
+        ksort($mapsSorted);
+        
+        $data['maps'] = $mapsSorted;
         $data['mapMaxLevel'] = Map::max('level');
         return view("map.index", $data);
     }
@@ -141,8 +149,9 @@ class MapController extends Controller
      * @return View
      */
     public function destroy($id){
-        Map::destroy($id);  
-        return redirect(route("map.index"));
+    
+        //Map::destroy($id);  
+        //return redirect(route("map.index"));
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -153,15 +162,16 @@ class MapController extends Controller
      * @param id
      * @return View
      */
-    public function moveUp($id){
+    public function moveUp(Request $r){
+        
         //We get the map that we are going to move
-        $map = Map::find($id);
+        $map = Map::where("level", $r->level)->first();
+        //We get the next map(The one that now has to go down)
+        $mapNext = DB::table('maps')->where('level', $map->level-1)->first();
+        $mapNext = Map::find($mapNext->id);
+        
         //We chech that it's not the first one
         if($map->level > 1){
-            //We get the next map(The one that now has to go down)
-            $mapNext = DB::table('maps')->where('level', $map->level-1)->first();
-            $mapNext = Map::find($mapNext->id);
-            
             //We leave some space so the character dosent repeat
             $mapNext->level = 0;
             $map->level--;
@@ -172,11 +182,10 @@ class MapController extends Controller
             $mapNext->level = $map->level + 1;
             $mapNext->update();
         } else {
-            echo("Error al subir mapa");
-            return redirect(route("map.index"));
+            return response()->json(['respond'=>false]);
         }
-        echo("Mapa clickado ahora en el level: ". $map->level ."<br>");
-        echo("Mapa siguiete ahora en el level: ". $mapNext->level);
+
+        return response()->json(['level'=>$map->level]);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -187,27 +196,29 @@ class MapController extends Controller
      * @param id
      * @return View
      */
-    public function moveDown($id){
+    public function moveDown(Request $r){
         //We get the map that we are going to move
-        $map = Map::find($id);
-        //We chech that it's not the last one
-        $maps = Map::all();
-        $lastMap = $maps->last();
-        if($map->level < $lastMap->level){
-            //We get the next map(The one that now has to go down)
-            $mapNext = DB::table('maps')->where('level', $map->level+1)->first();
+        $map = Map::where("level", $r->level)->first();
+        //We get the next map(The one that now has to go down)
+        $mapNext = DB::table('maps')->where('level', $map->level + 1)->first();
+        $mapNext = Map::find($mapNext->id);
+        
+        //We chech that it's not the first one
+        if($mapNext != null && $map->level + 1 == $mapNext->level){
+            
+            //We leave some space so the character dosent repeat
+            $mapNext->level = 0;
             $map->level++;
-            $mapNext->level--;
-            //$mapNext->level = 0;
-            //$levelAux = $map->level;
-            //$map->level += 1;
-            //$mapNext->level = $levelAux;
+            
+            $mapNext->update();
+            $map->update();
+            
+            $mapNext->level = $map->level - 1;
+            $mapNext->update();
         } else {
-            echo("Error al bajar mapa");
-            return redirect(route("map.index"));
+            return response()->json(['respond'=>false]);
         }
-        echo("Mapa clickado ahora en el level: ". $map->level ."<br>");
-        echo("Mapa siguiete ahora en el level: ". $mapNext->level);
-        dd();
+
+        return response()->json(['level'=>$map->level]);
     }
 }

@@ -16,9 +16,9 @@ Route::get('/', function () {
 });
 
 // MAPS /////////////////////////////////////////////////////////////////////////////////////
+Route::get('map/up', 'MapController@moveUp')->name('map.up');
+Route::get('map/down', 'MapController@moveDown')->name('map.down');
 Route::resource('map', 'MapController');
-Route::get('map/up/{id}', 'MapController@moveUp')->name('map.up');
-Route::get('map/down/{id}', 'MapController@moveDown')->name('map.down');
 // USER /////////////////////////////////////////////////////////////////////////////////////
 Route::resource('user', 'UserController');
 // STREETS /////////////////////////////////////////////////////////////////////////////////////
