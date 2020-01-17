@@ -148,8 +148,25 @@ class MapController extends Controller
      * @param id
      * @return View
      */
-    public function destroy($id){
-    
+    public function destroy(Request $r){
+        $map = Map::where("level", $r->level)->first();
+        
+        //We destroy the map
+        Map::destroy($map->id);
+
+        //We change the next levels
+        for($i = $r->level + 1; $i <= Map::count()+1; $i++){
+            $mapAux = Map::where("level", $i)->first();
+            $mapAux = Map::find($mapAux->id);
+            $mapAux->level -= 1;
+            $mapAux->update();
+        }
+
+        return response()->json([
+            'count'=> Map::count(),
+            'levelSelected'=>$r->level,
+        ]);
+        
         //Map::destroy($id);  
         //return redirect(route("map.index"));
     }

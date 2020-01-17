@@ -77,7 +77,7 @@
                                     <div class="modal-body">
                                         <p>¿Seguro que quieres borrar el mapa {{$map->title}}?</p>
                                         <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
-                                        <button type="button" class="btn btn-danger deleteConfirm">
+                                        <button type="button" class="btn btn-danger deleteConfirm" data-dismiss="modal">
                                             Eliminar
                                             <span class="d-none">{{$map->level}}</span> 
                                         </button>
@@ -112,13 +112,35 @@
             });
             $('.deleteConfirm').click(function(){
                 //We delete using ajax
-                var level = parseInt(jQuery(this).children().text());
+                //var auxLevel = jQuery(this).children();
                 
+                var mapParent = jQuery(this).parent().parent().parent().parent().parent().parent();
+                var maps = mapParent.parent();
+                var level = jQuery(jQuery(mapParent.children()[0]).children()[2]);
+
                 $.ajax({
                     method: "DELETE",
-                    url: "{{route('map.destroy', 1)}}",
+                    url: "{{route('map.destroy', "+level.text()+")}}",
+                    data: {
+                        "level": level.text(),
+                        "_token": $("meta[name='csrf-token']").attr("content")
+                    },
                     success: function(data){
-                        console.log("WoooooW");
+                        //Delete the container
+                        console.log("level" + level.text());
+                        console.log("total" + data['count']);
+                        for(var i = parseInt(level.text() + 1); i <= data['count']; i++){
+                            $nextMap = jQuery(jQuery(jQuery(maps.children()[i]).children()[0]).children()[2]);
+                            console.log($nextMap);
+                            $nextMap.text(parseInt($nextMap.text()) - 1);
+                        }
+                        mapParent.slideUp(400, function(){
+                            mapParent.remove();
+                        });
+                        //We update the levels
+                        
+
+                        //Here we have to change the levels visually
                     }
                 });
             });
@@ -152,6 +174,9 @@
                                 mapSelected.fadeOut(300, function(){
                                     level.text(parseInt(level.text()) - 1);
                                     levelOther.text(parseInt(levelOther.text()) + 1);
+                                    
+                                   
+
                                     mapSelected.after(mapOther);
                                     mapOther.fadeIn(300);
                                     mapSelected.fadeIn(300);
