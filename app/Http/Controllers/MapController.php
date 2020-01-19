@@ -220,7 +220,7 @@ class MapController extends Controller
         $mapNext = DB::table('maps')->where('level', $map->level + 1)->first();
         $mapNext = Map::find($mapNext->id);
         
-        //We chech that it's not the first one
+        //We chech that it's not the last one
         if($mapNext != null && $map->level + 1 == $mapNext->level){
             
             //We leave some space so the character dosent repeat

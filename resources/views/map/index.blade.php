@@ -19,18 +19,18 @@
         </a>
 
         <!-- Todos los elementos de la página -->
-        <div class="allElements justify-content-center mt-3">
+        <div id="allElements" class="justify-content-center mt-3">
 
             @foreach ($maps as $map)
                 <!-- Cada uno de los elementos de la página -->
-                <div class="row mb-4 oneElement justify-content-center">
+                <div id="oneElement{{$map->level}}" class="row mb-4 justify-content-center">
                     <!-- Columna con el numero y las flechas -->
                     <div class="col-1 bg-warning justify-content-center">
-                        <a  class="bUp"><button >Up</button></a>
+                        <a  class="bUp"><button id="bUp{{$map->level}}">Up</button></a>
                         <br>
-                        <span id="level{{$map->level}}"> {{$map->level}} </span>
+                        <span id="level{{$map->level}}">{{$map->level}}</span>
                         <br>
-                        <a class="bDown"> <button>Down</button></a>
+                        <a class="bDown"><button id="bDown{{$map->level}}">Down</button></a>
                     </div>
 
                     <!-- Columna con el numero y las flechas -->
@@ -65,7 +65,6 @@
                         </form>
                         
                         <!-- Modal para borrar -->
-                        <!-- Modal -->
                         <div class="modal fade text-dark ModalCenter{{$map->id}}" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
@@ -84,9 +83,9 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                        </div><!-- FINAL modal para borrar -->
+                    </div><!-- FINAL columna con info del mapa -->
+                </div> <!-- FINAL .oneElement -->
             @endforeach
         </div> <!-- FINAL .allEments -->
 
@@ -103,10 +102,12 @@
 @endsection
 
 @section('scripts')
+    <!------------------------------------ FUNCTIONS WITH AJAX ---------------------------------->
+    <!--------------------------------- DELETE, MOVE UP AND DOWN -------------------------------->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
     <script>
         $(document).ready(function(){
-            //DELETE CON AJAX
+            // DELETE CON AJAX ///////////////////////////////////////////////////////////////////////
             $('.cornerDeleteButton').click(function(e){
                 e.preventDefault();
             });
@@ -118,6 +119,7 @@
                 var maps = mapParent.parent();
                 var level = jQuery(jQuery(mapParent.children()[0]).children()[2]);
 
+                console.log(mapParent);
                 $.ajax({
                     method: "DELETE",
                     url: "{{route('map.destroy', "+level.text()+")}}",
@@ -126,33 +128,41 @@
                         "_token": $("meta[name='csrf-token']").attr("content")
                     },
                     success: function(data){
-                        //Delete the container
-                        console.log("level" + level.text());
-                        console.log("total" + data['count']);
-                        for(var i = parseInt(level.text() + 1); i <= data['count']; i++){
-                            $nextMap = jQuery(jQuery(jQuery(maps.children()[i]).children()[0]).children()[2]);
-                            console.log($nextMap);
-                            $nextMap.text(parseInt($nextMap.text()) - 1);
-                        }
+                        //Lo que tenemos que hacer desaparecer
                         mapParent.slideUp(400, function(){
                             mapParent.remove();
-                        });
-                        //We update the levels
-                        
+                            var index = 1;
+                            for(var i = 1; i <= jQuery($('#allElements').children()).length + 1; i++){
+                                if(i == level.text()){
+                                    continue;
+                                }
 
-                        //Here we have to change the levels visually
+                                console.log(index);
+                                console.log($('#level'+i));
+                                $('#level'+i).text(index);
+                                $('#level'+i).attr('id', 'level'+index);
+                                $('#oneElement'+i).attr('id', 'oneElement'+index++);
+                            }
+                        });
                     }
                 });
             });
             
 
-            //Mover hacia arriba
+            // MOVE UP ///////////////////////////////////////////////////////////////////////
             $('.bUp').click(function(){
                 var parent = $(this).parent().parent().parent();
                 var mapSelected = $(this).parent().parent();
                 var level = jQuery(mapSelected.children()[0]);
                 level = jQuery(level.children()[2]);
+                var button = jQuery(jQuery(jQuery(mapSelected.children()[0]).children()[0]).children()[0]);
 
+                if(level.text() == 1){
+                    alert("No puedes subir el primer mapa");
+                    return;
+                }
+                
+                button.prop('disabled', true);
                 $.ajax({
                     method: "GET",
                     url: "{{route('map.up')}}",
@@ -175,11 +185,15 @@
                                     level.text(parseInt(level.text()) - 1);
                                     levelOther.text(parseInt(levelOther.text()) + 1);
                                     
-                                   
+                                    level.attr('id', "level"+level.text());
+                                    levelOther.attr('id', "level"+levelOther.text());
+                                    mapSelected.attr('id', "oneElement"+level.text());
+                                    mapOther.attr('id', "oneElement"+levelOther.text());
 
                                     mapSelected.after(mapOther);
                                     mapOther.fadeIn(300);
                                     mapSelected.fadeIn(300);
+                                    button.prop('disabled', false);
                                 });
 
                                 return;
@@ -189,12 +203,17 @@
                 });
             });
 
-            //Mover hacia abajo
+            // MOVE DOWN   ///////////////////////////////////////////////////////////////////////
             $('.bDown').click(function(){
                 var parent = $(this).parent().parent().parent();
                 var mapSelected = $(this).parent().parent();
                 var level = jQuery(mapSelected.children()[0]);
                 level = jQuery(level.children()[2]);
+                //Uncool but fast version
+                var button = jQuery(jQuery(level.siblings()[3]).children()[0]);
+                //Cool but slow version
+                //var button = $('.bDown'+level.text());
+                button.prop('disabled', true);
 
                 $.ajax({
                     method: "GET",
@@ -206,6 +225,7 @@
                         //Here we have to update the numbers in the divs
                         for (var i = 0; i < parent.children().length; i++) {
                             //We get the id of all the elements
+                            
 
                             var mapOther = jQuery(parent.children().get(i+1));
                             var levelOther = jQuery(mapOther.children()[0]);
@@ -215,9 +235,15 @@
                                 mapOther.fadeOut(300);
                                 mapSelected.fadeOut(300, function(){
                                     mapSelected.before(mapOther);
-
+                                    
                                     level.text(parseInt(level.text()) + 1);
                                     levelOther.text(parseInt(levelOther.text()) - 1);
+                                    button.prop('disabled', false);
+
+                                    level.attr('id', "level"+level.text());
+                                    levelOther.attr('id', "level"+levelOther.text());
+                                    mapSelected.attr('id', "oneElement"+level.text());
+                                    mapOther.attr('id', "oneElement"+levelOther.text());
 
                                     mapOther.fadeIn(300);
                                     mapSelected.fadeIn(300);
@@ -228,6 +254,7 @@
                     }
                 });
             });
+
         });
     </script>
 @endsection
