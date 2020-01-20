@@ -216,13 +216,14 @@ class MapController extends Controller
     public function moveDown(Request $r){
         //We get the map that we are going to move
         $map = Map::where("level", $r->level)->first();
-        //We get the next map(The one that now has to go down)
-        $mapNext = DB::table('maps')->where('level', $map->level + 1)->first();
-        $mapNext = Map::find($mapNext->id);
+        
         
         //We chech that it's not the last one
-        if($mapNext != null && $map->level + 1 == $mapNext->level){
-            
+        if($map->level != Map::count()){
+            //We get the next map(The one that now has to go down)
+            $mapNext = DB::table('maps')->where('level', $map->level + 1)->first();
+            $mapNext = Map::find($mapNext->id);
+
             //We leave some space so the character dosent repeat
             $mapNext->level = 0;
             $map->level++;
@@ -233,7 +234,7 @@ class MapController extends Controller
             $mapNext->level = $map->level - 1;
             $mapNext->update();
         } else {
-            return response()->json(['respond'=>false]);
+            return response()->json(['lastOne'=>true]);
         }
 
         return response()->json(['level'=>$map->level]);

@@ -23,10 +23,10 @@
 
             @foreach ($maps as $map)
                 <!-- Cada uno de los elementos de la página -->
-                <div id="oneElement{{$map->level}}" class="row mb-4 justify-content-center">
+                <div id="oneElement{{$map->level}}" class="row mb-4 justify-content-center ">
                     <!-- Columna con el numero y las flechas -->
-                    <div class="col-1 bg-warning justify-content-center">
-                        <a  class="bUp"><button id="bUp{{$map->level}}">Up</button></a>
+                    <div class="col-1 bg-primary justify-content-center rounded">
+                        <a  class="bUp"><button id="bUp{{$map->level}}"> Up</button></a>
                         <br>
                         <span id="level{{$map->level}}">{{$map->level}}</span>
                         <br>
@@ -34,7 +34,7 @@
                     </div>
 
                     <!-- Columna con el numero y las flechas -->
-                    <div class="col-10 px-3 py-1 ml-4 text-left bg-danger">
+                    <div class="col-10 px-3 py-1 ml-4 text-left bg-primary rounded">
                         <!-- Titulo -->
                         <p><b class="text-white text-6">{{$map->title}}</b></p>
                         <!-- Foto/miniatura -->
@@ -151,18 +151,22 @@
 
             // MOVE UP ///////////////////////////////////////////////////////////////////////
             $('.bUp').click(function(){
+                var button = jQuery($(this).children()[0]);
+                button.prop('disabled', true);
                 var parent = $(this).parent().parent().parent();
                 var mapSelected = $(this).parent().parent();
                 var level = jQuery(mapSelected.children()[0]);
                 level = jQuery(level.children()[2]);
-                var button = jQuery(jQuery(jQuery(mapSelected.children()[0]).children()[0]).children()[0]);
+                //var button = jQuery(jQuery(jQuery(mapSelected.children()[0]).children()[0]).children()[0]);
+                
 
                 if(level.text() == 1){
                     alert("No puedes subir el primer mapa");
+                    button.prop('disabled', false);
                     return;
                 }
                 
-                button.prop('disabled', true);
+                
                 $.ajax({
                     method: "GET",
                     url: "{{route('map.up')}}",
@@ -205,27 +209,35 @@
 
             // MOVE DOWN   ///////////////////////////////////////////////////////////////////////
             $('.bDown').click(function(){
+                var button = jQuery($(this).children()[0]);
+                button.prop('disabled', true);
+
                 var parent = $(this).parent().parent().parent();
                 var mapSelected = $(this).parent().parent();
                 var level = jQuery(mapSelected.children()[0]);
                 level = jQuery(level.children()[2]);
                 //Uncool but fast version
-                var button = jQuery(jQuery(level.siblings()[3]).children()[0]);
+                //var button = jQuery(jQuery(level.siblings()[3]).children()[0]);
                 //Cool but slow version
                 //var button = $('.bDown'+level.text());
-                button.prop('disabled', true);
-
+               
                 $.ajax({
                     method: "GET",
                     url: "{{route('map.down')}}",
                     data: {level: level.text()},
                     success: function(data){
 
+                        if(data['lastOne']){
+                            alert("No puedes bajar el último mapa");
+                            button.prop('disabled', false);
+                            return;
+                        }
+                        
                         //Here we update the position of the divs
                         //Here we have to update the numbers in the divs
                         for (var i = 0; i < parent.children().length; i++) {
                             //We get the id of all the elements
-                            
+
 
                             var mapOther = jQuery(parent.children().get(i+1));
                             var levelOther = jQuery(mapOther.children()[0]);
@@ -254,7 +266,6 @@
                     }
                 });
             });
-
         });
     </script>
 @endsection
