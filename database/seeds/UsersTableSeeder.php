@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder
 {
@@ -16,7 +16,7 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
             'name'=> 'carmen',
             'email'=> 'carmen@mail.com',
-            'password'=> '1234',
+            'password'=> Hash::make('12341234'),
             'level'=> 1,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
@@ -25,7 +25,7 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
             'name'=> 'paula',
             'email'=> 'paula@mail.com',
-            'password'=> '1234',
+            'password'=> Hash::make('12341234'),
             'level'=> 1 ,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
@@ -34,7 +34,7 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
             'name'=> 'sergio',
             'email'=> 'csergio@mail.com',
-            'password'=> '1234',
+            'password'=> Hash::make('12341234'),
             'level'=> 1,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
@@ -43,7 +43,7 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
             'name'=> 'luis',
             'email'=> 'luis@mail.com',
-            'password'=> '1234',
+            'password'=> Hash::make('12341234'),
             'level'=> 1,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),

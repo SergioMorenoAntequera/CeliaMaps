@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Map;
+use DB;
+
 
 class MapController extends Controller
 {
@@ -28,7 +30,16 @@ class MapController extends Controller
      * @return View
      */
     public function index(){
-        $data['maps'] = Map::all();
+        $maps = Map::all();
+        //We sort the maps depending on the level
+        $mapsSorted = Array();
+        for ($i = 0; $i < sizeof($maps); $i++) {
+            $mapsSorted[$maps[$i]->level - 1] = $maps[$i];
+        }
+        ksort($mapsSorted);
+        
+        $data['maps'] = $mapsSorted;
+        $data['mapMaxLevel'] = Map::max('level');
         return view("map.index", $data);
     }
 
@@ -137,9 +148,27 @@ class MapController extends Controller
      * @param id
      * @return View
      */
-    public function destroy($id){
-        Map::destroy($id);  
-        return redirect(route("map.index"));
+    public function destroy(Request $r){
+        $map = Map::where("level", $r->level)->first();
+        
+        //We destroy the map
+        Map::destroy($map->id);
+
+        //We change the next levels
+        for($i = $r->level + 1; $i <= Map::count()+1; $i++){
+            $mapAux = Map::where("level", $i)->first();
+            $mapAux = Map::find($mapAux->id);
+            $mapAux->level -= 1;
+            $mapAux->update();
+        }
+
+        return response()->json([
+            'count'=> Map::count(),
+            'levelSelected'=>$r->level,
+        ]);
+        
+        //Map::destroy($id);  
+        //return redirect(route("map.index"));
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -150,8 +179,30 @@ class MapController extends Controller
      * @param id
      * @return View
      */
-    public function moveUp($id){
-        echo("Arriba".$id);
+    public function moveUp(Request $r){
+        
+        //We get the map that we are going to move
+        $map = Map::where("level", $r->level)->first();
+        //We get the next map(The one that now has to go down)
+        $mapNext = DB::table('maps')->where('level', $map->level-1)->first();
+        $mapNext = Map::find($mapNext->id);
+        
+        //We chech that it's not the first one
+        if($map->level > 1){
+            //We leave some space so the character dosent repeat
+            $mapNext->level = 0;
+            $map->level--;
+            
+            $mapNext->update();
+            $map->update();
+            
+            $mapNext->level = $map->level + 1;
+            $mapNext->update();
+        } else {
+            return response()->json(['respond'=>false]);
+        }
+
+        return response()->json(['level'=>$map->level]);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -162,7 +213,30 @@ class MapController extends Controller
      * @param id
      * @return View
      */
-    public function moveDown($id){
-        echo("Abajo".$id);
+    public function moveDown(Request $r){
+        //We get the map that we are going to move
+        $map = Map::where("level", $r->level)->first();
+        
+        
+        //We chech that it's not the last one
+        if($map->level != Map::count()){
+            //We get the next map(The one that now has to go down)
+            $mapNext = DB::table('maps')->where('level', $map->level + 1)->first();
+            $mapNext = Map::find($mapNext->id);
+
+            //We leave some space so the character dosent repeat
+            $mapNext->level = 0;
+            $map->level++;
+            
+            $mapNext->update();
+            $map->update();
+            
+            $mapNext->level = $map->level - 1;
+            $mapNext->update();
+        } else {
+            return response()->json(['lastOne'=>true]);
+        }
+
+        return response()->json(['level'=>$map->level]);
     }
 }

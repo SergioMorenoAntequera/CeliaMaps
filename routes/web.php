@@ -16,9 +16,9 @@ Route::get('/', function () {
 });
 
 // MAPS /////////////////////////////////////////////////////////////////////////////////////
+Route::get('map/up', 'MapController@moveUp')->name('map.up');
+Route::get('map/down', 'MapController@moveDown')->name('map.down');
 Route::resource('map', 'MapController');
-Route::get('map/up/{id}', 'MapController@moveUp')->name('map.up');
-Route::get('map/down/{id}', 'MapController@moveDown')->name('map.down');
 // USER /////////////////////////////////////////////////////////////////////////////////////
 Route::resource('user', 'UserController');
 // STREETS /////////////////////////////////////////////////////////////////////////////////////
@@ -27,3 +27,12 @@ Route::resource('street', 'StreetController');
 Route::resource('point', 'PointController');
 // HOTSPOT /////////////////////////////////////////////////////////////////////////////////////
 Route::resource('hotspot', 'HotspotController');
+// AUTH SE MODIFICA LA RUTA PARA ELIMINAR LA OPCIÓN DE REGISTRO //////////////////////////////////
+//Auth::routes();
+Auth::routes(['register' => false]);
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

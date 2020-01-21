@@ -2,15 +2,18 @@
     <head>
 
         <meta charset="utf-8">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>@yield('title')</title>
         
         <!--CDN-->
+        <link rel="icon" type="image/png" href="{{url('/img/icons/icon.png')}}" sizes="64x64">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" integrity="sha384-SI27wrMjH3ZZ89r4o+fGIJtnzkAnFs3E4qz9DIYioCQ5l9Rd/7UAa8DHcaL8jkWt" crossorigin="anonymous">
         <link rel="stylesheet" href="{{url('/css/Backend.css')}}">
         <link rel="stylesheet" href="{{url('/css/BootstrapOverride.css')}}">
         <link rel="stylesheet" href="{{url('/css/Global.css')}}">
         <link rel="stylesheet" href="{{url('/css/streets.css')}}">
+        <link rel="stylesheet" href="{{url('/css/Hotspots.css')}}">
     </head>
     
     <body class="bg-dark text-white">

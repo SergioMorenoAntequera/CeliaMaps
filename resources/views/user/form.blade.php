@@ -47,9 +47,19 @@
                             </div>
                             <button type="submit" class="btn btn-primary">Enviar</button>
                         </div>
+                             
                     </div>
                 </form>
+                <div class="inicio">
+                            <form action="{{route('user.index')}}" method="GET">
+                             @csrf 
+                             @method("GET|HEAD")
+                                <input type="submit" name="inicio" value="Inicio Usuarios">
+                            </form>
+                            </div>  
             </div>        
         </div>
-    </div>                    
+    </div>   
+
+            
 @endsection
