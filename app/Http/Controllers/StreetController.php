@@ -57,9 +57,10 @@ class StreetController extends Controller
      */
     public function create(){
         $data['streetsTypes'] = StreetType::all();
+        $data['maps'] = Map::all();
         return view("street.create", $data);
     }
-    
+
     // STORE FUNCTION ///////////////////////////////////////////////////////////////////////
     /**
      * Method that recieves information in a Request object from the,

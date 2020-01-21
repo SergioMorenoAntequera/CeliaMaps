@@ -14,6 +14,7 @@
                 <div class="card-body">
                   <h5 class="card-title">{{$street->type->type}} {{$street->name}}</h5>
                 </div>
+                <h6>Mapas</h6>
                 <ul class="list-group list-group-flush">
                     @if (!is_null($street->maps()))
                         @foreach ($street->maps as $map)

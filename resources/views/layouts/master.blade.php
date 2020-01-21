@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="{{url('/css/Backend.css')}}">
         <link rel="stylesheet" href="{{url('/css/BootstrapOverride.css')}}">
         <link rel="stylesheet" href="{{url('/css/Global.css')}}">
+        <link rel="stylesheet" href="{{url('/css/streets.css')}}">
     </head>
     
     <body class="bg-dark text-white">
