@@ -11,11 +11,15 @@
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('map');
+});*/
+Route::get('/test', function () {
+    return view('test');
 });
 
 // MAPS /////////////////////////////////////////////////////////////////////////////////////
+Route::get('/', 'MapController@map')->name('map.map');
 Route::get('map/up', 'MapController@moveUp')->name('map.up');
 Route::get('map/down', 'MapController@moveDown')->name('map.down');
 Route::resource('map', 'MapController');
