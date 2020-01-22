@@ -11,30 +11,53 @@
 #mapsMenu {
     left: 0px;
     top: 0px;
-    background-color: #f0f0f0;
+    background-color:#FFFFFF;
     z-index: 1;
     position: absolute;
-    width: 25%;
+    width: 250px;
     height: auto;
     display: none;
+
+    border-style: solid;
+    border-width: 0px 2px 2px 0px;
+    border-color: #E0E0E0;
+
+    padding-left: 30px;
 }
 
 .mapTrans {
-    margin-left: 30px;
     margin-bottom: 10px;
     margin-top: 10px;
        
 }
-.mapTrans > h2 {
+.contEye > h2 {
     display: inline;
     position: relative;
     top: -3px;
+    margin-left: 2px;
 }
 
 .mapTrans > input {
     width: 50%;
 }
 
+#mapsShow {
+    text-align: center;
+    width: 50px;
+    height: 30px;
+    position: relative; 
+    top: -1px;
+    margin-bottom: -35px;
+    left: 198px;
+    
+    border-style: solid;
+    border-width: 0px 2px 2px 2px;
+    border-color: #E0E0E0;
+    background-color:#FFFFFF;
+}
 
+#mapsShow > i {
+    margin-top: 5px;
+}
 
 
