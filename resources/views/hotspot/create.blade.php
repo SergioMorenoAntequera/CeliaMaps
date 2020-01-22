@@ -5,8 +5,9 @@
 @section('content')
 
     <div id="frame">
-        <img id="map" class="mapImg" src="{{url('img/maps/Mapa-prueba.png')}}">
+        <img id="map" class="mapImg" src="{{url('img/maps/mapa-prueba.png')}}">
         <img class="mapImg" src="{{url('img/maps/Mapa-prueba-2.png')}}">
+        <input id="transparency" type="range" step="0.01" min="0" max="1" value="1" class="custom-range">
         <img id="token" src="{{url('img/icons/token.svg')}}">
     </div>
 
@@ -31,14 +32,20 @@
                                 <input type="text" class="form-control" name="description" placeholder="Description of the hotspot">
                             </div>
                             <div class="form-group">
-                                <label>Punto X</label>
-                                <input type="text" class="form-control" name="point_x" id="point_x" placeholder="Point X of the hotspot">
+                                <input type="hidden" class="form-control" name="point_x" id="point_x" placeholder="Point X of the hotspot">
                             </div>
                             <div class="form-group">
-                                <label>Punto Y</label>
-                                <input type="text" class="form-control" name="point_y" id="point_y" placeholder="Point Y of the hotspot">
+                                <input type="hidden" class="form-control" name="point_y" id="point_y" placeholder="Point Y of the hotspot" readonly>
                             </div>
-                            
+                            <div class="form-group">
+                                <label class="text-dark">Mapas que lo contienen</label><br>
+                                @foreach ($mapList as $map)
+                                    <input type="checkbox" name="map_id[]" value="{{$map->id}}" checked>
+                                    <span class="text-dark">{{$map->title}} ({{$map->city}} - {{$map->date}})</span>
+                                    <input id="input_map{{$map->id}}" class="form-control" type="text" name="name_map{{$map->id}}" placeholder="Sobreescribir el nombre del hotspot en el mapa {{$map->title}}">
+                                    <br>
+                                @endforeach
+                            </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                               <button type="submit" class="btn btn-primary">Añadir nuevo hotspot</button>
@@ -61,7 +68,7 @@
             console.log(this.value);
         });
     
-        $('#map').click(function(e){
+        $('.mapImg').click(function(e){
             var point_x = e.pageX - this.offsetLeft;
             var point_y = e.pageY - this.offsetTop;
             console.log("X: " + point_x + " Y: " + point_y); 
@@ -76,7 +83,10 @@
             $("#token").css("left",point_x-15);
             $("#token").css("top",point_y-27);
             $("#token").show();
-
+            });
+            // Maps opacities
+            $("#transparency").change(function(){
+                $("#map").css("opacity",this.value);
             });
         });
     </script>

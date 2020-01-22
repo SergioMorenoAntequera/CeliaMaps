@@ -3,7 +3,7 @@
 <?php $__env->startSection('content'); ?>
 
     <div class="container-fluid bg">
-        <div class="bg">
+        <div>
             
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                 Editar Hotspot
