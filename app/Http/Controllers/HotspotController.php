@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Hotspot;
 use Illuminate\Http\Request;
+use App\Map;
 
 class HotspotController extends Controller
 {
@@ -41,7 +42,9 @@ class HotspotController extends Controller
      * @return View
      */
     public function create(){
-        return view('hotspot.create');
+        $hotspots = Hotspot::all();
+        $maps = Map::all();
+        return view('hotspot.create', ['hotspotList'=>$hotspots, 'mapList'=>$maps]);
     }
     
     /**
@@ -60,6 +63,7 @@ class HotspotController extends Controller
 
         $hotspot = new Hotspot($r->all());
         $hotspot->save();
+        $hotspot->maps()->attach($r->map_id);
         return redirect()->route('hotspot.index');
     }
 
