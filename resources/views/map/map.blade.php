@@ -23,6 +23,7 @@
 <body>
     <div id="mapid"></div>
 
+    <!-- Upper left menu for the maps -->
     <div id="mapsMenu">
         <div id="mapsTrans">
             <h1> <b>Mapas:</b></h1>
@@ -40,7 +41,6 @@
                 </div>
             @endforeach
             <div>
-                <button> Mostrar todos </button>
                 <button> Quitar todos</button>
             </div>  
         </div>
@@ -51,107 +51,62 @@
         </div>
     </div>
 
+    <!-- Bottom left menu for the maps -->
+    <div id="tilesMenu">
+        <div id="tilesShow">
+            <i class="fa fa-chevron-down"></i> hola que tal
+        </div>
+        <div id="tileChooser">
+            <div class="tiles active"> 
+                <img src="{{url("img/maps/KindOfMap1.png")}}" alt="">
+            </div>
+            <div class="tiles"> 
+                <img src="{{url("img/maps/KindOfMap2.png")}}" alt="">
+            </div>
+            <div class="tiles"> 
+                <img src="{{url("img/maps/KindOfMap3.png")}}" alt="">
+            </div>
+        </div>
+        <br>
+    </div>
+    
 
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="{{url('js/tlMenu.js')}}"></script>
     <script>
-    var map = L.map('mapid', {
-        minZoom: 10,
-        maxZoom: 20
-    });
-
-    map.setView([36.844092, -2.457840], 14);
-    
-    
     // Pagina donde están los proveedores de mapas:
     // http://leaflet-extras.github.io/leaflet-providers/preview/index.html
-    var Stamen_Toner = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.{ext}', {
-        attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        subdomains: 'abcd',
-        minZoom: 0,
-        maxZoom: 20,
-        ext: 'png'
+    var map = L.map('mapid', {
+        minZoom: 6,  //Dont touch, recommended
+        maxZoom: 18, //Dont touch, max zoom
     });
-    var Stamen_TonerLite = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', {
-        attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        subdomains: 'abcd',
-        minZoom: 0,
-        maxZoom: 20,
-        ext: 'png'
-    });
+    map.setView([36.844092, -2.457840], 14);
+
+    //Global maps from the one we will be able to pick one
+    var mapTiles = [
+        mapTile0 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }),
+        mapTile1 = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png', {
+            attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            subdomains: 'abcd',
+        }),
+        mapTile2 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+        })
+    ];
+
+    map.addLayer(mapTile0);
     
-    Stamen_TonerLite.addTo(map);
-
-
-
     $(document).ready(function(){
-        $('#mapsMenu').slideToggle(300);
-        
-        //Eye to enable disable tranparencies
-        $('.contEye').click(function(){
-            swapShowMenu($(this));
-        });
-
-        //Slider and how it affects the maps
-        $('.slider').change(function(){
-            $(this).parent().find(".opacity").text($(this).val());        
-        });
-
-        $('#mapsShow').click(function(){
-
-            var icono = $(this).find('i');
-
-            if(icono.hasClass('fa-chevron-up')){
-                $(this).siblings().slideUp(300);
-                icono.removeClass('fa-chevron-up');
-                icono.addClass('fa-chevron-down');
-            } else {
-                $(this).siblings().slideDown(300);
-                icono.removeClass('fa-chevron-down');
-                icono.addClass('fa-chevron-up');
-            }
-            
-        });
-
-        //////////////////////////////////////////////////////////////////////////////////////////
-        // AUXILIAR METHODS //////////////////////////////////////////////////////////////////////
-
-        // SWAP BETWEEN EYES MODES //////////////////////////////////////////////////////////////
-        function swapShowMenu(eyeContainer){
-
-            var eye = jQuery(eyeContainer.find(".eye"));
-
-            if(eye.hasClass("fa-eye")){
-                enable(eyeContainer, eye);
-            } else {
-                disable(eyeContainer, eye);
-            }
-        }
-
-        // ENABLE  //////////////////////////////////////////////////////////////////////////////
-        function enable(eyeContainer, eye){
-            eye.removeClass("fa-eye");
-            eye.parent().animate({
-                opacity: 0.50,
-            }, 100);
-            eye.addClass("fa-eye-slash");
-            eyeContainer.find("input").attr("disabled", true);
-            eyeContainer.siblings('.contSlider').slideUp(200, function(){
-                eyeContainer.siblings().find('.opacity').text(0);
+        // Change kind of map in the background ///////////////////////////////////////////////////
+        $('.tiles').click(function() {
+            var parent = $('#tileChooser');
+            mapTiles.forEach(function(e){
+                map.removeLayer(e);
             });
-        }
-
-        // DISABLE /////////////////////////////////////////////////////////////////////////////
-        function disable(eyeContainer, eye){
-            eye.removeClass("fa-eye-slash");
-            var valueOpacity = eyeContainer.siblings().find('.slider').val();
-            eyeContainer.siblings().find('.opacity').text(valueOpacity);
-            eyeContainer.animate({ 
-                opacity: 1,
-            }, 100);
-            eye.addClass("fa-eye");
-            eyeContainer.find(".opacity").attr("disabled", false);
-            eyeContainer.siblings('.contSlider').slideDown(200);
-        }
+            map.addLayer(mapTiles[parent.children().index($(this))]);
+        });
     });
 
     </script>
