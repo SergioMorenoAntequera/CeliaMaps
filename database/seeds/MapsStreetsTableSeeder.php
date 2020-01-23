@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class MapsStreetsSeeder extends Seeder
+class MapsStreetsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

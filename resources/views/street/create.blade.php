@@ -29,7 +29,7 @@
                             <h5 class="modal-title text-primary">Nueva vía</h5>
                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
                         </div>
-
+                        <!-- Street type -->
                         <div class="modal-body">
                         <div class="form-group">
                             <label class="text-dark">Tipo de vía</label>
@@ -39,18 +39,25 @@
                                 @endforeach
                             </select>
                         </div>
+                        <!-- Street name -->
                         <div class="form-group">
                             <label class="text-dark">Nombre de la vía</label>
                             <input type="text" class="form-control" name="name">
                         </div>
+                        <!-- Street maps -->
                         <div class="form-group">
                             <label class="text-dark">Mapas que lo contienen</label><br>
                             @foreach ($maps as $map)
-                                <input type="checkbox" name="map_id" value="{{$map->id}}" checked>
+                                <input type="checkbox" name="maps_id[]" value="{{$map->id}}" checked>
                                 <span class="text-dark">{{$map->title}} ({{$map->city}} - {{$map->date}})</span>
-                                <input id="input_map{{$map->id}}" class="form-control" type="text" name="name_map{{$map->id}}" placeholder="Sobreescribir el nombre de la vía en el mapa {{$map->title}}">
+                                <input id="input_map{{$map->id}}" class="form-control" type="text" name="maps_name[]" placeholder="Sobreescribir el nombre de la vía en el mapa {{$map->title}}">
                                 <br>
                             @endforeach
+                        </div>
+                        <!-- Street points -->
+                        <div>
+                            <input type="hidden" id="point_x" name="point_x">
+                            <input type="hidden" id="point_y" name="point_y">
                         </div>
                         </div>
                         <div class="modal-footer">
@@ -75,24 +82,25 @@
 @section('scripts')
     <script>
         $(document).ready(function(){
-            // Rename streets
+            // Rename streets toggle display
             $("input[name='map_id']").click(function(){
                 $("#input_map"+this.value).toggle();
                 console.log(this.value);
             });
-            // Modal
+            // Create street modal
             $('#map').click(function(e){
+                // Handle click point
                 var point_x = e.pageX - this.offsetLeft;
                 var point_y = e.pageY - this.offsetTop;
                 console.log("X: " + point_x + " Y: " + point_y); 
-                // Modal
+                // Modal display
                 setTimeout(function() {
                     $('#modal').modal('show');
                 }, 250);
                 // Coordenadas punto
                 $(".modal-body #point_x").val(point_x);
                 $(".modal-body #point_y").val(point_y);
-                // Ficha
+                // Token location and display
                 $("#token").css("left",point_x-15);
                 $("#token").css("top",point_y-27);
                 $("#token").show();

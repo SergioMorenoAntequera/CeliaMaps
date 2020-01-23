@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Map;
 use App\Street;
 use App\StreetType;
+use App\Point;
 
 class StreetController extends Controller
 {
@@ -58,6 +59,7 @@ class StreetController extends Controller
     public function create(){
         $data['streetsTypes'] = StreetType::all();
         $data['maps'] = Map::all();
+        $data['streets'] = Street::all();
         return view("street.create", $data);
     }
 
@@ -71,8 +73,12 @@ class StreetController extends Controller
      */
     public function store(Request $r){
         $street = new Street($r->all());
-        $street->id = Street::max('id')+1;
+        dd($r);
         $street->save();
+        $street->maps()->attach($r->maps_id, $r->maps_name);
+        $point = Point::Create(["point_x" => $r->point_x, "point_y" => $r->point_y]);
+        $street->points()->attach($point->id);
+        $street->type()->associate($r->type_id);
         return redirect(route('street.index'));
     }
 
@@ -86,6 +92,7 @@ class StreetController extends Controller
     public function edit($id){
         $data['street'] = Street::find($id);
         $data['streetsTypes'] = StreetType::all();
+        $data['maps'] = Map::all();
         return view("street.edit", $data);
     }
 

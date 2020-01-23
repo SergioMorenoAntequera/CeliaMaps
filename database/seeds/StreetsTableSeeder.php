@@ -14,25 +14,25 @@ class StreetsTableSeeder extends Seeder
     {
         DB::table('streets')->insert([
             'type_id'=> 1,
-            'name'=> 'mar, del',
+            'name'=> 'García Lorca',
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
         DB::table('streets')->insert([
             'type_id'=> 2,
-            'name'=> 'celia viñas',
+            'name'=> 'Mediterráneo',
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
         DB::table('streets')->insert([
             'type_id'=> 3,
-            'name'=> 'almeria, de',
+            'name'=> 'Cabo de Gata',
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
         DB::table('streets')->insert([
             'type_id'=> 2,
-            'name'=> 'Lopán',
+            'name'=> 'Carrera del Perú',
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);

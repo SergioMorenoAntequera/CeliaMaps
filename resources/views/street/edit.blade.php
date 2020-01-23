@@ -34,7 +34,14 @@
                         <label>Nombre de la vía</label>
                         <input type="text" class="form-control" name="name" value="{{$street->name}}">
                     </div>
-                    
+                    <div class="form-group">
+                        @foreach ($maps as $map)
+                            <input type="checkbox" name="map_id" value="{{$map->id}}" checked>
+                            <span class="text-dark">{{$map->title}} ({{$map->city}} - {{$map->date}})</span>
+                            <input id="input_map{{$map->id}}" class="form-control" type="text" name="name_map{{$map->id}}" placeholder="Sobreescribir el nombre de la vía en el mapa {{$map->title}}">
+                            <br>
+                        @endforeach
+                    </div>
                     <button type="submit" class="btn btn-primary">Modificar</button>
                 </form>
             </div>

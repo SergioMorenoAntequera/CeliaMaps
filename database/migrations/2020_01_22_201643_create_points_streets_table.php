@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMapsStreetsTable extends Migration
+class CreatePointsStreetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateMapsStreetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('maps_streets', function (Blueprint $table) {
+        Schema::create('points_streets', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('street_id');
-            $table->unsignedInteger('map_id');
-            $table->string('alternative_name', 100)->nullable();
+            $table->unsignedInteger('point_id');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateMapsStreetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('maps_streets');
+        Schema::dropIfExists('points_streets');
     }
 }

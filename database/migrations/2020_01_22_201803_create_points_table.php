@@ -17,7 +17,6 @@ class CreatePointsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('point_x');
             $table->unsignedInteger('point_y');
-            $table->unsignedInteger('street_id');
             $table->timestamps();
         });
     }
@@ -32,4 +31,3 @@ class CreatePointsTable extends Migration
         Schema::dropIfExists('points');
     }
 }
- 
