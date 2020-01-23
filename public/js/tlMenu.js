@@ -1,4 +1,5 @@
 //Top Left Menu.js
+
 $(document).ready(function(){
     $('#mapid').click(function(e) {
         var latlng = map.mouseEventToLatLng(e.originalEvent);

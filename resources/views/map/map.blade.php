@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     
 </head>
-<body>
+<body scroll="no" style="overflow: hidden">
     <div id="mapid"></div>
 
     <!-- Upper left menu for the maps -->
@@ -53,11 +53,12 @@
 
     <!-- Bottom left menu for the maps -->
     <div id="tilesMenu">
+        
         <div id="tilesShow">
-            <i class="fa fa-chevron-down"></i> hola que tal
+            <i class="fa fa-chevron-down"></i>
         </div>
         <div id="tileChooser">
-            <div class="tiles active"> 
+            <div class="tiles"> 
                 <img src="{{url("img/maps/KindOfMap1.png")}}" alt="">
             </div>
             <div class="tiles"> 
@@ -67,7 +68,6 @@
                 <img src="{{url("img/maps/KindOfMap3.png")}}" alt="">
             </div>
         </div>
-        <br>
     </div>
     
 
@@ -106,6 +106,37 @@
                 map.removeLayer(e);
             });
             map.addLayer(mapTiles[parent.children().index($(this))]);
+        });
+
+        // We hide the menu and all that //////////////////////////////////////////////////////////
+        $('#tilesShow').click(function(){
+            var icono = $(this).find('i');
+            var chooser = $(this).siblings();
+
+            if(icono.hasClass("fa-chevron-down")){
+                icono.removeClass("fa-chevron-down");
+                icono.addClass("fa-chevron-up");
+                $(this).parent().animate({
+                    bottom: "-100px",
+                }, 300);
+            } else {
+                icono.removeClass("fa-chevron-up");
+                icono.addClass("fa-chevron-down");
+                $(this).parent().animate({
+                    bottom: "15px",
+                }, 300);
+            }
+            
+            
+            /*if(icono.hasClass('fa-chevron-up')){
+                $(this).siblings().slideDown(300);
+                icono.removeClass('fa-chevron-up');
+                icono.addClass('fa-chevron-down');
+            } else {
+                $(this).siblings().slideUp(300);
+                icono.removeClass('fa-chevron-down');
+                icono.addClass('fa-chevron-up');
+            }*/
         });
     });
 
