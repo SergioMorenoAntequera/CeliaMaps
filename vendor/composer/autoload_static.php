@@ -464,6 +464,7 @@ class ComposerStaticInit3bc63085752e602f437e2a014d1e5b3a
     );
 
     public static $classMap = array (
+        'App\\Backup' => __DIR__ . '/../..' . '/app/Backup.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Hotspot' => __DIR__ . '/../..' . '/app/Hotspot.php',
@@ -473,6 +474,7 @@ class ComposerStaticInit3bc63085752e602f437e2a014d1e5b3a
         'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',
         'App\\Http\\Controllers\\Auth\\ResetPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ResetPasswordController.php',
         'App\\Http\\Controllers\\Auth\\VerificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerificationController.php',
+        'App\\Http\\Controllers\\BackupController' => __DIR__ . '/../..' . '/app/Http/Controllers/BackupController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Controllers\\HotspotController' => __DIR__ . '/../..' . '/app/Http/Controllers/HotspotController.php',
