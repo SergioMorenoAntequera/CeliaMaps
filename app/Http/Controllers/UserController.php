@@ -20,8 +20,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $userList = User::all();
         return view('user/index',['userList'=>$userList]);
+        $userList = User::all();
     }
 
     /**

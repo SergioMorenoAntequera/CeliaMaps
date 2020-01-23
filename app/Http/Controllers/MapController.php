@@ -23,6 +23,27 @@ class MapController extends Controller
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
+    // SHOW THE MAIN MAP  /////////////////////////////////////////////////////////////////////
+    /**
+     * Method that shows all the registers in the database
+     * 
+     * @return View
+     */
+    public function map(){
+        $maps = Map::all();
+        //We sort the maps depending on the level
+        $mapsSorted = Array();
+        for ($i = 0; $i < sizeof($maps); $i++) {
+            $mapsSorted[$maps[$i]->level - 1] = $maps[$i];
+        }
+        ksort($mapsSorted);
+        
+        $data['maps'] = $mapsSorted;
+        
+        return view("map.map", $data);
+    }
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////
     // SHOW ALL SOMETHING  ////////////////////////////////////////////////////////////////////
     /**
      * Method that shows all the registers in the database

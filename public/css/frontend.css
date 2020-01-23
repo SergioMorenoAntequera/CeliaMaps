@@ -1,4 +1,127 @@
-html body {
+
+#mapid {
+    position: absolute;
+    top: 0; 
+    left: 0;
     width: 100%;
     height: 100%;
+    z-index: 0;
+}
+
+/*/////////////////////////////////////////////////////////////////////*/
+/*/////////////////// MENU DE ARRIBA A LA IZQUIERDA ///////////////////*/
+/*/////////////////////////////////////////////////////////////////////*/
+
+#mapsMenu {
+    left: 0px;
+    top: 0px;
+    background-color:#FFFFFF;
+    z-index: 1;
+    position: absolute;
+    width: 250px;
+    height: auto;
+    display: none;
+
+    border-style: solid;
+    border-width: 0px 2px 2px 0px;
+    border-color: #E0E0E0;
+
+    padding-left: 30px;
+    border-radius: 0px 0px 10px 0px;
+}
+
+.mapTrans {
+    margin-bottom: 10px;
+    margin-top: 10px;
+       
+}
+.contEye > h2 {
+    display: inline;
+    position: relative;
+    top: -3px;
+    margin-left: 2px;
+}
+
+.mapTrans > input {
+    width: 50%;
+}
+
+#mapsShow {
+    text-align: center;
+    width: 50px;
+    height: 30px;
+    position: relative; 
+    top: -8px;
+    margin-bottom: -35px;
+    left: 198px;
+    
+    border-radius: 10px;
+
+    border-style: solid;
+    border-width: 2px 2px 2px 2px;
+    border-color: #E0E0E0;
+    background-color:#FFFFFF;
+}
+
+#mapsShow > i {
+    margin-top: 7px;
+}
+
+
+/*/////////////////////////////////////////////////////////////////////*/
+/*/////////////////// MENU DE ABAJO A LA IZQUIERDA ////////////////////*/
+/*/////////////////////////////////////////////////////////////////////*/
+
+
+
+#tilesMenu {
+    z-index: 0;
+    position: absolute;
+    
+    bottom: 15px;
+    left: 10px;
+
+    height: 100px;
+    width: auto;
+}
+#tileChooser {
+
+    border-radius: 10px;
+
+}
+#tileChooser > .tiles {
+    display: inline;    
+    
+}
+#tileChooser > .tiles > img {
+    height: 100px;
+
+    margin: 3px 2px 0px 2px;
+
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 2px 2px 2px 2px;
+    border-color: #E0E0E0;
+}
+
+#tilesShow{
+    position: relative; 
+    z-index: 2;
+
+    top: -25px;
+    margin-bottom: -35px;
+    left: 277px;
+
+    width: 50px;
+    height: 30px;
+    
+    text-align: center;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 2px 2px 2px 2px;
+    border-color: #E0E0E0;
+    background-color:#FFFFFF;
+}
+#tilesShow > i {
+    margin-top: 6px;
 }

@@ -45,4 +45,11 @@
       0 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     ),
   ),
+  'paulvl/backup' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Backup\\BackupServiceProvider',
+    ),
+  ),
 );
