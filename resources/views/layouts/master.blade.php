@@ -7,6 +7,7 @@
         <title>@yield('title')</title>
         
         <!--CDN-->
+
         <link rel="icon" type="image/png" href="{{url('/img/icons/icon.png')}}" sizes="64x64">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" integrity="sha384-SI27wrMjH3ZZ89r4o+fGIJtnzkAnFs3E4qz9DIYioCQ5l9Rd/7UAa8DHcaL8jkWt" crossorigin="anonymous">
         <link rel="stylesheet" href="{{url('/css/Backend.css')}}">
@@ -14,13 +15,51 @@
         <link rel="stylesheet" href="{{url('/css/Global.css')}}">
         <link rel="stylesheet" href="{{url('/css/streets.css')}}">
         <link rel="stylesheet" href="{{url('/css/Hotspots.css')}}">
+        <link rel="stylesheet" href="{{url('/css/NavBar.css')}}">
+        <script
+            src="https://code.jquery.com/jquery-3.4.1.js"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+            crossorigin="anonymous">
+        </script>
     </head>
     
     <body class="bg-dark text-white">
         
         <!-- Header -->
         <header>
-            @yield('header')
+            <div id="navBar" class="container-fluid">
+                <div class="row align-items-start text-center font-weight-bold">
+                    <div class="offset-1 col-4">
+                        <div class="row  mt-4">
+                            <div class="col headerLink">
+                                <a class="text-reset text-decoration-none" href="{{route('hotspot.index')}}">HOTSPOTS</a>
+                            </div>
+                            <div class="col headerLink">
+                                <a class="text-reset text-decoration-none" href="">IMÁGENES</a>
+                            </div>
+                            <div class="col headerLink">
+                                <a class="text-reset text-decoration-none" href="{{route('map.index')}}">MAPAS</a> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <img id="menuImg" class="img-fluid" src="{{url('img/icons/menuArrow.png')}}">
+                    </div>
+                    <div class="col-4">
+                        <div class="row mt-4">
+                            <div class="col headerLink">
+                                <a class="text-reset text-decoration-none" href="{{route('point.index')}}">PUNTOS</a>
+                            </div>
+                            <div class="col headerLink">
+                                <a class="text-reset text-decoration-none" href="{{route('street.index')}}">CALLES</a>
+                            </div>
+                            <div class="col headerLink">
+                                <a class="text-reset text-decoration-none" href="{{route('user.index')}}">USUARIOS</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+            </div>
         </header>
 
         <!-- Content -->

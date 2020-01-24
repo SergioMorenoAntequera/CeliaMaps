@@ -9,10 +9,6 @@
     <!-- LEAFLET -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
     <script src="{{url('/js/leaflet-providers.js')}}"></script> 
-    <!-- BOOTSTRAP 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    -->
     <!-- JQUERY -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <!-- PERSONAL CSS -->
@@ -126,17 +122,6 @@
                     bottom: "15px",
                 }, 300);
             }
-            
-            
-            /*if(icono.hasClass('fa-chevron-up')){
-                $(this).siblings().slideDown(300);
-                icono.removeClass('fa-chevron-up');
-                icono.addClass('fa-chevron-down');
-            } else {
-                $(this).siblings().slideUp(300);
-                icono.removeClass('fa-chevron-down');
-                icono.addClass('fa-chevron-up');
-            }*/
         });
     });
 

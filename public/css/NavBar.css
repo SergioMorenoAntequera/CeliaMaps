@@ -1,0 +1,20 @@
+#navBar {
+    height: 100px;
+}
+#navBar .col, .headerLink {
+    font-size: 20px;
+    transition: 0.3s;
+}
+#navBar .headerLink:hover {
+    color: #21fee1;
+    font-size: 23px;
+}
+#navBar > .row > {
+    height: 30px;
+    
+    background-color: aliceblue;
+}
+
+#menuImg:hover {
+    cursor: pointer;
+}
