@@ -16,11 +16,11 @@
     <!-- JQUERY -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <!-- PERSONAL CSS -->
-    <link rel="stylesheet" href="{{url('/css/Frontend.css')}}">
+    <link rel="stylesheet" href="{{url('/css/frontend.css')}}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     
 </head>
-<body scroll="no" style="overflow: hidden">
+<body >
     <div id="mapid"></div>
 
     <!-- Upper left menu for the maps -->

@@ -82,10 +82,14 @@
 @section('scripts')
     <script>
         $(document).ready(function(){
-            // Rename streets toggle display
-            $("input[name='map_id']").click(function(){
+            // Rename streets fields
+            $("input[type='checkbox']").click(function(){
+                // Hide forms fields
                 $("#input_map"+this.value).toggle();
-                console.log(this.value);
+                // Disable inputs to do not send
+                $("#input_map"+this.value).prop("disabled", function(){
+                    return !($(this).prop("disabled"));
+                });
             });
             // Create street modal
             $('#map').click(function(e){

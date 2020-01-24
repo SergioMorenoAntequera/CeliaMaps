@@ -73,9 +73,17 @@ class StreetController extends Controller
      */
     public function store(Request $r){
         $street = new Street($r->all());
-        dd($r);
         $street->save();
-        $street->maps()->attach($r->maps_id, $r->maps_name);
+        // ¡ DUDA !
+        //$street->maps()->attach($r->maps_id, $r->maps_name);
+        $mapStreet = new MapSteet();
+        for ($i=0; $i < count($r->maps_id); $i++) { 
+            # code...
+        }
+        $mapStreet->street_id = $street->id;
+        $mapStreet->map_id = $street->id;
+        
+        // 
         $point = Point::Create(["point_x" => $r->point_x, "point_y" => $r->point_y]);
         $street->points()->attach($point->id);
         $street->type()->associate($r->type_id);

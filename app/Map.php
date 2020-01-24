@@ -8,7 +8,7 @@ class Map extends Model
 {
 
     public function streets() {
-        return $this->belongsToMany('App\Street', 'maps_streets')->withPivot('alternative_name');
+        return $this->belongsToMany('App\Street', 'maps_streets');
     }
 
     public function hotspots() {
