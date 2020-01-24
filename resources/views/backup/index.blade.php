@@ -12,6 +12,12 @@
         @method("GET|HEAD")
         <input type="submit" value="backup database">
     </form>
+
+    <form action= "{{route('backup.restore')}}" method= "GET">
+        @csrf
+        @method("GET|HEAD")
+        <input type="submit" value="restore database">
+    </form>
 </div>
 @endsection
 
