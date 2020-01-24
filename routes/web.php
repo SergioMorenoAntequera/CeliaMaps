@@ -37,7 +37,10 @@ Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
+// BACKUP /////////////////////////////////////////////////////////////////////////////////////////
+Route::get('backup/index', 'BackupController@index')->name('backup.index');
+Route::get('backup/create', 'BackupController@create')->name('backup.create');
+Route::get('backup/restore', 'BackupController@restore')->name('backup.restore');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
