@@ -27,10 +27,14 @@
         
         <!-- Header -->
         <header>
-            <div id="navBar" class="container-fluid">
+            <div id="navBar" class="container">
+                <!-- La imagen que está en el centro -->
+                <img id="menuImg" src="{{url('img/icons/menuArrow.png')}}">
+                <!-- Fila que tiene el resto del menú -->
                 <div class="row align-items-start text-center font-weight-bold">
+                    <!-- Parte de la izquierda -->
                     <div class="offset-1 col-4">
-                        <div class="row  mt-4">
+                        <div class="row mt-4">
                             <div class="col headerLink">
                                 <a class="text-reset text-decoration-none" href="{{route('hotspot.index')}}">HOTSPOTS</a>
                             </div>
@@ -42,9 +46,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-2">
-                        <img id="menuImg" class="img-fluid" src="{{url('img/icons/menuArrow.png')}}">
-                    </div>
+                    <div class="offset-2"></div>
+                    <!-- Parte de la derecha -->
                     <div class="col-4">
                         <div class="row mt-4">
                             <div class="col headerLink">
@@ -58,7 +61,7 @@
                             </div>
                         </div>
                     </div>
-                </div>    
+                </div> 
             </div>
         </header>
 

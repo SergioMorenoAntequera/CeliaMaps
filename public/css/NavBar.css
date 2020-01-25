@@ -7,7 +7,7 @@
 }
 #navBar .headerLink:hover {
     color: #21fee1;
-    font-size: 23px;
+    font-size: 21px;
 }
 #navBar > .row > {
     height: 30px;
@@ -15,6 +15,13 @@
     background-color: aliceblue;
 }
 
+#menuImg {
+    z-index: 999;
+    position: fixed;
+    left: 50%;
+    width: 130px;
+    margin-left: -65px;
+}
 #menuImg:hover {
     cursor: pointer;
 }
