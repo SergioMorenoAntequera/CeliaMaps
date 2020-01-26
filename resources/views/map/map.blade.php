@@ -14,9 +14,9 @@
     <!-- PERSONAL CSS -->
     <link rel="stylesheet" href="{{url('/css/frontend.css')}}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+    <script src="{{url('js/tlMenu.js')}}"></script>
 </head>
-<body >
+<body>
     <div id="mapid"></div>
 
     <!-- Upper left menu for the maps -->
@@ -24,17 +24,23 @@
         <div id="mapsTrans">
             <h1> <b>Mapas:</b></h1>
             @foreach ($maps as $map)
-                <div id="mapTrans{{$map->id}}" class="mapTrans">
-                    <!-- The eye and thr title -->
-                    <div class="contEye">
-                        <i class="eye fa fa-eye fa-2x"></i><h2 class="title">{{$map->title}}</h2>
+                @if ($map->level == 1)
+                    <div id="mapTrans{{$map->id}}" class="mapTrans">
+                        <!-- The eye and thr title -->
+                        <div class="contEye">
+                            <i class="eye fa fa-eye fa-2x"></i><h2 class="title">{{$map->title}}</h2>
+                        </div>
+                        <!-- The slider and the number-->
+                        <div class="contSlider">
+                            <input type="range" min="0" max="100" value="50" class="slider" id="transparency{{$map->id}}">
+                            <span class="opacity">50</span>
+                        </div>
                     </div>
-                    <!-- The slider and the -->
-                    <div class="contSlider">
-                        <input type="range" min="0" max="100" value="50" class="slider" id="transparency{{$map->id}}">
-                        <span class="opacity">50</span>
-                    </div>
-                </div>
+                @else
+                    <script>
+                        console.log("PRA");
+                    </script>
+                @endif
             @endforeach
             <div>
                 <button> Quitar todos</button>
@@ -68,7 +74,7 @@
     
 
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
-    <script src="{{url('js/tlMenu.js')}}"></script>
+    
     <script>
     // Pagina donde están los proveedores de mapas:
     // http://leaflet-extras.github.io/leaflet-providers/preview/index.html

@@ -13,10 +13,11 @@ class CreatePointsTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('points');
         Schema::create('points', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('point_x');
-            $table->unsignedInteger('point_y');
+            $table->integer('x');
+            $table->integer('y');
             $table->timestamps();
         });
     }

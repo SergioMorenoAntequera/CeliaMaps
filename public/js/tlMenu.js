@@ -1,6 +1,7 @@
 //Top Left Menu.js
 
 $(document).ready(function(){
+
     $('#mapid').click(function(e) {
         var latlng = map.mouseEventToLatLng(e.originalEvent);
         console.log(latlng.lat + ', ' + latlng.lng);
@@ -37,25 +38,13 @@ $(document).ready(function(){
         var eye = jQuery(eyeContainer.find(".eye"));
 
         if(eye.hasClass("fa-eye")){
-            enable(eyeContainer, eye);
-        } else {
             disable(eyeContainer, eye);
+        } else {
+            enable(eyeContainer, eye);
         }
     }
-    // ENABLE EYE  /////////////////////////////////////////////////////////////////////////
+    // ENABLE EYE /////////////////////////////////////////////////////////////////////////
     function enable(eyeContainer, eye){
-        eye.removeClass("fa-eye");
-        eye.parent().animate({
-            opacity: 0.50,
-        }, 100);
-        eye.addClass("fa-eye-slash");
-        eyeContainer.find("input").attr("disabled", true);
-        eyeContainer.siblings('.contSlider').slideUp(200, function(){
-            eyeContainer.siblings().find('.opacity').text(0);
-        });
-    }
-    // DISABLE EYE /////////////////////////////////////////////////////////////////////////
-    function disable(eyeContainer, eye){
         eye.removeClass("fa-eye-slash");
         var valueOpacity = eyeContainer.siblings().find('.slider').val();
         eyeContainer.siblings().find('.opacity').text(valueOpacity);
@@ -65,5 +54,17 @@ $(document).ready(function(){
         eye.addClass("fa-eye");
         eyeContainer.find(".opacity").attr("disabled", false);
         eyeContainer.siblings('.contSlider').slideDown(200);
+    }
+    // DISABLE EYE  /////////////////////////////////////////////////////////////////////////
+    function disable(eyeContainer, eye){
+        eye.removeClass("fa-eye");
+        eye.parent().animate({
+            opacity: 0.50,
+        }, 100);
+        eye.addClass("fa-eye-slash");
+        eyeContainer.find("input").attr("disabled", true);
+        eyeContainer.siblings('.contSlider').slideUp(200, function(){
+            eyeContainer.siblings().find('.opacity').text(0);
+        });
     }
 });
