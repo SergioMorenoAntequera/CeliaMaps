@@ -260,4 +260,9 @@ class MapController extends Controller
 
         return response()->json(['level'=>$map->level]);
     }
+
+    public function alignMap($id){
+        $data['map'] = Map::find($id);
+        return view('map.align', $data);
+    }
 }

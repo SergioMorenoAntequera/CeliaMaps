@@ -29,7 +29,9 @@
         <header>
             <div id="navBar" class="container">
                 <!-- La imagen que está en el centro -->
+                <a href="{{route('map.map')}}">
                 <img id="menuImg" src="{{url('img/icons/menuArrow.png')}}">
+                </a>
                 <!-- Fila que tiene el resto del menú -->
                 <div class="row align-items-start text-center font-weight-bold">
                     <!-- Parte de la izquierda -->

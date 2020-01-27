@@ -4,7 +4,6 @@
 
 @section('header')
     (En teoría)Aquí se enseñan todos los mapas
-    
 @endsection
 
 @section('content')
@@ -84,6 +83,13 @@
                                 </div>
                             </div>
                         </div><!-- FINAL modal para borrar -->
+
+                        <!-- Boton para resize -->
+                        <a href="{{route('map.align', $map->id)}}"> 
+                            <button class="cornerAlignButton bg-secondary">
+                                <img src="{{url("img/icons/align.png")}}" alt=""> 
+                            </button>
+                        </a>
                     </div><!-- FINAL columna con info del mapa -->
                 </div> <!-- FINAL .oneElement -->
             @endforeach
