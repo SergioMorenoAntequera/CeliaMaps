@@ -32,8 +32,8 @@ Route::resource('point', 'PointController');
 // HOTSPOT /////////////////////////////////////////////////////////////////////////////////////
 Route::resource('hotspot', 'HotspotController');
 // AUTH SE MODIFICA LA RUTA PARA ELIMINAR LA OPCIÓN DE REGISTRO //////////////////////////////////
-//Auth::routes();
-Auth::routes(['register' => false]);
+Auth::routes();
+//Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -44,6 +44,6 @@ Route::get('backup/restore', 'BackupController@restore')->name('backup.restore')
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
+//Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

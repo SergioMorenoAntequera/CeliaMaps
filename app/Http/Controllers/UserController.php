@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+//use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 
 class UserController extends Controller
 {
-
+/*
     public function construct(){
         //$this->middleware("auth")->only("create","edit","destroy");
     }
+    */
 
     /**
      * Display a listing of the resource.

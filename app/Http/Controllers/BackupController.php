@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Log as FacadesLog;
 
 class BackupController extends Controller
 {
+    
+    //////////////////////// SOLO LOS USUARIOS LOGUEADOS PUEDEN UTILIZAR CREATE Y RESTORE /////////////////////////////
+    public function __construct(){
+
+        $this->middleware("auth")->only("create", "restore");
+    }
 
   //////////////////////////// VISTA DONDE SE UBICAN LOS CONTROLES DEL BACKUP, POR AHORA //////////////////////////// 
    public function index(){
