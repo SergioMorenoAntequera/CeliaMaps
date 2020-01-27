@@ -40,6 +40,7 @@
     position: relative;
     top: -3px;
     margin-left: 2px;
+    cursor: pointer;
 }
 
 .mapTrans > input {
@@ -61,6 +62,7 @@
     border-width: 2px 2px 2px 2px;
     border-color: #E0E0E0;
     background-color:#FFFFFF;
+    cursor: pointer;
 }
 
 #mapsShow > i {
@@ -71,8 +73,6 @@
 /*/////////////////////////////////////////////////////////////////////*/
 /*/////////////////// MENU DE ABAJO A LA IZQUIERDA ////////////////////*/
 /*/////////////////////////////////////////////////////////////////////*/
-
-
 
 #tilesMenu {
     z-index: 0;
@@ -102,6 +102,7 @@
     border-style: solid;
     border-width: 2px 2px 2px 2px;
     border-color: #E0E0E0;
+    cursor: pointer;
 }
 
 #tilesShow{
@@ -121,7 +122,33 @@
     border-width: 2px 2px 2px 2px;
     border-color: #E0E0E0;
     background-color:#FFFFFF;
+    cursor: pointer;
 }
 #tilesShow > i {
     margin-top: 6px;
+}
+
+/*/////////////////////////////////////////////////////////////////////*/
+/*///////////////////// MENU DE ABAJO A LA DERECHA ////////////////////*/
+/*//////////////////// PARA GUARDAR LOS CAMBIOS  //////////////////////*/
+/*/////////////////////////////////////////////////////////////////////*/
+    
+#saveMenu{
+    z-index: 0;
+    position: absolute;
+    
+    bottom: 15px;
+    right: 10px;
+
+    height: 100px;
+    width: 100px;
+    padding: 5px;
+}
+#saveMenu button {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+#saveMenu i {
+    color: blue;
 }

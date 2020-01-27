@@ -136,18 +136,6 @@
             console.log(latlng.lat + ', ' + latlng.lng);
         });
     });
-    /*
-    var img = L.distortableImageOverlay("{{url('img/maps/KindOfMap1.png')}}", {
-        corners: [
-            L.latLng('{{$maps[0]->tlCornerLatitude}}', '{{$maps[0]->tlCornerLongitude}}'),
-            L.latLng('{{$maps[0]->trCornerLatitude}}', '{{$maps[0]->trCornerLongitude}}'),
-            L.latLng('{{$maps[0]->blCornerLatitude}}', '{{$maps[0]->blCornerLongitude}}'),
-            L.latLng('{{$maps[0]->brCornerLatitude}}', '{{$maps[0]->brCornerLongitude}}'),
-        ],
-    }).addTo(map);
-
-    JSON.stringify(img.getCorners());
-    */
     </script>
 </body>
 </html>
