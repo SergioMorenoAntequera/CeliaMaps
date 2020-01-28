@@ -29,15 +29,19 @@
                 <form action="{{route('user.edit',$user->id)}}" method="GET">
                 @csrf
                 @method("GET|HEAD")
-                <input type="submit" margin=" 0 auto" value="Modificar">
+                <button class="btn" type="submit" value="Borrar">
+                    <img src="/img/icons/editYellow.png" style="height:2em" alt="">
+                </button>
                 </form>
             </td>
 
             <td style = "margin: 0 auto;">
                 <form action= "{{route('user.destroy',$user->id)}}" method= "POST">
-                @csrf
-                @method("DELETE")
-                <input type="submit"  value="Borrar">
+                    @csrf
+                    @method("DELETE")
+                    <button class="btn" type="submit" value="Borrar">
+                        <img src="/img/icons/deleteRed.png" style="height:2em" alt="">
+                    </button>
                 </form>
             </td>
 

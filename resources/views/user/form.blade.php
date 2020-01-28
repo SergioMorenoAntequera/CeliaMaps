@@ -20,7 +20,7 @@
                
                 <form class="form-inline" action="{{route('user.update', $user->id)}}" method="POST">
                 @method("PUT")
-    @else
+        @else
                    
                         <div class="card-header">
                             INSERTAR USUARIOS
@@ -28,7 +28,7 @@
 
                         <div class="card-body">
                             <form action="{{route('user.store')}}" method="POST">
-    @endisset
+        @endisset
                             @csrf
                             <div class="row">
                                 <div class="col">
