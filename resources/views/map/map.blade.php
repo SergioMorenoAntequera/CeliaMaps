@@ -30,7 +30,6 @@
     <!-- Upper left menu for the maps -->
     <div id="mapsMenu">
         <div id="mapsTrans">
-            <h1> <b>Mapas:</b></h1>
             @foreach ($maps as $map)
                 @if ($map->level == 1)
                     <div id="mapTrans{{$map->id}}" class="mapTrans">
@@ -58,10 +57,7 @@
                         </div>
                     </div>
                 @endif
-            @endforeach
-            <div>
-                <button> Quitar todos</button>
-            </div>  
+            @endforeach  
         </div>
         
         <br>
@@ -94,6 +90,7 @@
     var map = L.map('map', {
         minZoom: 6,  //Dont touch, recommended
         maxZoom: 18, //Dont touch, max zoom
+        zoomControl: false,
     });
     map.setView([36.844092, -2.457840], 14);
 

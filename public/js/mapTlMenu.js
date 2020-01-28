@@ -1,9 +1,9 @@
 //Top Left Menu.js
-
 $(document).ready(function(){
 
     $('#mapid').click(function(e) {
         var latlng = map.mouseEventToLatLng(e.originalEvent);
+        console.log("PRA");
         console.log(latlng.lat + ', ' + latlng.lng);
     });  
 
@@ -20,6 +20,9 @@ $(document).ready(function(){
         var icono = $(this).find('i');
         if(icono.hasClass('fa-chevron-up')){
             $(this).siblings().slideUp(300);
+            $(this).siblings().animate({
+                top: "0px",
+            }, 300);
             icono.removeClass('fa-chevron-up');
             icono.addClass('fa-chevron-down');
         } else {

@@ -79,6 +79,7 @@
         map.whenReady(function() {
 
             //Añadimos los polígonos que nos ayudarán para alinear
+            // CATEDRAL /////////////////////////////////////////////////////
             var catedral = L.polygon([
                 [36.83843318327438, -2.4676001071929936],
                 [36.838274330960374, -2.467042207717896],
@@ -93,7 +94,21 @@
                 {color: 'red',}
             ).addTo(map);
             catedral.bindPopup("Catedral de Almería.");
-            //Paseo de Almería
+
+            // OBISPO ORBERÁ /////////////////////////////////////////////////////
+            var paseo = L.polygon([
+                [36.84140409008731, -2.4636570926916073],
+                [36.84146419394736, -2.463565888170392],
+                [36.8403866104306, -2.4617153195696733],
+                [36.83970398990894, -2.4605295467098314],
+                [36.83934765098976, -2.459982201068001],
+                [36.83926607919642, -2.460035604419602],
+                [36.83964388466547, -2.4605992830366046]],
+                { color: 'blue',}
+            ).addTo(map);
+            paseo.bindPopup("Calle Rambla Obispo Orberá");
+
+            // PASEO /////////////////////////////////////////////////////////////
             var paseo = L.polygon([
                 [36.8413697450032, -2.4639040231704716],
                 [36.84138262441155, -2.463791370391846],
@@ -104,7 +119,26 @@
                 { color: 'blue',}
             ).addTo(map);
             paseo.bindPopup("Paseo de Almería.");
-            //Plaza de toros
+
+            // AVENIDA FEDERICO GARCÍA LORCA /////////////////////////////////////////////////////////////
+            var federico = L.polygon([
+                [36.84138691754718, -2.458614455011248],
+                [36.841189433058595, -2.4581316075459974],
+                [36.83638095770797, -2.461345009137555],
+                [36.83500275858721, -2.4622515819394235],
+                [36.83390361625576, -2.4629167348853254],
+                [36.83421704517093, -2.4636410060832015],
+                [36.834959823636304, -2.4630081653594975],
+                [36.83526466126582, -2.462723851203919],
+                [36.83632943669233, -2.462063749221704],
+                [36.837093661530595, -2.461505868022207],
+                [36.8375659314896, -2.4611786529213524],
+                ],
+                { color: 'blue',}
+            ).addTo(map);
+            federico.bindPopup("Avenida Federico García Lorca");
+
+            // PLAZA DE TOROS ////////////////////////////////////////////////////
             var plazaDeToros = L.circle([36.84686046942511, -2.4616509675979614], {
                 color: 'red',
                 fillColor: '#f03',
@@ -112,6 +146,7 @@
                 radius: 35
             }).addTo(map);
             plazaDeToros.bindPopup("Plaza de toros de Almería.");
+            
             
             
             //Añadimos las imágenes y sus propiedades
@@ -126,7 +161,6 @@
                     L.latLng('{{$map->blCornerLatitude}}', '{{$map->blCornerLongitude}}'),
                     L.latLng('{{$map->brCornerLatitude}}', '{{$map->brCornerLongitude}}'),
                 ],
-                //actions: [L.ScaleAction, L.RotateAction, L.FreeRotateAction, L.DistortAction, L.EditAction, L.BorderAction, L.OpacityAction, L.RevertAction, L.LockAction, L.DeleteAction],     
             });
             //Añadimos la imagen al mapa
             map.addLayer(img);
