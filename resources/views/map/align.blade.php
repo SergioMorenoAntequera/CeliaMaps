@@ -77,6 +77,43 @@
     
         //Here we are adding the images on top of the map
         map.whenReady(function() {
+
+            //Añadimos los polígonos que nos ayudarán para alinear
+            var catedral = L.polygon([
+                [36.83843318327438, -2.4676001071929936],
+                [36.838274330960374, -2.467042207717896],
+                [36.83828291758038, -2.4669617414474487],
+                [36.838218517906846, -2.466913461685181],
+                [36.838179878076694, -2.4669617414474487],
+                [36.83814982486198, -2.4669027328491215],
+                [36.837844998731036, -2.4670314788818364],
+                [36.83789222539424, -2.467219233512879],
+                [36.83761315832511, -2.4673479795455937],
+                [36.837772012012366, -2.4679058790206914]],
+                {color: 'red',}
+            ).addTo(map);
+            catedral.bindPopup("Catedral de Almería.");
+            //Paseo de Almería
+            var paseo = L.polygon([
+                [36.8413697450032, -2.4639040231704716],
+                [36.84138262441155, -2.463791370391846],
+                [36.8354406937098, -2.4628579616546635],
+                [36.83526466126582, -2.462723851203919],
+                [36.834959823636304, -2.4630081653594975],
+                [36.83531618299866, -2.4629491567611694]],
+                { color: 'blue',}
+            ).addTo(map);
+            paseo.bindPopup("Paseo de Almería.");
+            //Plaza de toros
+            var plazaDeToros = L.circle([36.84686046942511, -2.4616509675979614], {
+                color: 'red',
+                fillColor: '#f03',
+                fillOpacity: 0.5,
+                radius: 35
+            }).addTo(map);
+            plazaDeToros.bindPopup("Plaza de toros de Almería.");
+            
+            
             //Añadimos las imágenes y sus propiedades
             //URL de la imagen
             var img = L.distortableImageOverlay("{{url('img/maps/'.$map->image.'')}}", {
