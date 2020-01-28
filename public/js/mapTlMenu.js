@@ -1,6 +1,5 @@
 //Top Left Menu.js
 $(document).ready(function(){
-
     $('#mapid').click(function(e) {
         var latlng = map.mouseEventToLatLng(e.originalEvent);
         console.log("PRA");
@@ -32,6 +31,13 @@ $(document).ready(function(){
         }
     });
 
+    // CHANGING THE OPACITY OF THE MAP ON TOP  ///////////////////////////////////////////////
+    $('.slider').change(function(){
+        var slider = $(this);
+        var mapIndex = $(this).parent().children().index($(this));
+        images[mapIndex].setOpacity($(this).val() * 0.01);
+    });
+    
     //////////////////////////////////////////////////////////////////////////////////////////
     // AUXILIAR METHODS //////////////////////////////////////////////////////////////////////
 
@@ -70,4 +76,5 @@ $(document).ready(function(){
             eyeContainer.siblings().find('.opacity').text(0);
         });
     }
+    
 });

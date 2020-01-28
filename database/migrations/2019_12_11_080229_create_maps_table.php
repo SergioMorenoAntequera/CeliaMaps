@@ -25,14 +25,14 @@ class CreateMapsTable extends Migration
             $table->integer('level')->unique();
             $table->integer('width');
             $table->integer('height');
-            $table->float('tlCornerLatitude', 18, 16);
-            $table->float('tlCornerLongitude', 18, 16);
-            $table->float('trCornerLatitude', 18, 16);
-            $table->float('trCornerLongitude', 18, 16);
-            $table->float('blCornerLatitude', 18, 16);
-            $table->float('blCornerLongitude', 18, 16);
-            $table->float('brCornerLatitude', 18, 16);
-            $table->float('brCornerLongitude', 18, 16);
+            $table->float('tlCornerLatitude', 18, 16)->nullable();
+            $table->float('tlCornerLongitude', 18, 16)->nullable();
+            $table->float('trCornerLatitude', 18, 16)->nullable();
+            $table->float('trCornerLongitude', 18, 16)->nullable();
+            $table->float('blCornerLatitude', 18, 16)->nullable();
+            $table->float('blCornerLongitude', 18, 16)->nullable();
+            $table->float('brCornerLatitude', 18, 16)->nullable();
+            $table->float('brCornerLongitude', 18, 16)->nullable();
             $table->timestamps();
         });
     }

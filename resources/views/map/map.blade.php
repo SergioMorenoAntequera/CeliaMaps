@@ -30,32 +30,55 @@
     <!-- Upper left menu for the maps -->
     <div id="mapsMenu">
         <div id="mapsTrans">
+            @php
+                $first = true;
+            @endphp
             @foreach ($maps as $map)
-                @if ($map->level == 1)
-                    <div id="mapTrans{{$map->id}}" class="mapTrans">
-                        <!-- The eye and thr title -->
-                        <div class="contEye">
-                            <i class="eye fa fa-eye fa-2x"></i><h2 class="title">{{$map->title}}</h2>
+                @if (!empty($map->tlCornerLatitude))
+                    @if ($first)
+                        @php
+                            $first = false;
+                        @endphp
+                        <div id="mapTrans{{$map->id}}" class="mapTrans">
+                            <!-- The eye and thr title -->
+                            <div class="contEye">
+                                <i class="eye fa fa-eye fa-2x"></i><h2 class="title">{{$map->title}}</h2>
+                            </div>
+                            <!-- The slider and the number-->
+                            <div class="contSlider">
+                                <input type="range" min="0" max="100" value="100" class="slider" id="transparency{{$map->id}}">
+                                <span class="opacity">100</span>
+                            </div>
+                            <script>
+                                var images = new Array();
+                                //Añadimos las imágenes y sus propiedades
+                                var img = L.distortableImageOverlay("{{url('img/maps/'.$map->image.'')}}", {
+                                    //HAcemos que no pue pueda editar
+                                    editable: false,
+                                    corners: [
+                                        L.latLng('{{$map->tlCornerLatitude}}', '{{$map->tlCornerLongitude}}'),
+                                        L.latLng('{{$map->trCornerLatitude}}', '{{$map->trCornerLongitude}}'),
+                                        L.latLng('{{$map->blCornerLatitude}}', '{{$map->blCornerLongitude}}'),
+                                        L.latLng('{{$map->brCornerLatitude}}', '{{$map->brCornerLongitude}}'),
+                                    ],
+                                    //actions: [L.ScaleAction, L.RotateAction, L.FreeRotateAction, L.DistortAction, L.EditAction, L.BorderAction, L.OpacityAction, L.RevertAction, L.LockAction, L.DeleteAction],     
+                                });
+                                images.push(img);
+                            </script>
                         </div>
-                        <!-- The slider and the number-->
-                        <div class="contSlider">
-                            <input type="range" min="0" max="100" value="50" class="slider" id="transparency{{$map->id}}">
-                            <span class="opacity">50</span>
+                    @else
+                        <div id="mapTrans{{$map->id}}" class="mapTrans">
+                            <!-- The eye and thr title -->
+                            <div style="opacity:0.50;" class="contEye">
+                                <i class="eye fa fa-eye-slash fa-2x"></i><h2 class="title">{{$map->title}}</h2>
+                            </div>
+                            <!-- The slider and the number-->
+                            <div style="display: none;" class="contSlider">
+                                <input type="range" min="0" max="100" value="100" class="slider" id="transparency{{$map->id}}">
+                                <span class="opacity">0</span>
+                            </div>
                         </div>
-                        
-                    </div>
-                @else
-                    <div id="mapTrans{{$map->id}}" class="mapTrans">
-                        <!-- The eye and thr title -->
-                        <div style="opacity:0.50;" class="contEye">
-                            <i class="eye fa fa-eye-slash fa-2x"></i><h2 class="title">{{$map->title}}</h2>
-                        </div>
-                        <!-- The slider and the number-->
-                        <div style="display: none;" class="contSlider">
-                            <input type="range" min="0" max="100" value="50" class="slider" id="transparency{{$map->id}}">
-                            <span class="opacity">0</span>
-                        </div>
-                    </div>
+                    @endif
                 @endif
             @endforeach  
         </div>
@@ -112,25 +135,26 @@
 
     //Here we are adding the images on top of the map
     map.whenReady(function() {
-        //Añadimos las imágenes y sus propiedades
-        //URL de la imagen
-        var img = L.distortableImageOverlay("{{url('img/maps/NoMap.png')}}", {
-            //HAcemos que no pue pueda editar
-            editable: false,
-            corners: [
-                L.latLng('{{$maps[0]->tlCornerLatitude}}', '{{$maps[0]->tlCornerLongitude}}'),
-                L.latLng('{{$maps[0]->trCornerLatitude}}', '{{$maps[0]->trCornerLongitude}}'),
-                L.latLng('{{$maps[0]->blCornerLatitude}}', '{{$maps[0]->blCornerLongitude}}'),
-                L.latLng('{{$maps[0]->brCornerLatitude}}', '{{$maps[0]->brCornerLongitude}}'),
-            ],
-            //actions: [L.ScaleAction, L.RotateAction, L.FreeRotateAction, L.DistortAction, L.EditAction, L.BorderAction, L.OpacityAction, L.RevertAction, L.LockAction, L.DeleteAction],     
-        });
+        
         //Añadimos la imagen al mapa
-        map.addLayer(img);
+        map.addLayer(images[0]);
 
         $('#map').on('click', function(ev){
             var latlng = map.mouseEventToLatLng(ev.originalEvent);
             console.log(latlng.lat + ', ' + latlng.lng);
+        });
+
+        $('#mapsShow').click(function(){
+            var icono = $(this).find('i');
+            if(icono.hasClass("fa-chevron-up")){
+                $(this).parent().animate({
+                    top: "0px",
+                }, 300);
+            } else {
+                $(this).parent().animate({
+                    top: "15px",
+                }, 300);
+            }
         });
     });
     </script>

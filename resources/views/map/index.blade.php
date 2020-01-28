@@ -85,10 +85,17 @@
                         </div><!-- FINAL modal para borrar -->
 
                         <!-- Boton para resize -->
-                        <a href="{{route('map.align', $map->id)}}"> 
-                            <button class="cornerAlignButton bg-secondary">
-                                <img src="{{url("img/icons/align.png")}}" alt=""> 
-                            </button>
+                        <a href="{{route('map.align', $map->id)}}">
+                            @if (empty($map->tlCornerLatitude))
+                                <button class="cornerAlignButton bg-danger">
+                                    <img src="{{url("img/icons/align.png")}}" alt=""> 
+                                </button>
+                                <b> Mapa no alineado, no se mostrará en página principal </b>
+                            @else
+                                <button class="cornerAlignButton bg-secondary">
+                                    <img src="{{url("img/icons/align.png")}}" alt=""> 
+                                </button>
+                            @endif
                         </a>
                     </div><!-- FINAL columna con info del mapa -->
                 </div> <!-- FINAL .oneElement -->
