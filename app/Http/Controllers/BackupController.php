@@ -9,11 +9,12 @@ use Illuminate\Support\Facades\Log as FacadesLog;
 
 class BackupController extends Controller
 {
+   
     
     //////////////////////// SOLO LOS USUARIOS LOGUEADOS PUEDEN UTILIZAR CREATE Y RESTORE /////////////////////////////
     public function __construct(){
 
-        $this->middleware("auth")->only("create", "restore");
+        //$this->middleware("auth")->only("create", "restore");
     }
 
   //////////////////////////// VISTA DONDE SE UBICAN LOS CONTROLES DEL BACKUP, POR AHORA //////////////////////////// 
@@ -24,34 +25,28 @@ class BackupController extends Controller
    ///////////////////////////////// CREAR COPIA DE SEGURIDAD ////////////////////////////
     public function create(){
 
-        $dbhost = env('DB_HOST','localhost');
-        $dbname = env('DB_DATABASE','celiamaps');
-        $dbuser = env('DB_USERNAME','root');
-        $dbpass = env('DB_PASSWORD','');
-        $mysqldump = env('MYSQLDUMP_PATH','D:/laragon/bin/mysql/mysql-5.7.24-winx64/bin/mysqldump.exe');
-        $backup = env('BACKUP_PATH','D:/laragon/www/CeliaMaps/storage/celiamapsaversifunciona2.sql');
-
-        //dd($backup);
-
-        //$command = "D:/laragon/bin/mysql/mysql-5.7.24-winx64/bin/mysqldump.exe > mysqldump -h localhost -u root celiamaps > D:/laragon/www/CeliaMaps/storage/celiamapsaversifunciona.sql";
+        $dbhost = env('DB_HOST');
+        $dbname = env('DB_DATABASE');
+        $dbuser = env('DB_USERNAME');
+        $dbpass = env('DB_PASSWORD');
+        $mysqldump = env('MYSQLDUMP_PATH');
+        $backup = env('BACKUP_PATH');        
         
         $command = "$mysqldump > mysqldump -h $dbhost -u $dbuser $dbname > $backup"; 
-        //dd($command);
         
-        system($command);
-        //echo($output);
+        system($command);        
     }
       
     //////////////////////////////// RESTAURAR COPIA DE SEGURIDAD /////////////////////////////
+
     public function restore(){
                 
-        $dbhost = env('DB_HOST','localhost');
-        $dbname = env('DB_DATABASE','celiamaps');
-        $dbuser = env('DB_USERNAME','root');
-        $dbpass = env('DB_PASSWORD','');
-        $mysqlrestore = env('MYSQL_PATH','D:/laragon/bin/mysql/mysql-5.7.24-winx64/bin/mysql.exe');
-        $backup = env('BACKUP_PATH','D:/laragon/www/CeliaMaps/storage/celiamapsaversifunciona2.sql');
-        //dd($backup);
+        $dbhost = env('DB_HOST');
+        $dbname = env('DB_DATABASE');
+        $dbuser = env('DB_USERNAME');
+        $dbpass = env('DB_PASSWORD');
+        $mysqlrestore = env('MYSQL_PATH');
+        $backup = env('BACKUP_PATH');        
 
         $command = "$mysqlrestore > mysql -h $dbhost -u $dbuser $dbname < $backup"; 
         
@@ -61,15 +56,5 @@ class BackupController extends Controller
     }
 }
 
-/*
- $dbhost = env('DB_HOST','localhost');
-        $dbname = env('DB_DATABASE','celiamaps');
-        $dbuser = env('DB_USERNAME','root');
-        $dbpass = env('DB_PASSWORD','');
-        $mysqldump = env('MYSQLDUMP_PATH','C:/laragon/bin/mysql/mysql-5.7.24-winx64/bin/mysqldump.exe');
-        $backup = env('BACKUP_PATH','C:/laragon/www/CeliaMaps/storage/backup/celiamaps.sql');
-
-        $command = "$mysqldump > mysqldump -h $dbhost -u $dbuser -p$dbpass $dbname > $backup"; 
-        */
 
 
