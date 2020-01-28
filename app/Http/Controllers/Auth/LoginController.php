@@ -25,7 +25,12 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+
+     // POR AHORA EL LOGIN REDIRECIONA A MAP.INDEX YA VEREMOS DONDE VA FINALMENTE
+    protected $redirectTo = '/map';
+
+    // CON ESTA VARIABLE REDIRECCIONAMOS EL LOGOUT A LA PÁGINA PRINCIPAL 
+    protected $redirectAfterLogout = '/'; 
 
     /**
      * Create a new controller instance.

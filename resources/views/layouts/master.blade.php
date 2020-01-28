@@ -49,8 +49,8 @@
                         </div>
                     </div>
                     <div class="offset-2"></div>
-                    <!-- Parte de la derecha -->
-                    <div class="col-4">
+                    <!-- Parte de la derecha --> 
+                    <div class="col-5">   <!-- HE CAMBIADO EL NÚMERO DE COLUMNAS DE 4 A 5 PARA METER TEMPORALMENTE EL LOGIN -->
                         <div class="row mt-4">
                             <div class="col headerLink">
                                 <a class="text-reset text-decoration-none" href="{{route('point.index')}}">PUNTOS</a>
@@ -61,6 +61,14 @@
                             <div class="col headerLink">
                                 <a class="text-reset text-decoration-none" href="{{route('user.index')}}">USUARIOS</a>
                             </div>
+                            <div class="col headerLink">
+                                <a class="text-reset text-decoration-none" href="{{route('login')}}">LOGIN</a>
+                            </div>
+                            @auth
+                            <div class="col headerLink">
+                                <a class="text-reset text-decoration-none" href="{{route('register')}}">LOGOUT</a>
+                            </div>
+                            @endauth
                         </div>
                     </div>
                 </div> 
