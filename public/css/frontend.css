@@ -35,12 +35,14 @@
     margin-top: 10px;
        
 }
+.contEye {
+    cursor: pointer;
+}
 .contEye > h2 {
     display: inline;
     position: relative;
     top: -3px;
     margin-left: 2px;
-    cursor: pointer;
 }
 
 .mapTrans > input {

@@ -34,8 +34,14 @@ $(document).ready(function(){
     // CHANGING THE OPACITY OF THE MAP ON TOP  ///////////////////////////////////////////////
     $('.slider').change(function(){
         var slider = $(this);
-        var mapIndex = $(this).parent().children().index($(this));
-        images[mapIndex].setOpacity($(this).val() * 0.01);
+        var eye = slider.parent().parent().find("i");
+        // Para los graciosillos
+        if(eye.hasClass('fa-eye')){
+            var mapIndex = $(this).parent().children().index($(this));
+            images[mapIndex].setOpacity($(this).val() * 0.01);
+        } else {
+            images[mapIndex].setOpacity(0);
+        }
     });
     
     //////////////////////////////////////////////////////////////////////////////////////////
@@ -45,15 +51,16 @@ $(document).ready(function(){
     function swapShowMenu(eyeContainer){
 
         var eye = jQuery(eyeContainer.find(".eye"));
+        var mapIndex = eyeContainer.parent().children().index(eyeContainer);
 
         if(eye.hasClass("fa-eye")){
-            disable(eyeContainer, eye);
+            disable(eyeContainer, eye, mapIndex);
         } else {
-            enable(eyeContainer, eye);
+            enable(eyeContainer, eye, mapIndex);
         }
     }
     // ENABLE EYE /////////////////////////////////////////////////////////////////////////
-    function enable(eyeContainer, eye){
+    function enable(eyeContainer, eye, mapIndex){
         eye.removeClass("fa-eye-slash");
         var valueOpacity = eyeContainer.siblings().find('.slider').val();
         eyeContainer.siblings().find('.opacity').text(valueOpacity);
@@ -63,9 +70,10 @@ $(document).ready(function(){
         eye.addClass("fa-eye");
         eyeContainer.find(".opacity").attr("disabled", false);
         eyeContainer.siblings('.contSlider').slideDown(200);
+        images[mapIndex].setOpacity(1);
     }
     // DISABLE EYE  /////////////////////////////////////////////////////////////////////////
-    function disable(eyeContainer, eye){
+    function disable(eyeContainer, eye, mapIndex){
         eye.removeClass("fa-eye");
         eye.parent().animate({
             opacity: 0.50,
@@ -75,6 +83,7 @@ $(document).ready(function(){
         eyeContainer.siblings('.contSlider').slideUp(200, function(){
             eyeContainer.siblings().find('.opacity').text(0);
         });
+        images[mapIndex].setOpacity(0);
     }
     
 });

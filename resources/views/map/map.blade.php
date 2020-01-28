@@ -30,15 +30,11 @@
     <!-- Upper left menu for the maps -->
     <div id="mapsMenu">
         <div id="mapsTrans">
-            @php
-                $first = true;
-            @endphp
+            @php $first = true; @endphp
             @foreach ($maps as $map)
                 @if (!empty($map->tlCornerLatitude))
                     @if ($first)
-                        @php
-                            $first = false;
-                        @endphp
+                        @php $first = false; @endphp
                         <div id="mapTrans{{$map->id}}" class="mapTrans">
                             <!-- The eye and thr title -->
                             <div class="contEye">
