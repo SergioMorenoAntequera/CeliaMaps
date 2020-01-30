@@ -19,18 +19,15 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
     <script src="{{url('js/mapBlMenu.js')}}"></script>
+    <script src="{{url('js/mapFullScreenMenu.js')}}"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    
     <!-- PERSONAL CSS -->
     <link rel="stylesheet" href="{{url('/css/Frontend.css')}}">
 </head>
 <body style="overflow: hidden;">
     
     <div id="map"></div>
-
-    <div id="saveMenu">
-        <a href=""><button> <i class="fa fa-save fa-5x"></i> </button></a>
-    </div>
 
     <!-- Bottom left menu for the maps -->
     <div id="tilesMenu">
@@ -48,6 +45,16 @@
                 <img src="{{url("img/maps/KindOfMap3.png")}}" alt="">
             </div>
         </div>
+    </div>
+
+    <!-- Button to save the alignment when it's done -->
+    <div id="saveMenu">
+        <a href=""><button> <i class="fa fa-save fa-5x"></i> </button></a>
+    </div>
+
+    <!-- Button to put it on full screen -->
+    <div id="fullScreenMenu" style="right: 125px">
+        <img src="{{url('/img/icons/fsMaximize.png')}}" alt="">
     </div>
 
     <script>
@@ -170,7 +177,7 @@
                 console.log(latlng.lat + ', ' + latlng.lng);
             });
         });
-        </script>
+    </script>
 
 </body>
 </html>

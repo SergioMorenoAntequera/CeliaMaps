@@ -1,4 +1,10 @@
 
+html, body {
+    margin: 0; 
+    height: 100%; 
+    overflow: hidden;
+}
+
 #map {
     position: absolute;
     top: 0; 
@@ -132,7 +138,7 @@
 
 /*/////////////////////////////////////////////////////////////////////*/
 /*///////////////////// MENU DE ABAJO A LA DERECHA ////////////////////*/
-/*//////////////////// PARA GUARDAR LOS CAMBIOS  //////////////////////*/
+/*///////////// PARA GUARDAR LOS CAMBIOS AL ALINEAR  //////////////////*/
 /*/////////////////////////////////////////////////////////////////////*/
     
 #saveMenu{
@@ -153,4 +159,33 @@
 }
 #saveMenu i {
     color: black;
+}
+
+/*/////////////////////////////////////////////////////////////////////*/
+/*///////////////////// MENU DE ABAJO A LA DERECHA ////////////////////*/
+/*//////////////// PARA PONERLO EN PANTALLA COMPLETA  /////////////////*/
+/*/////////////////////////////////////////////////////////////////////*/
+    
+#fullScreenMenu{
+    z-index: 0;
+    position: absolute;
+    
+    bottom: 22px;
+    right: 10px;
+
+    height: 30px;
+    width: 30px;
+    
+    border-style: solid;
+    border-width: 2px 2px 2px 2px;
+    border-color: #E0E0E0;
+    background-color:#FFFFFF;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #FFFFFF;
+    cursor: pointer;
+}
+#fullScreenMenu img {
+    width: 100%;
+    height: 100%;
 }

@@ -23,8 +23,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="{{url('js/mapTlMenu.js')}}"></script>
     <script src="{{url('js/mapBlMenu.js')}}"></script>
+    <script src="{{url('js/mapFullScreenMenu.js')}}"></script>
 </head>
-<body>
+<body id="body">
     <div id="map"></div>
 
     <!-- Upper left menu for the maps -->
@@ -69,7 +70,7 @@
                     <script>
                         //Añadimos las imágenes y sus propiedades
                         var img = L.distortableImageOverlay("{{url('img/maps/'.$map->image.'')}}", {
-                            //HAcemos que no pue pueda editar
+                            //Hacemos que no pue pueda editar
                             editable: false,
                             corners: [
                                 L.latLng('{{$map->tlCornerLatitude}}', '{{$map->tlCornerLongitude}}'),
@@ -107,52 +108,64 @@
             </div>
         </div>
     </div>
+
+    <!-- -->
+    <div id="fullScreenMenu">
+        <img src="{{url('/img/icons/fsMaximize.png')}}" alt="">
+    </div>
     
     <script>
-    // Pagina donde están los proveedores de mapas:
-    // http://leaflet-extras.github.io/leaflet-providers/preview/index.html
-    var map = L.map('map', {
-        minZoom: 6,  //Dont touch, recommended
-        maxZoom: 18, //Dont touch, max zoom
-        zoomControl: false,
-    });
-    map.setView([36.844092, -2.457840], 14);
-
-    //Global maps from the one we will be able to pick one
-    var mapTiles = [
-        mapTile0 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }),
-        mapTile1 = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png', {
-            attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            subdomains: 'abcd',
-        }),
-        mapTile2 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-        })
-    ];
-    //Adding rhe layers to the map
-    map.addLayer(mapTile0);
-
-    //Here we are adding the images on top of the map
-    map.whenReady(function() {
-        
-        //Añadimos la imagen al mapa
-        map.addLayer(images[0]);
-        
-        $('#mapsShow').click(function(){
-            var icono = $(this).find('i');
-            if(icono.hasClass("fa-chevron-up")){
-                $(this).parent().animate({
-                    top: "0px",
-                }, 300);
-            } else {
-                $(this).parent().animate({
-                    top: "15px",
-                }, 300);
-            }
+        // Pagina donde están los proveedores de mapas:
+        // http://leaflet-extras.github.io/leaflet-providers/preview/index.html
+        var map = L.map('map', {
+            minZoom: 6,  //Dont touch, recommended
+            maxZoom: 18, //Dont touch, max zoom
+            zoomControl: false,
         });
-    });
+        map.setView([36.844092, -2.457840], 14);
+
+        //Global maps from the one we will be able to pick one
+        var mapTiles = [
+            mapTile0 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }),
+            mapTile1 = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png', {
+                attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                subdomains: 'abcd',
+            }),
+            mapTile2 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+            })
+        ];
+        //Adding rhe layers to the map
+        map.addLayer(mapTile0);
+
+        //Here we are adding the images on top of the map
+        map.whenReady(function() {
+            
+            var first = true;
+            //Añadimos la imagen al mapa
+            images.forEach(function(img) {
+                map.addLayer(img);
+                if(!first){
+                    img.setOpacity(0);
+                }
+                first = false;
+            });
+
+            $('#mapsShow').click(function(){
+                var icono = $(this).find('i');
+                if(icono.hasClass("fa-chevron-up")){
+                    $(this).parent().animate({
+                        top: "0px",
+                    }, 300);
+                } else {
+                    $(this).parent().animate({
+                        top: "15px",
+                    }, 300);
+                }
+            });
+        });
     </script>
 </body>
 </html>
