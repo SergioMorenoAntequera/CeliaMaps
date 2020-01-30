@@ -49,7 +49,21 @@
 
     <!-- Button to save the alignment when it's done -->
     <div id="saveMenu">
-        <a href=""><button> <i class="fa fa-save fa-5x"></i> </button></a>
+        <form id="saveForm" method="GET" action="{{route('map.saveAlign', $map->id)}}">
+            @csrf
+            
+            <input name="tlLat" type="hidden" value="{{$map->tlCornerLatitude}}">
+            <input name="tlLon" type="hidden" value="{{$map->tlCornerLongitude}}">
+            <input name="trLat" type="hidden" value="{{$map->trCornerLatitude}}">
+            <input name="trLon" type="hidden" value="{{$map->trCornerLongitude}}">
+            <input name="blLat" type="hidden" value="{{$map->blCornerLatitude}}">
+            <input name="blLon" type="hidden" value="{{$map->blCornerLongitude}}">
+            <input name="brLat" type="hidden" value="{{$map->brCornerLatitude}}">
+            <input name="brLon" type="hidden" value="{{$map->brCornerLongitude}}">
+            <button type="submit">
+                <img src="{{url('img/icons/save.png')}}" alt="">
+            </button>
+        </form>
     </div>
 
     <!-- Button to put it on full screen -->
@@ -154,14 +168,12 @@
             }).addTo(map);
             plazaDeToros.bindPopup("Plaza de toros de Almería.");
             
-            
-            
             //Añadimos las imágenes y sus propiedades
             //URL de la imagen
             var img = L.distortableImageOverlay("{{url('img/maps/'.$map->image.'')}}", {
-                //HAcemos que no pue pueda editar
+                //Hacemos que no pue pueda editar
                 selected: true,
-                actions: [L.ScaleAction, L.FreeRotateAction, L.RotateAction , L.DistortAction, L.EditAction, L.BorderAction, L.OpacityAction, L.RevertAction, L.LockAction, L.DeleteAction],
+                actions: [L.ScaleAction, L.RotateAction,  L.FreeRotateAction, L.DistortAction, L.EditAction, L.BorderAction, L.OpacityAction, L.RevertAction, L.LockAction, L.DeleteAction],
                 corners: [
                     L.latLng('{{$map->tlCornerLatitude}}', '{{$map->tlCornerLongitude}}'),
                     L.latLng('{{$map->trCornerLatitude}}', '{{$map->trCornerLongitude}}'),
@@ -171,10 +183,20 @@
             });
             //Añadimos la imagen al mapa
             map.addLayer(img);
-    
-            $('#map').on('click', function(ev){
-                var latlng = map.mouseEventToLatLng(ev.originalEvent);
-                console.log(latlng.lat + ', ' + latlng.lng);
+            
+            // Codigo del botón de guardar
+            $('#saveMenu').click(function(e){
+                e.preventDefault();
+                var corners = img.getCorners();
+                var test = jQuery($("#saveForm").children()[1]).attr("value", corners[0].lat);
+                var test = jQuery($("#saveForm").children()[2]).attr("value", corners[0].lng);
+                var test = jQuery($("#saveForm").children()[3]).attr("value", corners[1].lat);
+                var test = jQuery($("#saveForm").children()[4]).attr("value", corners[1].lng);
+                var test = jQuery($("#saveForm").children()[5]).attr("value", corners[2].lat);
+                var test = jQuery($("#saveForm").children()[6]).attr("value", corners[2].lng);
+                var test = jQuery($("#saveForm").children()[7]).attr("value", corners[3].lat);
+                var test = jQuery($("#saveForm").children()[8]).attr("value", corners[3].lng);
+                $("#saveForm").submit();
             });
         });
     </script>

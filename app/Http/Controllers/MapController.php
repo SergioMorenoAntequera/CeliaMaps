@@ -261,8 +261,39 @@ class MapController extends Controller
         return response()->json(['level'=>$map->level]);
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    // ALIGN MAPS //////////////////////////////////////////////////////////////////////////////
+    /**
+     * View  where we can adjust the map
+     * 
+     * @param id
+     * @return View
+     */
     public function alignMap($id){
         $data['map'] = Map::find($id);
         return view('map.align', $data);
+    }
+    
+    /**
+     * Function where we will update the map position
+     * 
+     * @param id
+     * @return View
+     */
+    public function saveAlign(Request $r, $id){
+        $map = Map::find($id);
+
+        // No me deja hacerlo del modo bonito por X
+        $map->tlCornerLatitude = $r->tlLat;
+        $map->tlCornerLongitude = $r->tlLon;
+        $map->trCornerLatitude = $r->trLat;
+        $map->trCornerLongitude = $r->trLon;
+        $map->blCornerLatitude = $r->blLat;
+        $map->blCornerLongitude = $r->blLon;
+        $map->brCornerLatitude = $r->brLat;
+        $map->brCornerLongitude = $r->brLon;
+        
+        $map->update();
+        return redirect(route("map.index"));
     }
 }

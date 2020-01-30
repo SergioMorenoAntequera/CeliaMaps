@@ -23,6 +23,7 @@ Route::get('/', 'MapController@map')->name('map.map');
 Route::get('map/up', 'MapController@moveUp')->name('map.up');
 Route::get('map/down', 'MapController@moveDown')->name('map.down');
 Route::get('map/align/{id}', 'MapController@alignMap')->name('map.align');
+Route::get('map/saveAlign/{id}', 'MapController@saveAlign')->name('map.saveAlign');
 Route::resource('map', 'MapController');
 // USER /////////////////////////////////////////////////////////////////////////////////////
 Route::resource('user', 'UserController');
