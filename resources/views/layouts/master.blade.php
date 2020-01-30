@@ -60,13 +60,14 @@
                             </div>
                             <div class="col headerLink">
                                 <a class="text-reset text-decoration-none" href="{{route('user.index')}}">USUARIOS</a>
-                            </div>
-                            <div class="col headerLink">
-                                <a class="text-reset text-decoration-none" href="{{route('login')}}">LOGIN</a>
-                            </div>
+                            </div>                           
                             @auth
                             <div class="col headerLink">
                                 <a class="text-reset text-decoration-none" href="{{route('register')}}">LOGOUT</a>
+                            </div>
+                            @else 
+                            <div class="col headerLink">
+                                <a class="text-reset text-decoration-none" href="{{route('login')}}">LOGIN</a>
                             </div>
                             @endauth
                         </div>

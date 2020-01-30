@@ -34,27 +34,29 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label for="name">Nombre</label>
-                                    <input type="text" class="form-control" name="name" id="name" value="{{$user->name??''}}">
+                                    <input type="text" class="form-control" name="name" id="name" value="{{$user->name??''}}" required>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" class="form-control" name="email" id="email" value="{{$user->email??''}}">
+                                    <input type="email" class="form-control" name="email" id="email" value="{{$user->email??''}}" required>
                                 </div>
                             </div>
                         </div>
                         <div id="segundafila" class="row">
                             <div class="col">
+                                <!-- SI EXISTE USUARIO MOSTRAMOS EL CAMPO CONTRASEÑA VACIO -->
                                 @isset($user)
                                 <div class="form-group">
-                                    <!-- <label for="password">Password</label> -->
-                                    <input type="hidden" class="form-control" name="password" id="password" value="{{$user->password??''}}">
+                                     <label for="password">rellenar solo si desdea modificar contraseña</label>
+                                    <input type="password" class="form-control" name="password" id="password" value="">
                                 </div>
+                                <!-- COMPORTAMIENTO DEL FORMULARIO SI INSERTAMOS NUEVO USUARIO -->
                                 @else
                                 <div class="form-group">
                                     <label for="password">Password</label>
-                                    <input type="password" class="form-control" name="password" id="password" value="{{$user->password??''}}">
+                                    <input type="password" class="form-control" name="password" id="password" value="{{$user->password??''}}" required>
                                 </div>
                             </div>
 
@@ -63,7 +65,7 @@
                             <div class="col-3">
                                 <div class="form-group">
                                     <label for="level">Level</label>
-                                    <input type="text" class="form-control" name="level" id="level" value="{{$user->level??''}}">
+                                    <input type="text" class="form-control" name="level" id="level" value="{{$user->level??''}}" required>
                                 </div>
                             </div>
                         </div>

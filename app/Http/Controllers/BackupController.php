@@ -34,7 +34,9 @@ class BackupController extends Controller
         
         $command = "$mysqldump > mysqldump -h $dbhost -u $dbuser $dbname > $backup"; 
         
-        system($command);        
+        system($command); 
+        
+        //redirigir al backend
     }
       
     //////////////////////////////// RESTAURAR COPIA DE SEGURIDAD /////////////////////////////
@@ -51,8 +53,8 @@ class BackupController extends Controller
         $command = "$mysqlrestore > mysql -h $dbhost -u $dbuser $dbname < $backup"; 
         
         system($command);
-       
 
+        //redirigir al backend
     }
 }
 
