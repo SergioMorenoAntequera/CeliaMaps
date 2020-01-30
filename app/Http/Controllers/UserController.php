@@ -11,7 +11,7 @@ class UserController extends Controller
     
 
     public function __construct(){
-        //$this->middleware("auth")->only("create","edit","destroy");
+    //$this->middleware("auth")->only("create","edit","destroy");
     }
     
 
@@ -90,12 +90,18 @@ class UserController extends Controller
      */
     public function update(Request $r,$id)
     {
-       //dd($r);
+       
         $user = User::find($id);
-     //dd($user);
+
+        $prueba = $user->password;
+        //dd($prueba);
+     
         $user->name = $r->name;
         $user->email = $r->email;
-        $user->password = $r->password;
+        if($prueba == null){
+            $user->password = $r->password;
+        }
+        
         $user->level = $r->level;
 
         $user->save();
@@ -117,4 +123,5 @@ class UserController extends Controller
 
        return redirect()->route('user.index');
     }
+    
 }

@@ -12,7 +12,7 @@
         </form>
 </div>
 
-<table class="table table-bordered table-hover text-white">
+<table class="table table-hover text-white">
     <thead>
         <tr>
             <th>Id</th><th>Nombre</th><th>Email</th><th>Contraseña</th><th>Nivel</th><th>accion1</th><th>accion2</th>
@@ -39,7 +39,7 @@
                 <form action= "{{route('user.destroy',$user->id)}}" method= "POST">
                     @csrf
                     @method("DELETE")
-                    <button class="btn" type="submit" value="Borrar">
+                    <button id="borrado" class="btn" type="submit" value="Borrar">
                         <img src="/img/icons/deleteRed.png" style="height:2em" alt="">
                     </button>
                 </form>
@@ -53,4 +53,4 @@
 
 @endsection
                    
-                    
+    
