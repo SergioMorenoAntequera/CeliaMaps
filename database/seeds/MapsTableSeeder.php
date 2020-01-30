@@ -18,7 +18,7 @@ class MapsTableSeeder extends Seeder
             'description' => 'Mapa de la ciudad de Almeria en el siglo XXI',
             'city' => 'Almería',
             'date' => '2012',
-            'image' => 'mapa1.jpg',
+            'image' => 'mapa1Modificado2.png',
             'miniature' => 'MiniatureAlmeria2012.png',
             'level' => '1',
             'width' => '900',

@@ -29,13 +29,19 @@
 
     <!-- Upper left menu for the maps -->
     <div id="mapsMenu">
+        <!-- Todo el menú -->
         <div id="mapsTrans">
             @php $first = true; @endphp
+            <script> var images = new Array(); </script>
             @foreach ($maps as $map)
                 @if (!empty($map->tlCornerLatitude))
+                    <script>
+                    </script>
                     @if ($first)
+                        <!-- Si es el primero lo ponemos para que se vea este -->
                         @php $first = false; @endphp
-                        <div id="mapTrans{{$map->id}}" class="mapTrans">
+                        <!-- Cada una de las filas para los mapas -->
+                        <div id="mapTrans{{$map->level}}" class="mapTrans">
                             <!-- The eye and thr title -->
                             <div class="contEye">
                                 <i class="eye fa fa-eye fa-2x"></i><h2 class="title">{{$map->title}}</h2>
@@ -45,25 +51,10 @@
                                 <input type="range" min="0" max="100" value="100" class="slider" id="transparency{{$map->id}}">
                                 <span class="opacity">100</span>
                             </div>
-                            <script>
-                                var images = new Array();
-                                //Añadimos las imágenes y sus propiedades
-                                var img = L.distortableImageOverlay("{{url('img/maps/'.$map->image.'')}}", {
-                                    //HAcemos que no pue pueda editar
-                                    editable: false,
-                                    corners: [
-                                        L.latLng('{{$map->tlCornerLatitude}}', '{{$map->tlCornerLongitude}}'),
-                                        L.latLng('{{$map->trCornerLatitude}}', '{{$map->trCornerLongitude}}'),
-                                        L.latLng('{{$map->blCornerLatitude}}', '{{$map->blCornerLongitude}}'),
-                                        L.latLng('{{$map->brCornerLatitude}}', '{{$map->brCornerLongitude}}'),
-                                    ],
-                                    //actions: [L.ScaleAction, L.RotateAction, L.FreeRotateAction, L.DistortAction, L.EditAction, L.BorderAction, L.OpacityAction, L.RevertAction, L.LockAction, L.DeleteAction],     
-                                });
-                                images.push(img);
-                            </script>
                         </div>
                     @else
-                        <div id="mapTrans{{$map->id}}" class="mapTrans">
+                        <!-- Si no lo es hacemos que no esté seleccionado -->
+                        <div id="mapTrans{{$map->level}}" class="mapTrans">
                             <!-- The eye and thr title -->
                             <div style="opacity:0.50;" class="contEye">
                                 <i class="eye fa fa-eye-slash fa-2x"></i><h2 class="title">{{$map->title}}</h2>
@@ -75,6 +66,20 @@
                             </div>
                         </div>
                     @endif
+                    <script>
+                        //Añadimos las imágenes y sus propiedades
+                        var img = L.distortableImageOverlay("{{url('img/maps/'.$map->image.'')}}", {
+                            //HAcemos que no pue pueda editar
+                            editable: false,
+                            corners: [
+                                L.latLng('{{$map->tlCornerLatitude}}', '{{$map->tlCornerLongitude}}'),
+                                L.latLng('{{$map->trCornerLatitude}}', '{{$map->trCornerLongitude}}'),
+                                L.latLng('{{$map->blCornerLatitude}}', '{{$map->blCornerLongitude}}'),
+                                L.latLng('{{$map->brCornerLatitude}}', '{{$map->brCornerLongitude}}'),
+                            ],
+                        });
+                        images.push(img);
+                    </script>
                 @endif
             @endforeach  
         </div>
@@ -134,12 +139,7 @@
         
         //Añadimos la imagen al mapa
         map.addLayer(images[0]);
-
-        $('#map').on('click', function(ev){
-            var latlng = map.mouseEventToLatLng(ev.originalEvent);
-            console.log(latlng.lat + ', ' + latlng.lng);
-        });
-
+        
         $('#mapsShow').click(function(){
             var icono = $(this).find('i');
             if(icono.hasClass("fa-chevron-up")){

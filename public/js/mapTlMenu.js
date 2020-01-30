@@ -1,10 +1,5 @@
 //Top Left Menu.js
 $(document).ready(function(){
-    $('#mapid').click(function(e) {
-        var latlng = map.mouseEventToLatLng(e.originalEvent);
-        console.log("PRA");
-        console.log(latlng.lat + ', ' + latlng.lng);
-    });  
 
     $('#mapsMenu').slideToggle(300);
     //Eye to enable disable tranparencies
@@ -34,10 +29,12 @@ $(document).ready(function(){
     // CHANGING THE OPACITY OF THE MAP ON TOP  ///////////////////////////////////////////////
     $('.slider').change(function(){
         var slider = $(this);
-        var eye = slider.parent().parent().find("i");
+        var eye = slider.parents(".mapTrans").find("i");
+        var clicked = slider.parents(".mapTrans");
+        var mapIndex = $('.mapTrans').index(clicked);
+
         // Para los graciosillos
         if(eye.hasClass('fa-eye')){
-            var mapIndex = $(this).parent().children().index($(this));
             images[mapIndex].setOpacity($(this).val() * 0.01);
         } else {
             images[mapIndex].setOpacity(0);
@@ -51,7 +48,8 @@ $(document).ready(function(){
     function swapShowMenu(eyeContainer){
 
         var eye = jQuery(eyeContainer.find(".eye"));
-        var mapIndex = eyeContainer.parent().children().index(eyeContainer);
+        var clicked = eyeContainer.parents(".mapTrans");
+        var mapIndex = $('.mapTrans').index(clicked);
 
         if(eye.hasClass("fa-eye")){
             disable(eyeContainer, eye, mapIndex);
@@ -70,7 +68,9 @@ $(document).ready(function(){
         eye.addClass("fa-eye");
         eyeContainer.find(".opacity").attr("disabled", false);
         eyeContainer.siblings('.contSlider').slideDown(200);
-        images[mapIndex].setOpacity(1);
+
+        map.addLayer(images[mapIndex]);
+        images[mapIndex].setOpacity(valueOpacity * 0.01);
     }
     // DISABLE EYE  /////////////////////////////////////////////////////////////////////////
     function disable(eyeContainer, eye, mapIndex){
@@ -83,7 +83,7 @@ $(document).ready(function(){
         eyeContainer.siblings('.contSlider').slideUp(200, function(){
             eyeContainer.siblings().find('.opacity').text(0);
         });
+
         images[mapIndex].setOpacity(0);
     }
-    
 });
