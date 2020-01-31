@@ -36,8 +36,6 @@
             <script> var images = new Array(); </script>
             @foreach ($maps as $map)
                 @if (!empty($map->tlCornerLatitude))
-                    <script>
-                    </script>
                     @if ($first)
                         <!-- Si es el primero lo ponemos para que se vea este -->
                         @php $first = false; @endphp
@@ -45,11 +43,11 @@
                         <div id="mapTrans{{$map->level}}" class="mapTrans">
                             <!-- The eye and thr title -->
                             <div class="contEye">
-                                <i class="eye fa fa-eye fa-2x"></i><h2 class="title">{{$map->title}}</h2>
+                                <i class="eye fa fa-eye fa-2x"></i><h2 class="noselect title">{{$map->title}}</h2>
                             </div>
                             <!-- The slider and the number-->
-                            <div class="contSlider">
-                                <input type="range" min="0" max="100" value="100" class="slider" id="transparency{{$map->id}}">
+                            <div class="contSlider slider">
+                                <input id="transparency{{$map->id}}" type="range" min="0" max="100" value="100" class="sliderVar" oninput="sliderChange(this.value, this.id)">
                                 <span class="opacity">100</span>
                             </div>
                         </div>
@@ -58,11 +56,11 @@
                         <div id="mapTrans{{$map->level}}" class="mapTrans">
                             <!-- The eye and thr title -->
                             <div style="opacity:0.50;" class="contEye">
-                                <i class="eye fa fa-eye-slash fa-2x"></i><h2 class="title">{{$map->title}}</h2>
+                                <i class="eye fa fa-eye-slash fa-2x"></i><h2 class="noselect title">{{$map->title}}</h2>
                             </div>
                             <!-- The slider and the number-->
-                            <div style="display: none;" class="contSlider">
-                                <input type="range" min="0" max="100" value="100" class="slider" id="transparency{{$map->id}}">
+                            <div style="display: none;" class="contSlider ">
+                                <input id="transparency{{$map->id}}" type="range" min="0" max="100" value="100" class="sliderVar"  oninput="sliderChange(this.value, this.id)">
                                 <span class="opacity">0</span>
                             </div>
                         </div>

@@ -1,4 +1,21 @@
 //Top Left Menu.js
+
+//Slider and how it affects the maps
+function sliderChange(value, id){
+    var slider = $("#"+id);
+    //HEre we change the value
+    slider.siblings(".opacity").text(value);
+    var eye = slider.parents(".mapTrans").find("i");
+    var clicked = slider.parents(".mapTrans");
+    var mapIndex = $('.mapTrans').index(clicked);
+    // Para los graciosillos
+    if(eye.hasClass('fa-eye')){
+        images[mapIndex].setOpacity(slider.val() * 0.01);
+    } else {
+        images[mapIndex].setOpacity(0);
+    }
+}
+
 $(document).ready(function(){
 
     $('#mapsMenu').slideToggle(300);
@@ -6,10 +23,7 @@ $(document).ready(function(){
     $('.contEye').click(function(){
         swapShowMenu($(this));
     });
-    //Slider and how it affects the maps
-    $('.slider').change(function(){
-        $(this).parent().find(".opacity").text($(this).val());        
-    });
+
     $('#mapsShow').click(function(){
         var icono = $(this).find('i');
         if(icono.hasClass('fa-chevron-up')){
@@ -27,19 +41,19 @@ $(document).ready(function(){
     });
 
     // CHANGING THE OPACITY OF THE MAP ON TOP  ///////////////////////////////////////////////
-    $('.slider').change(function(){
-        var slider = $(this);
-        var eye = slider.parents(".mapTrans").find("i");
-        var clicked = slider.parents(".mapTrans");
-        var mapIndex = $('.mapTrans').index(clicked);
+    // $('.slider').change(function(){
+    //     var slider = $(this);
+    //     var eye = slider.parents(".mapTrans").find("i");
+    //     var clicked = slider.parents(".mapTrans");
+    //     var mapIndex = $('.mapTrans').index(clicked);
 
-        // Para los graciosillos
-        if(eye.hasClass('fa-eye')){
-            images[mapIndex].setOpacity($(this).val() * 0.01);
-        } else {
-            images[mapIndex].setOpacity(0);
-        }
-    });
+    //     // Para los graciosillos
+    //     if(eye.hasClass('fa-eye')){
+    //         images[mapIndex].setOpacity($(this).val() * 0.01);
+    //     } else {
+    //         images[mapIndex].setOpacity(0);
+    //     }
+    // });
     
     //////////////////////////////////////////////////////////////////////////////////////////
     // AUXILIAR METHODS //////////////////////////////////////////////////////////////////////
@@ -60,7 +74,7 @@ $(document).ready(function(){
     // ENABLE EYE /////////////////////////////////////////////////////////////////////////
     function enable(eyeContainer, eye, mapIndex){
         eye.removeClass("fa-eye-slash");
-        var valueOpacity = eyeContainer.siblings().find('.slider').val();
+        var valueOpacity = eyeContainer.siblings().find('.sliderVar').val();
         eyeContainer.siblings().find('.opacity').text(valueOpacity);
         eyeContainer.animate({ 
             opacity: 1,
