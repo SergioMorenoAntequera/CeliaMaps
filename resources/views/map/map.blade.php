@@ -109,7 +109,7 @@
         </div>
     </div>
 
-    <!-- -->
+    <!-- Full screen Menu -->
     <div id="fullScreenMenu">
         <img src="{{url('/img/icons/fsMaximize.png')}}" alt="">
     </div>
@@ -119,21 +119,24 @@
         // http://leaflet-extras.github.io/leaflet-providers/preview/index.html
         var map = L.map('map', {
             minZoom: 6,  //Dont touch, recommended
-            maxZoom: 18, //Dont touch, max zoom
+            // maxZoom: 2, //Dont touch, max zoom 
             zoomControl: false,
         });
         map.setView([36.844092, -2.457840], 14);
 
         //Global maps from the one we will be able to pick one
         var mapTiles = [
-            mapTile0 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            mapTile0 = L.tileLayer.wms('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19, //Dont touch, max zoom 
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             }),
-            mapTile1 = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png', {
+            mapTile1 = L.tileLayer.wms('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png', {
                 attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                maxZoom: 20, //Dont touch, max zoom
                 subdomains: 'abcd',
             }),
-            mapTile2 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            mapTile2 = L.tileLayer.wms('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                maxZoom: 20, //Dont touch, max zoom 
                 attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
             })
         ];

@@ -76,20 +76,22 @@
         // http://leaflet-extras.github.io/leaflet-providers/preview/index.html
         var map = L.map('map', {
             minZoom: 6,  //Dont touch, recommended
-            maxZoom: 18, //Dont touch, max zoom
         });
         map.setView([36.844092, -2.457840], 14);
     
         //Global maps from the one we will be able to pick one
         var mapTiles = [
             mapTile0 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19, //Dont touch, max zoom
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }),
             mapTile1 = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png', {
                 attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                maxZoom: 20, //Dont touch, max zoom
                 subdomains: 'abcd',
             }),
             mapTile2 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                maxZoom: 20, //Dont touch, max zoom
                 attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
             })
         ];
@@ -168,19 +170,32 @@
             }).addTo(map);
             plazaDeToros.bindPopup("Plaza de toros de Almería.");
             
-            //Añadimos las imágenes y sus propiedades
-            //URL de la imagen
-            var img = L.distortableImageOverlay("{{url('img/maps/'.$map->image.'')}}", {
-                //Hacemos que no pue pueda editar
-                selected: true,
-                actions: [L.ScaleAction, L.RotateAction,  L.FreeRotateAction, L.DistortAction, L.EditAction, L.BorderAction, L.OpacityAction, L.RevertAction, L.LockAction, L.DeleteAction],
-                corners: [
-                    L.latLng('{{$map->tlCornerLatitude}}', '{{$map->tlCornerLongitude}}'),
-                    L.latLng('{{$map->trCornerLatitude}}', '{{$map->trCornerLongitude}}'),
-                    L.latLng('{{$map->blCornerLatitude}}', '{{$map->blCornerLongitude}}'),
-                    L.latLng('{{$map->brCornerLatitude}}', '{{$map->brCornerLongitude}}'),
-                ],
-            });
+            //Añadimos las imágenes y sus propiedade
+            var cornerCheck = {{$map->tlCornerLatitude}}0;
+            console.log(cornerCheck);
+            var img = 0;
+            if (cornerCheck !== 0) {
+                img = L.distortableImageOverlay("{{url('img/maps/'.$map->image.'')}}", {
+                    //Hacemos que se pueda editar
+                    selected: true,
+                    actions: [L.ScaleAction, L.RotateAction,  L.FreeRotateAction, L.DistortAction, L.EditAction, L.BorderAction, L.OpacityAction, L.RevertAction, L.LockAction],
+                    corners: [
+                        L.latLng('{{$map->tlCornerLatitude}}', '{{$map->tlCornerLongitude}}'),
+                        L.latLng('{{$map->trCornerLatitude}}', '{{$map->trCornerLongitude}}'),
+                        L.latLng('{{$map->blCornerLatitude}}', '{{$map->blCornerLongitude}}'),
+                        L.latLng('{{$map->brCornerLatitude}}', '{{$map->brCornerLongitude}}'),
+                    ],
+                });
+            } else {
+                img = L.distortableImageOverlay("{{url('img/maps/'.$map->image.'')}}", {
+                    //Hacemos que se pueda editar
+                    selected: true,
+                    actions: [L.ScaleAction, L.RotateAction,  L.FreeRotateAction, L.DistortAction, L.EditAction, L.BorderAction, L.OpacityAction, L.RevertAction, L.LockAction],
+                });
+            }
+
+            //Imagen si este tiene esquinas registradas(Ya ha sido colocado)
+            
             //Añadimos la imagen al mapa
             map.addLayer(img);
             

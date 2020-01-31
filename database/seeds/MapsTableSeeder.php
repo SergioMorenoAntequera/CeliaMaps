@@ -23,6 +23,29 @@ class MapsTableSeeder extends Seeder
             'level' => '1',
             'width' => '900',
             'height' => '400',
+            'tlCornerLatitude' => '36.8551065476929500',
+            'tlCornerLongitude' => '-2.4715805053710940',
+            'trCornerLatitude' => '36.8529775049102400',
+            'trCornerLongitude' => '-2.4231719970703130',
+            'blCornerLatitude' => '36.8355995519090600',
+            'blCornerLongitude' => '-2.4795627593994145',
+            'brCornerLatitude' => '36.8246075036501700',
+            'brCornerLongitude' => '-2.4444580078125004',
+            'created_at' => date('Y-m-d H-m-s'),
+            'updated_at' => date('Y-m-d H-m-s'),
+        ]);
+
+        DB::table('maps')->insert([    
+            //La id no se pone porque se autoincrementa sola
+            'title' => 'Huercal XXI',
+            'description' => 'Mapa de la ciudad de Huercal en el siglo XXI',
+            'city' => 'Huercal',
+            'date' => '2019',
+            'image' => 'NoMap.png',
+            'miniature' => 'MiniatureHuercal2019.png',
+            'level' => '2',
+            'width' => '1080',
+            'height' => '720',
             'tlCornerLatitude' => '36.85510654769295',
             'tlCornerLongitude' => '-2.471580505371094',
             'trCornerLatitude' => '36.85297750491024',
@@ -37,34 +60,11 @@ class MapsTableSeeder extends Seeder
 
         DB::table('maps')->insert([    
             //La id no se pone porque se autoincrementa sola
-            'title' => 'Huercal XXI',
-            'description' => 'Mapa de la ciudad de Huercal en el siglo XXI',
-            'city' => 'Huercal',
-            'date' => '2019',
-            'image' => 'Huercal2019.png',
-            'miniature' => 'MiniatureHuercal2019.png',
-            'level' => '2',
-            'width' => '1080',
-            'height' => '720',
-            'tlCornerLatitude' => null,
-            'tlCornerLongitude' => null,
-            'trCornerLatitude' => null,
-            'trCornerLongitude' => null,
-            'blCornerLatitude' => null,
-            'blCornerLongitude' => null,
-            'brCornerLatitude' => null,
-            'brCornerLongitude' => null,
-            'created_at' => date('Y-m-d H-m-s'),
-            'updated_at' => date('Y-m-d H-m-s'),
-        ]);
-
-        DB::table('maps')->insert([    
-            //La id no se pone porque se autoincrementa sola
             'title' => 'Almería XX',
             'description' => 'Mapa de la ciudad de Almeria en el siglo XX',
             'city' => 'Almería',
             'date' => '1990',
-            'image' => 'Almeria1990.png',
+            'image' => 'KindOfMap3.png',
             'miniature' => 'MiniatureAlmeria1990.png',
             'level' => '3',
             'width' => '400',
