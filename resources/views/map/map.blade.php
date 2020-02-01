@@ -28,8 +28,48 @@
 <body id="body">
     <div id="map"></div>
 
+    
     <!-- Upper left menu for the maps -->
-    <div id="mapsMenu">
+    <div id="trMenu">
+        <div class="ballMenu">
+            <div class="ballMenuContent">
+                <img class="noselect" src="{{url('img/icons/menu.png')}}" alt="">
+            </div>
+        </div>
+        <div id="ballStreets" class="ball noselect">
+            Tonto el 
+        </div>
+        <div id="ballHotspots" class="ball noselect">
+            que lo
+        </div>
+        <div id="ballStreets" class="ball noselect">
+            lea
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $('.ballMenu').on('click', function(){
+                var balls = $(this).siblings(".ball");
+                balls.each(function(index){
+                    var ball = jQuery(balls[index]);
+                    if(ball.css('top') == "0px"){
+                        var lefts = new Array("110px", "75px", "10px");
+                        var tops = new Array("10px", "75px", "110px");
+                    } else {
+                        var lefts = new Array("0px", "0px", "0px");
+                        var tops = new Array("0px", "0px", "0px");
+                    }
+                    ball.animate({
+                        left: lefts[index],
+                        top: tops[index],
+                    }, 200);
+                });
+            }); 
+        });
+    </script>
+    
+    {{-- <div id="mapsMenu">
         <!-- Todo el menú -->
         <div id="mapsTrans">
             @php $first = true; @endphp
@@ -48,7 +88,7 @@
                             <!-- The slider and the number-->
                             <div class="contSlider slider">
                                 <input id="transparency{{$map->id}}" type="range" min="0" max="100" value="100" class="sliderVar" oninput="sliderChange(this.value, this.id)">
-                                <span class="opacity">100</span>
+                                <span class="noselect opacity">100</span>
                             </div>
                         </div>
                     @else
@@ -61,7 +101,7 @@
                             <!-- The slider and the number-->
                             <div style="display: none;" class="contSlider ">
                                 <input id="transparency{{$map->id}}" type="range" min="0" max="100" value="100" class="sliderVar"  oninput="sliderChange(this.value, this.id)">
-                                <span class="opacity">0</span>
+                                <span class="noselect opacity">0</span>
                             </div>
                         </div>
                     @endif
@@ -82,12 +122,11 @@
                 @endif
             @endforeach  
         </div>
-        
         <br>
         <div id="mapsShow">
             <i class="fa fa-chevron-up"></i>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Bottom left menu for the maps -->
     <div id="tilesMenu">
