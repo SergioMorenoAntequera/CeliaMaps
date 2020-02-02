@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -27,7 +28,7 @@ class LoginController extends Controller
      */
 
      // POR AHORA EL LOGIN REDIRECIONA A MAP.INDEX YA VEREMOS DONDE VA FINALMENTE
-    protected $redirectTo = '/map';
+    protected $redirectTo = 'user';
 
     // CON ESTA VARIABLE REDIRECCIONAMOS EL LOGOUT A LA PÁGINA PRINCIPAL 
     protected $redirectAfterLogout = '/'; 
@@ -41,4 +42,5 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+   
 }

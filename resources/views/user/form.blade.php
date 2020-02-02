@@ -83,7 +83,7 @@
                     <form action="{{route('user.index')}}" method="GET">
                         @csrf
                         @method("GET|HEAD")
-                        <input type="submit" class="btn btn-info" name="inicio" value="Inicio Usuarios">
+                        <input type="submit" class="btn btn-info" name="inicio" value="Volver">
                     </form>
                 </div>
 

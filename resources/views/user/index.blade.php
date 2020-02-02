@@ -3,19 +3,19 @@
 @section('title', 'Celia Maps')
     
 @section('content')
-
+<div class="container">
 <div class="insertar float-right" style="padding: 80px 80px 15px 0px">
         <form action= "{{route('user.create')}}" method= "GET">
                 @csrf
                 @method("GET|HEAD")
-                <input type="submit" value="Insertar">
+                <input type="submit" value="Nuevo Usuario">
         </form>
 </div>
 
-<table class="table table-hover text-white">
+<table class="table table-hover text-white bg-primary">
     <thead>
         <tr>
-            <th>Id</th><th>Nombre</th><th>Email</th><th>Contraseña</th><th>Nivel</th><th>accion1</th><th>accion2</th>
+            <th>Id</th><th>Nombre</th><th>Email</th><th>Contraseña</th><th>Nivel</th><th>Editar</th><th>Eliminar</th>
         </tr>
     </thead>
     @foreach ($userList as $user)
@@ -49,8 +49,8 @@
         
     @endforeach
 </table>
-
+</div>
 
 @endsection
-                   
+   
     
