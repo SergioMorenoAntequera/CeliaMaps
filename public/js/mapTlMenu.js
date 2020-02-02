@@ -17,8 +17,6 @@ function sliderChange(value, id){
 }
 
 $(document).ready(function(){
-
-    $('#mapsMenu').slideToggle(300);
     //Eye to enable disable tranparencies
     $('.contEye').click(function(){
         swapShowMenu($(this));
@@ -39,24 +37,10 @@ $(document).ready(function(){
             icono.addClass('fa-chevron-up');
         }
     });
-
-    // CHANGING THE OPACITY OF THE MAP ON TOP  ///////////////////////////////////////////////
-    // $('.slider').change(function(){
-    //     var slider = $(this);
-    //     var eye = slider.parents(".mapTrans").find("i");
-    //     var clicked = slider.parents(".mapTrans");
-    //     var mapIndex = $('.mapTrans').index(clicked);
-
-    //     // Para los graciosillos
-    //     if(eye.hasClass('fa-eye')){
-    //         images[mapIndex].setOpacity($(this).val() * 0.01);
-    //     } else {
-    //         images[mapIndex].setOpacity(0);
-    //     }
-    // });
     
     //////////////////////////////////////////////////////////////////////////////////////////
     // AUXILIAR METHODS //////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////
 
     // SWAP BETWEEN EYES MODES //////////////////////////////////////////////////////////////
     function swapShowMenu(eyeContainer){

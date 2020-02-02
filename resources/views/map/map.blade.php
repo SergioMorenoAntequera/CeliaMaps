@@ -31,103 +31,167 @@
     
     <!-- Upper left menu for the maps -->
     <div id="trMenu">
+        {{-- CONTROLADOR DEL MENÚ --}}
         <div class="ballMenu">
             <div class="ballMenuContent">
                 <img class="noselect" src="{{url('img/icons/menu.png')}}" alt="">
             </div>
         </div>
-        <div id="ballStreets" class="ball noselect">
-            Tonto el 
+        <div id="ballMaps" class="ball noselect">
+            <div class="ballContent">
+                <img class="noselect" src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
+            </div>
         </div>
         <div id="ballHotspots" class="ball noselect">
-            que lo
+            <div class="ballContent">
+                <img class="noselect" src="{{url('img/icons/tlMenuToken.png')}}" title="Puntos de interés">
+            </div>
         </div>
         <div id="ballStreets" class="ball noselect">
-            lea
+           <div class="ballContent">
+                <img class="noselect" src="{{url('img/icons/tlMenuStreet.png')}}" title="Callejero">
+            </div>
         </div>
+
+        {{-- CONTENIDO DE MENÚ --}}
+        {{-- Todos los menús que podemos poner --}}
+
+        {{-- Menú de los mapas --}}
+        <div id="mapsMenu" class="menu">
+                <!-- Todo el menú -->
+                <div class="closeMenuButton">
+                    <i class="fa fa-times"></i>
+                </div>
+                <img class="noselect" src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
+                <div id="mapsTrans">
+                    {{-- Para activar el primer mapa y los otros no  --}}
+                    @php $first = true; @endphp
+                    {{-- Variables donde metemos los mapas --}}
+                    <script> var images = new Array(); </script>
+                    {{-- Por cada mapa que encontramos en la base de datos  --}}
+                    @foreach ($maps as $map)
+                        {{-- Comprobamos que tenga una posición en el mapa --}}
+                        @if (!empty($map->tlCornerLatitude))
+                            {{-- Si es el primero aparece activado --}}
+                            @if ($first)
+                                <!-- Si es el primero quitamos la variable de en medio -->
+                                @php $first = false; @endphp
+                                <!-- Cada una de las filas para los mapas -->
+                                <div id="mapTrans{{$map->level}}" class="mapTrans">
+                                    <!-- The eye and thr title -->
+                                    <div class="contEye">
+                                        <i class="eye fa fa-eye fa-2x"></i><h2 class="noselect title">{{$map->title}}</h2>
+                                    </div>
+                                    <!-- The slider and the number-->
+                                    <div class="contSlider slider">
+                                        <input id="transparency{{$map->id}}" type="range" min="0" max="100" value="100" class="sliderVar" oninput="sliderChange(this.value, this.id)">
+                                        <span class="noselect opacity">100</span>
+                                    </div>
+                                </div>
+                            @else
+                                <!-- Si no lo es hacemos que no esté seleccionado -->
+                                <div id="mapTrans{{$map->level}}" class="mapTrans">
+                                    <!-- The eye and thr title -->
+                                    <div style="opacity:0.50;" class="contEye">
+                                        <i class="eye fa fa-eye-slash fa-2x"></i><h2 class="noselect title">{{$map->title}}</h2>
+                                    </div>
+                                    <!-- The slider and the number-->
+                                    <div style="display: none;" class="contSlider ">
+                                        <input id="transparency{{$map->id}}" type="range" min="0" max="100" value="100" class="sliderVar"  oninput="sliderChange(this.value, this.id)">
+                                        <span class="noselect opacity">0</span>
+                                    </div>
+                                </div>
+                            @endif
+                            <script>
+                                //Añadimos las imágenes y sus propiedades
+                                var img = L.distortableImageOverlay("{{url('img/maps/'.$map->image.'')}}", {
+                                    //Hacemos que no pue pueda editar
+                                    editable: false,
+                                    corners: [
+                                        L.latLng('{{$map->tlCornerLatitude}}', '{{$map->tlCornerLongitude}}'),
+                                        L.latLng('{{$map->trCornerLatitude}}', '{{$map->trCornerLongitude}}'),
+                                        L.latLng('{{$map->blCornerLatitude}}', '{{$map->blCornerLongitude}}'),
+                                        L.latLng('{{$map->brCornerLatitude}}', '{{$map->brCornerLongitude}}'),
+                                    ],
+                                });
+                                images.push(img);
+                            </script>
+                        @endif <!-- Si no tiene alineamiento no se pone el mapa -->
+                    @endforeach  
+                </div>
+        </div>
+            
+        {{-- Manú de los hotspots --}}
+        <div id="hotspotsMenu" class="menu">
+            <div class="closeMenuButton">
+                <i class="fa fa-times"></i>
+            </div>
+            <img class="noselect" src="{{url('img/icons/tlMenuToken.png')}}" title="Puntos de interés">
+            <div id="hotspotsContent">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium deserunt sint omnis, fuga nam blanditiis qui pariatur quidem repellat labore facere consequatur neque accusamus amet aspernatur fugit, enim aliquid autl!
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis architecto odit itaque incidunt necessitatibus cum, soluta quam beatae vel odio reiciendis repudiandae nam nobis optio vero corporis voluptatibus earum similique.
+            </div>
+        </div>
+
+        {{-- Menú del callejero --}}
+        <div id="streetsMenu" class="menu">
+            <div class="closeMenuButton">
+                <i class="fa fa-times"></i>
+            </div>
+            <img class="noselect" src="{{url('img/icons/tlMenuStreet.png')}}" title="Callejero">
+            <div id="steetsContent">
+                Menú del callejero que creo que irá a la parte derecha de la pantalla
+            </div>
+        </div>
+
     </div>
 
     <script>
         $(document).ready(function(){
             $('.ballMenu').on('click', function(){
-                var balls = $(this).siblings(".ball");
-                balls.each(function(index){
-                    var ball = jQuery(balls[index]);
-                    if(ball.css('top') == "0px"){
-                        var lefts = new Array("110px", "75px", "10px");
-                        var tops = new Array("10px", "75px", "110px");
-                    } else {
-                        var lefts = new Array("0px", "0px", "0px");
-                        var tops = new Array("0px", "0px", "0px");
-                    }
-                    ball.animate({
-                        left: lefts[index],
-                        top: tops[index],
-                    }, 200);
-                });
-            }); 
-        });
-    </script>
-    
-    {{-- <div id="mapsMenu">
-        <!-- Todo el menú -->
-        <div id="mapsTrans">
-            @php $first = true; @endphp
-            <script> var images = new Array(); </script>
-            @foreach ($maps as $map)
-                @if (!empty($map->tlCornerLatitude))
-                    @if ($first)
-                        <!-- Si es el primero lo ponemos para que se vea este -->
-                        @php $first = false; @endphp
-                        <!-- Cada una de las filas para los mapas -->
-                        <div id="mapTrans{{$map->level}}" class="mapTrans">
-                            <!-- The eye and thr title -->
-                            <div class="contEye">
-                                <i class="eye fa fa-eye fa-2x"></i><h2 class="noselect title">{{$map->title}}</h2>
-                            </div>
-                            <!-- The slider and the number-->
-                            <div class="contSlider slider">
-                                <input id="transparency{{$map->id}}" type="range" min="0" max="100" value="100" class="sliderVar" oninput="sliderChange(this.value, this.id)">
-                                <span class="noselect opacity">100</span>
-                            </div>
-                        </div>
-                    @else
-                        <!-- Si no lo es hacemos que no esté seleccionado -->
-                        <div id="mapTrans{{$map->level}}" class="mapTrans">
-                            <!-- The eye and thr title -->
-                            <div style="opacity:0.50;" class="contEye">
-                                <i class="eye fa fa-eye-slash fa-2x"></i><h2 class="noselect title">{{$map->title}}</h2>
-                            </div>
-                            <!-- The slider and the number-->
-                            <div style="display: none;" class="contSlider ">
-                                <input id="transparency{{$map->id}}" type="range" min="0" max="100" value="100" class="sliderVar"  oninput="sliderChange(this.value, this.id)">
-                                <span class="noselect opacity">0</span>
-                            </div>
-                        </div>
-                    @endif
-                    <script>
-                        //Añadimos las imágenes y sus propiedades
-                        var img = L.distortableImageOverlay("{{url('img/maps/'.$map->image.'')}}", {
-                            //Hacemos que no pue pueda editar
-                            editable: false,
-                            corners: [
-                                L.latLng('{{$map->tlCornerLatitude}}', '{{$map->tlCornerLongitude}}'),
-                                L.latLng('{{$map->trCornerLatitude}}', '{{$map->trCornerLongitude}}'),
-                                L.latLng('{{$map->blCornerLatitude}}', '{{$map->blCornerLongitude}}'),
-                                L.latLng('{{$map->brCornerLatitude}}', '{{$map->brCornerLongitude}}'),
-                            ],
-                        });
-                        images.push(img);
-                    </script>
-                @endif
-            @endforeach  
-        </div>
-        <br>
-        <div id="mapsShow">
-            <i class="fa fa-chevron-up"></i>
-        </div>
-    </div> --}}
+                toggleBalls();
+            });
 
+            $('.ball').on("click", function(){
+                console.log($(this).index());
+                if($(this).index() == 1) {
+                    $("#mapsMenu").fadeToggle(100);
+                }
+                if($(this).index() == 2) {
+                    $("#hotspotsMenu").fadeToggle(100);
+                }
+                if($(this).index() == 3) {
+                    $("#streetsMenu").fadeToggle(100);
+                }
+            });
+            $('.closeMenuButton').on("click", function(){
+                $(this).parent().fadeOut(100);
+            });
+            
+        });
+
+        function toggleBalls(){
+            var BallMenu = $(".ballMenu");
+            var balls = BallMenu.siblings(".ball");
+            balls.each(function(index){
+                var ball = jQuery(balls[index]);
+                if(ball.css('top') == "0px"){
+                    var lefts = new Array("110px", "75px", "10px");
+                    var tops = new Array("10px", "75px", "110px");
+                } else {
+                    var lefts = new Array("0px", "0px", "0px");
+                    var tops = new Array("0px", "0px", "0px");
+                }
+                ball.animate({
+                    left: lefts[index],
+                    top: tops[index],
+                }, 200);
+            });
+        }
+
+        
+
+    </script>
     <!-- Bottom left menu for the maps -->
     <div id="tilesMenu">
         <div id="tilesShow">

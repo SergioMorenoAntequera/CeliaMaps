@@ -14,32 +14,130 @@ html, body {
     z-index: 0;
 }
 
-/*/////////////////////////////////////////////////////////////////////*/
-/*/////////////////// MENU DE ARRIBA A LA IZQUIERDA ///////////////////*/
-/*/////////////////////////////////////////////////////////////////////*/
+/*//////////////////////////////////////////////////////////////////////*/
+/*///////////////////// MENU DE arriba A LA IZQUIERDA //////////////////*/
+/*/////////////////// con las peloticas y todo eso  ////////////////////*/
+/*//////////////////////////////////////////////////////////////////////*/
 
-#mapsMenu {
-    left: 10px;
-    top: 15px;
-    background-color:#FFFFFF;
-    z-index: 1;
+/*** BOLA PRINCIPAL ****/
+.ballMenu {
     position: absolute;
-    width: 220px;
-    height: auto;
-    display: none;
+    z-index: 99;
+    left: -100px;
+    top: -100px;
 
+    width: 200px;
+    height: 200px;
+
+    border-radius: 50%;
     border-style: solid;
-    border-width: 0px 2px 2px 0px;
+    border-width: 2px 2px 2px 2px;
     border-color: #E0E0E0;
+    background-color: #FFFFFF;
+    cursor: pointer;
+}
+.ballMenu > .ballMenuContent {
+    float: left;
+    position: relative;
+    width: 60px;
+    height: 60px;
+    left: 105px;
+    top: 105px;
+}
+.ballMenu > .ballMenuContent > img{
+    width: 100%;
     
-    padding-left: 30px;
-    border-radius: 10px;
 }
 
+/*** BOLAS SECUNDARIAS ****/
+.ball {
+    position: absolute;
+    z-index: 98;
+    left: 100;
+    top: 0;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+    border-style: solid;
+    border-width: 2px 2px 2px 2px;
+    border-color: #E0E0E0;
+    background-color: #FFFFFF;
+    cursor: pointer;
+}
+.ball > .ballContent {
+    float: left;
+    position: relative;
+    width: 30px;
+    height: 30px;
+    top: 5px;
+    left: 5px;
+}
+.ball > .ballContent > img {
+    width: 100%;
+}
+
+/*/////////////////////////////////////////////////////////////////////*/
+/*///////////////////////// CONTENDOR DE MENUS ////////////////////////*/
+/*/////////////////////////////////////////////////////////////////////*/
+/* #contentMenu{
+    display: flex;
+    flex-direction: row;
+    height: auto;
+
+    z-index: 0;
+    
+    position: absolute;
+    left: 120px;
+    top: 15px;
+    background-color:red;
+} */
+.menu{
+    position: absolute;
+    height: auto;
+    width: auto;
+
+    background-color:#FFFFFF;
+    border-style: solid;
+    border-color: #E0E0E0;
+    border-radius: 10px;
+    margin: 0px 5px 0px 5px;
+    padding: 5px 10px 5px 10px;
+}
+.menu > img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    width: 30px;
+}
+.closeMenuButton {
+    position: relative;
+    float: right;
+    width: 20px;
+
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+}
+
+
+
+
+/*/////////////////////////// MENU DE MAPAS ///////////////////////////*/
+#mapsMenu {
+    left: 190px;
+    top: 20px;
+}
+
+#mapsTrans {
+    
+    width: 190px;
+    height: auto;
+}
 .mapTrans {
-    margin-bottom: 10px;
-    margin-top: 10px;
-       
+    margin: 5px 10px 5px 10px;   
 }
 .contEye {
     cursor: pointer;
@@ -55,27 +153,28 @@ html, body {
     width: 50%;
 }
 
-#mapsShow {
-    text-align: center;
-    width: 50px;
-    height: 30px;
-    position: relative; 
-    top: -8px;
-    margin-bottom: -35px;
-    left: 170px;
+/*/////////////////////////// MENU DE HOTSPOTS ///////////////////////////*/
+#hotspotsMenu {
     
-    border-radius: 10px;
-
-    border-style: solid;
-    border-width: 2px 2px 2px 2px;
-    border-color: #E0E0E0;
-    background-color:#FFFFFF;
-    cursor: pointer;
+    left: 10px;
+    top: 110px;
+    width: 150px;
+    height: 300px;
+}
+#hotspotsMenu > #hotspotsContent {
+    overflow-y: auto;
+    width: 100%;
+    height: 270px;
 }
 
-#mapsShow > i {
-    margin-top: 7px;
+/*/////////////////////////// MENU DE CALLEJERO ///////////////////////////*/
+#streetsMenu {
+    top: 20px;
+    right: 10px;
+    width: 190px;
+    height: auto;
 }
+
 
 
 /*/////////////////////////////////////////////////////////////////////*/
@@ -199,59 +298,6 @@ html, body {
     height: 100%;
 }
 
-
-/*//////////////////////////////////////////////////////////////////////*/
-/*///////////////////// MENU DE arriba A LA DERECHA ////////////////////*/
-/*/////////////////// con las peloticas y todo eso  ////////////////////*/
-/*//////////////////////////////////////////////////////////////////////*/
-
-/*** BOLA PRINCIPAL ****/
-.ballMenu {
-    position: absolute;
-    z-index: 99;
-    left: -100px;
-    top: -100px;
-
-    width: 200px;
-    height: 200px;
-
-    border-radius: 50%;
-    border-style: solid;
-    border-width: 2px 2px 2px 2px;
-    border-color: #E0E0E0;
-    background-color: #FFFFFF;
-    cursor: pointer;
-}
-.ballMenu > .ballMenuContent {
-    float: left;
-    position: relative;
-    width: 60px;
-    height: 60px;
-    left: 105px;
-    top: 105px;
-}
-.ballMenu > .ballMenuContent > img{
-    width: 100%;
-    
-}
-
-/*** BOLAS SECUNDARIAS ****/
-.ball {
-    position: absolute;
-    z-index: 98;
-    left: 100;
-    top: 0;
-
-    width: 40px;
-    height: 40px;
-
-    border-radius: 50%;
-    border-style: solid;
-    border-width: 2px 2px 2px 2px;
-    border-color: #E0E0E0;
-    background-color: #FFFFFF;
-    cursor: pointer;
-}
 
 
 
