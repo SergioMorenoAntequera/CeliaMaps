@@ -18,6 +18,7 @@
 
     <!-- JQUERY -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!-- PERSONAL CSS -->
     <link rel="stylesheet" href="{{url('/css/Frontend.css')}}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -26,11 +27,18 @@
     <script src="{{url('js/mapFullScreenMenu.js')}}"></script>
 </head>
 <body id="body">
-    <div id="map"></div>
+    <!-- Div where the map and all the menus will
+    go so we are able to drag booth the menues and go 
+    trought the map -->
+    <div id="draggableArea">
 
-    
-    <!-- Upper left menu for the maps -->
-    <div id="trMenu">
+        {{-- Mapa --}}
+        <div id="map"></div>
+        
+        {{---------------------------------------------------------}}
+        {{-- MENU DE ARRIBA A LA DERECHA Y LAS VENTANAS FLOTANTE --}}
+        {{---------------------------------------------------------}}
+
         {{-- CONTROLADOR DEL MENÚ --}}
         <div class="ballMenu">
             <div class="ballMenuContent">
@@ -143,56 +151,15 @@
                 Menú del callejero que creo que irá a la parte derecha de la pantalla
             </div>
         </div>
-
     </div>
 
     <script>
-        $(document).ready(function(){
-            $('.ballMenu').on('click', function(){
-                toggleBalls();
-            });
-
-            $('.ball').on("click", function(){
-                console.log($(this).index());
-                if($(this).index() == 1) {
-                    $("#mapsMenu").fadeToggle(100);
-                }
-                if($(this).index() == 2) {
-                    $("#hotspotsMenu").fadeToggle(100);
-                }
-                if($(this).index() == 3) {
-                    $("#streetsMenu").fadeToggle(100);
-                }
-            });
-            $('.closeMenuButton').on("click", function(){
-                $(this).parent().fadeOut(100);
-            });
-            
-        });
-
-        function toggleBalls(){
-            var BallMenu = $(".ballMenu");
-            var balls = BallMenu.siblings(".ball");
-            balls.each(function(index){
-                var ball = jQuery(balls[index]);
-                if(ball.css('top') == "0px"){
-                    var lefts = new Array("110px", "75px", "10px");
-                    var tops = new Array("10px", "75px", "110px");
-                } else {
-                    var lefts = new Array("0px", "0px", "0px");
-                    var tops = new Array("0px", "0px", "0px");
-                }
-                ball.animate({
-                    left: lefts[index],
-                    top: tops[index],
-                }, 200);
-            });
-        }
-
         
-
     </script>
-    <!-- Bottom left menu for the maps -->
+
+    {{-----------------------------------------------------------}}
+    {{-- BOTTOM LEFT MENU TO CHANGE THE KIND OF MAP TO DISPLAY --}}
+    {{-----------------------------------------------------------}}
     <div id="tilesMenu">
         <div id="tilesShow">
             <i class="fa fa-chevron-down"></i>
@@ -210,11 +177,17 @@
         </div>
     </div>
 
-    <!-- Full screen Menu -->
+    {{-------------------------------------------------------------}}
+    {{-- BOTTOM RIGHT MENU SO WE CAN DISPLAY S WE CAN FULLSCREEN --}}
+    {{-------------------------------------------------------------}}
     <div id="fullScreenMenu">
         <img src="{{url('/img/icons/fsMaximize.png')}}" alt="">
     </div>
     
+    {{---------------------------------------------------------------}}
+    {{-- ALL OF THE PARTS RELATED WITH SHOWING THE MAPS AND LAYERS --}}
+    {{---------------------------------------------------------------}}
+
     <script>
         // Pagina donde están los proveedores de mapas:
         // http://leaflet-extras.github.io/leaflet-providers/preview/index.html
@@ -242,28 +215,34 @@
             })
         ];
         //Adding rhe layers to the map
-        map.addLayer(mapTile0);
+        map.addLayer(mapTile2);
 
-        //Here we are adding the images on top of the map
+        //Here we are adding the images(of the diferent maps) on top of the map
         map.whenReady(function() {
-            
-            var first = true;
             //Añadimos la imagen al mapa
             images.forEach(function(img) {
+                //Then we add all the different maps
                 map.addLayer(img);
-                if(!first){
+                map.bringToFront();
+                //And if they are not the first one
+                if(img != images[0]){
+                    //We take the opacity to 0 so they are hidding now
                     img.setOpacity(0);
                 }
-                first = false;
             });
 
+            // Small arrow to allow us to hide the menu at the bottom left
             $('#mapsShow').click(function(){
+                // We control it using the icon
                 var icono = $(this).find('i');
+                //If it's up(Menu closed)
                 if(icono.hasClass("fa-chevron-up")){
+                    //We show it by moving it up
                     $(this).parent().animate({
                         top: "0px",
                     }, 300);
                 } else {
+                    //If the menu is down we move it up
                     $(this).parent().animate({
                         top: "15px",
                     }, 300);

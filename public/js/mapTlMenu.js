@@ -17,6 +17,29 @@ function sliderChange(value, id){
 }
 
 $(document).ready(function(){
+
+    $(".menu").draggable();
+            
+    $('.ballMenu').on('click', function(){
+        toggleBalls();
+    });
+
+    $('.ball').on("click", function(){
+        console.log($(this).index());
+        if($(this).index() == 1) {
+            $("#mapsMenu").fadeToggle(100);
+        }
+        if($(this).index() == 2) {
+            $("#hotspotsMenu").fadeToggle(100);
+        }
+        if($(this).index() == 3) {
+            $("#streetsMenu").fadeToggle(100);
+        }
+    });
+    $('.closeMenuButton').on("click", function(){
+        $(this).parent().fadeOut(100);
+    });
+
     //Eye to enable disable tranparencies
     $('.contEye').click(function(){
         swapShowMenu($(this));
@@ -41,6 +64,26 @@ $(document).ready(function(){
     //////////////////////////////////////////////////////////////////////////////////////////
     // AUXILIAR METHODS //////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////
+
+    // CAMBIAR ENTRE ENSEÑAR LAS BOLAS O NO //////////////////////////////////////////////////
+    function toggleBalls(){
+        var BallMenu = $(".ballMenu");
+        var balls = BallMenu.siblings(".ball");
+        balls.each(function(index){
+            var ball = jQuery(balls[index]);
+            if(ball.css('top') == "0px"){
+                var lefts = new Array("110px", "75px", "10px");
+                var tops = new Array("10px", "75px", "110px");
+            } else {
+                var lefts = new Array("0px", "0px", "0px");
+                var tops = new Array("0px", "0px", "0px");
+            }
+            ball.animate({
+                left: lefts[index],
+                top: tops[index],
+            }, 200);
+        });
+    }
 
     // SWAP BETWEEN EYES MODES //////////////////////////////////////////////////////////////
     function swapShowMenu(eyeContainer){
