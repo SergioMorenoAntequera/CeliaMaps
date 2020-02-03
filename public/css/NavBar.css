@@ -1,3 +1,31 @@
+/* El mensaje que cae de arriba con el resto del menú */
+#fallingMenu{
+    z-index: 998;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: -100%;
+    align-items: center;
+
+    text-align: center;
+    background-size: 100% 100%; 
+}
+#fallingMenuContent{
+    position: relative;
+    top: 12%;
+    
+    font-family: 'Dancing Script', cursive;
+    color: black;
+    font-size: 32px;
+    font-weight: bold;
+}
+#fallingMenuContent > a {
+    display: block;
+    margin-top: 10px;
+}
+
+/* BARRA DE NAVEGACIÓN QUE SE VE SIN TENER QUE DESPLEGAR NADA */
 #navBar {
     height: 100px;
 }
@@ -9,6 +37,7 @@
     color: #21fee1;
     font-size: 21px;
 }
+
 #navBar > .row > {
     height: 30px;
     
