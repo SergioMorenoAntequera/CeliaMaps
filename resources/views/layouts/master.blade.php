@@ -36,10 +36,10 @@
                 <div class="row align-items-start text-center font-weight-bold">
                     <!-- Parte de la izquierda -->
                     <div class="offset-1 col-4">
-                        <div class="row mt-4">
-                            <div class="col headerLink">
+                        <div class="row mt-4">                           
+                            <div class="col headerLink">                                
                                 <a class="text-reset text-decoration-none" href="{{route('hotspot.index')}}">HOTSPOTS</a>
-                            </div>
+                            </div>                            
                             <div class="col headerLink">
                                 <a class="text-reset text-decoration-none" href="">IMÁGENES</a>
                             </div>
@@ -63,8 +63,15 @@
                             </div>                           
                             @auth
                             <div class="col headerLink">
-                                <a class="text-reset text-decoration-none" href="{{route('register')}}">LOGOUT</a>
+                                 <!-- INCLUYO AQUÍ LA RUTA DEL LOGOUT DE LARAVEL PARA QUE NO PASE POR LA PÁGINA OFICIAL,
+                                SINO QUE VAYA DIRECTAMENTE A LA PÁGINA PRINCIPAL --> 
+                                <a class="text-reset text-decoration-none" href=""
+                                onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">LOGOUT</a>
                             </div>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                             @else 
                             <div class="col headerLink">
                                 <a class="text-reset text-decoration-none" href="{{route('login')}}">LOGIN</a>
@@ -95,5 +102,5 @@
     
     <!-- Optional views scripts -->
     @yield('scripts')
-
+   
 </html>

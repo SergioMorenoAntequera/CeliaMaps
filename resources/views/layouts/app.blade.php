@@ -1,80 +1,93 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <head>
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+        <meta charset="utf-8">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>@yield('title')</title>
+        
+        <!--CDN-->
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-</head>
-<body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+        <link rel="icon" type="image/png" href="{{url('/img/icons/icon.png')}}" sizes="64x64">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" integrity="sha384-SI27wrMjH3ZZ89r4o+fGIJtnzkAnFs3E4qz9DIYioCQ5l9Rd/7UAa8DHcaL8jkWt" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{url('/css/Backend.css')}}">
+        <link rel="stylesheet" href="{{url('/css/BootstrapOverride.css')}}">
+        <link rel="stylesheet" href="{{url('/css/Global.css')}}">
+        <link rel="stylesheet" href="{{url('/css/streets.css')}}">
+        <link rel="stylesheet" href="{{url('/css/Hotspots.css')}}">
+        <link rel="stylesheet" href="{{url('/css/NavBar.css')}}">
+        <script
+            src="https://code.jquery.com/jquery-3.4.1.js"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+            crossorigin="anonymous">
+        </script>
+    </head>
+    
+    <body class="bg-dark text-white">
+        
+        <!-- Header -->
+        <header>
+            <div id="navBar" class="container">
+                <!-- La imagen que está en el centro -->
+                <a href="{{route('map.map')}}">
+                <img id="menuImg" src="{{url('img/icons/menuArrow.png')}}">
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            <!-- COMENTO ESTA PARTE PARA ELIMINAR LA OPCION DE REGISTRO DEL LOGIN
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Registro') }}</a>
-                                </li>
-                            @endif
-                            -->
-                        @else
-                        <!--
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                AQUI ACABA LA PARTE COMENTADA PARA ELIMINAR LA OPCIÓN DE REGISTRO DEL LOGIN -->        
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
+                <!-- Fila que tiene el resto del menú -->
+                <div class="row align-items-start text-center font-weight-bold">
+                    <!-- Parte de la izquierda -->
+                    <div class="offset-1 col-4">
+                        <div class="row mt-4">                           
+                            <div class="col headerLink">                                
+                                <a class="text-reset text-decoration-none" href="{{route('hotspot.index')}}">HOTSPOTS</a>
+                            </div>                            
+                            <div class="col headerLink">
+                                <a class="text-reset text-decoration-none" href="">IMÁGENES</a>
+                            </div>
+                            <div class="col headerLink">
+                                <a class="text-reset text-decoration-none" href="{{route('map.index')}}">MAPAS</a> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="offset-2"></div>
+                    <!-- Parte de la derecha --> 
+                    <div class="col-5">   <!-- HE CAMBIADO EL NÚMERO DE COLUMNAS DE 4 A 5 PARA METER TEMPORALMENTE EL LOGIN -->
+                        <div class="row mt-4">
+                            <div class="col headerLink">
+                                <a class="text-reset text-decoration-none" href="{{route('point.index')}}">PUNTOS</a>
+                            </div>
+                            <div class="col headerLink">
+                                <a class="text-reset text-decoration-none" href="{{route('street.index')}}">CALLES</a>
+                            </div>
+                            <div class="col headerLink">
+                                <a class="text-reset text-decoration-none" href="{{route('user.index')}}">USUARIOS</a>
+                            </div>                           
+                            @auth
+                            <div class="col headerLink">
+                                 <!-- INCLUYO AQUÍ LA RUTA DEL LOGOUT DE LARAVEL PARA QUE NO PASE POR LA PÁGINA OFICIAL,
+                                SINO QUE VAYA DIRECTAMENTE A LA PÁGINA PRINCIPAL --> 
+                                <a class="text-reset text-decoration-none" href=""
+                                onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">LOGOUT</a>
+                            </div>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                            @else 
+                            <div class="col headerLink">
+                                <a class="text-reset text-decoration-none" href="{{route('login')}}">LOGIN</a>
+                            </div>
+                            @endauth
+                        </div>
+                    </div>
+                </div> 
             </div>
-        </nav>
+        </header>
+<body>
+    
+    <div id="app">
+        
 
         <main class="py-4">
             @yield('content')
