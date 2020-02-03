@@ -29,7 +29,7 @@
     </div>
 
 @foreach ($userList as $user)
-    <div id="usuario" class="row">
+    <div id="usuario" class="row mt-4">
         <div class="col-1">
         {{$user->id}}
         </div>
@@ -68,6 +68,12 @@
     @endforeach
 
 </div>
+
+@endsection
+@section('scripts')
+
+<script type="text/javascript" src="{{url('/js/user.js')}}">
+</script>
 
 @endsection
    
