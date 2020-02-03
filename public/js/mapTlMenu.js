@@ -25,17 +25,17 @@ $(document).ready(function(){
     });
 
     $('.ball').on("click", function(){
-        console.log($(this).index());
-        if($(this).index() == 1) {
+        if($(this).attr("id").includes("Maps")) {
             $("#mapsMenu").fadeToggle(100);
         }
-        if($(this).index() == 2) {
+        if($(this).attr("id").includes("Hotspots")) {
             $("#hotspotsMenu").fadeToggle(100);
         }
-        if($(this).index() == 3) {
+        if($(this).attr("id").includes("Streets")) {
             $("#streetsMenu").fadeToggle(100);
         }
     });
+    
     $('.closeMenuButton').on("click", function(){
         $(this).parent().fadeOut(100);
     });

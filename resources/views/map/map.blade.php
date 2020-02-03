@@ -223,7 +223,7 @@
             images.forEach(function(img) {
                 //Then we add all the different maps
                 map.addLayer(img);
-                map.bringToFront();
+                img.bringToFront();
                 //And if they are not the first one
                 if(img != images[0]){
                     //We take the opacity to 0 so they are hidding now
