@@ -14,7 +14,6 @@ $(document).ready(function(){
         var level = jQuery(jQuery(mapParent.children()[0]).children()[2]);
 
         var url = window.location.href+"/"+jQuery(this).attr("iddb");
-        console.log(url);
         $.ajax({
             "method" : "DELETE",
             "url" : url,

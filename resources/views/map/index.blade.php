@@ -118,6 +118,6 @@
     <!------------------------------------ FUNCTIONS WITH AJAX ---------------------------------->
     <!--------------------------------- DELETE, MOVE UP AND DOWN -------------------------------->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
-    <script type="text/javascript" src="{{url('/js/MoveMaps.js')}}">
+    <script type="text/javascript" src="{{url('/js/MoveAndDeleteMaps.js')}}">
     </script>
 @endsection

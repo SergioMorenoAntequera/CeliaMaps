@@ -219,6 +219,11 @@
 
         //Here we are adding the images(of the diferent maps) on top of the map
         map.whenReady(function() {
+            
+            map.on('click', function(e) {
+                console.log(e.latlng.lat + ", " + e.latlng.lng);
+                map.setView([e.latlng.lat, e.latlng.lng], 14);
+            });
             //Añadimos la imagen al mapa
             images.forEach(function(img) {
                 //Then we add all the different maps
