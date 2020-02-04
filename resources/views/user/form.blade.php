@@ -45,12 +45,12 @@
                             </div>
                         </div>
                         <div id="segundafila" class="row">
-                            <div class="col">
+                            <div class="col-6">
                                 <!-- SI EXISTE USUARIO MOSTRAMOS EL CAMPO CONTRASEÑA VACIO -->
                                 @isset($user)
                                 <div class="form-group">
-                                     <label for="password">rellenar solo si desdea modificar contraseña</label>
-                                    <input type="password" class="form-control" name="password" id="password" value="">
+                                     <label for="password">Contraseña</label>
+                                    <input type="password" class="form-control" name="password" id="password" placeholder="rellenar solo si desdea modificar" value="">
                                 </div>
                                 <!-- COMPORTAMIENTO DEL FORMULARIO SI INSERTAMOS NUEVO USUARIO -->
                                 @else
@@ -59,10 +59,8 @@
                                     <input type="password" class="form-control" name="password" id="password" value="{{$user->password??''}}" required>
                                 </div>
                             </div>
-
-
                             @endisset
-                            <div class="col-3">
+                            <div class="col-2">
                                 <div class="form-group">
                                     <label for="level">Level</label>
                                     <input type="text" class="form-control" name="level" id="level" value="{{$user->level??''}}" required>
