@@ -11,13 +11,19 @@
     <!-- Maps -->
 
     <div id="frame">
-    <img id="map" src="{{url('img/maps/mapa-prueba.png')}}">
+        <img id="map" src="{{url('img/maps/mapa-prueba.png')}}">
         <input id="transparency" type="range" step="0.01" min="0" max="1" value="1" class="custom-range">
+        @foreach ($streets as $street)
+            <img id="{{$street->id}}" style="top:{{$street->points[0]->point_y}};left:{{$street->points[0]->point_x}}" class="token" src="{{url('img/icons/token.svg')}}">
+        @endforeach
+        
         <img id="token" src="{{url('img/icons/token.svg')}}">
+        
+        
     </div>
 
 
-    <!-- Add street modal -->
+    <!-- Create/edit street modal -->
 
     <div class="modal fade" id="modal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -26,7 +32,7 @@
                         @csrf
                         @method("POST")
                         <div class="modal-header border-bottom-0">
-                            <h5 class="modal-title text-primary">Nueva vía</h5>
+                            <h5 class="modal-title text-primary"></h5>
                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
                         </div>
                         <!-- Street type -->
@@ -61,17 +67,17 @@
                         </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary">Añadir</button>
+                            <button id="btn-remove" type="button" class="btn btn-danger" data-dismiss="modal">Eliminar</button>
+                            <button id="btn-position" type="button" class="btn btn-warning mr-auto" data-dismiss="modal">Cambiar posición</button>
+                            <button id="btn-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button id="btn-submit" type="submit" class="btn btn-primary">Guardar</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-        
-    <!-- Modify street modal -->
-
     
+
     
 @endsection
 
@@ -82,32 +88,59 @@
 @section('scripts')
     <script>
         $(document).ready(function(){
-            // Rename streets toggle display
-            $("input[name='map_id']").click(function(){
-                $("#input_map"+this.value).toggle();
-                console.log(this.value);
-            });
             // Create street modal
             $('#map').click(function(e){
                 // Handle click point
                 var point_x = e.pageX - this.offsetLeft;
                 var point_y = e.pageY - this.offsetTop;
-                console.log("X: " + point_x + " Y: " + point_y); 
-                // Modal display
-                setTimeout(function() {
-                    $('#modal').modal('show');
-                }, 250);
-                // Coordenadas punto
                 $(".modal-body #point_x").val(point_x);
                 $(".modal-body #point_y").val(point_y);
                 // Token location and display
                 $("#token").css("left",point_x-15);
                 $("#token").css("top",point_y-27);
                 $("#token").show();
+                // Modal display
+                $(".modal-title").text("Nueva vía");
+                $("#btn-remove").prop("disabled", true);
+                $("#btn-remove").css("display", "none");
+                $("#btn-position").prop("disabled", true);
+                $("#btn-position").css("display", "none");
+                setTimeout(function() {
+                    $('#modal').modal('show');
+                }, 250);
+            });
+            // Edit street modal
+            $('#token').on('click', function(){
+                // Token change
+                $("#token").prop("src", "{{url('img/icons/token-selected.svg')}}" );
+                // Fill inputs fields
+                
+                // Modal display
+                $(".modal-title").text("Editar vía");
+                $("#btn-remove").prop("disabled", false);
+                $("#btn-remove").css("display", "initial");
+                $("#btn-position").prop("disabled", false);
+                $("#btn-position").css("display", "initial");
+                setTimeout(function() {
+                    $('#modal').modal('show');
+                }, 250);
+            });
+            // Rename streets fields
+            $("input[type='checkbox']").click(function(){
+                // Hide forms fields
+                $("#input_map"+this.value).toggle();
+                // Disable inputs to do not send
+                $("#input_map"+this.value).prop("disabled", function(){
+                    return !($(this).prop("disabled"));
+                });
             });
             // Maps opacities
             $("#transparency").change(function(){
                 $("#map").css("opacity",this.value);
+            });
+            // Restore token style
+            $("#modal").click(function(){
+                $("#token").prop("src", "{{url('img/icons/token.svg')}}" );
             });
 
     });

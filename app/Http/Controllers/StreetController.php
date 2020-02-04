@@ -8,6 +8,7 @@ use App\Map;
 use App\Street;
 use App\StreetType;
 use App\Point;
+use App\MapStreet;
 
 class StreetController extends Controller
 {
@@ -73,9 +74,14 @@ class StreetController extends Controller
      */
     public function store(Request $r){
         $street = new Street($r->all());
-        dd($r);
         $street->save();
-        $street->maps()->attach($r->maps_id, $r->maps_name);
+        for ($i=0; $i < count($r->maps_id); $i++) { 
+            $mapStreet = new MapStreet();
+            $mapStreet->street_id = $street->id;
+            $mapStreet->map_id = $r->maps_id[$i];
+            $mapStreet->alternative_name = $r->maps_name[$i];
+            $mapStreet->save();
+        }
         $point = Point::Create(["point_x" => $r->point_x, "point_y" => $r->point_y]);
         $street->points()->attach($point->id);
         $street->type()->associate($r->type_id);
