@@ -7,7 +7,9 @@ $(document).ready(function(){
 
     $('#borrado').click(function borradoUsuario(id, route){
 
-        var route = "{{route('user.destroy', 'Request')}}".replace('Request',id)
+        var route = "{{route('user.destroy', 'idreq')}}".replace('idreq',id)
+        console.log(route);
+        
         
         $.ajax({              
             url: route,
@@ -17,7 +19,7 @@ $(document).ready(function(){
                 },
             success: function(result){
                 if(result[status]){
-                    $("#id" + result['Request']).remove();
+                    $("#id" + result['idreq']).remove();
                     alert('registro borrado');
                 }else {
                     modalWindw(result[error],0,null);
