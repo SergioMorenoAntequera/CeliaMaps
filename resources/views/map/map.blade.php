@@ -35,9 +35,9 @@
         {{-- Mapa --}}
         <div id="map"></div>
         
-        {{---------------------------------------------------------}}
-        {{-- MENU DE ARRIBA A LA DERECHA Y LAS VENTANAS FLOTANTE --}}
-        {{---------------------------------------------------------}}
+        {{-----------------------------------------------------------}}
+        {{-- MENU DE ARRIBA A LA IZQUIERDA Y LAS VENTANAS FLOTANTE --}}
+        {{-----------------------------------------------------------}}
 
         {{-- CONTROLADOR DEL MENÚ --}}
         <div class="ballMenu">
@@ -70,6 +70,11 @@
                 <div class="closeMenuButton">
                     <i class="fa fa-times"></i>
                 </div>
+                <div class="pinMenuButton">
+                    <img class="pingCross" style="display: none; width: 60%; left: 22%; top: 1%;" src="{{url('/img/icons/menuCross.svg')}}" alt="">
+                    <img style="width: 100%" src="{{url('/img/icons/menuPin.svg')}}" alt="">
+                </div>
+
                 <img class="noselect" src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
                 <div id="mapsTrans">
                     {{-- Para activar el primer mapa y los otros no  --}}
@@ -221,8 +226,12 @@
         map.whenReady(function() {
             
             map.on('click', function(e) {
+                console.log(map._layers );
+                console.log(e.latlng .lat + ", " + e.latlng.lng);    
+            });
+            images[0].on('click', function(e) {
+                console.log("PRA");
                 console.log(e.latlng.lat + ", " + e.latlng.lng);
-                map.setView([e.latlng.lat, e.latlng.lng], 14);
             });
             //Añadimos la imagen al mapa
             images.forEach(function(img) {
