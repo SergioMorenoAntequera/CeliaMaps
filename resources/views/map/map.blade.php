@@ -65,17 +65,17 @@
         {{-- Todos los menús que podemos poner --}}
 
         {{-- Menú de los mapas --}}
-        <div id="mapsMenu" class="menu">
+        <div id="mapsMenu" class="menu noselect">
                 <!-- Todo el menú -->
                 <div class="closeMenuButton">
                     <i class="fa fa-times"></i>
                 </div>
-                <div class="pinMenuButton">
+                <div class="pinMenuButton ">
                     <img class="pingCross" style="display: none; width: 60%; left: 22%; top: 1%;" src="{{url('/img/icons/menuCross.svg')}}" alt="">
                     <img style="width: 100%" src="{{url('/img/icons/menuPin.svg')}}" alt="">
                 </div>
 
-                <img class="noselect" src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
+                <img src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
                 <div id="mapsTrans">
                     {{-- Para activar el primer mapa y los otros no  --}}
                     @php $first = true; @endphp
@@ -135,9 +135,13 @@
         </div>
             
         {{-- Manú de los hotspots --}}
-        <div id="hotspotsMenu" class="menu">
+        <div id="hotspotsMenu" class="menu noselect">
             <div class="closeMenuButton">
                 <i class="fa fa-times"></i>
+            </div>
+            <div class="pinMenuButton ">
+                <img class="pingCross" style="display: none; width: 60%; left: 22%; top: 1%;" src="{{url('/img/icons/menuCross.svg')}}" alt="">
+                <img style="width: 100%" src="{{url('/img/icons/menuPin.svg')}}" alt="">
             </div>
             <img class="noselect" src="{{url('img/icons/tlMenuToken.png')}}" title="Puntos de interés">
             <div id="hotspotsContent">
@@ -147,9 +151,13 @@
         </div>
 
         {{-- Menú del callejero --}}
-        <div id="streetsMenu" class="menu">
+        <div id="streetsMenu" class="menu noselect">
             <div class="closeMenuButton">
                 <i class="fa fa-times"></i>
+            </div>
+            <div class="pinMenuButton ">
+                <img class="pingCross" style="display: none; width: 60%; left: 22%; top: 1%;" src="{{url('/img/icons/menuCross.svg')}}" alt="">
+                <img style="width: 100%" src="{{url('/img/icons/menuPin.svg')}}" alt="">
             </div>
             <img class="noselect" src="{{url('img/icons/tlMenuStreet.png')}}" title="Callejero">
             <div id="steetsContent">
