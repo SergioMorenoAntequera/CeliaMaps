@@ -70,11 +70,11 @@
                 </div>
                 <div class="col-1">
                 <form action= "{{route('user.destroy',$user->id)}}" method= "POST">
-                            @csrf
-                            @method("DELETE")
-                            <button id="borrado" class="btn" type="submit" value="Borrar">
-                                <img src="/img/icons/deleteRed.png" style="height:2em" alt="">
-                            </button>
+                    @csrf
+                    @method("DELETE")
+                    <button id="borrado" class="btn" type="submit" value="Borrar">
+                        <img src="/img/icons/deleteRed.png" style="height:2em" alt="">
+                    </button>
                 </form>
                 </div>
             </div>

@@ -115,15 +115,32 @@ html, body {
 .closeMenuButton {
     position: relative;
     float: right;
-    width: 20px;
+    width: 12.58px;
+    height: 16px;
 
     margin-left: auto;
     margin-right: auto;
     cursor: pointer;
 }
+.pinMenuButton {
+    position: relative;
+    top: 1px;
+    right: 5px;
+    float: right;
+    width: 17px;
+    height: 17px;
 
-
-
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+}
+.pinMenuButton img {
+    position: absolute;
+    width: 73%;
+    opacity: 0.5;
+    right: -3px;
+    top: 2px;
+}
 
 /*/////////////////////////// MENU DE MAPAS ///////////////////////////*/
 #mapsMenu {

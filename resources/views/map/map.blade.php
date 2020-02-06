@@ -20,7 +20,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!-- PERSONAL CSS -->
-    <link rel="stylesheet" href="{{url('/css/Frontend.css')}}">
+    <link rel="stylesheet" href="{{url('/css/frontend.css')}}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="{{url('js/mapTlMenu.js')}}"></script>
     <script src="{{url('js/mapBlMenu.js')}}"></script>
@@ -35,10 +35,9 @@
         {{-- Mapa --}}
         <div id="map"></div>
         
-        {{---------------------------------------------------------}}
-        {{-- MENU DE ARRIBA A LA DERECHA Y LAS VENTANAS FLOTANTE --}}
-        {{---------------------------------------------------------}}
-
+        {{-----------------------------------------------------------}}
+        {{-- MENU DE ARRIBA A LA IZQUIERDA Y LAS VENTANAS FLOTANTE --}}
+        {{-----------------------------------------------------------}}
         {{-- CONTROLADOR DEL MENÚ --}}
         <div class="ballMenu">
             <div class="ballMenuContent">
@@ -65,12 +64,16 @@
         {{-- Todos los menús que podemos poner --}}
 
         {{-- Menú de los mapas --}}
-        <div id="mapsMenu" class="menu">
+        <div id="mapsMenu" class="menu noselect">
                 <!-- Todo el menú -->
                 <div class="closeMenuButton">
                     <i class="fa fa-times"></i>
                 </div>
-                <img class="noselect" src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
+                <div class="pinMenuButton ">
+                    <img class="pinIcon" src="{{url('/img/icons/pin.svg')}}" alt="">
+                </div>
+
+                <img src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
                 <div id="mapsTrans">
                     {{-- Para activar el primer mapa y los otros no  --}}
                     @php $first = true; @endphp
@@ -130,10 +133,16 @@
         </div>
             
         {{-- Manú de los hotspots --}}
-        <div id="hotspotsMenu" class="menu">
+        <div id="hotspotsMenu" class="menu noselect">
+            {{-- Cruz para cerrar el menú --}}
             <div class="closeMenuButton">
                 <i class="fa fa-times"></i>
             </div>
+            {{-- Iconito del pin para fijarla --}}
+            <div class="pinMenuButton ">
+                <img class="pinIcon" src="{{url('/img/icons/pin.svg')}}" alt="">
+            </div>
+            {{-- Icono que representa y contenido de la ventana --}}
             <img class="noselect" src="{{url('img/icons/tlMenuToken.png')}}" title="Puntos de interés">
             <div id="hotspotsContent">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium deserunt sint omnis, fuga nam blanditiis qui pariatur quidem repellat labore facere consequatur neque accusamus amet aspernatur fugit, enim aliquid autl!
@@ -142,20 +151,22 @@
         </div>
 
         {{-- Menú del callejero --}}
-        <div id="streetsMenu" class="menu">
+        <div id="streetsMenu" class="menu noselect">
+            {{-- Cruz para cerrar el menú --}}
             <div class="closeMenuButton">
                 <i class="fa fa-times"></i>
             </div>
+            {{-- Iconito del pin para fijarla --}}
+            <div class="pinMenuButton ">
+                <img class="pinIcon" src="{{url('/img/icons/pin.svg')}}" alt="">
+            </div>
+            {{-- Icono que representa y contenido de la ventana --}}
             <img class="noselect" src="{{url('img/icons/tlMenuStreet.png')}}" title="Callejero">
             <div id="steetsContent">
                 Menú del callejero que creo que irá a la parte derecha de la pantalla
             </div>
         </div>
     </div>
-
-    <script>
-        
-    </script>
 
     {{-----------------------------------------------------------}}
     {{-- BOTTOM LEFT MENU TO CHANGE THE KIND OF MAP TO DISPLAY --}}
@@ -221,8 +232,12 @@
         map.whenReady(function() {
             
             map.on('click', function(e) {
+                console.log(map._layers );
+                console.log(e.latlng .lat + ", " + e.latlng.lng);    
+            });
+            images[0].on('click', function(e) {
+                console.log("PRA");
                 console.log(e.latlng.lat + ", " + e.latlng.lng);
-                map.setView([e.latlng.lat, e.latlng.lng], 14);
             });
             //Añadimos la imagen al mapa
             images.forEach(function(img) {

@@ -18,8 +18,6 @@ function sliderChange(value, id){
 
 $(document).ready(function(){
 
-    $(".menu").draggable();
-            
     $('.ballMenu').on('click', function(){
         toggleBalls();
     });
@@ -36,8 +34,23 @@ $(document).ready(function(){
         }
     });
     
+    $(".menu").draggable();
+
     $('.closeMenuButton').on("click", function(){
-        $(this).parent().fadeOut(100);
+        $(this).parents(".menu").fadeOut(100);
+    });
+
+    $(".pinMenuButton").on("click", function(){
+        var ping = $(this).children(".pinIcon");
+        if(ping.css('opacity') == 0.5){
+            // Fijando el menú en el mepa
+            ping.css('opacity', 1);
+            ping.parents('.menu').draggable( "disable" );
+        } else {
+            // Desfijamos el menú del mapa
+            ping.css('opacity', 0.5);
+            ping.parents('.menu').draggable( "enable" );
+        }
     });
 
     //Eye to enable disable tranparencies

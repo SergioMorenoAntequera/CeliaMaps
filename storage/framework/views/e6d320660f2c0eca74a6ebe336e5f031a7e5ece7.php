@@ -123,7 +123,6 @@
             $("#token").css("top",point_y-27);
             $("#tokenSelected").css("top",point_y-35);
             $("#token").show();
-            $("#tokenSelected").hide();
             });
             // Maps opacities
             $("#transparency").change(function(){
