@@ -38,7 +38,6 @@
         {{-----------------------------------------------------------}}
         {{-- MENU DE ARRIBA A LA IZQUIERDA Y LAS VENTANAS FLOTANTE --}}
         {{-----------------------------------------------------------}}
-
         {{-- CONTROLADOR DEL MENÚ --}}
         <div class="ballMenu">
             <div class="ballMenuContent">
@@ -136,13 +135,16 @@
             
         {{-- Manú de los hotspots --}}
         <div id="hotspotsMenu" class="menu noselect">
+            {{-- Cruz para cerrar el menú --}}
             <div class="closeMenuButton">
                 <i class="fa fa-times"></i>
             </div>
+            {{-- Iconito del pin para fijarla --}}
             <div class="pinMenuButton ">
                 <img class="pingCross" style="display: none; width: 60%; left: 22%; top: 1%;" src="{{url('/img/icons/menuCross.svg')}}" alt="">
                 <img style="width: 100%" src="{{url('/img/icons/menuPin.svg')}}" alt="">
             </div>
+            {{-- Icono que representa y contenido de la ventana --}}
             <img class="noselect" src="{{url('img/icons/tlMenuToken.png')}}" title="Puntos de interés">
             <div id="hotspotsContent">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium deserunt sint omnis, fuga nam blanditiis qui pariatur quidem repellat labore facere consequatur neque accusamus amet aspernatur fugit, enim aliquid autl!
@@ -152,23 +154,22 @@
 
         {{-- Menú del callejero --}}
         <div id="streetsMenu" class="menu noselect">
+            {{-- Cruz para cerrar el menú --}}
             <div class="closeMenuButton">
                 <i class="fa fa-times"></i>
             </div>
+            {{-- Iconito del pin para fijarla --}}
             <div class="pinMenuButton ">
                 <img class="pingCross" style="display: none; width: 60%; left: 22%; top: 1%;" src="{{url('/img/icons/menuCross.svg')}}" alt="">
                 <img style="width: 100%" src="{{url('/img/icons/menuPin.svg')}}" alt="">
             </div>
+            {{-- Icono que representa y contenido de la ventana --}}
             <img class="noselect" src="{{url('img/icons/tlMenuStreet.png')}}" title="Callejero">
             <div id="steetsContent">
                 Menú del callejero que creo que irá a la parte derecha de la pantalla
             </div>
         </div>
     </div>
-
-    <script>
-        
-    </script>
 
     {{-----------------------------------------------------------}}
     {{-- BOTTOM LEFT MENU TO CHANGE THE KIND OF MAP TO DISPLAY --}}
