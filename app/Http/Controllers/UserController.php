@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 
 use App\User;
@@ -61,7 +62,9 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()->route("user.index");
+        return Response()->json(['success'=>'registrado con exito']);
+
+        //return redirect()->route("user.index");
     }
 
     /**

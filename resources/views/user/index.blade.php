@@ -63,7 +63,7 @@
                 <form action="{{route('user.edit',$user->id)}}" method="GET">
                         @csrf
                         @method("GET|HEAD")
-                        <button class="btn" type="submit" value="Editar">
+                        <button class="btn" id="editar" type="submit" value="Editar">
                             <img src="/img/icons/editYellow.png" style="height:2em" alt="">
                         </button>
                 </form>
@@ -72,7 +72,7 @@
                 <form action= "{{route('user.destroy',$user->id)}}" method= "POST">
                     @csrf
                     @method("DELETE")
-                    <button id="borrado" class="btn" type="submit" value="Borrar">
+                    <button id="borrar" class="btn" type="submit" value="Borrar">
                         <img src="/img/icons/deleteRed.png" style="height:2em" alt="">
                     </button>
                 </form>
@@ -85,8 +85,75 @@
 
 @endsection
 
+
+@section('scripts')
+
+<script  type="text/javascript">
+  
+    
+$(document).ready(function(){
+
+    function campoVacio(){
+        $("#name").val('');
+        $("#email").val('');
+        $("#password").val('');
+        $("#level").val('');
+    }
+
+    //EL TOKEN, QUE NO FUNCIONABA SIN ÉL ////////////
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    
+    // PARA QUE NO SE RECARGUE LA PÁGINA ////////// 
+    $("#editar").click(function(e){
+        e.preventDefault(); 
+    
+
+        var nombre = $("input[name = name]").val();
+        var email = $("input[name = email]").val();
+        var pass = $("input[name = password]").val();
+        var level = $("input[name = level]").val();
+        
+        
+        //var route =  "{{route('user.store')}}";
+
+        $.ajax({
+            type:'PUT',
+            dataType: 'json',
+            url:  "{{route('user.update', $id->id)}}",
+            // al pasar los datos del nuevo usuario se hace por par nombre del campo en la base
+            // de datos : nombre de la variable que hemos declarado con el campo.
+            // y se pasan en el mismo orden en el que están en la base de datos
+            data: {name:nombre, email:email, password:pass, level:level},
+            success: function(data){
+                //mostrarMensaje(data.mensaje);
+                //alert("no se por donde voy");
+                campoVacio();
+            }
+            
+        });
+
+    });
+});
+
+
+
+
+ </script>
+    
+@endsection
+
+
+
+<!--
+
 <script>
 $(document).ready(function(){
+alert("entrajquery");
+
 
 $('#borrado').click(function(e){
     e.preventDefault();
@@ -120,3 +187,5 @@ $('#borrado').click(function borradoUsuario(id, route){
 
 
 </script>    
+-->
+ <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
