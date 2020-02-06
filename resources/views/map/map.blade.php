@@ -70,8 +70,7 @@
                     <i class="fa fa-times"></i>
                 </div>
                 <div class="pinMenuButton ">
-                    <img class="pingCross" style="display: none; width: 60%; left: 22%; top: 1%;" src="{{url('/img/icons/menuCross.svg')}}" alt="">
-                    <img style="width: 100%" src="{{url('/img/icons/menuPin.svg')}}" alt="">
+                    <img class="pinIcon" src="{{url('/img/icons/pin.svg')}}" alt="">
                 </div>
 
                 <img src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
@@ -141,8 +140,7 @@
             </div>
             {{-- Iconito del pin para fijarla --}}
             <div class="pinMenuButton ">
-                <img class="pingCross" style="display: none; width: 60%; left: 22%; top: 1%;" src="{{url('/img/icons/menuCross.svg')}}" alt="">
-                <img style="width: 100%" src="{{url('/img/icons/menuPin.svg')}}" alt="">
+                <img class="pinIcon" src="{{url('/img/icons/pin.svg')}}" alt="">
             </div>
             {{-- Icono que representa y contenido de la ventana --}}
             <img class="noselect" src="{{url('img/icons/tlMenuToken.png')}}" title="Puntos de interés">
@@ -160,8 +158,7 @@
             </div>
             {{-- Iconito del pin para fijarla --}}
             <div class="pinMenuButton ">
-                <img class="pingCross" style="display: none; width: 60%; left: 22%; top: 1%;" src="{{url('/img/icons/menuCross.svg')}}" alt="">
-                <img style="width: 100%" src="{{url('/img/icons/menuPin.svg')}}" alt="">
+                <img class="pinIcon" src="{{url('/img/icons/pin.svg')}}" alt="">
             </div>
             {{-- Icono que representa y contenido de la ventana --}}
             <img class="noselect" src="{{url('img/icons/tlMenuStreet.png')}}" title="Callejero">

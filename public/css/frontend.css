@@ -136,6 +136,10 @@ html, body {
 }
 .pinMenuButton img {
     position: absolute;
+    width: 73%;
+    opacity: 0.5;
+    right: -3px;
+    top: 2px;
 }
 
 /*/////////////////////////// MENU DE MAPAS ///////////////////////////*/

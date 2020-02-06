@@ -41,15 +41,14 @@ $(document).ready(function(){
     });
 
     $(".pinMenuButton").on("click", function(){
-        console.log("PRA");
-        var ping = $(this).children(".pingCross");
-        if(ping.css('display') == "none"){
+        var ping = $(this).children(".pinIcon");
+        if(ping.css('opacity') == 0.5){
             // Fijando el menú en el mepa
-            ping.css('display', "block");
+            ping.css('opacity', 1);
             ping.parents('.menu').draggable( "disable" );
         } else {
             // Desfijamos el menú del mapa
-            ping.css('display', "none");
+            ping.css('opacity', 0.5);
             ping.parents('.menu').draggable( "enable" );
         }
     });
