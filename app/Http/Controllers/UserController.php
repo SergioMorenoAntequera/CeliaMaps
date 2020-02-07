@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 
 use App\User;
@@ -56,12 +57,14 @@ class UserController extends Controller
 
         $user->name = $r->name;
         $user->email = $r->email;
-        $user->password = Hash::make($r->password);
+        $user->password = Hash::make($r->password);        
         $user->level = $r->level;
 
         $user->save();
 
-        return redirect()->route("user.index");
+        return Response()->json(['success'=>'registrado con exito']);
+
+        //return redirect()->route("user.index");
     }
 
     /**
@@ -95,25 +98,30 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      * 
-     * EN EL MÉTODO UPDATE, LE DAMOS A $prueba EL VALOR DE LA PASSWORD Y ESTABLECEMOS QUE,
+     * EN EL MÉTODO UPDATE, LE DAMOS A $clave EL VALOR DE LA PASSWORD Y ESTABLECEMOS QUE,
      * SI EL CAMPO PASSWORD ESTÁ VACIO EN EL FORMULARIO DE EDICIÓN DE USUARIO, LA PASSWORD
-     * NO SE MODIFICA 
+     * NO SE MODIFICA, ES DECIR, TOMA EL VALOR DE $clave.
      */
     public function update(Request $r,$id)
     {
        
         $user = User::find($id);
 
-        $clave = $user->password;      
+        $clave = $user->password;    
+        //dd($clave);
         $user->name = $r->name;
         $user->email = $r->email;
-        if($clave == null){
-            $user->password = $r->password;
-        }        
+       if($r->password == null){
+            $user->password = $clave;
+        }else{
+            $user->password = Hash::make($r->password);    ;
+        }
         $user->level = $r->level;
         $user->save();
 
-        return redirect()->route('user.index');
+       
+        return Response()->json(['success'=>'modificado con exito']);
+        // return redirect()->route('user.index');
 
     }
 
