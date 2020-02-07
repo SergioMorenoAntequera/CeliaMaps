@@ -119,7 +119,9 @@ class UserController extends Controller
         $user->level = $r->level;
         $user->save();
 
-        return redirect()->route('user.index');
+       
+        return Response()->json(['success'=>'modificado con exito']);
+        // return redirect()->route('user.index');
 
     }
 
