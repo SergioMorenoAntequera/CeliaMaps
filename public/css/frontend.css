@@ -99,8 +99,8 @@ html, body {
     width: auto;
 
     background-color:#FFFFFF;
-    border-style: solid;
-    border-color: #E0E0E0;
+    border: solid 1 px #E0E0E0;
+
     border-radius: 10px;
     margin: 0px 5px 0px 5px;
     padding: 5px 10px 5px 10px;
@@ -113,8 +113,9 @@ html, body {
     width: 30px;
 }
 .closeMenuButton {
-    position: relative;
-    float: right;
+    position: absolute;
+    top: 1px;
+    right: 3px;
     width: 12.58px;
     height: 16px;
 
@@ -123,9 +124,9 @@ html, body {
     cursor: pointer;
 }
 .pinMenuButton {
-    position: relative;
-    top: 1px;
-    right: 5px;
+    position: absolute;
+    top: 2px;
+    right: 12px;
     float: right;
     width: 17px;
     height: 17px;
@@ -135,11 +136,8 @@ html, body {
     cursor: pointer;
 }
 .pinMenuButton img {
-    position: absolute;
     width: 73%;
     opacity: 0.5;
-    right: -3px;
-    top: 2px;
 }
 
 /*/////////////////////////// MENU DE MAPAS ///////////////////////////*/
@@ -187,9 +185,56 @@ html, body {
 #streetsMenu {
     top: 20px;
     right: 10px;
-    width: 190px;
+    width: 400px;
     height: auto;
+
+    padding: 0px;
+    border-radius: 10px;
 }
+/* Parte de arriba */
+#searchBar {
+    height: 40px;
+
+}
+#searchBar .divImg {
+    position: absolute;
+    width: 10%;
+    height: 40px;
+    float: left;
+}
+#searchBar .divImg img {
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+#searchBar .divInput {
+    width: 90%;
+    height: 100%;
+    margin-left: 10%;
+}
+#searchBar .divInput input{
+    width: 99%;
+    height: 95%;
+    padding-left: 1%;
+
+    border-radius: 10px;
+    font-size: 20px;
+    border: none;
+}
+/* Parte de abajo  */
+#streetsFound{
+    width: 100%;
+    text-align: center;
+    background-color: red;
+}
+#streetsFound .street{
+    background-color: yellow;
+}
+
+
 
 
 

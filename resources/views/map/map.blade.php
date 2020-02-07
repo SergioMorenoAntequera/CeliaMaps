@@ -49,14 +49,14 @@
                 <img class="noselect" src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
             </div>
         </div>
+        <div id="ballStreets" class="ball noselect">
+            <div class="ballContent">
+                 <img class="noselect" src="{{url('img/icons/search.svg')}}" title="Buscador">
+             </div>
+         </div>
         <div id="ballHotspots" class="ball noselect">
             <div class="ballContent">
                 <img class="noselect" src="{{url('img/icons/tlMenuToken.png')}}" title="Puntos de interés">
-            </div>
-        </div>
-        <div id="ballStreets" class="ball noselect">
-           <div class="ballContent">
-                <img class="noselect" src="{{url('img/icons/tlMenuStreet.png')}}" title="Callejero">
             </div>
         </div>
 
@@ -160,10 +160,33 @@
             <div class="pinMenuButton ">
                 <img class="pinIcon" src="{{url('/img/icons/pin.svg')}}" alt="">
             </div>
-            {{-- Icono que representa y contenido de la ventana --}}
-            <img class="noselect" src="{{url('img/icons/tlMenuStreet.png')}}" title="Callejero">
-            <div id="steetsContent">
-                Menú del callejero que creo que irá a la parte derecha de la pantalla
+            {{-- Icono que representa & Contenido de la ventana --}}
+            <div id="searchBar">    
+                {{-- Icono de la lupa --}}
+                <div class="divImg">
+                    <img class="noselect" src="{{url('img/icons/search.svg')}}" title="Callejero">
+                </div>
+                {{-- Barra de input para las calles --}}
+                <div class="divInput">
+                    <input id="streetsInput" placeholder="Buscar en el mapa...">
+                </div>
+            </div>
+
+            <div id="searchContent">
+                {{-- div donde se mostrarán todas las calles --}}
+                {{-- <div id="streetsFound">
+                    Buscador de calles
+                    <div class="street">
+                        Por cada calle encontrada se pone uno de estos
+                    </div>
+                </div> --}}
+
+                <script>
+                    $("#streetsInput").on("input", function(e){
+                        var text = $(this).val();
+                        console.log(text);
+                    });
+                </script>
             </div>
         </div>
     </div>
