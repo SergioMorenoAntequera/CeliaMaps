@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Map;
+use App\Street;
 use DB;
 
 
@@ -295,5 +296,25 @@ class MapController extends Controller
         
         $map->update();
         return redirect(route("map.index"));
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    // LOOK FOR THINGS IN THE MAP /////////////////////////////////////////////////////////////
+    /**
+     * Method that gets the info from the database
+     * 
+     * @param id
+     * @return View
+     */
+    public function search(Request $r){
+        //We have to look for the street name
+        $streetsFound = DB::table('streets')->where('name', 'like', '%'.$r->text.'%')->get();
+        //And then in the hotspot title
+        $hotSpotsFound = DB::table('hotspots')->where('title', 'like', '%'.$r->text.'%')->get();
+        
+        return response()->json([
+            'streets'=>$streetsFound,
+            'hotspots'=>$hotSpotsFound,
+        ]);
     }
 }

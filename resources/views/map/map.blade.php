@@ -50,8 +50,8 @@
             </div>
         </div>
         <div id="ballStreets" class="ball noselect">
-            <div class="ballContent">
-                 <img class="noselect" src="{{url('img/icons/search.svg')}}" title="Buscador">
+            <div class="ballContent">   
+                 <img style="width: 70%;position: absolute; top: 15%; left: 15%" class="noselect" src="{{url('img/icons/search.svg')}}" title="Buscador">
              </div>
          </div>
         <div id="ballHotspots" class="ball noselect">
@@ -174,17 +174,41 @@
 
             <div id="searchContent">
                 {{-- div donde se mostrarán todas las calles --}}
-                {{-- <div id="streetsFound">
-                    Buscador de calles
-                    <div class="street">
-                        Por cada calle encontrada se pone uno de estos
+                <div id="streetsFound">
+                    <div class="street"> 
+                        test
                     </div>
-                </div> --}}
+                </div>
 
                 <script>
                     $("#streetsInput").on("input", function(e){
                         var text = $(this).val();
-                        console.log(text);
+                        var url = window.location.href + "map/search";
+                        //Si se ha empezado a teclear
+                        
+                        console.log(text.length);
+                        if(text.length >= 1){
+                        // if(text.length % 2 == 0 && text.length != 0){
+                            $.ajax({
+                                type: 'GET',
+                                url: url,
+                                data: { text : text },
+                                success: function(data) {
+                                    var streets = data.streets;
+                                    var hotspots = data.hotspots;
+                                    $('#streetsFound .street').remove();
+                                    for(var i = 0; i < hotspots.length; i++){
+                                        $('#streetsFound').append("<div class='street'>"+ hotspots[i].title +"</div>");
+                                    }
+                                    for(var i = 0; i < streets.length; i++){
+                                        $('#streetsFound').append("<div class='street'>"+ streets[i].name +"</div>");
+                                    }
+                                },
+                            });
+                        //If there is nothing in the bar we remove everything
+                        } else {
+                            $('#streetsFound .street').remove();
+                        }
                     });
                 </script>
             </div>
