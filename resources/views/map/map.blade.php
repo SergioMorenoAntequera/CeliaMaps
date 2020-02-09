@@ -185,28 +185,38 @@
                         var text = $(this).val();
                         var url = window.location.href + "map/search";
                         //Si se ha empezado a teclear
-                        
-                        console.log(text.length);
-                        if(text.length >= 1){
+                        var streets, hotspots;
+                        if(text.length == 1){
                         // if(text.length % 2 == 0 && text.length != 0){
                             $.ajax({
                                 type: 'GET',
                                 url: url,
                                 data: { text : text },
                                 success: function(data) {
-                                    var streets = data.streets;
-                                    var hotspots = data.hotspots;
+                                    hotspots = data.hotspots;
+                                    streets = data.streets;
                                     $('#streetsFound .street').remove();
                                     for(var i = 0; i < hotspots.length; i++){
-                                        $('#streetsFound').append("<div class='street'>"+ hotspots[i].title +"</div>");
+                                        if(i < 4){
+                                            $('#streetsFound').append("<div class='street'>"+hotspots[i].title +"</div>");
+                                        } else {
+                                            $('#streetsFound').append("<div style=\"display: none;\" class='street'>"+hotspots[i].title +"</div>");
+                                        }
                                     }
                                     for(var i = 0; i < streets.length; i++){
-                                        $('#streetsFound').append("<div class='street'>"+ streets[i].name +"</div>");
+                                        if(i < 4){
+                                            $('#streetsFound').append("<div class='street'>"+streets[i].name +"</div>");
+                                        } else {
+                                            $('#streetsFound').append("<div style=\"display: none;\" class='street'>"+streets[i].name +"</div>");
+                                        }
                                     }
                                 },
                             });
+                        //If we have more than one we can look inside the div without the db
+                        } else if(text.length > 1){
+                            
                         //If there is nothing in the bar we remove everything
-                        } else {
+                        } else if(text.length == 0){
                             $('#streetsFound .street').remove();
                         }
                     });
