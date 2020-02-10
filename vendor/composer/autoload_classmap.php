@@ -22,6 +22,7 @@ return array(
     'App\\Http\\Controllers\\HotspotController' => $baseDir . '/app/Http/Controllers/HotspotController.php',
     'App\\Http\\Controllers\\MapController' => $baseDir . '/app/Http/Controllers/MapController.php',
     'App\\Http\\Controllers\\PointController' => $baseDir . '/app/Http/Controllers/PointController.php',
+    'App\\Http\\Controllers\\SearchController' => $baseDir . '/app/Http/Controllers/SearchController.php',
     'App\\Http\\Controllers\\StreetController' => $baseDir . '/app/Http/Controllers/StreetController.php',
     'App\\Http\\Controllers\\UserController' => $baseDir . '/app/Http/Controllers/UserController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
