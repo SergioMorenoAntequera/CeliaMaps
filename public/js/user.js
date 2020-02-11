@@ -49,6 +49,7 @@
           });
   
       });
+      /*
   
       // MODIFICAR USUARIOS CON AJAX
       $("#modificarUsuario").click(function(e){
@@ -77,6 +78,7 @@
           });
   
       });
+      */
   });
   
   

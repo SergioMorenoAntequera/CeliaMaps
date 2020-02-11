@@ -44,7 +44,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('backup/index', 'BackupController@index')->name('backup.index');
 Route::get('backup/create', 'BackupController@create')->name('backup.create');
 Route::get('backup/restore', 'BackupController@restore')->name('backup.restore');
+// SEARCH /////////////////////////////////////////////////////////////////////////////////////
+Route::get('search/index', 'SearchController@index')->name('search.index');
+Route::post('search', 'SearchController@search')->name('search.search');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-//Route::get('/home', 'HomeController@index')->name('home');
+
