@@ -15,24 +15,14 @@ class SearchController extends Controller
 
         return view('search/searchStreet', ['streetList'=>$streetList]);
     }
+
     public function search(Request $request){
 
-        $data = $request->text;
+        $data = $request->text; // lo que escribimos en la caja de texto de la vista
 
-        $data = Street::where('name', 'like', $data.'%')->get();
-       
-        
-
+        $data = Street::where('name', 'like', $data.'%')->get();   
         return response()->json($data);
 
-       /* $users = DB::table('users')
-                ->where('name', 'like', 'T%')
-                ->get();
-
-                $data = DB::table('streets')->where('name', 'like', $data.'%')->get();
-        */
-        //dd($data);
-
-        //$view = view('search/searchStreet', compact('data'))->render();
+       
     }
 }

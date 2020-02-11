@@ -8,18 +8,16 @@ use Illuminate\Support\Traits\Macroable;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
 
 class Command extends SymfonyCommand
 {
-    use Macroable;
+    use Concerns\CallsCommands,
+        Concerns\HasParameters,
+        Macroable;
 
     /**
      * The Laravel application instance.
@@ -146,33 +144,6 @@ class Command extends SymfonyCommand
     }
 
     /**
-     * Specify the arguments and options on the command.
-     *
-     * @return void
-     */
-    protected function specifyParameters()
-    {
-        // We will loop through all of the arguments and options for the command and
-        // set them all on the base command instance. This specifies what can get
-        // passed into these commands as "parameters" to control the execution.
-        foreach ($this->getArguments() as $arguments) {
-            if ($arguments instanceof InputArgument) {
-                $this->getDefinition()->addArgument($arguments);
-            } else {
-                call_user_func_array([$this, 'addArgument'], $arguments);
-            }
-        }
-
-        foreach ($this->getOptions() as $options) {
-            if ($options instanceof InputOption) {
-                $this->getDefinition()->addOption($options);
-            } else {
-                call_user_func_array([$this, 'addOption'], $options);
-            }
-        }
-    }
-
-    /**
      * Run the console command.
      *
      * @param  \Symfony\Component\Console\Input\InputInterface  $input
@@ -203,47 +174,6 @@ class Command extends SymfonyCommand
     }
 
     /**
-     * Call another console command.
-     *
-     * @param  \Symfony\Component\Console\Command\Command|string  $command
-     * @param  array  $arguments
-     * @return int
-     */
-    public function call($command, array $arguments = [])
-    {
-        return $this->runCommand($command, $arguments, $this->output);
-    }
-
-    /**
-     * Call another console command silently.
-     *
-     * @param  \Symfony\Component\Console\Command\Command|string  $command
-     * @param  array  $arguments
-     * @return int
-     */
-    public function callSilent($command, array $arguments = [])
-    {
-        return $this->runCommand($command, $arguments, new NullOutput);
-    }
-
-    /**
-     * Run the given the console command.
-     *
-     * @param  \Symfony\Component\Console\Command\Command|string  $command
-     * @param  array  $arguments
-     * @param  \Symfony\Component\Console\Output\OutputInterface  $output
-     * @return int
-     */
-    protected function runCommand($command, array $arguments, OutputInterface $output)
-    {
-        $arguments['command'] = $command;
-
-        return $this->resolveCommand($command)->run(
-            $this->createInputFromArguments($arguments), $output
-        );
-    }
-
-    /**
      * Resolve the console command instance for the given command.
      *
      * @param  \Symfony\Component\Console\Command\Command|string  $command
@@ -266,39 +196,6 @@ class Command extends SymfonyCommand
         }
 
         return $command;
-    }
-
-    /**
-     * Create an input instance from the given arguments.
-     *
-     * @param  array  $arguments
-     * @return \Symfony\Component\Console\Input\ArrayInput
-     */
-    protected function createInputFromArguments(array $arguments)
-    {
-        return tap(new ArrayInput(array_merge($this->context(), $arguments)), function ($input) {
-            if ($input->hasParameterOption(['--no-interaction'], true)) {
-                $input->setInteractive(false);
-            }
-        });
-    }
-
-    /**
-     * Get all of the context passed to the command.
-     *
-     * @return array
-     */
-    protected function context()
-    {
-        return collect($this->option())->only([
-            'ansi',
-            'no-ansi',
-            'no-interaction',
-            'quiet',
-            'verbose',
-        ])->filter()->mapWithKeys(function ($value, $key) {
-            return ["--{$key}" => $value];
-        })->all();
     }
 
     /**
@@ -654,26 +551,6 @@ class Command extends SymfonyCommand
         parent::setHidden($this->hidden = $hidden);
 
         return $this;
-    }
-
-    /**
-     * Get the console command arguments.
-     *
-     * @return array
-     */
-    protected function getArguments()
-    {
-        return [];
-    }
-
-    /**
-     * Get the console command options.
-     *
-     * @return array
-     */
-    protected function getOptions()
-    {
-        return [];
     }
 
     /**

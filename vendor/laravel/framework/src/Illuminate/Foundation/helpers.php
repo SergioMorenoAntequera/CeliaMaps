@@ -715,7 +715,7 @@ if (! function_exists('rescue')) {
                 report($e);
             }
 
-            return value($rescue);
+            return $rescue instanceof Closure ? $rescue($e) : $rescue;
         }
     }
 }
@@ -918,7 +918,7 @@ if (! function_exists('url')) {
     /**
      * Generate a url for the application.
      *
-     * @param  string  $path
+     * @param  string|null  $path
      * @param  mixed  $parameters
      * @param  bool|null  $secure
      * @return \Illuminate\Contracts\Routing\UrlGenerator|string

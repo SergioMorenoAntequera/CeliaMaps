@@ -52,7 +52,7 @@ class Worker
     /**
      * The callback used to determine if the application is in maintenance mode.
      *
-     * @var \callable
+     * @var callable
      */
     protected $isDownForMaintenance;
 
@@ -76,7 +76,7 @@ class Worker
      * @param  \Illuminate\Contracts\Queue\Factory  $manager
      * @param  \Illuminate\Contracts\Events\Dispatcher  $events
      * @param  \Illuminate\Contracts\Debug\ExceptionHandler  $exceptions
-     * @param  \callable  $isDownForMaintenance
+     * @param  callable  $isDownForMaintenance
      * @return void
      */
     public function __construct(QueueManager $manager,
@@ -136,6 +136,10 @@ class Worker
                 $this->sleep($options->sleep);
             }
 
+            if ($this->supportsAsyncSignals()) {
+                $this->resetTimeoutHandler();
+            }
+
             // Finally, we will check to see if we have exceeded our memory limits or if
             // the queue should restart based on other indications. If so, we'll stop
             // this worker and let whatever is "monitoring" it restart the process.
@@ -168,6 +172,16 @@ class Worker
         pcntl_alarm(
             max($this->timeoutForJob($job, $options), 0)
         );
+    }
+
+    /**
+     * Reset the worker timeout handler.
+     *
+     * @return void
+     */
+    protected function resetTimeoutHandler()
+    {
+        pcntl_alarm(0);
     }
 
     /**
@@ -217,6 +231,7 @@ class Worker
      * @param  \Illuminate\Queue\WorkerOptions  $options
      * @param  int  $lastRestart
      * @param  mixed  $job
+     * @return void
      */
     protected function stopIfNecessary(WorkerOptions $options, $lastRestart, $job = null)
     {
