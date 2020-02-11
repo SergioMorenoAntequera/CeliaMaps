@@ -17,12 +17,14 @@
     </div>
     
     
-    @foreach ($streetList as $item)
+   
     <div id="resultado">
-        {{$item->name}}
+    @foreach ($streetList as $item)
+        {{$item->name}} </br>
+     @endforeach
     </div>
 
-@endforeach
+
     
 @endsection
 
@@ -49,10 +51,14 @@ $(document).ready(function(){
       dataType: 'json',      
       data: {text:elNombreDelaCalle},
       
-      success: function(response){    
+      success: function(response){ 
+        $("#resultado").text(""); 
+        for(var i = 0; i< response.length; i++){
+          //cuando haga el enlace hay qu incluir el a href en el append, igual que he metido el br
+          $("#resultado").append(response[i].name+"</br>"); 
+        }   
         
-          $("#cajaTexto").val(response.name); 
-              
+         
       },
       error:function(){
         alert("no funciona");
