@@ -193,7 +193,7 @@
                         //Me da palo escribir inglés
                         //Si es el primero o cada 3 hacemos una petición ajax
                         //para evitar sobrecargar la base de datos
-                        if(text.length == 1 || text.length % 3 == 0 && text.length != 0){
+                        if(text.length > 0){
                             //Petición ajax, mandamos el texto de la caja
                             $.ajax({
                                 type: 'GET',
@@ -224,17 +224,6 @@
                                     }
                                 },
                             }); // FIN AJAX
-                        //If we have more than one we can look inside the div without the db
-                        } else if(text.length > 1){
-                            $('#streetsFound .street').remove();
-                            for(var i = 0; i < hotspots.length; i++){
-                                if(hotspots[i].title.toLowerCase().includes(text.toLowerCase()))
-                                    $('#streetsFound').append("<div class='street'>"+hotspots[i].title +"</div>");
-                            }
-                            for(var i = 0; i < streets.length; i++){
-                                if(streets[i].name.toLowerCase().includes(text.toLowerCase()))
-                                    $('#streetsFound').append("<div class='street'>"+streets[i].type.name + " " +streets[i].name +"</div>");
-                            }
                         //If there is nothing in the bar we remove everything
                         } else if(text.length == 0){
                             $('#streetsFound .street').remove();
