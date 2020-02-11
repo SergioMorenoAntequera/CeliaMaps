@@ -171,50 +171,70 @@
                     <input id="streetsInput" placeholder="Buscar en el mapa...">
                 </div>
             </div>
-
+            {{-- Contenido de las busquedas y petición con AJAX --}}
             <div id="searchContent">
                 {{-- div donde se mostrarán todas las calles --}}
                 <div id="streetsFound">
-                    <div class="street"> 
+                    {{-- <div class="street"> 
                         test
-                    </div>
+                    </div> --}}
                 </div>
 
                 <script>
+                    //We prepare the url for ajax
+                    var url = window.location.href + "map/search";
+                    //We prepare  the arrays of data that we will recieve
+                    var streets = []; 
+                    var hotspots = [];
+                    //If we put data inside the input
                     $("#streetsInput").on("input", function(e){
+                        //We get the text in the box
                         var text = $(this).val();
-                        var url = window.location.href + "map/search";
-                        //Si se ha empezado a teclear
-                        var streets, hotspots;
-                        if(text.length == 1){
-                        // if(text.length % 2 == 0 && text.length != 0){
+                        //Me da palo escribir inglés
+                        //Si es el primero o cada 3 hacemos una petición ajax
+                        //para evitar sobrecargar la base de datos
+                        if(text.length == 1 || text.length % 3 == 0 && text.length != 0){
+                            //Petición ajax, mandamos el texto de la caja
                             $.ajax({
                                 type: 'GET',
                                 url: url,
                                 data: { text : text },
                                 success: function(data) {
+                                    //Nos devuelve un array con los elementos que contengan ese aspecto
+                                    //Quitramos lo que ya tenemos
+                                    $('#streetsFound .street').remove();
+                                    //Guardamos las cosas en los arrays por comodidad
                                     hotspots = data.hotspots;
                                     streets = data.streets;
-                                    $('#streetsFound .street').remove();
+                                    //Ponemos los hotspots primero aquí y si es más de 4 en hidden
                                     for(var i = 0; i < hotspots.length; i++){
                                         if(i < 4){
                                             $('#streetsFound').append("<div class='street'>"+hotspots[i].title +"</div>");
-                                        } else {
-                                            $('#streetsFound').append("<div style=\"display: none;\" class='street'>"+hotspots[i].title +"</div>");
-                                        }
+                                        }// else {
+                                        //     $('#streetsFound').append("<div style=\"display: none;\" class='street'>"+hotspots[i].title +"</div>");
+                                        // }
                                     }
+                                    //Ponemos las calles después aquí y si es más de 4 en hidden
                                     for(var i = 0; i < streets.length; i++){
                                         if(i < 4){
-                                            $('#streetsFound').append("<div class='street'>"+streets[i].name +"</div>");
-                                        } else {
-                                            $('#streetsFound').append("<div style=\"display: none;\" class='street'>"+streets[i].name +"</div>");
-                                        }
+                                            $('#streetsFound').append("<div class='street'>"+streets[i].type.name + " " + streets[i].name +"</div>");
+                                        }// else {
+                                        //     $('#streetsFound').append("<div style=\"display: none;\" class='street'>"+streets[i].name +"</div>");
+                                        // }
                                     }
                                 },
-                            });
+                            }); // FIN AJAX
                         //If we have more than one we can look inside the div without the db
                         } else if(text.length > 1){
-                            
+                            $('#streetsFound .street').remove();
+                            for(var i = 0; i < hotspots.length; i++){
+                                if(hotspots[i].title.toLowerCase().includes(text.toLowerCase()))
+                                    $('#streetsFound').append("<div class='street'>"+hotspots[i].title +"</div>");
+                            }
+                            for(var i = 0; i < streets.length; i++){
+                                if(streets[i].name.toLowerCase().includes(text.toLowerCase()))
+                                    $('#streetsFound').append("<div class='street'>"+streets[i].type.name + " " +streets[i].name +"</div>");
+                            }
                         //If there is nothing in the bar we remove everything
                         } else if(text.length == 0){
                             $('#streetsFound .street').remove();

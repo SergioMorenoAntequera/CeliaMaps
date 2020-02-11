@@ -13,9 +13,10 @@ class CreateStreetTypesTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('street_types');
         Schema::create('street_types', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('type');
+            $table->string('name');
             $table->string('abbreviation');
             $table->timestamps();
         });

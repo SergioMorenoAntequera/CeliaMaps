@@ -307,11 +307,40 @@ class MapController extends Controller
      * @return View
      */
     public function search(Request $r){
-        //We have to look for the street name
-        $streetsFound = DB::table('streets')->where('name', 'like', '%'.$r->text.'%')->get();
+        //We have to look for the street name/type
+        // $r->text = "ca";
+        $streetsFound = Array();
+        $streetsByType = Array();
+        // Buscamos los tipos de calles que empiecen por lo introducido
+        $auxTypes = DB::table('street_types')->where('name', 'like', '%'.$r->text.'%')->get();
+        // Aqui tenemos todos las calles de los tipos que se han podido deducir de lo que se ha metido
+        for($i = 0; $i < sizeof($auxTypes); $i++){
+            $streetsByType[] = DB::table('streets')->where('type_id', $auxTypes[$i]->id)->get();
+        }
+        for ($i = 0; $i < sizeof($streetsByType); $i++) { 
+            for ($j = 0; $j < sizeof($streetsByType[$i]); $j++) {
+                $streetsFound[] = $streetsByType[$i][$j];
+            }
+        }
+        
+        // Buscamos por el nombre de la calle 
+        $auxNames = DB::table('streets')->where('name', 'like', '%'.$r->text.'%')->get();
+        for($i = 0; $i < sizeof($auxNames); $i++){
+            //Miramos si ya lo hemos añadido antes al poner los tipos de calles
+            if(!in_array($auxNames[$i], $streetsFound)){
+                $streetsFound[] = $auxNames[$i];
+
+            }
+        }
+        //Le añadimos a el array Calle un objeto type 
+        for($i = 0; $i < sizeof($streetsFound); $i++){
+            $type = DB::table('street_types')->where("id", $streetsFound[$i]->type_id)->get()->first();
+            $streetsFound[$i]->type = $type;    
+        } 
+        
         //And then in the hotspot title
         $hotSpotsFound = DB::table('hotspots')->where('title', 'like', '%'.$r->text.'%')->get();
-        
+
         return response()->json([
             'streets'=>$streetsFound,
             'hotspots'=>$hotSpotsFound,

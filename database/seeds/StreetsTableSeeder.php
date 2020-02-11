@@ -19,8 +19,8 @@ class StreetsTableSeeder extends Seeder
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
         DB::table('streets')->insert([
-            'type_id'=> 2,
-            'name'=> 'Mediterráneo',
+            'type_id'=> 1,
+            'name'=> 'del Mediterráneo',
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);

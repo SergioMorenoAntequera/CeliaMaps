@@ -12,43 +12,43 @@ class StreetTypeTableSeeder extends Seeder
     public function run()
     {
         DB::table('street_types')->insert([
-            'type'=> 'Avenida',
+            'name'=> 'Avenida',
             'abbreviation'=> 'AVD. ',
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
         DB::table('street_types')->insert([
-            'type'=> 'Calle',
+            'name'=> 'Calle',
             'abbreviation'=> 'C/',
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
         DB::table('street_types')->insert([
-            'type'=> 'Plaza',
+            'name'=> 'Plaza',
             'abbreviation'=> 'PZ. ',
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
         DB::table('street_types')->insert([
-            'type'=> 'Arboleda',
+            'name'=> 'Arboleda',
             'abbreviation'=> 'ARB. ',
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
         DB::table('street_types')->insert([
-            'type'=> 'Finca',
+            'name'=> 'Finca',
             'abbreviation'=> 'FN. ',
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
         DB::table('street_types')->insert([
-            'type'=> 'Conjunto monumental',
+            'name'=> 'Conjunto monumental',
             'abbreviation'=> 'CM. ',
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
         DB::table('street_types')->insert([
-            'type'=> 'Paseo',
+            'name'=> 'Paseo',
             'abbreviation'=> 'P. ',
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
