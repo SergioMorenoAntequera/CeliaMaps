@@ -47,6 +47,8 @@ Route::get('backup/restore', 'BackupController@restore')->name('backup.restore')
 // SEARCH /////////////////////////////////////////////////////////////////////////////////////
 Route::get('search/index', 'SearchController@index')->name('search.index');
 Route::post('search', 'SearchController@search')->name('search.search');
+// PDF /////////////////////////////////////////////////////////////////////////////////////////////
+Route::get('pdf/ver', 'PdfController@ver')->name('pdf.download');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
