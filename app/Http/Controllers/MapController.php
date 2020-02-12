@@ -308,15 +308,38 @@ class MapController extends Controller
      */
     public function search(Request $r){
         //We have to look for the street name/type
-        // $r->text = "ca";
-        $streetsFound = Array();
-        $streetsByType = Array();
-        // Buscamos los tipos de calles que empiecen por lo introducido
-        $auxTypes = DB::table('street_types')->where('name', 'like', '%'.$r->text.'%')->get();
-        // Aqui tenemos todos las calles de los tipos que se han podido deducir de lo que se ha metido
-        for($i = 0; $i < sizeof($auxTypes); $i++){
-            $streetsByType[] = DB::table('streets')->where('type_id', $auxTypes[$i]->id)->get();
+        $r->text = "Calle Avenida";
+        $wordsAux = explode(" ", trim($r->text));
+        $words = Array();
+        foreach ($wordsAux as $word) {
+            if($word != ""){
+                $words[] = $word;
+            }
         }
+        
+        //Array donde guardaremos todas las calles que hemos encontrado por los tipos de calles
+        $streetsByType = Array();
+        $streetsFound = Array();
+        
+        // Tipos de calles que hemos concontrado
+        $typesFound = Array();
+        for ($i = 0; $i < sizeof($words); $i++) {
+            $aux = DB::table('street_types')->where('name', 'like', '%'.$words[$i].'%')->get()->toArray();
+            if(sizeof($aux) != 0 && !in_array($aux, $typesFound)){
+                $typesFound[] = $aux[0]; 
+            }
+        }
+        
+        // Aqui tenemos todos las calles de los tipos que se han podido deducir de lo que se ha metido
+        for($i = 0; $i < sizeof($typesFound); $i++){
+            $aux = DB::table('streets')->where('type_id', $typesFound[$i]->id)->get()->toArray();
+            foreach ($aux as $street) {
+                if(!in_array($street, $streetsByType))
+                $streetsByType[] = $street;    
+            }
+        }
+        dd($streetsByType);
+        
         for ($i = 0; $i < sizeof($streetsByType); $i++) { 
             for ($j = 0; $j < sizeof($streetsByType[$i]); $j++) {
                 $streetsFound[] = $streetsByType[$i][$j];
