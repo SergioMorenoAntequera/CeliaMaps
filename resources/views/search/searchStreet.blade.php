@@ -17,15 +17,13 @@
 
 </div>
 
-
-
 <div id="resultado">
   @foreach ($streetList as $item)
   {{$item->name}} </br>
   @endforeach
 </div>
 
-<a href="{{action('PdfController@downloadPDF', $show->id)}}">
+<a href="{{action('SearchController@download')}}">
 <button type="button" class="btn btn-primary">pdf</button>
 </a>
 

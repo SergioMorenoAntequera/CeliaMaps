@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title', 'Celia Maps')
-<title> Celia Maps</title>
+
 
 @section('header')
 @endsection
