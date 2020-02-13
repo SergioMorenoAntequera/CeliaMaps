@@ -34,5 +34,12 @@ class PointsTableSeeder extends Seeder
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
+        DB::table('points')->insert([    
+            //La id no se pone porque se autoincrementa sola
+            'x' => 400,
+            'y' => 400,
+            'created_at' => date('Y-m-d H-m-s'),
+            'updated_at' => date('Y-m-d H-m-s'),
+        ]);
     }
 }

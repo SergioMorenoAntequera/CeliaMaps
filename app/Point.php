@@ -18,6 +18,6 @@ class Point extends Model
 
     //The attributes that are mass assignable.
     protected $fillable = [
-        'point_x', 'point_y',
+        'x', 'y',
     ];
 }

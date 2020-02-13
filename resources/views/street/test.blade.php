@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Celia Maps</title>
 
+@extends('layouts.master')
+
+@section('title', 'Celia Maps')
+
+@section('cdn')
     <!-- LEAFLET -->
     <script src="{{url('/js/Leaflet/leaflet.js')}}"></script>
     <link rel="stylesheet" href="{{'/js/Leaflet/leaflet.css'}}">
@@ -25,9 +23,13 @@
     <script src="{{url('js/mapTlMenu.js')}}"></script>
     <script src="{{url('js/mapBlMenu.js')}}"></script>
     <script src="{{url('js/mapFullScreenMenu.js')}}"></script>
-</head>
+@endsection
 
-<body id="body">
+@section('header')
+    <!--  Header html  -->
+@endsection
+
+@section('content')
     <!-- Div where the map and all the menus will
     go so we are able to drag booth the menues and go 
     trought the map -->
@@ -36,9 +38,10 @@
         {{-- Mapa --}}
         <div id="map"></div>
         
-        {{-----------------------------------------------------------}}
-        {{-- MENU DE ARRIBA A LA IZQUIERDA Y LAS VENTANAS FLOTANTE --}}
-        {{-----------------------------------------------------------}}
+        {{---------------------------------------------------------}}
+        {{-- MENU DE ARRIBA A LA DERECHA Y LAS VENTANAS FLOTANTE --}}
+        {{---------------------------------------------------------}}
+
         {{-- CONTROLADOR DEL MENÚ --}}
         <div class="ballMenu">
             <div class="ballMenuContent">
@@ -50,14 +53,14 @@
                 <img class="noselect" src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
             </div>
         </div>
-        <div id="ballStreets" class="ball noselect">
-            <div class="ballContent">   
-                 <img style="width: 70%;position: absolute; top: 15%; left: 15%" class="noselect" src="{{url('img/icons/search.svg')}}" title="Buscador">
-             </div>
-         </div>
         <div id="ballHotspots" class="ball noselect">
             <div class="ballContent">
                 <img class="noselect" src="{{url('img/icons/tlMenuToken.png')}}" title="Puntos de interés">
+            </div>
+        </div>
+        <div id="ballStreets" class="ball noselect">
+           <div class="ballContent">
+                <img class="noselect" src="{{url('img/icons/tlMenuStreet.png')}}" title="Callejero">
             </div>
         </div>
 
@@ -65,16 +68,12 @@
         {{-- Todos los menús que podemos poner --}}
 
         {{-- Menú de los mapas --}}
-        <div id="mapsMenu" class="menu noselect">
+        <div id="mapsMenu" class="menu">
                 <!-- Todo el menú -->
                 <div class="closeMenuButton">
                     <i class="fa fa-times"></i>
                 </div>
-                <div class="pinMenuButton ">
-                    <img class="pinIcon" src="{{url('/img/icons/pin.svg')}}" alt="">
-                </div>
-
-                <img src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
+                <img class="noselect" src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
                 <div id="mapsTrans">
                     {{-- Para activar el primer mapa y los otros no  --}}
                     @php $first = true; @endphp
@@ -134,16 +133,10 @@
         </div>
             
         {{-- Manú de los hotspots --}}
-        <div id="hotspotsMenu" class="menu noselect">
-            {{-- Cruz para cerrar el menú --}}
+        <div id="hotspotsMenu" class="menu">
             <div class="closeMenuButton">
                 <i class="fa fa-times"></i>
             </div>
-            {{-- Iconito del pin para fijarla --}}
-            <div class="pinMenuButton ">
-                <img class="pinIcon" src="{{url('/img/icons/pin.svg')}}" alt="">
-            </div>
-            {{-- Icono que representa y contenido de la ventana --}}
             <img class="noselect" src="{{url('img/icons/tlMenuToken.png')}}" title="Puntos de interés">
             <div id="hotspotsContent">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium deserunt sint omnis, fuga nam blanditiis qui pariatur quidem repellat labore facere consequatur neque accusamus amet aspernatur fugit, enim aliquid autl!
@@ -152,88 +145,20 @@
         </div>
 
         {{-- Menú del callejero --}}
-        <div id="streetsMenu" class="menu noselect">
-            {{-- Cruz para cerrar el menú --}}
+        <div id="streetsMenu" class="menu">
             <div class="closeMenuButton">
                 <i class="fa fa-times"></i>
             </div>
-            {{-- Iconito del pin para fijarla --}}
-            <div class="pinMenuButton ">
-                <img class="pinIcon" src="{{url('/img/icons/pin.svg')}}" alt="">
-            </div>
-            {{-- Icono que representa & Contenido de la ventana --}}
-            <div id="searchBar">    
-                {{-- Icono de la lupa --}}
-                <div class="divImg">
-                    <img class="noselect" src="{{url('img/icons/search.svg')}}" title="Callejero">
-                </div>
-                {{-- Barra de input para las calles --}}
-                <div class="divInput">
-                    <input id="streetsInput" placeholder="Buscar en el mapa...">
-                </div>
-            </div>
-            {{-- Contenido de las busquedas y petición con AJAX --}}
-            <div id="searchContent">
-                {{-- div donde se mostrarán todas las calles --}}
-                <div id="streetsFound">
-                    {{-- <div class="street"> 
-                        test
-                    </div> --}}
-                </div>
-
-                <script>
-                    //We prepare the url for ajax
-                    var url = window.location.href + "map/search";
-                    //We prepare  the arrays of data that we will recieve
-                    var streets = []; 
-                    var hotspots = [];
-                    //If we put data inside the input
-                    $("#streetsInput").on("input", function(e){
-                        //We get the text in the box
-                        var text = $(this).val();
-                        //Me da palo escribir inglés
-                        //Si es el primero o cada 3 hacemos una petición ajax
-                        //para evitar sobrecargar la base de datos
-                        if(text.length > 0){
-                            //Petición ajax, mandamos el texto de la caja
-                            $.ajax({
-                                type: 'GET',
-                                url: url,
-                                data: { text : text },
-                                success: function(data) {
-                                    //Nos devuelve un array con los elementos que contengan ese aspecto
-                                    //Quitramos lo que ya tenemos
-                                    $('#streetsFound .street').remove();
-                                    //Guardamos las cosas en los arrays por comodidad
-                                    hotspots = data.hotspots;
-                                    streets = data.streets;
-                                    //Ponemos los hotspots primero aquí y si es más de 4 en hidden
-                                    for(var i = 0; i < hotspots.length; i++){
-                                        if(i < 4){
-                                            $('#streetsFound').append("<div class='street'>"+hotspots[i].title +"</div>");
-                                        }// else {
-                                        //     $('#streetsFound').append("<div style=\"display: none;\" class='street'>"+hotspots[i].title +"</div>");
-                                        // }
-                                    }
-                                    //Ponemos las calles después aquí y si es más de 4 en hidden
-                                    for(var i = 0; i < streets.length; i++){
-                                        if(i < 4){
-                                            $('#streetsFound').append("<div class='street'>"+streets[i].type.name + " " + streets[i].name +"</div>");
-                                        }// else {
-                                        //     $('#streetsFound').append("<div style=\"display: none;\" class='street'>"+streets[i].name +"</div>");
-                                        // }
-                                    }
-                                },
-                            }); // FIN AJAX
-                        //If there is nothing in the bar we remove everything
-                        } else if(text.length == 0){
-                            $('#streetsFound .street').remove();
-                        }
-                    });
-                </script>
+            <img class="noselect" src="{{url('img/icons/tlMenuStreet.png')}}" title="Callejero">
+            <div id="steetsContent">
+                Menú del callejero que creo que irá a la parte derecha de la pantalla
             </div>
         </div>
     </div>
+
+    <script>
+        
+    </script>
 
     {{-----------------------------------------------------------}}
     {{-- BOTTOM LEFT MENU TO CHANGE THE KIND OF MAP TO DISPLAY --}}
@@ -297,15 +222,6 @@
 
         //Here we are adding the images(of the diferent maps) on top of the map
         map.whenReady(function() {
-            
-            map.on('click', function(e) {
-                console.log(map._layers );
-                console.log(e.latlng .lat + ", " + e.latlng.lng);    
-            });
-            images[0].on('click', function(e) {
-                console.log("PRA");
-                console.log(e.latlng.lat + ", " + e.latlng.lng);
-            });
             //Añadimos la imagen al mapa
             images.forEach(function(img) {
                 //Then we add all the different maps
@@ -337,5 +253,12 @@
             });
         });
     </script>
-</body>
-</html>
+@endsection
+
+@section('footer')
+    <!--  Footer html  -->
+@endsection
+
+@section('scripts')
+   
+@endsection
