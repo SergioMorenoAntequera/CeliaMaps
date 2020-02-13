@@ -9,9 +9,10 @@
 @section('content')
 
 <div id="container">
+    <div class="card float-left">
     <div id="informe" class="bg-primary">
         <div id="tituloCalle" class="row">
-
+            calle
         </div>
         <div id="nombreCalle" class="row">
 
@@ -25,9 +26,11 @@
 
     </div>
 </div>
+</div>
     <a href="{{action('SearchController@download')}}">
         <button type="button" class="btn btn-primary">pdf</button>
     </a>
     
 
 @endsection
+
