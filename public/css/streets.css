@@ -8,8 +8,6 @@
     bottom: 0;
     
 }
-
-
 #frame #map{
     position: absolute;
 }
@@ -30,3 +28,7 @@
     max-width: 600px;
 }
 */
+.token{
+    position: absolute;
+    width: 30px;
+}

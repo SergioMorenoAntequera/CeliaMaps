@@ -27,6 +27,7 @@ class MapsStreetsTableSeeder extends Seeder
         DB::table('maps_streets')->insert([
             'street_id' => 3,
             'map_id' => 3,
+            'alternative_name' =>'nombre alternativo',
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
