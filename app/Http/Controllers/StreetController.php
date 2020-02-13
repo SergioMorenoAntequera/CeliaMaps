@@ -8,6 +8,7 @@ use App\Map;
 use App\Street;
 use App\StreetType;
 use App\Point;
+use App\MapStreet;
 
 class StreetController extends Controller
 {
@@ -60,7 +61,9 @@ class StreetController extends Controller
         $data['streetsTypes'] = StreetType::all();
         $data['maps'] = Map::all();
         $data['streets'] = Street::all();
-        return view("street.create", $data);
+        //return view("street.create", $data);
+        return view("street.test", $data);
+
     }
 
     // STORE FUNCTION ///////////////////////////////////////////////////////////////////////
@@ -74,17 +77,17 @@ class StreetController extends Controller
     public function store(Request $r){
         $street = new Street($r->all());
         $street->save();
-        // ¡ DUDA !
-        //$street->maps()->attach($r->maps_id, $r->maps_name);
-        $mapStreet = new MapSteet();
-        for ($i=0; $i < count($r->maps_id); $i++) { 
-            # code...
+        if(!is_null($r->maps_id) > 0){
+            for ($i=0; $i < count($r->maps_id); $i++) { 
+                $mapStreet = new MapStreet();
+                $mapStreet->street_id = $street->id;
+                $mapStreet->map_id = $r->maps_id[$i];
+                $mapStreet->alternative_name = $r->maps_name[$i];
+                $mapStreet->save();
+            }
         }
-        $mapStreet->street_id = $street->id;
-        $mapStreet->map_id = $street->id;
         
-        // 
-        $point = Point::Create(["point_x" => $r->point_x, "point_y" => $r->point_y]);
+        $point = Point::Create(["x" => $r->point_x, "y" => $r->point_y]);
         $street->points()->attach($point->id);
         $street->type()->associate($r->type_id);
         return redirect(route('street.index'));
@@ -116,7 +119,11 @@ class StreetController extends Controller
     public function update(Request $r, $id){
         $street = Street::find($id);
         $street->fill($r->all());
-        $street->update();
+        // corregir nombres alternativos
+        $street->maps()->sync($r->maps_id);
+        // localización
+        $street->points()->sync();
+        $street->save();
         return redirect(route('street.index'));
     }
 
@@ -130,7 +137,14 @@ class StreetController extends Controller
      * @return View
      */
     public function destroy($id){
-        Street::destroy($id);
+        $street = Street::findOrFail($id);
+        $street->maps()->detach();
+        $street->points()->detach();
+        // type
+        $street->delete();
+
+        
+        //Street::destroy($id);
         return redirect(route('street.index'));
     }
 }

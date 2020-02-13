@@ -26,6 +26,7 @@
     <script src="{{url('js/mapBlMenu.js')}}"></script>
     <script src="{{url('js/mapFullScreenMenu.js')}}"></script>
 </head>
+
 <body id="body">
     <!-- Div where the map and all the menus will
     go so we are able to drag booth the menues and go 
