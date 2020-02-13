@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Street;
+use App\Map;
+use App\StreetType;
+use App\Point;
+use App\MapStreet;
 use DB;
 use PDF;
 
@@ -13,6 +17,7 @@ class SearchController extends Controller
     public function index(){
 
        $streetList = Street::all();
+       //dd($streetList);
 
         return view('search/searchStreet', ['streetList'=>$streetList]);
     }
@@ -21,7 +26,7 @@ class SearchController extends Controller
 
         $data = $request->text; // lo que escribimos en la caja de texto de la vista
 
-        $data = Street::where('name', 'like', $data.'%')->get();   
+        $data = Street::where('name', 'like','%'.$data.'%')->get();   
         return response()->json($data);
 
        
@@ -54,5 +59,8 @@ class SearchController extends Controller
        // return PDF::loadView('search/probandopdf', $data)->stream('archivo.pdf');
     */
     }
-    
+    public function streetInform()
+{
+
+}    
 }

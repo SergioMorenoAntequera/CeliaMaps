@@ -9,29 +9,28 @@
 @section('content')
 
 
-
-<form class="form-inline float-right">
-  <input type="text" id="cajaTexto" class="form-control" placeholder="Search">
-  <button class="btn btn-outline-success" id="botonBuscador" type="submit">Search</button>
-</form>
-
-</div>
-
-<div id="resultado">
-  @foreach ($streetList as $item)
-  {{$item->name}} </br>
-  @endforeach
-</div>
-
-<a href="{{action('SearchController@download')}}">
-<button type="button" class="btn btn-primary">pdf</button>
-</a>
+  <form class="form-inline float-right">
+    <input type="text" id="cajaTexto" class="form-control" placeholder="Search">
+    <button class="btn btn-outline-success" id="botonBuscador" type="submit">Search</button>
+  </form>
 
 
-@endsection
+
+  <div id="resultado" class="bg-primary">
+    @foreach ($streetList as $street)
+      <div id="nombreCalle">
+         {{$street->name}} </br>
+      </div>
+    @endforeach
+  </div>
+
+  @endsection
+
 
 @section('scripts')
 <script type="text/javascript">
+
+
   $(document).ready(function() {
 
     $.ajaxSetup({
