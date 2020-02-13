@@ -21,6 +21,32 @@ body, html {
     z-index: 20;
 }
 
+.token{
+    position: absolute;
+    width: 30px;
+    z-index: 20;
+}
+
 .modal-dialog{
     max-width: 600px;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    display: none;
+    max-width: 286px;
+    transition: 0.3s;
+    width: 40%;
+    max-height: 240px;
+    z-index: 21;
+    position: absolute;
+    border: none;
+}
+  
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+  
+.card-body {
+    padding: 2px 16px;
 }

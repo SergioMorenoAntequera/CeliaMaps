@@ -17,7 +17,7 @@ class CreateHotspotsTable extends Migration
             $table->bigIncrements('id');
             $table->string('image', 250)->nullable();
             $table->string('title', 50);
-            $table->string('description', 600);
+            $table->string('description', 1600);
             $table->unsignedInteger('point_x');
             $table->unsignedInteger('point_y');
             $table->timestamps();
