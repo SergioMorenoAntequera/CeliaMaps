@@ -22,6 +22,8 @@ Route::get('/test', function () {
 Route::get('/', 'MapController@map')->name('map.map');
 Route::get('map/up', 'MapController@moveUp')->name('map.up');
 Route::get('map/down', 'MapController@moveDown')->name('map.down');
+Route::get('map/align/{id}', 'MapController@alignMap')->name('map.align');
+Route::get('map/saveAlign/{id}', 'MapController@saveAlign')->name('map.saveAlign');
 Route::resource('map', 'MapController');
 // USER /////////////////////////////////////////////////////////////////////////////////////
 Route::resource('user', 'UserController');
@@ -31,16 +33,17 @@ Route::resource('street', 'StreetController');
 Route::resource('point', 'PointController');
 // HOTSPOT /////////////////////////////////////////////////////////////////////////////////////
 Route::resource('hotspot', 'HotspotController');
-// AUTH SE MODIFICA LA RUTA PARA ELIMINAR LA OPCIÓN DE REGISTRO //////////////////////////////////
-//Auth::routes();
-Auth::routes(['register' => false]);
-
-Route::get('/home', 'HomeController@index')->name('home');
-
+// AUTH ///////////////////////////////////////////////////////////////////////////////////////
 Auth::routes();
+//Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
+// BACKUP /////////////////////////////////////////////////////////////////////////////////////////
+Route::get('backup/index', 'BackupController@index')->name('backup.index');
+Route::get('backup/create', 'BackupController@create')->name('backup.create');
+Route::get('backup/restore', 'BackupController@restore')->name('backup.restore');
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//Route::get('/home', 'HomeController@index')->name('home');

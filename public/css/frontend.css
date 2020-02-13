@@ -1,39 +1,157 @@
 
-#mapid {
-    position: absolute;
-    top: 0; 
-    left: 0;
+html, body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    max-height: 100%;
+    max-width: 100%;
+    
+    overflow: hidden;
+}
+
+#draggableArea {
+    position: relative;
+    overflow: hidden;
     width: 100%;
     height: 100%;
+}
+
+#map {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
     z-index: 0;
 }
 
-/*/////////////////////////////////////////////////////////////////////*/
-/*/////////////////// MENU DE ARRIBA A LA IZQUIERDA ///////////////////*/
-/*/////////////////////////////////////////////////////////////////////*/
+/*//////////////////////////////////////////////////////////////////////*/
+/*///////////////////// MENU DE arriba A LA IZQUIERDA //////////////////*/
+/*/////////////////// con las peloticas y todo eso  ////////////////////*/
+/*//////////////////////////////////////////////////////////////////////*/
 
-#mapsMenu {
-    left: 0px;
-    top: 0px;
-    background-color:#FFFFFF;
-    z-index: 1;
+/*** BOLA PRINCIPAL ****/
+.ballMenu {
     position: absolute;
-    width: 250px;
-    height: auto;
-    display: none;
+    z-index: 99;
+    left: -100px;
+    top: -100px;
 
+    width: 200px;
+    height: 200px;
+
+    border-radius: 50%;
     border-style: solid;
-    border-width: 0px 2px 2px 0px;
+    border-width: 2px 2px 2px 2px;
     border-color: #E0E0E0;
-
-    padding-left: 30px;
-    border-radius: 0px 0px 10px 0px;
+    background-color: #FFFFFF;
+    cursor: pointer;
+}
+.ballMenu > .ballMenuContent {
+    float: left;
+    position: relative;
+    width: 60px;
+    height: 60px;
+    left: 105px;
+    top: 105px;
+}
+.ballMenu > .ballMenuContent > img{
+    width: 100%;
+    
 }
 
+/*** BOLAS SECUNDARIAS ****/
+.ball {
+    position: absolute;
+    z-index: 98;
+    left: 100;
+    top: 0;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+    border-style: solid;
+    border-width: 2px 2px 2px 2px;
+    border-color: #E0E0E0;
+    background-color: #FFFFFF;
+    cursor: pointer;
+}
+.ball > .ballContent {
+    float: left;
+    position: relative;
+    width: 30px;
+    height: 30px;
+    top: 5px;
+    left: 5px;
+}
+.ball > .ballContent > img {
+    width: 100%;
+}
+
+/*/////////////////////////////////////////////////////////////////////*/
+/*///////////////////////// CONTENDOR DE MENUS ////////////////////////*/
+/*/////////////////////////////////////////////////////////////////////*/
+/* #contentMenu{
+    display: flex;
+    flex-direction: row;
+    height: auto;
+
+    z-index: 0;
+    
+    position: absolute;
+    left: 120px;
+    top: 15px;
+    background-color:red;
+} */
+.menu{
+    position: absolute;
+    height: auto;
+    width: auto;
+
+    background-color:#FFFFFF;
+    border-style: solid;
+    border-color: #E0E0E0;
+    border-radius: 10px;
+    margin: 0px 5px 0px 5px;
+    padding: 5px 10px 5px 10px;
+}
+.menu > img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    width: 30px;
+}
+.closeMenuButton {
+    position: relative;
+    float: right;
+    width: 20px;
+
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+}
+
+
+
+
+/*/////////////////////////// MENU DE MAPAS ///////////////////////////*/
+#mapsMenu {
+    left: 190px;
+    top: 20px;
+}
+
+#mapsTrans {
+    
+    width: 190px;
+    height: auto;
+}
 .mapTrans {
-    margin-bottom: 10px;
-    margin-top: 10px;
-       
+    margin: 5px 10px 5px 10px;   
+}
+.contEye {
+    cursor: pointer;
 }
 .contEye > h2 {
     display: inline;
@@ -46,33 +164,32 @@
     width: 50%;
 }
 
-#mapsShow {
-    text-align: center;
-    width: 50px;
-    height: 30px;
-    position: relative; 
-    top: -8px;
-    margin-bottom: -35px;
-    left: 198px;
-    
-    border-radius: 10px;
-
-    border-style: solid;
-    border-width: 2px 2px 2px 2px;
-    border-color: #E0E0E0;
-    background-color:#FFFFFF;
+/*/////////////////////////// MENU DE HOTSPOTS ///////////////////////////*/
+#hotspotsMenu {
+    left: 10px;
+    top: 110px;
+    width: 150px;
+    height: 300px;
+}
+#hotspotsMenu > #hotspotsContent {
+    overflow-y: auto;
+    width: 100%;
+    height: 270px;
 }
 
-#mapsShow > i {
-    margin-top: 7px;
+/*/////////////////////////// MENU DE CALLEJERO ///////////////////////////*/
+#streetsMenu {
+    top: 20px;
+    right: 10px;
+    width: 190px;
+    height: auto;
 }
+
 
 
 /*/////////////////////////////////////////////////////////////////////*/
 /*/////////////////// MENU DE ABAJO A LA IZQUIERDA ////////////////////*/
 /*/////////////////////////////////////////////////////////////////////*/
-
-
 
 #tilesMenu {
     z-index: 0;
@@ -102,6 +219,7 @@
     border-style: solid;
     border-width: 2px 2px 2px 2px;
     border-color: #E0E0E0;
+    cursor: pointer;
 }
 
 #tilesShow{
@@ -121,7 +239,88 @@
     border-width: 2px 2px 2px 2px;
     border-color: #E0E0E0;
     background-color:#FFFFFF;
+    cursor: pointer;
 }
 #tilesShow > i {
     margin-top: 6px;
 }
+
+/*/////////////////////////////////////////////////////////////////////*/
+/*///////////////////// MENU DE ABAJO A LA DERECHA ////////////////////*/
+/*///////////// PARA GUARDAR LOS CAMBIOS AL ALINEAR  //////////////////*/
+/*/////////////////////////////////////////////////////////////////////*/
+    
+#saveMenu{
+    z-index: 0;
+    position: absolute;
+    
+    bottom: 15px;
+    right: 10px;
+
+    height: 100px;
+    width: 100px;
+    padding: 5px;
+}
+#saveMenu button {
+    width: 100%;
+    height: 100px;
+    
+    border-style: solid;
+    border-width: 2px 2px 2px 2px;
+    border-color: #E0E0E0;
+    background-color:#FFFFFF;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #FFFFFF;
+    cursor: pointer;
+}
+#saveMenu img {
+    cursor: pointer;
+    width: 100%;
+}
+
+/*/////////////////////////////////////////////////////////////////////*/
+/*///////////////////// MENU DE ABAJO A LA DERECHA ////////////////////*/
+/*//////////////// PARA PONERLO EN PANTALLA COMPLETA  /////////////////*/
+/*/////////////////////////////////////////////////////////////////////*/
+    
+#fullScreenMenu{
+    z-index: 0;
+    position: absolute;
+    
+    bottom: 22px;
+    right: 10px;
+
+    height: 30px;
+    width: 30px;
+    
+    border-style: solid;
+    border-width: 2px 2px 2px 2px;
+    border-color: #E0E0E0;
+    background-color:#FFFFFF;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #FFFFFF;
+    cursor: pointer;
+}
+#fullScreenMenu img {
+    width: 100%;
+    height: 100%;
+}
+
+
+
+
+/*/////////////////////////////////////////////////////////////////////*/
+/*////////////////////////////// OTROS  ///////////////////////////////*/
+/*/////////////////////////////////////////////////////////////////////*/
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Opera and Firefox */
+  }

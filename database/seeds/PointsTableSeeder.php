@@ -15,22 +15,29 @@ class PointsTableSeeder extends Seeder
         //Punto de ejemplo
         DB::table('points')->insert([    
             //La id no se pone porque se autoincrementa sola
-            'point_x' => 100,
-            'point_y' => 100,
+            'x' => 100,
+            'y' => 100,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
         DB::table('points')->insert([    
             //La id no se pone porque se autoincrementa sola
-            'point_x' => 200,
-            'point_y' => 200,
+            'x' => 200,
+            'y' => 200,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
         DB::table('points')->insert([    
             //La id no se pone porque se autoincrementa sola
-            'point_x' => 300,
-            'point_y' => 300,
+            'x' => 300,
+            'y' => 300,
+            'created_at' => date('Y-m-d H-m-s'),
+            'updated_at' => date('Y-m-d H-m-s'),
+        ]);
+        DB::table('points')->insert([    
+            //La id no se pone porque se autoincrementa sola
+            'x' => 400,
+            'y' => 400,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);

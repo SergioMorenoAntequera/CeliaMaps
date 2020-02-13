@@ -3,50 +3,78 @@
 @section('title', 'Celia Maps')
     
 @section('content')
+<div class="container">
+    <div id="cabecera" class="row">
+    <div class="col-1">
+        Id
+    </div>
+    <div class="col-1">
+        Nombre
+    </div>
+    <div class="col-2">
+        Email  
+    </div>
+    <div class="col-3">
+        Contraseña
+    </div>
+    <div class="col-2" style="text-align:center">
+        Tipo
+    </div>
+    <div class="col-1">
+        Modificar
+    </div>
+    <div class="col-1">
+        Eliminar
+    </div>
+    </div>
 
-<div class="insertar float-right" style="padding: 80px 80px 15px 0px">
-        <form action= "{{route('user.create')}}" method= "GET">
+@foreach ($userList as $user)
+    <div id="usuario" class="row mt-4">
+        <div class="col-1">
+        {{$user->id}}
+        </div>
+        <div class="col-1">
+        {{$user->name}}
+        </div>
+        <div class="col-2">
+        {{$user->email}}
+        </div>
+        <div class="col-3" style="overflow: hidden">
+        {{$user->password}}
+        </div>
+        <div class="col-2" style="text-align:center">
+        {{$user->level}}
+        </div>
+        <div class="col-1">
+        <form action="{{route('user.edit',$user->id)}}" method="GET">
                 @csrf
                 @method("GET|HEAD")
-                <input type="submit" value="Insertar">
-        </form>
-</div>
-
-<table class="table table-bordered table-hover text-white">
-    <thead>
-        <tr>
-            <th>Id</th><th>Nombre</th><th>Email</th><th>Contraseña</th><th>Nivel</th><th>accion1</th><th>accion2</th>
-        </tr>
-    </thead>
-    @foreach ($userList as $user)
-            <td>{{$user->id}}</td>
-            <td>{{$user->name}}</td>
-            <td>{{$user->email}}</td>
-            <td>{{$user->password}}</td>
-            <td>{{$user->level}}</td>
-
-            <td style = "margin: 0 auto;"> 
-                <form action="{{route('user.edit',$user->id)}}" method="GET">
-                @csrf
-                @method("GET|HEAD")
-                <input type="submit" margin=" 0 auto" value="Modificar">
+                <button class="btn" type="submit" value="Borrar">
+                    <img src="/img/icons/editYellow.png" style="height:2em" alt="">
+                </button>
                 </form>
-            </td>
-
-            <td style = "margin: 0 auto;">
-                <form action= "{{route('user.destroy',$user->id)}}" method= "POST">
-                @csrf
-                @method("DELETE")
-                <input type="submit"  value="Borrar">
+        </div>
+        <div class="col-1">
+        <form action= "{{route('user.destroy',$user->id)}}" method= "POST">
+                    @csrf
+                    @method("DELETE")
+                    <button id="borrado" class="btn" type="submit" value="Borrar">
+                        <img src="/img/icons/deleteRed.png" style="height:2em" alt="">
+                    </button>
                 </form>
-            </td>
-
-        </tr>
+        </div>
+    </div>
         
     @endforeach
-</table>
 
+</div>
 
 @endsection
-                   
-                    
+@section('scripts')
+
+<script type="text/javascript" src="{{url('/js/user.js')}}">
+</script>
+
+@endsection
+   
+    

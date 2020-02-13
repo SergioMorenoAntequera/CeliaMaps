@@ -14,7 +14,7 @@ body, html {
     position: absolute;
 }
 
-#frame #token{
+#frame #token, #tokenSelected{
     position: absolute;
     display: none;
     width: 30px;

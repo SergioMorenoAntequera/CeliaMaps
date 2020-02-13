@@ -4,14 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
 use App\User;
 
 class UserController extends Controller
 {
+    
 
-    public function construct(){
-        //$this->middleware("auth")->only("create","edit","destroy");
+    public function __construct(){
+    //$this->middleware("auth")->only("create","edit","destroy");
     }
+    
 
     /**
      * Display a listing of the resource.
@@ -20,8 +24,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('user/index',['userList'=>$userList]);
         $userList = User::all();
+        return view('user/index',['userList'=>$userList]);
+        
     }
 
     /**
@@ -39,14 +44,19 @@ class UserController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     * 
+     * PARA ENCRIPTAR LA CONTRASEÑA SIN UTILIZAR EL REGISTER QUE TRAE LARAVEL POR DEFECTO, HAY QUE
+     * ANADIR EN LA CABECERA "use Illuminate\Support\Facades\Hash;" Y EN EL MÉTODO STORE DEL CONTROLADOR
+     * AÑADIR EL HASH:MAKE A LA PASSWORD
+
      */
     public function store(Request $r)
     {
-        $user = new User();
+       $user = new User();
 
         $user->name = $r->name;
         $user->email = $r->email;
-        $user->password = $r->password;
+        $user->password = Hash::make($r->password);
         $user->level = $r->level;
 
         $user->save();
@@ -84,17 +94,23 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     * 
+     * EN EL MÉTODO UPDATE, LE DAMOS A $prueba EL VALOR DE LA PASSWORD Y ESTABLECEMOS QUE,
+     * SI EL CAMPO PASSWORD ESTÁ VACIO EN EL FORMULARIO DE EDICIÓN DE USUARIO, LA PASSWORD
+     * NO SE MODIFICA 
      */
     public function update(Request $r,$id)
     {
-       //dd($r);
+       
         $user = User::find($id);
-     //dd($user);
+
+        $clave = $user->password;      
         $user->name = $r->name;
         $user->email = $r->email;
-        $user->password = $r->password;
+        if($clave == null){
+            $user->password = $r->password;
+        }        
         $user->level = $r->level;
-
         $user->save();
 
         return redirect()->route('user.index');
@@ -107,11 +123,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $id)
     {
        $user = User::find($id);
        $user->delete();
 
        return redirect()->route('user.index');
     }
+    
 }

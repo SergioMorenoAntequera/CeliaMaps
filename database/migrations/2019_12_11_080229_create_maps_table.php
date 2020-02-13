@@ -21,15 +21,18 @@ class CreateMapsTable extends Migration
             $table->string('city',75); 
             $table->integer('date');
             $table->string('image',75);
-            $table->string('miniature',75);
+            $table->string('miniature',200);
             $table->integer('level')->unique();
             $table->integer('width');
             $table->integer('height');
-            // Aquí falta la fecha de subida pero eso lo hace la función final
-            $table->float('deviation_x', 10, 2);
-            $table->float('deviation_y', 10, 2);
-            // Esto no sabiamos lo que era
-            // $table->integer('principal');
+            $table->float('tlCornerLatitude', 18, 16)->nullable();
+            $table->float('tlCornerLongitude', 18, 16)->nullable();
+            $table->float('trCornerLatitude', 18, 16)->nullable();
+            $table->float('trCornerLongitude', 18, 16)->nullable();
+            $table->float('blCornerLatitude', 18, 16)->nullable();
+            $table->float('blCornerLongitude', 18, 16)->nullable();
+            $table->float('brCornerLatitude', 18, 16)->nullable();
+            $table->float('brCornerLongitude', 18, 16)->nullable();
             $table->timestamps();
         });
     }

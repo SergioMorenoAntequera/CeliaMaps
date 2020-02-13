@@ -50,3 +50,23 @@
     max-width:85%;
     max-height:85%;
 }
+
+/******* ALIGN BUTTON *******/
+.cornerAlignButton{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: -10px;
+    right: 100px;
+    border: 0px;
+    border-radius: 25px;
+}
+.cornerAlignButton > img {
+    max-width:70%;
+    max-height:70%;
+    transition: 0.3s;
+}
+.cornerAlignButton>img:hover {
+    max-width:85%;
+    max-height:85%;
+}

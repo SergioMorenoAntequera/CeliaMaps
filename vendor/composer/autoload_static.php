@@ -464,6 +464,7 @@ class ComposerStaticInit3bc63085752e602f437e2a014d1e5b3a
     );
 
     public static $classMap = array (
+        'App\\Backup' => __DIR__ . '/../..' . '/app/Backup.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Hotspot' => __DIR__ . '/../..' . '/app/Hotspot.php',
@@ -490,6 +491,7 @@ class ComposerStaticInit3bc63085752e602f437e2a014d1e5b3a
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Map' => __DIR__ . '/../..' . '/app/Map.php',
+        'App\\MapStreet' => __DIR__ . '/../..' . '/app/MapStreet.php',
         'App\\Point' => __DIR__ . '/../..' . '/app/Point.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',

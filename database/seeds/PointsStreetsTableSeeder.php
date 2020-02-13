@@ -30,5 +30,11 @@ class PointsStreetsTableSeeder extends Seeder
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
+        DB::table('points_streets')->insert([
+            'street_id' => 4,
+            'point_id' => 4,
+            'created_at' => date('Y-m-d H-m-s'),
+            'updated_at' => date('Y-m-d H-m-s'),
+        ]);
     }
 }
