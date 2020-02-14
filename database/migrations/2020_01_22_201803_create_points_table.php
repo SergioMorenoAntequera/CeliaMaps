@@ -16,8 +16,8 @@ class CreatePointsTable extends Migration
         Schema::dropIfExists('points');
         Schema::create('points', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('x');
-            $table->integer('y');
+            $table->decimal('lat', 10, 8);
+            $table->decimal('lng', 11, 8);
             $table->timestamps();
         });
     }

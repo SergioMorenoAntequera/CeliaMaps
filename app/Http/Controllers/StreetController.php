@@ -87,7 +87,7 @@ class StreetController extends Controller
             }
         }
         
-        $point = Point::Create(["x" => $r->point_x, "y" => $r->point_y]);
+        $point = Point::Create(["lat" => $r->lat, "lng" => $r->lng]);
         $street->points()->attach($point->id);
         $street->type()->associate($r->type_id);
         return redirect(route('street.index'));
