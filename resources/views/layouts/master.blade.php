@@ -27,101 +27,11 @@
     </head>
     
     <body class="bg-dark">
-        
         <!-- Header -->
-        {{-- <header>
-            <div id="navBar" class="container">
-                <div id="fallingMenu" style="background-image: url({{url('img/resources/FallingMenuBackground.png')}})">
-                    <div id="fallingMenuContent">
-                        <a class="text-reset text-decoration-none" href="{{route('map.map')}}">FRONTEND</a>
-                        <br>
-                        <a class="text-reset text-decoration-none" href="{{route('hotspot.index')}}">HOTSPOTS</a>
-                        <a class="text-reset text-decoration-none" >IMÁGENES</a>
-                        <a class="text-reset text-decoration-none" href="{{route('map.index')}}">MAPAS</a>
-                        <a class="text-reset text-decoration-none" >PUNTOS</a>
-                        <a class="text-reset text-decoration-none" href="{{route('user.index')}}">USUARIOS</a>
-                        <a class="text-reset text-decoration-none" href="{{route('street.index')}}">CALLES</a>
-                    </div>
-                </div>
-                <!-- La imagen que está en el centro -->
-                <a>
-                <img id="menuImg" src="{{url('img/icons/menuArrow.png')}}">
-                </a>
-                <script>
-                    $(document).ready(function(){
-                        $("#menuImg").on("click", function(e){
-                            e.preventDefault();
-                            console.log($("#fallingMenu"));
-
-                            if(parseInt($("#fallingMenu").css("top").replace("px")) < 0) {
-                                $("#fallingMenu").animate({
-                                    top: 20
-                                }, 200, function() {
-                                    $("#fallingMenu").animate({
-                                        top: 0,
-                                    }, 75);
-                                });
-                            } else {
-                                $("#fallingMenu").animate({
-                                    top: -$(window).height(),
-                                }, 200);
-                            }
-                        });
-                    });
-                    
-                </script>
-
-                <!-- Fila que tiene el resto del menú -->
-                <div class="row align-items-start text-center font-weight-bold">
-                    <!-- Parte de la izquierda -->
-                    <div class="offset-1 col-4">
-                        <div class="row mt-4">                           
-                            <div class="col headerLink">                                
-                                <a class="text-reset text-decoration-none" href="{{route('hotspot.index')}}">HOTSPOTS</a>
-                            </div>                            
-                            <div class="col headerLink">
-                                <a class="text-reset text-decoration-none" href="">IMÁGENES</a>
-                            </div>
-                            <div class="col headerLink">
-                                <a class="text-reset text-decoration-none" href="{{route('map.index')}}">MAPAS</a> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="offset-2"></div>
-                    <!-- Parte de la derecha --> 
-                    <div class="col-5">   <!-- HE CAMBIADO EL NÚMERO DE COLUMNAS DE 4 A 5 PARA METER TEMPORALMENTE EL LOGIN -->
-                        <div class="row mt-4">
-                            <div class="col headerLink">
-                                <a class="text-reset text-decoration-none">PUNTOS</a>
-                            </div>
-                            <div class="col headerLink">
-                                <a class="text-reset text-decoration-none" href="{{route('street.index')}}">CALLES</a>
-                            </div>
-                            <div class="col headerLink">
-                                <a class="text-reset text-decoration-none" href="{{route('user.index')}}">USUARIOS</a>
-                            </div>                           
-                            @auth
-                            <div class="col headerLink">
-                                 <!-- INCLUYO AQUÍ LA RUTA DEL LOGOUT DE LARAVEL PARA QUE NO PASE POR LA PÁGINA OFICIAL,
-                                SINO QUE VAYA DIRECTAMENTE A LA PÁGINA PRINCIPAL --> 
-                                <a class="text-reset text-decoration-none" href=""
-                                onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">LOGOUT</a>
-                            </div>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-                            @else 
-                            <div class="col headerLink">
-                                <a class="text-reset text-decoration-none" href="{{route('login')}}">LOGIN</a>
-                            </div>
-                            @endauth
-                        </div>
-                    </div>
-                </div> 
-            </div>
-        </header> --}}
         <!-- Plantilla de la pagina principal -->
+        <div style="background-image: url({{url("img/resources/FallingMenuBackground.png")}})" id="flotingMenu"> 
+            <span>Me llamaban feo, <br> ahora no pueden dejar de mirarme</span>
+        </div>
         <div class="container-fluid">
             <div style="height: 100%" class="row">
                 {{-- Columna de la izquierda --}}
@@ -211,9 +121,25 @@
                                 <b> Backup </b>
                                 <div class="line"></div>
                                 <a href="{{route('backup.index')}}"><li>Indice</li></a>
-                                <a href="{{route('backup.create')}}"><li>Insertar</li></a>
+                                <a href="{{route('backup.index')}}"><li>Insertar</li></a>
                                 <a href="{{route('backup.index')}}"><li>Modificar</li></a>
                                 <a href="{{route('backup.index')}}"><li>Elminar</li></a>
+                            </div>
+                        </div>
+
+                        <div class="lateralMenuElement">
+                            <a class="lateralMenuLink" href="">
+                            <li class="lateralMenuImg">
+                                <img src="{{url('img/icons/report.svg')}}" class="img-fluid">
+                            </li>
+                            </a>
+                            <div class="lateralExpandMenu">
+                                <b> Reporte </b>
+                                <div class="line"></div>
+                                <a href=""><li>No sé</li></a>
+                                <a href=""><li>Que Poner</li></a>
+                                <a href=""><li>Aquí</li></a>
+                                <a href=""><li>jeje</li></a>
                             </div>
                         </div>
                     </ul>
@@ -223,7 +149,7 @@
                                 var top = $(this).position().top;
                                 var expandMenu = $(this).children(".lateralExpandMenu");
                                 //La parida esta es para que salga centrada
-                                expandMenu.css("top", top + $(this).height()/2 - expandMenu.height()/2);
+                                expandMenu.css("top", top - expandMenu.height()/2 + $(this).height()/2);
                                 expandMenu.show();
                             }, function(e){
                                 $(this).children(".lateralExpandMenu").hide();
@@ -237,16 +163,36 @@
                         });
                     </script>
 
+                    {{-- div ausiliar para que todo sea responsivo --}}
+                    <div id="notocar" style="position: absolute; bottom: 10%" class="lateralMenuImg">
+                        <img src="{{url('img/icons/rip.svg')}}" class="img-fluid">
+                    </div>
+                    <script>
+                        $(document).ready(function(){
+                            $("#flotingMenu").css("top", -$("#flotingMenu").height());
+                            $("#notocar").on("click", function(){
+                                $("#flotingMenu").show()
+                                $("#flotingMenu").animate({
+                                    top: "20px",
+                                }, 200, function(e){
+                                    $("#flotingMenu").animate({
+                                        top: "0px",
+                                    }, 200);
+                                });
+                            });
+                        });
+                    </script>
                     <a href="{{route('map.map')}}">
                         <div style="position: absolute; bottom: 0px" class="lateralMenuImg">
                             <img src="{{url('img/icons/turnOff.svg')}}" class="img-fluid">
                         </div>
                     </a>
+
                 </div>
+
                 {{-- Columna de la derecha con el contenido --}}
                 <div id="rightContent">
                     @yield('content')
-
                     <!-- Footer -->
                     <footer>
                         @yield('footer')
