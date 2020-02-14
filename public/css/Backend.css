@@ -1,5 +1,69 @@
+/***************************************/
+/* Barra de navegación de la izquierda */
+/***************************************/
+#leftNavBar {
+    position: fixed;
+    z-index: 10000;
+    width: 5%;
+    height: 100%;
+    background-color: #283e65;
+}
+#rightContent {
+    width: 95%;
+    margin-left: 5%;
+    
+    background-color: #efefef;
+}
+.lateralMenuImg {
+    padding: 15 0; 
+}
+.lateralMenuImg:hover {
+    background-color: #6f7e96;
+}
+.lateralMenuImg img {
+    padding-left: 25%;
+    width: 75%;
+}
+.lateralExpandMenu {
+    display: none;
+    position: absolute;
+    left: 100%;
+    width: 225%;
+
+    border-radius: 0px 10px 10px 0px;
+    text-align: center;
+    color: white;
+    background-color: #283e65;
+    padding: 10px 0px 10px 0px;
+}
+.lateralExpandMenu .line{
+    position: relative;
+    border-top: solid 2px white;
+    width: 90%;
+    height: 1px;
+    left: 5%;
+}
+.lateralExpandMenu a{
+    text-decoration: none;
+    color: white;
+    margin-bottom: 5px;
+    transition: 0.2s;
+}
+.lateralExpandMenu li {
+    padding-left: 10px;
+    padding-right: 10px;
+    transition: 0.2s;
+}
+.lateralExpandMenu li:hover {
+    background-color: #6f7e96;
+    text-decoration: none;
+}
 
 
+
+/***************************************/
+/* LO OTRO BLA BLA BLA */
+/***************************************/
 /******* ONE ELEMENT OF THE LIST *******/
 .oneElement {
     /*margin-bottom: 20px;*/

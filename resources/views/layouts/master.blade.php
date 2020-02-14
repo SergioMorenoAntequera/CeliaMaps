@@ -1,6 +1,5 @@
 <html>
     <head>
-
         <meta charset="utf-8">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,7 +13,7 @@
         <link rel="stylesheet" href="{{url('/css/Global.css')}}">
         <link rel="stylesheet" href="{{url('/css/streets.css')}}">
         <link rel="stylesheet" href="{{url('/css/Hotspots.css')}}">
-        <link rel="stylesheet" href="{{url('/css/NavBar.css')}}">
+        {{-- <link rel="stylesheet" href="{{url('/css/NavBar.css')}}"> --}}
         <!--  <link href="https://fonts.googleapis.com/css?family=Dancing+Script:500&display=swap" rel="stylesheet">   -->
         <script
         
@@ -30,7 +29,7 @@
     <body class="bg-dark">
         
         <!-- Header -->
-        <header>
+        {{-- <header>
             <div id="navBar" class="container">
                 <div id="fallingMenu" style="background-image: url({{url('img/resources/FallingMenuBackground.png')}})">
                     <div id="fallingMenuContent">
@@ -121,17 +120,140 @@
                     </div>
                 </div> 
             </div>
-        </header>
+        </header> --}}
+        <!-- Plantilla de la pagina principal -->
+        <div class="container-fluid">
+            <div style="height: 100%" class="row">
+                {{-- Columna de la izquierda --}}
+                <div id="leftNavBar">
+                    <ul id=lateralMenu class="list-unstyled">
+                        <div class="lateralMenuElement mb-4">
+                            <a class="lateralMenuLink" href="{{route('map.map')}}">
+                            <li id="celiaMapsIcon" class="lateralMenuImg my-3">
+                                <img src="{{url('img/icons/icon.png')}}" alt="CeliaMaps" class="img-fluid">
+                            </li>
+                            </a>
+                        </div>
+                        
+                        <div class="lateralMenuElement">
+                            <a class="lateralMenuLink" href="{{route('map.index')}}">
+                            <li class="lateralMenuImg">
+                                <img src="{{url('img/icons/tlMenuMapWhite.png')}}" alt="CeliaMaps" class="img-fluid">
+                            </li>
+                            </a>
+                            <div class="lateralExpandMenu">
+                                <b> Mapas </b>
+                                <div class="line"></div>
+                                <a href="{{route('map.index')}}"><li>Indice</li></a>
+                                <a href="{{route('map.create')}}"><li>Insertar</li></a>
+                                <a href="{{route('map.index')}}"><li>Modificar</li></a>
+                                <a href="{{route('map.index')}}"><li>Elminar</li></a>
+                                <a href="{{route('map.index')}}"><li>Ordenar</li></a>
+                                <a href="{{route('map.index')}}"><li>Alinear</li></a>
+                            </div>
+                        </div>
+                        
+                        <div class="lateralMenuElement">
+                            <a class="lateralMenuLink" href="{{route('street.index')}}">
+                            <li class="lateralMenuImg">
+                                <img src="{{url('img/icons/tlMenuStreetWhite.png')}}" alt="CeliaMaps" class="img-fluid">
+                            </li>
+                            </a>
+                            <div class="lateralExpandMenu">
+                                <b> Calles </b>
+                                <div class="line"></div>
+                                <a href="{{route('street.index')}}"><li>Indice</li></a>
+                                <a href="{{route('street.create')}}"><li>Insertar</li></a>
+                                <a href="{{route('street.index')}}"><li>Modificar</li></a>
+                                <a href="{{route('street.index')}}"><li>Elminar</li></a>
+                            </div>
+                        </div>
 
-        <!-- Content -->
-        
-            @yield('content')
-        
-        <!-- Footer -->
-        <footer>
-            @yield('footer')
-        </footer>
+                        <div class="lateralMenuElement">
+                            <a class="lateralMenuLink" href="{{route('hotspot.index')}}">
+                            <li class="lateralMenuImg">
+                                <img src="{{url('img/icons/tlMenuTokenWhite.png')}}" alt="CeliaMaps" class="img-fluid">
+                            </li>
+                            </a>
+                            <div class="lateralExpandMenu">
+                                <b> Puntos de interés </b>
+                                <div class="line"></div>
+                                <a href="{{route('hotspot.index')}}"><li>Indice</li></a>
+                                <a href="{{route('hotspot.create')}}"><li>Insertar</li></a>
+                                <a href="{{route('hotspot.index')}}"><li>Modificar</li></a>
+                                <a href="{{route('hotspot.index')}}"><li>Elminar</li></a>
+                            </div>
+                        </div>
 
+                        <div class="lateralMenuElement">
+                            <a class="lateralMenuLink" href="{{route('user.index')}}">
+                            <li class="lateralMenuImg">
+                                <img src="{{url('img/icons/userWhite.png')}}" class="img-fluid">
+                            </li>
+                            </a>
+                            <div class="lateralExpandMenu">
+                                <b> Users </b>
+                                <div class="line"></div>
+                                <a href="{{route('user.index')}}"><li>Indice</li></a>
+                                <a href="{{route('user.create')}}"><li>Insertar</li></a>
+                                <a href="{{route('user.index')}}"><li>Modificar</li></a>
+                                <a href="{{route('user.index')}}"><li>Elminar</li></a>
+                            </div>
+                        </div>
+
+                        <div class="lateralMenuElement">
+                            <a class="lateralMenuLink" href="{{route('backup.index')}}">
+                            <li class="lateralMenuImg">
+                                <img src="{{url('img/icons/database.svg')}}" class="img-fluid">
+                            </li>
+                            </a>
+                            <div class="lateralExpandMenu">
+                                <b> Backup </b>
+                                <div class="line"></div>
+                                <a href="{{route('backup.index')}}"><li>Indice</li></a>
+                                <a href="{{route('backup.create')}}"><li>Insertar</li></a>
+                                <a href="{{route('backup.index')}}"><li>Modificar</li></a>
+                                <a href="{{route('backup.index')}}"><li>Elminar</li></a>
+                            </div>
+                        </div>
+                    </ul>
+                    <script>
+                        $(document).ready(function(){
+                            $(".lateralMenuElement").hover(function(e){
+                                var top = $(this).position().top;
+                                var expandMenu = $(this).children(".lateralExpandMenu");
+                                //La parida esta es para que salga centrada
+                                expandMenu.css("top", top + $(this).height()/2 - expandMenu.height()/2);
+                                expandMenu.show();
+                            }, function(e){
+                                $(this).children(".lateralExpandMenu").hide();
+                            });
+                            $(".lateralExpandMenu").hover(function(e){
+                                console.log("PRA");
+                                $(this).parents(".lateralMenuElement").css("background-color", "#6f7e96");
+                            }, function(e) {
+                                $(this).parents(".lateralMenuElement").css("background-color", "#283e65");
+                            });
+                        });
+                    </script>
+
+                    <a href="{{route('map.map')}}">
+                        <div style="position: absolute; bottom: 0px" class="lateralMenuImg">
+                            <img src="{{url('img/icons/turnOff.svg')}}" class="img-fluid">
+                        </div>
+                    </a>
+                </div>
+                {{-- Columna de la derecha con el contenido --}}
+                <div id="rightContent">
+                    @yield('content')
+
+                    <!-- Footer -->
+                    <footer>
+                        @yield('footer')
+                    </footer>
+                </div>
+            </div>
+        </div>
     </body>
 
     <!-- Scripts -->
