@@ -14,10 +14,10 @@
         <img id="tokenSelected" style="width: 40px" src="{{url('img/icons/tokenSelected.svg')}}">
         @foreach ($hotspotList as $hotspot)
             <img id="{{$hotspot->id}}" style="top:{{$hotspot->point_y}};left:{{$hotspot->point_x}}" class="token" src="{{url('img/icons/token.svg')}}">
-                <div id="preview{{$hotspot->id}}" class="card" style="top:{{intval($hotspot->point_y)-245}}; left:{{intval($hotspot->point_x)-129}}">
-                    <img src="{{url('img/hotspots/catedral-almeria-img-01.jpg')}}" alt="Hotspot Preview" style="width:286px; heigth:180px">
+                <div id="preview{{$hotspot->id}}" class="card" style="top:{{intval($hotspot->point_y)-245}}; left:{{intval($hotspot->point_x)-129}}; max-height: 245px">
+                    <img src="{{url('img/hotspots/puerta-purchena-img-01.jpg')}}" alt="Hotspot Preview" style="width:286px; max-heigth:180px">
                     <div class="card-body" style="color: black">
-                      <h4 style="margin-top: 0.5rem"><b>{{$hotspot->title}}</b></h4> 
+                      <h4><b>{{$hotspot->title}}</b></h4> 
                     </div>
                 </div>
         @endforeach
@@ -64,11 +64,8 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body text-dark pb-0">
-                    <button type="button" class="close"  aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                     <div id="show{{$hotspot->id}}" class="show">
-                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <div id="carousel" class="carousel slide" data-ride="carousel" data-interval="10000">
                             <ol class="carousel-indicators">
                               <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                               <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -76,13 +73,13 @@
                             </ol>
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                <img class="d-block w-100" src="{{url('img/hotspots/catedral-almeria-img-01.jpg')}}" alt="First slide">
+                                <img class="d-block w-100" src="{{url('img/hotspots/puerta-purchena-img-01.jpg')}}" alt="First slide">
                             </div>
                             <div class="carousel-item">
-                                <img class="d-block w-100" src="{{url('img/hotspots/catedral-almeria-img-02.jpg')}}" alt="Second slide">
+                                <img class="d-block w-100" src="{{url('img/hotspots/puerta-purchena-img-02.jpg')}}" alt="Second slide">
                               </div>
                               <div class="carousel-item">
-                                <img class="d-block w-100" src="{{url('img/hotspots/catedral-almeria-img-03.jpg')}}" alt="Third slide">
+                                <img class="d-block w-100" src="{{url('img/hotspots/puerta-purchena-img-03.jpg')}}" alt="Third slide">
                             </div>
                             </div>
                             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -120,14 +117,14 @@
     <script>
         $(document).ready(function(){
         
-        // Hotspots to JavaScript
+        //  Hotspots to JavaScript
         /*
-        let hotspots = @ js on($hotspots);
+        let hotspots = @ j so n($hotspots);
         @ f or ( $i=0;$i<count($hotspots);$i++) 
-            hotspots[{ { $i}}].maps =  @ jso n($hotspots[$i]->maps)
-        @ endf or
+            hotspots[{ {     $i}}].maps =  @ j so n($hotspots[$i]->maps)
+        @ e ndf or
         */
-
+        
         $("input[type='checkbox']").click(function(){
             // Hide forms fields
             $("#input_map"+this.value).toggle();
@@ -159,14 +156,6 @@
             $("#transparency").change(function(){
                 $("#map").css("opacity",this.value);
             });
-        });
-
-        $('#buttonEdit').on('click','#token', function(){
-            $("#tokenSelected").show();
-            $("#token").hide();
-            setTimeout(function() {
-                $('#modalEdit').modal('show');
-            }, 250);
         });
 
         $('.token').hover(function(){

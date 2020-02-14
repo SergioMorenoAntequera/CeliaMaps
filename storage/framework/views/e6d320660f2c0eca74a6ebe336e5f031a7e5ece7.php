@@ -12,10 +12,10 @@
         <img id="tokenSelected" style="width: 40px" src="<?php echo e(url('img/icons/tokenSelected.svg')); ?>">
         <?php $__currentLoopData = $hotspotList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $hotspot): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <img id="<?php echo e($hotspot->id); ?>" style="top:<?php echo e($hotspot->point_y); ?>;left:<?php echo e($hotspot->point_x); ?>" class="token" src="<?php echo e(url('img/icons/token.svg')); ?>">
-                <div id="preview<?php echo e($hotspot->id); ?>" class="card" style="top:<?php echo e(intval($hotspot->point_y)-245); ?>; left:<?php echo e(intval($hotspot->point_x)-129); ?>">
-                    <img src="<?php echo e(url('img/hotspots/catedral-almeria-img-01.jpg')); ?>" alt="Hotspot Preview" style="width:286px; heigth:180px">
+                <div id="preview<?php echo e($hotspot->id); ?>" class="card" style="top:<?php echo e(intval($hotspot->point_y)-245); ?>; left:<?php echo e(intval($hotspot->point_x)-129); ?>; max-height: 245px">
+                    <img src="<?php echo e(url('img/hotspots/puerta-purchena-img-01.jpg')); ?>" alt="Hotspot Preview" style="width:286px; max-heigth:180px">
                     <div class="card-body" style="color: black">
-                      <h4 style="margin-top: 0.5rem"><b><?php echo e($hotspot->title); ?></b></h4> 
+                      <h4><b><?php echo e($hotspot->title); ?></b></h4> 
                     </div>
                 </div>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -62,11 +62,8 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body text-dark pb-0">
-                    <button type="button" class="close"  aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                     <div id="show<?php echo e($hotspot->id); ?>" class="show">
-                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <div id="carousel" class="carousel slide" data-ride="carousel" data-interval="10000">
                             <ol class="carousel-indicators">
                               <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                               <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -74,13 +71,13 @@
                             </ol>
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                <img class="d-block w-100" src="<?php echo e(url('img/hotspots/catedral-almeria-img-01.jpg')); ?>" alt="First slide">
+                                <img class="d-block w-100" src="<?php echo e(url('img/hotspots/puerta-purchena-img-01.jpg')); ?>" alt="First slide">
                             </div>
                             <div class="carousel-item">
-                                <img class="d-block w-100" src="<?php echo e(url('img/hotspots/catedral-almeria-img-02.jpg')); ?>" alt="Second slide">
+                                <img class="d-block w-100" src="<?php echo e(url('img/hotspots/puerta-purchena-img-02.jpg')); ?>" alt="Second slide">
                               </div>
                               <div class="carousel-item">
-                                <img class="d-block w-100" src="<?php echo e(url('img/hotspots/catedral-almeria-img-03.jpg')); ?>" alt="Third slide">
+                                <img class="d-block w-100" src="<?php echo e(url('img/hotspots/puerta-purchena-img-03.jpg')); ?>" alt="Third slide">
                             </div>
                             </div>
                             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -118,14 +115,14 @@
     <script>
         $(document).ready(function(){
         
-        // Hotspots to JavaScript
+        //  Hotspots to JavaScript
         /*
-        let hotspots = @ js on($hotspots);
+        let hotspots = @ j so n($hotspots);
         @ f or ( $i=0;$i<count($hotspots);$i++) 
-            hotspots[{ { $i}}].maps =  @ jso n($hotspots[$i]->maps)
-        @ endf or
+            hotspots[{ {     $i}}].maps =  @ j so n($hotspots[$i]->maps)
+        @ e ndf or
         */
-
+        
         $("input[type='checkbox']").click(function(){
             // Hide forms fields
             $("#input_map"+this.value).toggle();
@@ -157,14 +154,6 @@
             $("#transparency").change(function(){
                 $("#map").css("opacity",this.value);
             });
-        });
-
-        $('#buttonEdit').on('click','#token', function(){
-            $("#tokenSelected").show();
-            $("#token").hide();
-            setTimeout(function() {
-                $('#modalEdit').modal('show');
-            }, 250);
         });
 
         $('.token').hover(function(){
