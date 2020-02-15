@@ -3,9 +3,6 @@
 @section('title', 'Celia Maps')
 
 @section('cdn')
-<link rel="stylesheet" href="{{url('/css/Forms.css')}}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 @endsection
 
 @section('content')
@@ -14,8 +11,9 @@
         <div class="wholePanel">
             <div class="leftPanel">
                 <div class="content justify-content-center align-items-center">
-                   Introducción de mapa <br>
-                   <img src="{{url('img/icons/tlMenuMapWhite.png')}}" alt="CeliaMaps" class="img-fluid">
+                   Introducción de mapa
+                   <br>
+                   <img src="{{url('img/icons/tlMenuMapWhite.png')}}" alt="CeliaMaps" class="img-fluid"> 
                 </div>
             </div>    
            <div class="rightPanel">

@@ -10,10 +10,8 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" integrity="sha384-SI27wrMjH3ZZ89r4o+fGIJtnzkAnFs3E4qz9DIYioCQ5l9Rd/7UAa8DHcaL8jkWt" crossorigin="anonymous">
         <link rel="stylesheet" href="{{url('/css/Backend.css')}}">
         <link rel="stylesheet" href="{{url('/css/BootstrapOverride.css')}}">
-        <link rel="stylesheet" href="{{url('/css/Global.css')}}">
         <link rel="stylesheet" href="{{url('/css/streets.css')}}">
         <link rel="stylesheet" href="{{url('/css/Hotspots.css')}}">
-        {{-- <link rel="stylesheet" href="{{url('/css/NavBar.css')}}"> --}}
         <!--  <link href="https://fonts.googleapis.com/css?family=Dancing+Script:500&display=swap" rel="stylesheet">   -->
         <script
             src="https://code.jquery.com/jquery-3.4.1.js"
