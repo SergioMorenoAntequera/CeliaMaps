@@ -18,22 +18,22 @@
         </a>
 
         <!-- Todos los elementos de la página -->
-        <div id="allElements" class="justify-content-center mt-3">
-
+        <div id="allElements" class="justify-content-center mt-3 text-white">
             @foreach ($maps as $map)
                 <!-- Cada uno de los elementos de la página -->
-                <div id="oneElement{{$map->level}}" class="row mb-4 justify-content-center ">
+                <div class="oneElement row mb-4 justify-content-center ">
                     <!-- Columna con el numero y las flechas -->
-                    <div class="col-1 bg-primary justify-content-center rounded">
-                        <a  class="bUp"><button id="bUp{{$map->level}}"> Up</button></a>
+                    <div class="elementLeft col-1 bg-primary justify-content-center rounded">
+                        {{-- Metemos el boton dentro de un enlace para cuando queramos usar una imagen --}}
+                        <a class="bUp"><button> Up </button></a>
                         <br>
-                        <span id="level{{$map->level}}">{{$map->level}}</span>
+                        <span class="mapLevel">{{$map->level}}</span>
                         <br>
-                        <a class="bDown"><button id="bDown{{$map->level}}">Down</button></a>
+                        <a class="bDown"><button> Down </button></a>
                     </div>
 
-                    <!-- Columna con el numero y las flechas -->
-                    <div class="col-10 px-3 py-1 ml-4 text-left bg-primary rounded">
+                    <!-- Columna con el resto de información del mapa -->
+                    <div class="elementRight col-10 px-3 py-1 ml-4 text-left bg-primary rounded">
                         <!-- Titulo -->
                         <p><b class="text-white text-6">{{$map->title}}</b></p>
                         <!-- Foto/miniatura -->
@@ -84,7 +84,7 @@
                             </div>
                         </div><!-- FINAL modal para borrar -->
 
-                        <!-- Boton para resize -->
+                        <!-- Boton para alinear -->
                         <a href="{{route('map.align', $map->id)}}">
                             @if (empty($map->tlCornerLatitude))
                                 <button class="cornerAlignButton bg-danger">

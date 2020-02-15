@@ -2,64 +2,48 @@
 
 @section('title', 'Celia Maps')
 
-@section('header')
-    (En teoría)Aquí se crean todos los mapas
+@section('cdn')
+<link rel="stylesheet" href="{{url('/css/Forms.css')}}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 @endsection
 
 @section('content')
-    <br>
-    <div class="container w-50 text-center">
-        <div class="card">
-            <div class="card-header">
-                Registar mapa
-            </div>
-
-            <div class="card-body text-secondary">
-                <form method="POST" action="{{route('map.store')}}" enctype="multipart/form-data">
+    <div class="container text-center">
+        
+        <div class="wholePanel">
+            <div class="leftPanel">
+                <div class="content justify-content-center align-items-center">
+                   Introducción de mapa <br>
+                   <img src="{{url('img/icons/tlMenuMapWhite.png')}}" alt="CeliaMaps" class="img-fluid">
+                </div>
+            </div>    
+           <div class="rightPanel">
+                <form method="POST" class="text-left" action="{{route('map.store')}}" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <label>Título</label>
-                        <input type="text" class="form-control" name="title" placeholder="Title of the map">
+                        <label>Título *</label>
+                        <input type="text" class="form-control" name="title" placeholder="Título del mapa">
                     </div>
                     <div class="form-group">
-                        <label>Description</label>
-                        <input type="text" class="form-control" name="description" placeholder="Description of the map">
+                        <label>Descripción *</label>
+                        <input type="text" class="form-control" name="description" placeholder="Pequeña descripción del mapa">
                     </div>
                     <div class="form-group">
-                        <label>City</label>
-                        <input type="text" class="form-control" name="city" placeholder="City of the map">
+                        <label>Ciudad *</label>
+                        <input type="text" class="form-control" name="city" placeholder="Ciudad/es del mapa">
                     </div>
                     <div class="form-group">
-                        <label>Date</label>
-                        <input type="number" class="form-control" name="date" placeholder="Year of the map">
+                        <label>Fecha *</label>
+                        <input type="number" class="form-control" name="date" placeholder="Año del mapa">
                     </div>
                     <div class="form-group">
-                        <label>Image</label>
-                        <input type="file" class="form-control" name="image" placeholder="File of the map">
+                        <label>Imagen *</label>
+                        <input type="file" class="form-control" name="image" placeholder="Archivo del mapa">
                     </div>
                     <div class="form-group">
-                        <label>Miniature</label>
+                        <label>Miniatura</label>
                         <input type="file" class="form-control" name="miniature" placeholder="Miniature ile of the map">
-                    </div>
-                    <div class="form-group">
-                        <label>Level</label>
-                        <input type="int" class="form-control" name="level" placeholder="Level of the map">
-                    </div>
-                    <div class="form-group">
-                        <label>Width</label>
-                        <input type="text"  class="form-control" name="width" placeholder="Width of the map">
-                    </div>
-                    <div class="form-group">
-                        <label>Height</label>
-                        <input type="text" class="form-control" name="height" placeholder="Height of the map">
-                    </div>
-                    <div class="form-group">
-                        <label>Deviation_x</label>
-                        <input type="text" class="form-control" name="deviation_x" placeholder="Deviation_x of the map">
-                    </div>
-                    <div class="form-group">
-                        <label>Deviation_y</label>
-                        <input type="text" class="form-control" name="deviation_y" placeholder="Deviation_y of the map">
                     </div>
                     <button type="submit" class="btn btn-primary">Registrar</button>
                 </form>

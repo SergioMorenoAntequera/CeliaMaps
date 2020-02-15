@@ -43,15 +43,12 @@ $(document).ready(function(){
 
     // MOVE UP ///////////////////////////////////////////////////////////////////////
     $('.bUp').click(function(){
-        var button = jQuery($(this).children()[0]);
+        var button = $(this).find("button");
         button.prop('disabled', true);
-        var parent = $(this).parent().parent().parent();
-        var mapSelected = $(this).parent().parent();
-        var level = jQuery(mapSelected.children()[0]);
-        level = jQuery(level.children()[2]);
-        //var button = jQuery(jQuery(jQuery(mapSelected.children()[0]).children()[0]).children()[0]);
+        var parent = $(this).parents("#allElements");
+        var mapSelected = $(this).parents(".oneElement");
+        var level = mapSelected.find(".mapLevel");
         
-
         if(level.text() == 1){
             alert("No puedes subir el primer mapa");
             button.prop('disabled', false);
@@ -64,7 +61,6 @@ $(document).ready(function(){
             "url": url,
             data: {level: level.text()},
             success: function(data){
-
                 //Here we update the position of the divs
                 //Here we have to update the numbers in the divs
                 for (var i = 0; i < parent.children().length; i++) {
@@ -91,7 +87,6 @@ $(document).ready(function(){
                             mapSelected.fadeIn(300);
                             button.prop('disabled', false);
                         });
-
                         return;
                     }
                 }                        
@@ -101,17 +96,11 @@ $(document).ready(function(){
 
     // MOVE DOWN   ///////////////////////////////////////////////////////////////////////
     $('.bDown').click(function(){
-        var button = jQuery($(this).children()[0]);
+        var button = $(this).find("button");
         button.prop('disabled', true);
-
-        var parent = $(this).parent().parent().parent();
-        var mapSelected = $(this).parent().parent();
-        var level = jQuery(mapSelected.children()[0]);
-        level = jQuery(level.children()[2]);
-        //Uncool but fast version
-        //var button = jQuery(jQuery(level.siblings()[3]).children()[0]);
-        //Cool but slow version
-        //var button = $('.bDown'+level.text());
+        var parent = $(this).parents("#allElements");
+        var mapSelected = $(this).parents(".oneElement");
+        var level = mapSelected.find(".mapLevel");
        
         var url = window.location.href+"/down";
         $.ajax({
