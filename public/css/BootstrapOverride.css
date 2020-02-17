@@ -27,10 +27,10 @@
 }
 
 /********* DANGER *********/
-.text-warning{
+.text-danger{
     color: #a03525 !important;
 }
-.bg-warning{
+.bg-danger{
     background-color: #a03525 !important;
 }
 

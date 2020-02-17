@@ -11,11 +11,14 @@
         <div class="wholePanel">
             <div class="leftPanel">
                 <div class="content justify-content-center align-items-center">
-                   Modificando mapa
-                   <br>
-                   <p style="margin-bottom: 0px;  font-size: 50px">{{$map->title}}</p>
-                   <img src="{{url('img/maps/$map->miniature')}}" alt="Sin Miniatura" class="img-fluid"> 
-                   
+                    Modificando mapa
+                    <br>
+                    <p style="margin-bottom: 0px;  font-size: 50px">{{$map->title}}</p>
+                    @if ($map->miniature == "")
+                        <img src="{{url('img/maps/$map->miniature')}}" alt="Sin Miniatura" style="width: 80%">  
+                    @else 
+                        <img src="{{url('img/maps/NoMap.png')}}" alt="Sin Miniatura" style="width: 80%;">  
+                    @endif
                 </div>
             </div>    
            <div class="rightPanel">

@@ -20,30 +20,30 @@
                 <form method="POST" class="text-left" action="{{route('map.store')}}" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <label>Título *</label>
-                        <input type="text" class="form-control" name="title" placeholder="Título del mapa">
+                        <label>Título <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="title" placeholder="Almería XXI">
                     </div>
                     <div class="form-group">
-                        <label>Descripción *</label>
-                        <input type="text" class="form-control" name="description" placeholder="Pequeña descripción del mapa">
+                        <label>Descripción</label>
+                        <input type="text" class="form-control" name="description" placeholder="Mapa de Almería en el 2020">
                     </div>
                     <div class="form-group">
-                        <label>Ciudad *</label>
-                        <input type="text" class="form-control" name="city" placeholder="Ciudad/es del mapa">
+                        <label>Ciudad <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="city" placeholder="Almería, Aguadulce...">
                     </div>
                     <div class="form-group">
-                        <label>Fecha *</label>
-                        <input type="number" class="form-control" name="date" placeholder="Año del mapa">
+                        <label>Fecha <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" name="date" placeholder="2020">
                     </div>
                     <div class="form-group">
-                        <label>Imagen *</label>
-                        <input type="file" class="form-control" name="image" placeholder="Archivo del mapa">
+                        <label>Imagen del mapa <span class="text-danger">*</span></label>
+                        <input id="uploadImage" type="file" class="form-control" name="image" placeholder="Archivo del mapa">
                     </div>
                     <div class="form-group">
                         <label>Miniatura</label>
-                        <input type="file" class="form-control" name="miniature" placeholder="Miniature ile of the map">
+                        <input type="file" class="form-control" name="miniature" placeholder="Miniatura del mapa">
                     </div>
-                    <button type="submit" class="btn btn-primary">Registrar</button>
+                    <button type="submit" class="btn btn-primary"> Continuar </button>
                 </form>
             </div>
         </div>

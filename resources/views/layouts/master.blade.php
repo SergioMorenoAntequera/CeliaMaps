@@ -141,6 +141,19 @@
                     </ul>
                     <script>
                         $(document).ready(function(){
+                            if(window.location.href.includes("/map")){
+                                var element = $(".lateralMenuLink[href|='{{route('map.index')}}']").parents(".lateralMenuElement");
+                            } else if(window.location.href.includes("/street")){
+                                var element = $(".lateralMenuLink[href|='{{route('street.index')}}']").parents(".lateralMenuElement");
+                            } else if(window.location.href.includes("/hotspot")){
+                                var element = $(".lateralMenuLink[href|='{{route('hotspot.index')}}']").parents(".lateralMenuElement");
+                            } else if(window.location.href.includes("/user")){
+                                var element = $(".lateralMenuLink[href|='{{route('user.index')}}']").parents(".lateralMenuElement");
+                            } else if(window.location.href.includes("/backup")){
+                                var element = $(".lateralMenuLink[href|='{{route('backup.index')}}']").parents(".lateralMenuElement");
+                            }
+                            element.css("background-color", "#6f7e96")
+                            
                             $(".lateralMenuElement").hover(function(e){
                                 var top = $(this).position().top;
                                 var expandMenu = $(this).children(".lateralExpandMenu");
@@ -150,12 +163,11 @@
                             }, function(e){
                                 $(this).children(".lateralExpandMenu").hide();
                             });
-                            $(".lateralExpandMenu").hover(function(e){
-                                console.log("PRA");
-                                $(this).parents(".lateralMenuElement").css("background-color", "#6f7e96");
-                            }, function(e) {
-                                $(this).parents(".lateralMenuElement").css("background-color", "#283e65");
-                            });
+                            // $(".lateralExpandMenu").hover(function(e){
+                            //     $(this).parents(".lateralMenuElement").css("background-color", "#6f7e96");
+                            // }, function(e) {
+                            //     $(this).parents(".lateralMenuElement").css("background-color", "#283e65");
+                            // });
                         });
                     </script>
 

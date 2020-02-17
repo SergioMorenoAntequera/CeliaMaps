@@ -99,8 +99,9 @@ class MapController extends Controller
      */
     public function store(Request $r){
         $map = new Map($r->all());
-        $map->id = Map::max('id')+1;
-        
+        $map->id = Map::max('id') + 1;
+        $map->level = Map::max('level') + 1;
+
         if($r->hasFile('image')){
             $file = $r->file('image');
             $file->move(public_path("/img/maps/"), $map->id.$file->getClientOriginalName());
@@ -108,7 +109,6 @@ class MapController extends Controller
         } else {
             $map->image = "NoMap.png";
         }
-
         if($r->hasFile('miniature')){
             $file = $r->file('miniature');
             $file->move(public_path("/img/miniatures/"), $map->id.$file->getClientOriginalName());

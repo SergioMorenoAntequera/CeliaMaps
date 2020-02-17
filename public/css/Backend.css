@@ -1,8 +1,7 @@
 html body{
     width: 100%;
-    height: auto;
     min-height: 100%;
-    
+    height: auto;
 }
 /***************************************/
 /* Barra de navegación de la izquierda */
@@ -10,7 +9,6 @@ html body{
 #leftNavBar {
     position: fixed;
     z-index: 10000;
-    /* width: 70px; */
     width: 5%;
     height: 100%;
     background-color: #283e65;
@@ -21,8 +19,9 @@ html body{
     
     background-color: #efefef;
 }
+
 .lateralMenuImg {
-    padding: 10 0; 
+    padding: 20% 0; 
 }
 .lateralMenuImg:hover {
     background-color: #6f7e96;
@@ -143,9 +142,9 @@ los formularios y seguramente algo más, pa quién lo quiera */
 .wholePanel {
     display: flex;
     width: 100%;
-    max-height: 100%;
-
+    min-height: auto;
     margin: 50px 0px 50px 0px;
+    
 }
 .wholePanel .leftPanel {
     width: 40%;
@@ -174,6 +173,15 @@ los formularios y seguramente algo más, pa quién lo quiera */
     color: black;
     border-radius: 0px 10px 10px 0px;
 }
+.wholePanel .rightPanel label {
+    font-weight: bold;
+}
+@media (max-width: 768px) {
+    .wholePanel .leftPanel {display: none;}
+    .wholePanel .rightPanel {margin-left: auto; margin-right: auto;}
+}
+/* Para ver si queremos alinear el mapa antes antes de subirlo */
+
 
 
 #notocar{

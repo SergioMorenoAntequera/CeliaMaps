@@ -17,14 +17,12 @@ class CreateMapsTable extends Migration
         Schema::create('maps', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title',75)->unique(); 
-            $table->string('description', 150); 
-            $table->string('city',75); 
-            $table->integer('date');
+            $table->string('description', 150)->nullable(); 
+            $table->string('city',75)->nullable(); 
+            $table->integer('date')->nullable();
             $table->string('image',75);
-            $table->string('miniature',200);
+            $table->string('miniature',200)->nullable();
             $table->integer('level')->unique();
-            $table->integer('width');
-            $table->integer('height');
             $table->float('tlCornerLatitude', 18, 16)->nullable();
             $table->float('tlCornerLongitude', 18, 16)->nullable();
             $table->float('trCornerLatitude', 18, 16)->nullable();
