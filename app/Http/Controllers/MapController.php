@@ -98,6 +98,15 @@ class MapController extends Controller
      * @return View
      */
     public function store(Request $r){
+        $r->validate([
+            'title' => 'required|unique:maps',
+            'date' => 'required|numeric|min:0|max:'.date("Y").'',
+            'image' => 'required|image',
+            'description' => 'nullable|string',
+            'city' => 'nullable|string',
+            'miniature' => 'nullable|image',
+        ]);
+
         $map = new Map($r->all());
         $map->id = Map::max('id') + 1;
         $map->level = Map::max('level') + 1;
@@ -143,6 +152,15 @@ class MapController extends Controller
      */
     public function update(Request $r, $id){
         $map = Map::find($id);
+        $r->validate([
+            'title' => 'required|unique:maps',
+            'date' => 'required|numeric|min:0|max:'.date("Y").'',
+            'image' => 'required|image',
+            'description' => 'nullable|string',
+            'city' => 'nullable|string',
+            'miniature' => 'nullable|image',
+        ]);
+        
         
         $map->fill($r->all());
         if($r->hasFile('image')){

@@ -52,8 +52,6 @@
                             </button>
                         </a>
                         
-                        <!-- Boton para borrar -->
-                        <!-- action="{{route('map.destroy', $map->id)}}" -->
                         <form method="POST" action="{{route('map.destroy', $map->id)}}">
                             @csrf
                             @method("DELETE")

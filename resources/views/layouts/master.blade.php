@@ -8,6 +8,7 @@
         <!-- General CDNs -->
         <link rel="icon" type="image/png" href="{{url('/img/icons/icon.png')}}" sizes="64x64">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" integrity="sha384-SI27wrMjH3ZZ89r4o+fGIJtnzkAnFs3E4qz9DIYioCQ5l9Rd/7UAa8DHcaL8jkWt" crossorigin="anonymous">
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         <link rel="stylesheet" href="{{url('/css/Backend.css')}}">
         <link rel="stylesheet" href="{{url('/css/BootstrapOverride.css')}}">
         <link rel="stylesheet" href="{{url('/css/streets.css')}}">

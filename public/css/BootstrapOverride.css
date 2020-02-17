@@ -44,11 +44,10 @@
 
 /********* SUCCESS *********/
 .text-success{
-    color: #25945c !important;
+    color: #3ab398 !important;
 }
-.bg-success{
-    background-color: #25945c !important;
-}
+.bg-success{background-color: #3ab398 !important;}
+.btn-success { background-color: #3ab398 !important; border-color: #3ab398 !important;}
 
 /********* LIGHT *********/
 .text-light{
