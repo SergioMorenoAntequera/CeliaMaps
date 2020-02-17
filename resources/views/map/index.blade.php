@@ -21,21 +21,21 @@
         <div id="allElements" class="justify-content-center mt-3 text-white">
             @foreach ($maps as $map)
                 <!-- Cada uno de los elementos de la página -->
-                <div class="oneElement row mb-4 justify-content-center ">
+                <div class="wholePanel">
                     <!-- Columna con el numero y las flechas -->
-                    <div class="elementLeft col-1 bg-primary justify-content-center rounded">
+                    <div style="width:10%; position: relative" class="leftPanel">
                         {{-- Metemos el boton dentro de un enlace para cuando queramos usar una imagen --}}
-                        <a class="bUp"><button> Up </button></a>
-                        <br>
-                        <span class="mapLevel">{{$map->level}}</span>
-                        <br>
-                        <a class="bDown"><button> Down </button></a>
+                        <input class="bUp" type="image" src="{{url("img/icons/arrowUp.svg")}}"/>
+                        <div class="content">
+                            <span class="mapLevel">{{$map->level}}</span>
+                        </div>
+                        <input class="bDown" type="image" src="{{url("img/icons/arrowDown.svg")}}"/>
                     </div>
 
                     <!-- Columna con el resto de información del mapa -->
-                    <div class="elementRight col-10 px-3 py-1 ml-4 text-left bg-primary rounded">
+                    <div style="width:90%; position: relative;" class="rightPanel">
                         <!-- Titulo -->
-                        <p><b class="text-white text-6">{{$map->title}}</b></p>
+                        <p><b class="text-6">{{$map->title}}</b></p>
                         <!-- Foto/miniatura -->
                         <a style="float: left" href="{{route("map.show", $map->id)}}">
                             <img class="mr-4 ml-5" style="width: 100px" src="{{url("img/miniatures/$map->miniature")}}" alt="Miniatura">
@@ -46,13 +46,23 @@
                         <div style="clear: both"></div>
 
                         <!-- Boton para modificar -->
-                        <a href="{{route('map.edit', $map->id)}}"> 
-                            <button class="cornerUpdateButton bg-secondary">
-                                <img src="{{url("img/icons/editWhite.png")}}" alt=""> 
-                            </button>
+                        <a href="{{route('map.edit', $map->id)}}">
+                            <div class="cornerButton" style="right: 50px">
+                                <img class="center" src="{{url("img/icons/editWhite.png")}}" alt=""> 
+                            </div>
                         </a>
-                        
+
                         <form method="POST" action="{{route('map.destroy', $map->id)}}">
+                            @csrf
+                            @method("DELETE")
+
+                            <button class="cornerButton">
+                                <img class="center" src="{{url("img/icons/deleteWhite.png")}}" alt=""> 
+                            </button>
+                        </form>
+                            
+                        
+                        {{-- <form method="POST" action="{{route('map.destroy', $map->id)}}">
                             @csrf
                             @method("DELETE")
 
@@ -88,28 +98,24 @@
                                 <button class="cornerAlignButton bg-danger">
                                     <img src="{{url("img/icons/align.png")}}" alt=""> 
                                 </button>
-                                <b> Mapa no alineado, no se mostrará en página principal </b>
+                                <b class="text-warning"> Mapa no alineado, no se mostrará en página principal </b>
                             @else
                                 <button class="cornerAlignButton bg-secondary">
                                     <img src="{{url("img/icons/align.png")}}" alt=""> 
                                 </button>
-                            @endif
+                            @endif --}}
                         </a>
                     </div><!-- FINAL columna con info del mapa -->
                 </div> <!-- FINAL .oneElement -->
             @endforeach
         </div> <!-- FINAL .allEments -->
-
-        
     </div>
 @endsection
 
 @section('footer')
-
     <div>
         footer
     </div>
-
 @endsection
 
 @section('scripts')

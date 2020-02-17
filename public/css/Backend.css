@@ -76,6 +76,21 @@ html body{
     padding-left: 40px;
 }
 /******* DELETE BUTTON *******/
+.cornerButton {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: -20px;
+    right: 0px;
+
+    border-radius: 25px;
+    background-color: #3ab398;
+}
+.cornerButton > img {
+    max-width:60%;
+    max-height:60%;
+}
+
 .cornerDeleteButton{
     position: absolute;
     width: 40px;
@@ -148,7 +163,6 @@ los formularios y seguramente algo más, pa quién lo quiera */
     -webkit-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.13);
     -moz-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.13);
     box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.13);
-    
 }
 .wholePanel .leftPanel {
     width: 40%;
@@ -185,18 +199,25 @@ los formularios y seguramente algo más, pa quién lo quiera */
     color: black;
     border-radius: 0px 10px 10px 0px;
 }
-.wholePanel .rightPanel label {
-    font-weight: bold;
-}
 @media (max-width: 768px) {
     .wholePanel .leftPanel {display: none;}
     .wholePanel .rightPanel {margin-left: auto; margin-right: auto;}
+}
+.center {
+    position: relative;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
 }
 /* Div donde se enseñan la info adicional por si la queremos añadir */
 .showMore { color: #3ab398; }
 .showMore:hover { cursor: pointer; }
 .more {border: solid 0.5px #3ab398; padding: 2%; border-radius: 10px;}
 .clearInput { border: none; padding-left: 0px; padding-top: 1px;}
+.wholePanel .rightPanel label { font-weight: bold; }
+/* Cosos del index */
+.leftPanel input { width: 70%;}
+.leftPanel .bDown { position: absolute; left: 15%; bottom: 5%;}
+.leftPanel .bUp { position: absolute; left: 15%; top: 5%;}
 /* Para ver si queremos alinear el mapa antes antes de subirlo */
 
 
