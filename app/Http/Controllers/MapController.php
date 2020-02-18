@@ -202,8 +202,13 @@ class MapController extends Controller
             $mapAux->level -= 1;
             $mapAux->update();
         }
-        unlink(public_path('img/maps/'. $map->image));
-        unlink(public_path('img/miniatures/'. $map->miniature));
+
+        // if(file_exists(public_path('img/maps/'. $map->image))){
+        //     unlink(public_path('img/maps/'. $map->image));
+        // }
+        // if(file_exists(public_path('img/miniatures/'. $map->miniature)) && $map->miniature != "NoMiniature.png"){
+        //     unlink(public_path('img/miniatures/'. $map->miniature));
+        // }
 
         return response()->json([
             'count'=> Map::count(),

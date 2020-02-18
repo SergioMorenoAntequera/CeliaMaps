@@ -11,23 +11,32 @@ $(document).ready(function(){
             "url": route,
             data: {_token: token, id: $(this).attr("iddb")},
             success: function(){
+                // Animación de borrar
                 panel.css({
                     "position":"relative",
                 });
                 panel.animate({
-                    left: "30px",
-                }, 300, function(){
+                    left: "50px",
+                }, 200, function(){
                     panel.animate({
                         left: "-3000px"
-                    }, 800, function(){
-                        panel.slideToggle();
+                    }, 450, function(){
+                        panel.slideToggle(function(){
+                            panel.remove();
+                            //Reordenarlo todo
+                            var index = 1;
+                            $(".mapLevel").each(function(){
+                                console.log($(this))
+                                $(this).text(index++);
+                            });
+                        });
                     });
                 });
             }
         });
     });
 
-    // MOVE UP ///////////////////////////////////////////////////////////////////////
+    // MOVE UP /////////////////////////////////////////////////////////////////////////////
     $('.bUp').click(function(){
         var button = $(this).find("button");
         button.prop('disabled', true);
@@ -80,7 +89,7 @@ $(document).ready(function(){
         });
     });
 
-    // MOVE DOWN   ///////////////////////////////////////////////////////////////////////
+    // MOVE DOWN //////////////////////////////////////////////////////////////////////////
     $('.bDown').click(function(){
         var button = $(this).find("button");
         button.prop('disabled', true);
