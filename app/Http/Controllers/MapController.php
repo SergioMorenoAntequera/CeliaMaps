@@ -189,18 +189,21 @@ class MapController extends Controller
      * @return View
      */
     public function destroy(Request $r){
-        $map = Map::where("level", $r->level)->first();
         
+        $map = Map::where("id", $r->id)->first();
+        $level = $map->level;
         //We destroy the map
         Map::destroy($map->id);
 
         //We change the next levels
-        for($i = $r->level + 1; $i <= Map::count()+1; $i++){
+        for($i = $level + 1; $i <= Map::count()+1; $i++){
             $mapAux = Map::where("level", $i)->first();
             $mapAux = Map::find($mapAux->id);
             $mapAux->level -= 1;
             $mapAux->update();
         }
+        unlink(url('img/maps/'. $data['map']->image));
+        unlink(url('img/miniatures/'. $data['map']->miniature));
 
         return response()->json([
             'count'=> Map::count(),

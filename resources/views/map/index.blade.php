@@ -45,13 +45,6 @@
                         <p> {{$map->description}}</p>
                         <div style="clear: both"></div>
 
-                        <!-- Boton para modificar -->
-                        <a href="{{route('map.edit', $map->id)}}">
-                            <div class="cornerButton" style="right: 50px">
-                                <img class="center" src="{{url("img/icons/editWhite.png")}}" alt=""> 
-                            </div>
-                        </a>
-
                         <!-- Boton para Borrar  -->
                         <form method="POST" action="{{route('map.destroy', $map->id)}}">
                             @csrf
@@ -74,13 +67,21 @@
                                         <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
                                         <button iddb="{{$map->id}}" type="button" class="btn btn-danger deleteConfirm" data-dismiss="modal">
                                             Eliminar
-                                            <span class="d-none">{{$map->level}}</span> 
                                         </button>
                                     </div>
                                 </div>
                             </div>
-                        </div><!-- FINAL modal para borrar -->
-                            
+                        </div>
+                        <!-- FINAL modal para borrar -->
+
+                        <!-- Boton para modificar -->
+                        <a href="{{route('map.edit', $map->id)}}">
+                            <div class="cornerButton" style="right: 50px">
+                                <img class="center" src="{{url("img/icons/editWhite.png")}}" alt=""> 
+                            </div>
+                        </a><!-- FIN Boton para modificar -->
+
+                        {{-- Boton para alinear los mapas  --}}
                         <a href="{{route('map.align', $map->id)}}">
                             @if (empty($map->tlCornerLatitude))
                                 <div style="right: 100px" class="cornerButton bg-danger">
@@ -93,6 +94,8 @@
                                 </div>
                             @endif 
                         </a>
+
+
                         {{-- <form method="POST" action="{{route('map.destroy', $map->id)}}">
                             @csrf
                             @method("DELETE")
@@ -135,6 +138,7 @@
     <!------------------------------------ FUNCTIONS WITH AJAX ---------------------------------->
     <!--------------------------------- DELETE, MOVE UP AND DOWN -------------------------------->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+    <script> var token = '{{csrf_token()}}'</script>
     <script type="text/javascript" src="{{url('/js/MoveAndDeleteMaps.js')}}">
     </script>
     

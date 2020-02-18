@@ -3,8 +3,29 @@
 //--------------------------------- DELETE, MOVE UP AND DOWN -------------------------------->
 $(document).ready(function(){
     // DELETE CON AJAX ///////////////////////////////////////////////////////////////////////
-    
-    
+    $(".deleteConfirm").on("click", function(){
+        var route = window.location.href + "/" + $(this).attr("iddb");
+        var panel = $(this).parents(".wholePanel")
+        $.ajax({
+            type: "DELETE",
+            "url": route,
+            data: {_token: token, id: $(this).attr("iddb")},
+            success: function(){
+                panel.css({
+                    "position":"relative",
+                });
+                panel.animate({
+                    left: "30px",
+                }, 300, function(){
+                    panel.animate({
+                        left: "-3000px"
+                    }, 800, function(){
+                        panel.slideToggle();
+                    });
+                });
+            }
+        });
+    });
 
     // MOVE UP ///////////////////////////////////////////////////////////////////////
     $('.bUp').click(function(){

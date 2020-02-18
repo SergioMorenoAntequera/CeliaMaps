@@ -65,7 +65,7 @@
         {{-- Todos los menús que podemos poner --}}
 
         {{-- Menú de los mapas --}}
-        <div id="mapsMenu" class="menu noselect">
+        <div id="mapsMenu" style="font-family: Arial, Helvetica, sans-serif" class="menu noselect">
                 <!-- Todo el menú -->
                 <div class="closeMenuButton">
                     <i class="fa fa-times"></i>
