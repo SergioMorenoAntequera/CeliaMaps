@@ -46,12 +46,12 @@ Route::get('backup/create', 'BackupController@create')->name('backup.create');
 Route::get('backup/restore', 'BackupController@restore')->name('backup.restore');
 // SEARCH /////////////////////////////////////////////////////////////////////////////////////
 Route::get('search/index', 'SearchController@index')->name('search.index');
-Route::get('search', 'SearchController@search')->name('search.search');
+Route::post('search', 'SearchController@search')->name('search.search');
 Route::get('search/download', 'SearchController@download')->name('search.download');
-Route::get('search/inform', 'SearchController@inform')->name('search.inform');
+Route::get('search/inform/{id}', 'SearchController@inform')->name('search.inform');
 // PDF /////////////////////////////////////////////////////////////////////////////////////////////
-Route::get('pdf/ver', 'PdfController@ver')->name('pdf.ver');
-Route::get('pdf/download', 'PdfController@download')->name('pdf.download');
+//Route::get('pdf/ver', 'PdfController@ver')->name('pdf.ver');
+//Route::get('pdf/download', 'PdfController@download')->name('pdf.download');
 
 Route::get('/home', 'HomeController@index')->name('home');
 

@@ -74,13 +74,13 @@ CREATE TABLE `hotspots` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `image` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
   `title` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `description` varchar(600) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(1600) COLLATE utf8_unicode_ci NOT NULL,
   `point_x` int(10) unsigned NOT NULL,
   `point_y` int(10) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -89,7 +89,7 @@ CREATE TABLE `hotspots` (
 
 LOCK TABLES `hotspots` WRITE;
 /*!40000 ALTER TABLE `hotspots` DISABLE KEYS */;
-INSERT INTO `hotspots` VALUES (1,'catedralAlmeria.png','Catedral','CAtedral de la ciudad de Almeria',100,150,'2020-02-11 08:02:41','2020-02-11 08:02:41'),(2,'Alcazaba.png','Alcazaba','Alcazaba de la ciudad de Almeria',50,190,'2020-02-11 08:02:41','2020-02-11 08:02:41'),(3,'mercadoCentral.png','Mercado Central','Mercado del paseo',500,63,'2020-02-11 08:02:41','2020-02-11 08:02:41'),(4,'REfugios.png','Refugios WW2','Refugios de la segunda guerra mundial',100,150,'2020-02-11 08:02:41','2020-02-11 08:02:41'),(5,'minihollywood.png','Minihollywood','Atracción del oeste y zoo para toda la familia',10,500,'2020-02-11 08:02:41','2020-02-11 08:02:41');
+INSERT INTO `hotspots` VALUES (1,'catedralAlmeria.png','Catedral de Almeria','La Catedral-Fortaleza de la Encarnación es la sede episcopal \r\n            de la diócesis de Almería. El edificio, con estructura de fortaleza, presenta una \r\n            arquitectura de transición entre el Gótico tardío y el Renacimiento, así como rasgos \r\n            posteriores barrocos y neoclásicos. Constituye una de las manifestaciones artísticas de carácter \r\n            arquitectónico y cultural más importantes y valiosas de Andalucía y, por ende, de España, al ser \r\n            la única Catedral con naturaleza de fortaleza erigida en el siglo XVI. ',100,150,'2020-02-17 10:02:56','2020-02-17 10:02:56'),(2,'Alcazaba.png','Alcazaba','Alcazaba de la ciudad de Almeria',50,190,'2020-02-17 10:02:56','2020-02-17 10:02:56'),(3,'mercadoCentral.png','Mercado Central','Mercado del paseo',500,63,'2020-02-17 10:02:56','2020-02-17 10:02:56'),(4,'REfugios.png','Refugios WW2','Refugios de la segunda guerra mundial',100,150,'2020-02-17 10:02:56','2020-02-17 10:02:56'),(5,'minihollywood.png','Minihollywood','Atracción del oeste y zoo para toda la familia',10,500,'2020-02-17 10:02:56','2020-02-17 10:02:56'),(6,'plazaVieja.png','Plaza Vieja','La Plaza de la Constitución, popularmente conocida como Plaza Vieja, es una plaza situada en el centro histórico de la ciudad española de Almería. Durante la época musulmana se encontraba en este lugar el zoco, consolidándose su carácter de plaza en el siglo XIX. Alberga la sede del Ayuntamiento de la ciudad, construido a finales de dicho siglo, proyecto del arquitecto almeriense Trinidad Cuartara.',60,530,'2020-02-17 10:02:56','2020-02-17 10:02:56'),(7,'puertaPurchena.png','Puerta Purchena','La Puerta de Purchena es una plaza situada en el centro de la ciudad de Almería. En ella se ubicó la antigua puerta de Pechina, aunque su nombre se vio alterado tras la conquista cristiana por un error de transcripción de los Reyes Católicos, quienes confundieron el nombre de los pueblos de Pechina (la antigua Bayyana) y Purchena, ambos almerienses. \r\n            La puerta homónima desapareció tras el derribo de la muralla en 1855, creándose por entonces la actual plaza. El urbanismo que la caracteriza es propio de la arquitectura burguesa del siglo XIX, representada en edificaciones como la Casa de las Mariposas. ',870,550,'2020-02-17 10:02:56','2020-02-17 10:02:56');
 /*!40000 ALTER TABLE `hotspots` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -214,7 +214,7 @@ CREATE TABLE `maps` (
 
 LOCK TABLES `maps` WRITE;
 /*!40000 ALTER TABLE `maps` DISABLE KEYS */;
-INSERT INTO `maps` VALUES (1,'Almería XXI','Mapa de la ciudad de Almeria en el siglo XXI','Almería',2012,'mapa1Modificado2.png','MiniatureAlmeria2012.png',1,900,400,36.8509943512347000,-2.4849700927734380,36.8509943512347000,-2.4457776546478276,36.8282316190681300,-2.4849700927734380,36.8282316190681300,-2.4457776546478276,'2020-02-11 08:02:40','2020-02-12 10:08:47'),(2,'Huercal XXI','Mapa de la ciudad de Huercal en el siglo XXI','Huercal',2019,'NoMap.png','MiniatureHuercal2019.png',2,1080,720,36.8551065476929500,-2.4715805053710940,36.8529775049102400,-2.4231719970703130,36.8355995519090600,-2.4795627593994145,36.8246075036501700,-2.4444580078125004,'2020-02-11 08:02:40','2020-02-12 10:08:47'),(3,'Almería XX','Mapa de la ciudad de Almeria en el siglo XX','Almería',1990,'KindOfMap3.png','MiniatureAlmeria1990.png',3,400,200,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2020-02-11 08:02:40','2020-02-11 08:02:40'),(4,'Aguadulce XXI','Mapa de la ciudad de Aguadulce en el siglo XXI','Aguadulce',2000,'Aguadulce2000.png','MiniatureAguadulce2000.png',4,1080,720,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2020-02-11 08:02:40','2020-02-11 08:02:40'),(5,'Tabernas XXI','Mapa de la ciudad de Tabernas en el siglo XXI','Tabernas',2001,'Tabernas2001.png','MiniatureTabernas2001.png',5,1080,720,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2020-02-11 08:02:40','2020-02-11 08:02:40');
+INSERT INTO `maps` VALUES (1,'Almería XXI','Mapa de la ciudad de Almeria en el siglo XXI','Almería',2012,'mapa1Modificado2.png','MiniatureAlmeria2012.png',1,900,400,36.8551065476929500,-2.4715805053710940,36.8529775049102400,-2.4231719970703130,36.8355995519090600,-2.4795627593994145,36.8246075036501700,-2.4444580078125004,'2020-02-17 10:02:55','2020-02-17 10:02:55'),(2,'Huercal XXI','Mapa de la ciudad de Huercal en el siglo XXI','Huercal',2019,'NoMap.png','MiniatureHuercal2019.png',2,1080,720,36.8551065476929500,-2.4715805053710940,36.8529775049102400,-2.4231719970703130,36.8355995519090600,-2.4795627593994145,36.8246075036501700,-2.4444580078125004,'2020-02-17 10:02:55','2020-02-17 10:02:55'),(3,'Almería XX','Mapa de la ciudad de Almeria en el siglo XX','Almería',1990,'KindOfMap3.png','MiniatureAlmeria1990.png',3,400,200,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2020-02-17 10:02:55','2020-02-17 10:02:55'),(4,'Aguadulce XXI','Mapa de la ciudad de Aguadulce en el siglo XXI','Aguadulce',2000,'Aguadulce2000.png','MiniatureAguadulce2000.png',4,1080,720,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2020-02-17 10:02:55','2020-02-17 10:02:55'),(5,'Tabernas XXI','Mapa de la ciudad de Tabernas en el siglo XXI','Tabernas',2001,'Tabernas2001.png','MiniatureTabernas2001.png',5,1080,720,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2020-02-17 10:02:56','2020-02-17 10:02:56');
 /*!40000 ALTER TABLE `maps` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -242,7 +242,7 @@ CREATE TABLE `maps_streets` (
 
 LOCK TABLES `maps_streets` WRITE;
 /*!40000 ALTER TABLE `maps_streets` DISABLE KEYS */;
-INSERT INTO `maps_streets` VALUES (1,2,1,NULL,'2020-02-11 08:02:41','2020-02-11 08:02:41'),(2,3,1,NULL,'2020-02-11 08:02:41','2020-02-11 08:02:41'),(3,3,3,NULL,'2020-02-11 08:02:41','2020-02-11 08:02:41'),(4,4,4,NULL,'2020-02-11 08:02:41','2020-02-11 08:02:41'),(5,1,5,NULL,'2020-02-11 08:02:41','2020-02-11 08:02:41');
+INSERT INTO `maps_streets` VALUES (1,2,1,NULL,'2020-02-17 10:02:57','2020-02-17 10:02:57'),(2,3,1,NULL,'2020-02-17 10:02:57','2020-02-17 10:02:57'),(3,3,3,'nombre alternativo','2020-02-17 10:02:57','2020-02-17 10:02:57'),(4,4,4,NULL,'2020-02-17 10:02:57','2020-02-17 10:02:57'),(5,1,5,NULL,'2020-02-17 10:02:57','2020-02-17 10:02:57');
 /*!40000 ALTER TABLE `maps_streets` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -255,10 +255,10 @@ DROP TABLE IF EXISTS `migrations`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `migrations` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1653 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -267,7 +267,7 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (1441,'2019_12_11_080807_create_points_table',1),(1639,'2014_10_12_000000_create_users_table',2),(1640,'2014_10_12_100000_create_password_resets_table',2),(1641,'2019_12_11_080229_create_maps_table',2),(1642,'2019_12_11_090929_create_maps_streets_table',2),(1643,'2019_12_11_091012_create_streets_table',2),(1644,'2019_12_11_111906_create_hotspots_table',2),(1645,'2019_12_17_101423_create_images_table',2),(1646,'2019_12_17_122414_create_hotspots_images_table',2),(1647,'2019_12_17_123323_create_street_types_table',2),(1648,'2020_01_09_123137_create_hotspots_maps_table',2),(1649,'2020_01_22_201643_create_points_streets_table',2),(1650,'2020_01_22_201803_create_points_table',2),(1651,'2020_01_23_174116_create_backup_databases_table',2),(1652,'2020_01_23_180934_create_backups_table',2);
+INSERT INTO `migrations` VALUES (1,'2014_10_12_000000_create_users_table',1),(2,'2014_10_12_100000_create_password_resets_table',1),(3,'2019_12_11_080229_create_maps_table',1),(4,'2019_12_11_090929_create_maps_streets_table',1),(5,'2019_12_11_091012_create_streets_table',1),(6,'2019_12_11_111906_create_hotspots_table',1),(7,'2019_12_17_101423_create_images_table',1),(8,'2019_12_17_122414_create_hotspots_images_table',1),(9,'2019_12_17_123323_create_street_types_table',1),(10,'2020_01_09_123137_create_hotspots_maps_table',1),(11,'2020_01_22_201643_create_points_streets_table',1),(12,'2020_01_22_201803_create_points_table',1),(13,'2020_01_23_174116_create_backup_databases_table',1),(14,'2020_01_23_180934_create_backups_table',1);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -304,12 +304,12 @@ DROP TABLE IF EXISTS `points`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `points` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `x` int(11) NOT NULL,
-  `y` int(11) NOT NULL,
+  `lat` decimal(10,8) NOT NULL,
+  `lng` decimal(11,8) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -318,7 +318,7 @@ CREATE TABLE `points` (
 
 LOCK TABLES `points` WRITE;
 /*!40000 ALTER TABLE `points` DISABLE KEYS */;
-INSERT INTO `points` VALUES (1,100,100,'2020-02-11 08:02:41','2020-02-11 08:02:41'),(2,200,200,'2020-02-11 08:02:41','2020-02-11 08:02:41'),(3,300,300,'2020-02-11 08:02:41','2020-02-11 08:02:41');
+INSERT INTO `points` VALUES (1,36.85441570,-2.44742402,'2020-02-17 10:02:57','2020-02-17 10:02:57'),(2,36.83820303,-2.47978789,'2020-02-17 10:02:57','2020-02-17 10:02:57'),(3,36.82146698,-2.43938129,'2020-02-17 10:02:57','2020-02-17 10:02:57'),(4,36.83115853,-2.43895234,'2020-02-17 10:02:57','2020-02-17 10:02:57');
 /*!40000 ALTER TABLE `points` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -336,7 +336,7 @@ CREATE TABLE `points_streets` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -345,7 +345,7 @@ CREATE TABLE `points_streets` (
 
 LOCK TABLES `points_streets` WRITE;
 /*!40000 ALTER TABLE `points_streets` DISABLE KEYS */;
-INSERT INTO `points_streets` VALUES (1,1,1,'2020-02-11 08:02:41','2020-02-11 08:02:41'),(2,2,2,'2020-02-11 08:02:41','2020-02-11 08:02:41'),(3,3,3,'2020-02-11 08:02:41','2020-02-11 08:02:41');
+INSERT INTO `points_streets` VALUES (1,1,1,'2020-02-17 10:02:57','2020-02-17 10:02:57'),(2,2,2,'2020-02-17 10:02:57','2020-02-17 10:02:57'),(3,3,3,'2020-02-17 10:02:57','2020-02-17 10:02:57'),(4,4,4,'2020-02-17 10:02:57','2020-02-17 10:02:57');
 /*!40000 ALTER TABLE `points_streets` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -372,7 +372,7 @@ CREATE TABLE `street_types` (
 
 LOCK TABLES `street_types` WRITE;
 /*!40000 ALTER TABLE `street_types` DISABLE KEYS */;
-INSERT INTO `street_types` VALUES (1,'Avenida','AVD. ','2020-02-11 08:02:41','2020-02-11 08:02:41'),(2,'Calle','C/','2020-02-11 08:02:41','2020-02-11 08:02:41'),(3,'Plaza','PZ. ','2020-02-11 08:02:41','2020-02-11 08:02:41'),(4,'Arboleda','ARB. ','2020-02-11 08:02:41','2020-02-11 08:02:41'),(5,'Finca','FN. ','2020-02-11 08:02:41','2020-02-11 08:02:41'),(6,'Conjunto monumental','CM. ','2020-02-11 08:02:41','2020-02-11 08:02:41'),(7,'Paseo','P. ','2020-02-11 08:02:41','2020-02-11 08:02:41');
+INSERT INTO `street_types` VALUES (1,'Avenida','AVD. ','2020-02-17 10:02:57','2020-02-17 10:02:57'),(2,'Calle','C/','2020-02-17 10:02:57','2020-02-17 10:02:57'),(3,'Plaza','PZ. ','2020-02-17 10:02:57','2020-02-17 10:02:57'),(4,'Arboleda','ARB. ','2020-02-17 10:02:57','2020-02-17 10:02:57'),(5,'Finca','FN. ','2020-02-17 10:02:57','2020-02-17 10:02:57'),(6,'Conjunto monumental','CM. ','2020-02-17 10:02:57','2020-02-17 10:02:57'),(7,'Paseo','P. ','2020-02-17 10:02:57','2020-02-17 10:02:57');
 /*!40000 ALTER TABLE `street_types` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -399,7 +399,7 @@ CREATE TABLE `streets` (
 
 LOCK TABLES `streets` WRITE;
 /*!40000 ALTER TABLE `streets` DISABLE KEYS */;
-INSERT INTO `streets` VALUES (1,1,'García Lorca','2020-02-11 08:02:40','2020-02-11 08:02:40'),(2,1,'del Mediterráneo','2020-02-11 08:02:40','2020-02-11 08:02:40'),(3,3,'Cabo de Gata','2020-02-11 08:02:40','2020-02-11 08:02:40'),(4,2,'Carrera del Perú','2020-02-11 08:02:41','2020-02-11 08:02:41');
+INSERT INTO `streets` VALUES (1,1,'García Lorca','2020-02-17 10:02:56','2020-02-17 10:02:56'),(2,1,'del Mediterráneo','2020-02-17 10:02:56','2020-02-17 10:02:56'),(3,3,'Cabo de Gata','2020-02-17 10:02:56','2020-02-17 10:02:56'),(4,2,'Carrera del Perú','2020-02-17 10:02:56','2020-02-17 10:02:56');
 /*!40000 ALTER TABLE `streets` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -431,7 +431,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'carmen','$2y$10$L9IfgXzM5c2Jq8a3nja2EOZtY8SFwCTACIjCtZkp8bvPrEjHQq5GS','carmen@mail.com',1,NULL,NULL,'2020-02-11 08:02:40','2020-02-11 08:02:40'),(2,'paula','$2y$10$pMfUMid890IWHQiOVx6CZu7SYo3h.liEoQiPA90RG4zHvYuufAYue','paula@mail.com',1,NULL,NULL,'2020-02-11 08:02:40','2020-02-11 08:02:40'),(3,'sergio','$2y$10$WrV687LCAMho.dmmeM3fAOEDqhjRzX8FSvGO6ptPO5RbPYZ/TtGaq','csergio@mail.com',1,NULL,NULL,'2020-02-11 08:02:40','2020-02-11 08:02:40'),(4,'luis','$2y$10$PE574eExFFRMnJ7nqYLepuM4M597RFc3heGe6HV6uqeB1Uk0PZIre','luis@mail.com',1,NULL,NULL,'2020-02-11 08:02:40','2020-02-11 08:02:40');
+INSERT INTO `users` VALUES (1,'carmen','$2y$10$7fjOkNKr35maH5oBYT5l5.tk1jc/t6dUb/7kUw.uGqc.AHespR3di','carmen@mail.com',1,NULL,NULL,'2020-02-17 10:02:56','2020-02-17 10:02:56'),(2,'paula','$2y$10$QHzaItYXgWp9mSLEXe2T4.5OoZTd72CDXNdMpr8KMuGZnHHhgrBMu','paula@mail.com',1,NULL,NULL,'2020-02-17 10:02:56','2020-02-17 10:02:56'),(3,'sergio','$2y$10$5D0R812R9O4jeW1iIMLCmu.OP9oznkbDA1eQHEO203pO/fxGW/9sy','csergio@mail.com',1,NULL,NULL,'2020-02-17 10:02:56','2020-02-17 10:02:56');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -444,4 +444,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-14 13:17:18
+-- Dump completed on 2020-02-18  9:26:14
