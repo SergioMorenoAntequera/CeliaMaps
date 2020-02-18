@@ -23,7 +23,7 @@
                 <!-- Cada uno de los elementos de la página -->
                 <div class="wholePanel">
                     <!-- Columna con el numero y las flechas -->
-                    <div style="width:10%; position: relative" class="leftPanel">
+                    <div class="leftPanel" style="width:10%; position: relative">
                         {{-- Metemos el boton dentro de un enlace para cuando queramos usar una imagen --}}
                         <input class="bUp" type="image" src="{{url("img/icons/arrowUp.svg")}}"/>
                         <div class="content">
@@ -33,7 +33,7 @@
                     </div>
 
                     <!-- Columna con el resto de información del mapa -->
-                    <div style="width:90%; position: relative;" class="rightPanel">
+                    <div class="rightPanel" style="width:90%; position: relative;">
                         <!-- Titulo -->
                         <p><b class="text-6">{{$map->title}}</b></p>
                         <!-- Foto/miniatura -->
@@ -94,33 +94,6 @@
                                 </div>
                             @endif 
                         </a>
-
-
-                        {{-- <form method="POST" action="{{route('map.destroy', $map->id)}}">
-                            @csrf
-                            @method("DELETE")
-
-                            <button data-toggle="modal" data-target=".ModalCenter{{$map->id}}" class="cornerDeleteButton bg-secondary" type="submit" value="Eliminar">
-                                <img src="{{url("img/icons/deleteWhite.png")}}" alt="">    
-                            </button>
-                        </form>
-                        
-                        <!-- Modal para borrar -->
-                        
-
-                        <!-- Boton para alinear -->
-                        <a href="{{route('map.align', $map->id)}}">
-                            @if (empty($map->tlCornerLatitude))
-                                <button class="cornerAlignButton bg-danger">
-                                    <img src="{{url("img/icons/align.png")}}" alt=""> 
-                                </button>
-                                <b class="text-warning"> Mapa no alineado, no se mostrará en página principal </b>
-                            @else
-                                <button class="cornerAlignButton bg-secondary">
-                                    <img src="{{url("img/icons/align.png")}}" alt=""> 
-                                </button>
-                            @endif 
-                        </a> --}}
                     </div><!-- FINAL columna con info del mapa -->
                 </div> <!-- FINAL .oneElement -->
             @endforeach
