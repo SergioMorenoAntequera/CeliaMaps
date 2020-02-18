@@ -16,9 +16,11 @@ class SearchController extends Controller
 {
     public function index(){
 
-        $streetList = Street::all();
-        return view('search/searchStreet', ['streetList'=>$streetList]);
-       // return view('search/informe');
+        $streets = Street::all();
+        $maps = Map::all();
+        $types = StreetType::all();
+        return view('search/searchStreet', ['streets'=>$streets,'maps'=>$maps,'types'=>$types]);
+       //return view('search/informe');
        
      }
 
@@ -58,7 +60,7 @@ class SearchController extends Controller
     */
     }
     public function streetInform()
-    {
+{
 
-    }    
+}    
 }

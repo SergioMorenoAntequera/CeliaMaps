@@ -46,7 +46,7 @@ Route::get('backup/create', 'BackupController@create')->name('backup.create');
 Route::get('backup/restore', 'BackupController@restore')->name('backup.restore');
 // SEARCH /////////////////////////////////////////////////////////////////////////////////////
 Route::get('search/index', 'SearchController@index')->name('search.index');
-Route::post('search', 'SearchController@search')->name('search.search');
+Route::get('search', 'SearchController@search')->name('search.search');
 Route::get('search/download', 'SearchController@download')->name('search.download');
 Route::get('search/inform', 'SearchController@inform')->name('search.inform');
 // PDF /////////////////////////////////////////////////////////////////////////////////////////////
