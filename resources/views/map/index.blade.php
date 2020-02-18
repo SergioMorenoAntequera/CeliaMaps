@@ -52,27 +52,16 @@
                             </div>
                         </a>
 
+                        <!-- Boton para Borrar  -->
                         <form method="POST" action="{{route('map.destroy', $map->id)}}">
                             @csrf
                             @method("DELETE")
 
-                            <button class="cornerButton">
+                            <div data-toggle="modal" data-target="#ModalCenter{{$map->id}}" class="deleteCornerButton cornerButton">
                                 <img class="center" src="{{url("img/icons/deleteWhite.png")}}" alt=""> 
-                            </button>
+                            </div>
                         </form>
-                            
-                        
-                        {{-- <form method="POST" action="{{route('map.destroy', $map->id)}}">
-                            @csrf
-                            @method("DELETE")
-
-                            <button data-toggle="modal" data-target=".ModalCenter{{$map->id}}" class="cornerDeleteButton bg-secondary" type="submit" value="Eliminar">
-                                <img src="{{url("img/icons/deleteWhite.png")}}" alt="">    
-                            </button>
-                        </form>
-                        
-                        <!-- Modal para borrar -->
-                        <div class="modal fade text-dark ModalCenter{{$map->id}}" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div id="ModalCenter{{$map->id}}" class="modal fade text-dark" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -91,6 +80,30 @@
                                 </div>
                             </div>
                         </div><!-- FINAL modal para borrar -->
+                            
+                        <a href="{{route('map.align', $map->id)}}">
+                            @if (empty($map->tlCornerLatitude))
+                                <div style="right: 100px" class="cornerButton bg-danger">
+                                    <img class="center" src="{{url("img/icons/align.png")}}" alt=""> 
+                                </div>
+                                <b class="text-warning"> Mapa no alineado, no se mostrará en página principal </b>
+                            @else
+                                <div style="right: 100px" class="cornerButton">
+                                    <img class="center" src="{{url("img/icons/align.png")}}" alt=""> 
+                                </div>
+                            @endif 
+                        </a>
+                        {{-- <form method="POST" action="{{route('map.destroy', $map->id)}}">
+                            @csrf
+                            @method("DELETE")
+
+                            <button data-toggle="modal" data-target=".ModalCenter{{$map->id}}" class="cornerDeleteButton bg-secondary" type="submit" value="Eliminar">
+                                <img src="{{url("img/icons/deleteWhite.png")}}" alt="">    
+                            </button>
+                        </form>
+                        
+                        <!-- Modal para borrar -->
+                        
 
                         <!-- Boton para alinear -->
                         <a href="{{route('map.align', $map->id)}}">
@@ -103,8 +116,8 @@
                                 <button class="cornerAlignButton bg-secondary">
                                     <img src="{{url("img/icons/align.png")}}" alt=""> 
                                 </button>
-                            @endif --}}
-                        </a>
+                            @endif 
+                        </a> --}}
                     </div><!-- FINAL columna con info del mapa -->
                 </div> <!-- FINAL .oneElement -->
             @endforeach
@@ -124,4 +137,5 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
     <script type="text/javascript" src="{{url('/js/MoveAndDeleteMaps.js')}}">
     </script>
+    
 @endsection

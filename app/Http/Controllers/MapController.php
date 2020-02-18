@@ -127,7 +127,7 @@ class MapController extends Controller
         }
 
         $map->save();
-        return redirect(route('map.index'));
+        return redirect(route('map.align', $map->id));
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -153,9 +153,9 @@ class MapController extends Controller
     public function update(Request $r, $id){
         $map = Map::find($id);
         $r->validate([
-            'title' => 'required|unique:maps',
+            'title' => 'required|unique:maps,title,'. $id,
             'date' => 'required|numeric|min:0|max:'.date("Y").'',
-            'image' => 'required|image',
+            'image' => 'nullable|image',
             'description' => 'nullable|string',
             'city' => 'nullable|string',
             'miniature' => 'nullable|image',

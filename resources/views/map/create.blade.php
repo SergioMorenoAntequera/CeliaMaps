@@ -6,11 +6,10 @@
 @endsection
 
 @section('content')
-    <div class="container text-center">
-        
+    <div class="container">
         <div class="wholePanel">
             <div class="leftPanel">
-                <div class="content justify-content-center align-items-center">
+                <div class="content">
                    Inserción de mapa
                    <br>
                    <img src="{{url('img/icons/tlMenuMapWhite.png')}}" alt="CeliaMaps" class="img-fluid"> 
@@ -26,7 +25,7 @@
                         </ul>
                     </div>
                 @endif
-                <form method="POST" class="text-left" action="{{route('map.store')}}" enctype="multipart/form-data">
+                <form id="createForm" method="POST" class="text-left" action="{{route('map.store')}}" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label>Título <span class="text-danger">*</span></label>
@@ -72,7 +71,7 @@
                             });
                         });
                     </script>
-                    <button type="submit" class="mt-3 btn btn-success"> Continuar al alineamiento </button> 
+                    <button id="btnAlign" class="mt-3 btn btn-success"> Continuar </button>
                 </form>
             </div>
         </div>

@@ -3,42 +3,7 @@
 //--------------------------------- DELETE, MOVE UP AND DOWN -------------------------------->
 $(document).ready(function(){
     // DELETE CON AJAX ///////////////////////////////////////////////////////////////////////
-    $('.cornerDeleteButton').click(function(e){
-        e.preventDefault();
-    });
-    $('.deleteConfirm').click(function(){
-        //We delete using ajax
-        //var auxLevel = jQuery(this).children();
-        var mapParent = jQuery(this).parent().parent().parent().parent().parent().parent();
-        var maps = mapParent.parent();
-        var level = jQuery(jQuery(mapParent.children()[0]).children()[2]);
-
-        var url = window.location.href+"/"+jQuery(this).attr("iddb");
-        $.ajax({
-            "method" : "DELETE",
-            "url" : url,
-            "data" : {
-                "level": level.text(),
-                "_token": $("meta[name='csrf-token']").attr("content")
-            },
-            success: function(data){
-                //Lo que tenemos que hacer desaparecer
-                mapParent.slideUp(400, function(){
-                    mapParent.remove();
-                    var index = 1;
-                    for(var i = 1; i <= jQuery($('#allElements').children()).length + 1; i++){
-                        if(i == level.text()){
-                            continue;
-                        }
-
-                        $('#level'+i).text(index);
-                        $('#level'+i).attr('id', 'level'+index);
-                        $('#oneElement'+i).attr('id', 'oneElement'+index++);
-                    }
-                });
-            }
-        });
-    });
+    
     
 
     // MOVE UP ///////////////////////////////////////////////////////////////////////
