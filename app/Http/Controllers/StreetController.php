@@ -90,7 +90,7 @@ class StreetController extends Controller
         $point = Point::Create(["lat" => $r->lat, "lng" => $r->lng]);
         $street->points()->attach($point->id);
         $street->type()->associate($r->type_id);
-        return redirect(route('street.index'));
+        return redirect(route('street.create'));
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
