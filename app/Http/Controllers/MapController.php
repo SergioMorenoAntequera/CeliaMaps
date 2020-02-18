@@ -202,8 +202,8 @@ class MapController extends Controller
             $mapAux->level -= 1;
             $mapAux->update();
         }
-        unlink(url('img/maps/'. $data['map']->image));
-        unlink(url('img/miniatures/'. $data['map']->miniature));
+        unlink(public_path('img/maps/'. $map->image));
+        unlink(public_path('img/miniatures/'. $map->miniature));
 
         return response()->json([
             'count'=> Map::count(),
