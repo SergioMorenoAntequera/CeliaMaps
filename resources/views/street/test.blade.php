@@ -402,25 +402,46 @@
     {{-- STREET MANAGEMENT --}}
     <script>
         $(function(){
-            // Mark design
-            var markerImage = L.icon({
-                iconUrl: "{{url('img/icons/token.svg')}}",
-                iconSize:     [30, 90],
-                iconAnchor:   [15,60],
-           });
+            // Saved streets checking
+            @isset($streets)
+                // Streets php array conversion to js
+                let streets = @json($streets);
+                // Complete array with map relationship data
+                @for ($i=0;$i<count($streets);$i++) 
+                    streets[{{$i}}].maps =  @json($streets[$i]->maps)
+                @endfor
 
-            // Saved streets
-            @foreach ($streets as $street)
-                var marker = L.marker([{{$street->points[0]->lat}}, {{$street->points[0]->lng}}],{icon: markerImage});    // Creating a Marker
-                marker.addTo(map); // Adding marker to the map
-            @endforeach
+                // Mark icon design
+                var markerImage = L.icon({
+                    iconUrl: "{{url('img/icons/token.svg')}}",
+                    iconSize:     [30, 90],
+                    iconAnchor:   [15,60],
+                });
 
+                // Write saved streets
+                @foreach ($streets as $street)
+                    var marker = L.marker([{{$street->points[0]->lat}}, {{$street->points[0]->lng}}],{icon: markerImage, alt:"{{$street->id}}"});    // Creating a Marker
+                    marker.addTo(map); // Adding marker to the map
+                @endforeach
+
+            @endisset
             // Add street
-
+            // Image click
+           $(".leaflet-image-layer").click(function(realEvent){
+                /*let similatedEvent = new jQuery.Event("click");
+                similatedEvent.pageX = realEvent.pageX;
+                similatedEvent.pageY = realEvent.pageY;
+                $(".leaflet-map-pane").trigger(similatedEvent);
+                console.log("post-click");*/
+                
+           });
+            // Map click
             map.on('click', function(e) {
+            //$(".leaflet-tile-pane").on("click", function(e){
                 // Handle click point
                 var lat = e.latlng.lat;
                 var lng = e.latlng.lng;
+                console.log(lat + " " + lng);
                 // Clear fields
                 $("select[name='type_id']").val("");
                 $("input[name='name']").val("");
@@ -442,8 +463,43 @@
                     let newMark = L.marker([lat, lng],{icon: markerImage});    // Creating a Marker
                     newMark.addTo(map); // Adding marker to the map
                 })
-            });   
+            });
+            // Edit Street
+            $('.leaflet-marker-icon').on('click', function(){
+                $("#modal-form").attr("action", "{{route('street.store')}}/"+this.alt);
+                $("input[name='_method']").val("PUT");
+                let street;
+                for (let i = 0; i < streets.length; i++) {
+                    if(streets[i].id == this.alt)
+                        street = streets[i];
+                }
+                // Token change
+                //$("#token").prop("src", "{{url('img/icons/token-selected.svg')}}" );
+                console.log(street);
+                // Fill inputs fields
+                $("select[name='type_id']").val(street.type_id);
+                $("input[name='name']").val(street.name);
+                
+                // fill streets maps
 
+                // Modal display
+                $(".modal-title").text("Editar vía");
+                $("#btn-remove").prop("disabled", false);
+                $("#btn-remove").css("display", "initial");
+                $("#btn-position").prop("disabled", false);
+                $("#btn-position").css("display", "initial");
+                $('#modal').modal('show');
+            });
+
+            // Rename streets fields
+            $("input[type='checkbox']").click(function(){
+                // Hide forms fields
+                $("#input_map"+this.value).toggle();
+                // Disable inputs to do not send
+                $("#input_map"+this.value).prop("disabled", function(){
+                    return !($(this).prop("disabled"));
+                });
+            });
         });
     </script>
 @endsection

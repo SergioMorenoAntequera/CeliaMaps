@@ -7,103 +7,108 @@
 
 @section('content')
 
-<br>
-<div class="container w-50 text-center  text-dark">
+<div class="container">
+    <div class="wholePanel">
+        <div class="leftPanel widht:40%">
+            
+            <div class="content">
+                @isset($user)
+                    <div class="titulo" >
+                        Modificar Usuarios
+                    </div>
+            @else
+                    <div class="titulo">
+                        Insertar Usuarios
+                    </div>
+            @endisset
 
-    <div class="card">
-        @isset($user)
-            <div class="card-header">
-                MODIFICAR USUARIOS
-            </div>
-
-            <div class="card-body">
-
+                <img src="/img/icons/userWhite.png" width="50%" alt="" class="img-fluid">
+            </div>            
+        </div>
+        <div class="rightPanel">
+            @isset($user)
                 <form class="" action="{{route('user.update', $user->id)}}" method="POST">
-                    @method("PUT")
+                @method("PUT")
+            @else 
+                <form action="{{route('user.store')}}" method="POST">                
+            @endisset
 
-        @else
-
-            <div class="card-header">
-                INSERTAR USUARIOS
+            @csrf
+            <div id="primerafila" class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="name">Nombre</label>
+                        <input type="text" class="form-control"  name="name" id="name" value="{{$user->name??''}}" required>
+                    </div>
+                </div>
+            </div>
+            <div id="segundafila" class="row">            
+                <div class="col">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" name="email" id="email" value="{{$user->email??''}}" required>
+                    </div>
+                </div>
             </div>
 
-            <div class="card-body">
-                <form action="{{route('user.store')}}" method="POST">
+            <div id="segundafila" class="row">
+                <div class="col-6">
+                    <!-- SI EXISTE USUARIO MOSTRAMOS EL CAMPO CONTRASEÑA VACIO -->
+                    @isset($user)
+                        <div class="form-group">
+                            <label for="password">Contraseña</label>
+                            <input type="password" class="form-control" name="password" id="password" placeholder="rellenar solo si desdea modificar" value="">
+                        </div>
+                    <!-- COMPORTAMIENTO DEL FORMULARIO SI INSERTAMOS NUEVO USUARIO -->
+                    @else
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password"  class="form-control" name="password" id="password" value="{{$user->password??''}}" required>
+                        </div>
                     @endisset
-                        @csrf
-                            <div id="primerafila" class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="name">Nombre</label>
-                                        <input type="text" class="form-control"  name="name" id="name" value="{{$user->name??''}}" required>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="email">Email</label>
-                                        <input type="email" class="form-control" name="email" id="email" value="{{$user->email??''}}" required>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="segundafila" class="row">
-                                <div class="col-6">
-                                    <!-- SI EXISTE USUARIO MOSTRAMOS EL CAMPO CONTRASEÑA VACIO -->
-                                    @isset($user)
-                                        <div class="form-group">
-                                            <label for="password">Contraseña</label>
-                                            <input type="password" class="form-control" name="password" id="password" placeholder="rellenar solo si desdea modificar" value="">
-                                        </div>
-                                    <!-- COMPORTAMIENTO DEL FORMULARIO SI INSERTAMOS NUEVO USUARIO -->
-                                    @else
-                                        <div class="form-group">
-                                            <label for="password">Password</label>
-                                            <input type="password"  class="form-control" name="password" id="password" value="{{$user->password??''}}" required>
-                                        </div>
-                                    @endisset
-                                </div>                                    
-                                <div class="col-2">
-                                    <div class="form-group">
-                                        <label for="level">Level</label>
-                                        <input type="text" class="form-control" name="level" id="level" value="{{$user->level??''}}" required>
-                                    </div>
-                                </div>
-                            </div>
-               
-                            <div id="tercerafila" class="row">
-
-                                @isset($user)
-
-                                <div class="col">
-                                    <div class="form-group">
-                                        <button type="submit" id="modificarUsuario" class="btn btn-primary">Modificar</button>
-                                    </div>
-                                </div>
-                                @else
-                                <div class="col">
-                                    <div class="form-group">
-                                        <button type="submit" id="enviarUsuario" class="btn btn-primary">Enviar</button>
-                                    </div>
-                                </div>
-                                @endisset
-                </form>
-                                <div class="col">
-                                    <div class="inicio">
-                                        <form action="{{route('user.index')}}" method="GET">
-                                            @csrf
-                                                @method("GET|HEAD")
-                                                    <input type="submit"  class="btn btn-info" name="inicio" value="Volver">
-                                        </form>
-                                    </div>
-                
-                                </div>
-                            </div>
+                </div>
             </div>
-    </div>
+                <div id="tercerafila" class="row">                                   
+                <div class="col-2">
+                    <div class="form-group">
+                        <label for="level">Level</label>
+                        <input type="text" class="form-control" name="level" id="level" value="{{$user->level??''}}" required>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="cuartafila" class="row">
+
+                @isset($user)
+
+                <div class="col">
+                    <div class="form-group">
+                        <button type="submit" id="modificarUsuario" class="btn btn-primary">Modificar</button>
+                    </div>
+                </div>
+                @else
+                <div class="col">
+                    <div class="form-group">
+                        <button type="submit" id="enviarUsuario" class="btn btn-primary">Enviar</button>
+                    </div>
+                </div>
+                @endisset
+</form>
+                <div class="col">
+                    <div class="inicio">
+                        <form action="{{route('user.index')}}" method="GET">
+                            @csrf
+                                @method("GET|HEAD")
+                                    <input type="submit"  class="btn btn-info" name="inicio" value="Volver">
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+</div>
 </div>
 
 @endsection
-
 @section('scripts')
 
 
@@ -158,8 +163,6 @@ $(document).ready(function(){
         });
 
     });
-
-
 });
 
 

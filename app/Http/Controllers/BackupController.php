@@ -36,7 +36,7 @@ class BackupController extends Controller
         
         system($command); 
         
-        //redirigir al backend
+        return view('map/index');
     }
       
     //////////////////////////////// RESTAURAR COPIA DE SEGURIDAD /////////////////////////////

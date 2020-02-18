@@ -19,16 +19,20 @@ class SearchController extends Controller
         $streets = Street::all();
         $maps = Map::all();
         $types = StreetType::all();
-        return view('search/searchStreet', ['streets'=>$streets,'maps'=>$maps,'types'=>$types]);
-       //return view('search/informe');
+        return view('search/searchStreet', ['streets'=>$streets,'maps'=>$maps,'types'=>$types]);      
        
      }
 
     public function search(Request $request){
 
         $data = $request->text; // lo que escribimos en la caja de texto de la vista
-
-        $data = Street::where('name', 'like','%'.$data.'%')->get();   
+        //id, name, type
+        $data = DB::table('streets')                          
+                            ->join('street_types','streets.type_id','=','street_types.id')
+                            ->join('maps', 'streets.id','=','maps_streets.street_id')
+                            ->select('streets.*','street_types.*')
+                            ->where('streets.name', 'like','%'.$data.'%')->get();
+       // $data = Street::where('name', 'like','%'.$data.'%')->get();   
         return response()->json($data);       
     }
 
@@ -36,31 +40,20 @@ class SearchController extends Controller
     {
     
         $data = ['title' => 'CeliaMaps'];
-        $pdf = PDF::loadView('search.searchStreet', $data);
+        $pdf = PDF::loadView('search.inform', $data);
+
+          //->stream('informe.pdf'); para que se abra en otra pagina
      
-        return $pdf->download('probandopdf.pdf');
-
-
-        //return PDF::loadView('search.probandopdf', $data)
-        //->stream('probandopdf.pdf');
-    
-    /*
-       $data = ['title' => 'CeliaMaps'];
-       //$streetList = Street::all();
+        return $pdf->download('informe.pdf');
        
-        $pdf = PDF::loadView('search.probandopdf', $data);
-     
-        return $pdf->download('probandopdf.pdf');
-    
-        //$pdf = \PDF::loadView('search/searchStreet', $data);
-     
-        //return $pdf->download('archivo.pdf');
-    
-       // return PDF::loadView('search/probandopdf', $data)->stream('archivo.pdf');
-    */
     }
-    public function streetInform()
-{
-
-}    
+    public function inform()
+    {
+       return view('search/inform');
+    }    
 }
+
+
+
+      
+    
