@@ -10,13 +10,6 @@
     
     <!-- One div to get all the maps -->
     <div class="container text-center">
-        <p>Estaría bien poner aqui una serie de opciones por las cuales se pueda filtrar el mapa que sale</p>
-        <a href="{{route('map.create')}}"> 
-            <button> 
-                Crear nuevo 
-            </button>
-        </a>
-
         <!-- Todos los elementos de la página -->
         <div id="allElements" class="justify-content-center mt-3 text-white">
             @foreach ($maps as $map)
@@ -99,6 +92,12 @@
             @endforeach
         </div> <!-- FINAL .allEments -->
     </div>
+
+    <a href="{{route('map.create')}}">
+    <div id="addButton">
+        <img class="center" src="{{url("img/icons/plus.svg")}}">
+    </div>
+    </a>
 @endsection
 
 @section('footer')
