@@ -15,9 +15,9 @@
                     <br>
                     <p class="mb-3" style="margin-bottom: 0px;  font-size: 50px">{{$map->title}}</p>
                     @if ($map->miniature != "")
-                        <img class="mb-4" src="{{url('img/miniatures/'.$map->miniature.'')}}" alt="Miniatura" style="width: 80%">  
+                        <img class="mb-4" src="{{url('img/miniatures/'.$map->miniature.'')}}" alt="Miniatura">  
                     @else 
-                        <img class="mb-4" src="{{url('img/maps/NoMap.png')}}" alt="Sin Miniatura" style="width: 80%;">  
+                        <img class="mb-4" src="{{url('img/maps/NoMap.png')}}" alt="Sin Miniatura">  
                     @endif
                 </div>
             </div>    

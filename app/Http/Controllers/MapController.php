@@ -251,7 +251,10 @@ class MapController extends Controller
             return response()->json(['respond'=>false]);
         }
 
-        return response()->json(['level'=>$map->level]);
+        return response()->json([
+            'level'=>$map->level,
+            'levelOther'=>$mapNext->level
+        ]);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
