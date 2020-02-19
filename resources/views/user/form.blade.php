@@ -110,11 +110,7 @@
 
 @endsection
 @section('scripts')
-
-
-
-<script  type="text/javascript">
-  
+<script  type="text/javascript">  
     
 $(document).ready(function(){
 
@@ -137,12 +133,13 @@ $(document).ready(function(){
         // PARA QUE NO SE RECARGUE LA PÁGINA ////////// 
         e.preventDefault(); 
     
-
+        
         var nombre = $("input[name = name]").val();
         var email = $("input[name = email]").val();
         var pass = $("input[name = password]").val();
         var level = $("input[name = level]").val();
-        
+    
+       
         
         //var route =  "{{route('user.store')}}";
 
@@ -154,7 +151,9 @@ $(document).ready(function(){
             // de datos : nombre de la variable que hemos declarado con el campo.
             // y se pasan en el mismo orden en el que están en la base de datos
             data: {name:nombre, email:email, password:pass, level:level},
+            
             success: function(data){
+                $("#respuesta").text('Usuario insertado con éxito');
                 //mostrarMensaje(data.mensaje);
                 //alert("no se por donde voy");
                 campoVacio();
@@ -163,6 +162,34 @@ $(document).ready(function(){
         });
 
     });
+    /*
+
+    $("#formularioModifica").submit(function(e){
+        // PARA QUE NO SE RECARGUE LA PÁGINA ////////// 
+        e.preventDefault(); 
+        
+        var datos = $(this).serialize();
+
+        $.ajax({
+            type:'POST',
+            dataType: 'json',
+            url:  "{{route('user.update')}}",
+            // al pasar los datos del nuevo usuario se hace por par nombre del campo en la base
+            // de datos : nombre de la variable que hemos declarado con el campo.
+            // y se pasan en el mismo orden en el que están en la base de datos
+            ///data: {name:nombre, email:email, password:pass, level:level},
+            data: {datos},
+            success: function(data){
+                $("#respuesta").text('Usuario modificado con éxito');
+                //mostrarMensaje(data.mensaje);
+                //alert("no se por donde voy");
+                campoVacio();
+            }
+        
+        });
+
+});
+*/
 });
 
 

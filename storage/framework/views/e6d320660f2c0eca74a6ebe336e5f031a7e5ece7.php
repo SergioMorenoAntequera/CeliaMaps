@@ -1,15 +1,26 @@
 <?php $__env->startSection('title', 'Celia Maps'); ?> 
 
+<?php $__env->startSection('cdn'); ?>
+
+    <!-- Leaflet -->
+    <script src="<?php echo e(url('/js/Leaflet/leaflet.js')); ?>"></script>
+    <link rel="stylesheet" href="<?php echo e('/js/Leaflet/leaflet.css'); ?>">
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('header'); ?>
+    <!--  Header html  -->
+<?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('content'); ?>
 
+    <!-- Maps -->
+
     <div id="frame">
-        <img id="map" class="mapImg" src="<?php echo e(url('img/maps/mapa-prueba.png')); ?>">
-        <!--
-        <img class="mapImg" src="{ {url('img/maps/Mapa-prueba-2.png')}}">
-        -->
+
+        <img id="map" src="<?php echo e(url('img/maps/mapa-prueba.png')); ?>">
         <input id="transparency" type="range" step="0.01" min="0" max="1" value="1" class="custom-range">
-        <button id="buttonEdit"><img id="token" src="<?php echo e(url('img/icons/token.svg')); ?>"></button>
-        <img id="tokenSelected" style="width: 40px" src="<?php echo e(url('img/icons/tokenSelected.svg')); ?>">
+        
         <?php $__currentLoopData = $hotspotList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $hotspot): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <img id="<?php echo e($hotspot->id); ?>" style="top:<?php echo e($hotspot->point_y); ?>;left:<?php echo e($hotspot->point_x); ?>" class="token" src="<?php echo e(url('img/icons/token.svg')); ?>">
                 <div id="preview<?php echo e($hotspot->id); ?>" class="card" style="top:<?php echo e(intval($hotspot->point_y)-245); ?>; left:<?php echo e(intval($hotspot->point_x)-129); ?>; max-height: 245px">
@@ -19,7 +30,14 @@
                     </div>
                 </div>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+        <div id="draggable">
+            <img id="token" src="<?php echo e(url('img/icons/token.svg')); ?>">
+        </div>
+
     </div>
+
+    <!-- Create street modal -->
 
     <div class="modal fade" id="modal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -57,6 +75,7 @@
         </div>
     </div>     
 
+    <!-- Edit street modal -->
 
     <div class="modal fade" id="modalEdit" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -112,6 +131,81 @@
 
 
 <?php $__env->startSection('scripts'); ?>
+    
+    <script>
+        // Pagina donde están los proveedores de mapas:
+        // http://leaflet-extras.github.io/leaflet-providers/preview/index.html
+        var map = L.map('map', {
+            minZoom: 6,  //Dont touch, recommended
+            // maxZoom: 2, //Dont touch, max zoom 
+            zoomControl: false,
+        });
+        map.setView([36.844092, -2.457840], 14);
+
+        //Global maps from the one we will be able to pick one
+        var mapTiles = [
+            mapTile0 = L.tileLayer.wms('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19, //Dont touch, max zoom 
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            }),
+            mapTile1 = L.tileLayer.wms('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png', {
+                attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                maxZoom: 20, //Dont touch, max zoom
+                subdomains: 'abcd',
+            }),
+            mapTile2 = L.tileLayer.wms('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                maxZoom: 20, //Dont touch, max zoom 
+                attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+            })
+        ];
+        //Adding rhe layers to the map
+        map.addLayer(mapTile2);
+
+        //Here we are adding the images(of the diferent maps) on top of the map
+        map.whenReady(function() {
+            
+            map.on('click', function(e) {
+                console.log(map._layers );
+                console.log(e.latlng .lat + ", " + e.latlng.lng);    
+            });
+            images[0].on('click', function(e) {
+                console.log("PRA");
+                console.log(e.latlng.lat + ", " + e.latlng.lng);
+            });
+            //Añadimos la imagen al mapa
+            images.forEach(function(img) {
+                //Then we add all the different maps
+                map.addLayer(img);
+                img.bringToFront();
+                //And if they are not the first one
+                if(img != images[0]){
+                    //We take the opacity to 0 so they are hidding now
+                    img.setOpacity(0);
+                }
+            });
+
+            // Small arrow to allow us to hide the menu at the bottom left
+            $('#mapsShow').click(function(){
+                // We control it using the icon
+                var icono = $(this).find('i');
+                //If it's up(Menu closed)
+                if(icono.hasClass("fa-chevron-up")){
+                    //We show it by moving it up
+                    $(this).parent().animate({
+                        top: "0px",
+                    }, 300);
+                } else {
+                    //If the menu is down we move it up
+                    $(this).parent().animate({
+                        top: "15px",
+                    }, 300);
+                }
+            });
+        });
+    </script>
+
+    
+
     <script>
         $(document).ready(function(){
         

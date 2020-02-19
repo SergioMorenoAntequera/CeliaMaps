@@ -22,8 +22,8 @@ class HotspotTableSeeder extends Seeder
             posteriores barrocos y neoclásicos. Constituye una de las manifestaciones artísticas de carácter 
             arquitectónico y cultural más importantes y valiosas de Andalucía y, por ende, de España, al ser 
             la única Catedral con naturaleza de fortaleza erigida en el siglo XVI. ',
-            'point_x' => 100,
-            'point_y' => 150,
+            'lat' => 36.854415703972165,
+            'lng' => -2.4474240161989163,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -33,8 +33,8 @@ class HotspotTableSeeder extends Seeder
             'image' => 'Alcazaba.png',
             'title' => 'Alcazaba',
             'description' => 'Alcazaba de la ciudad de Almeria',
-            'point_x' => 50,
-            'point_y' => 190,
+            'lat' => 36.8382030317319,
+            'lng' => -2.4797878905928017,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -44,8 +44,8 @@ class HotspotTableSeeder extends Seeder
             'image' => 'mercadoCentral.png',
             'title' => 'Mercado Central',
             'description' => 'Mercado del paseo',
-            'point_x' => 500,
-            'point_y' => 63,
+            'lat' => 36.82146698198432,
+            'lng' => -2.4393812851598966,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -55,8 +55,8 @@ class HotspotTableSeeder extends Seeder
             'image' => 'REfugios.png',
             'title' => 'Refugios WW2',
             'description' => 'Refugios de la segunda guerra mundial',
-            'point_x' => 100,
-            'point_y' => 150,
+            'lat' => 36.83115852885874,
+            'lng' => -2.438952340303922,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -66,8 +66,8 @@ class HotspotTableSeeder extends Seeder
             'image' => 'minihollywood.png',
             'title' => 'Minihollywood',
             'description' => 'Atracción del oeste y zoo para toda la familia',
-            'point_x' => 10,
-            'point_y' => 500,
+            'lat' => 36.98115852885874,
+            'lng' => -5.438952340303922,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -77,8 +77,8 @@ class HotspotTableSeeder extends Seeder
             'image' => 'plazaVieja.png',
             'title' => 'Plaza Vieja',
             'description' => 'La Plaza de la Constitución, popularmente conocida como Plaza Vieja, es una plaza situada en el centro histórico de la ciudad española de Almería. Durante la época musulmana se encontraba en este lugar el zoco, consolidándose su carácter de plaza en el siglo XIX. Alberga la sede del Ayuntamiento de la ciudad, construido a finales de dicho siglo, proyecto del arquitecto almeriense Trinidad Cuartara.',
-            'point_x' => 60,
-            'point_y' => 530,
+            'lat' => 34.83115852885874,
+            'lng' => -1.908952340303922,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -89,8 +89,8 @@ class HotspotTableSeeder extends Seeder
             'title' => 'Puerta Purchena',
             'description' => 'La Puerta de Purchena es una plaza situada en el centro de la ciudad de Almería. En ella se ubicó la antigua puerta de Pechina, aunque su nombre se vio alterado tras la conquista cristiana por un error de transcripción de los Reyes Católicos, quienes confundieron el nombre de los pueblos de Pechina (la antigua Bayyana) y Purchena, ambos almerienses. 
             La puerta homónima desapareció tras el derribo de la muralla en 1855, creándose por entonces la actual plaza. El urbanismo que la caracteriza es propio de la arquitectura burguesa del siglo XIX, representada en edificaciones como la Casa de las Mariposas. ',
-            'point_x' => 870,
-            'point_y' => 550,
+            'lat' => 37.23115852885874,
+            'lng' => -2.217852340303922,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);

@@ -18,8 +18,8 @@ class CreateHotspotsTable extends Migration
             $table->string('image', 250)->nullable();
             $table->string('title', 50);
             $table->string('description', 1600);
-            $table->unsignedInteger('point_x');
-            $table->unsignedInteger('point_y');
+            $table->decimal('lat', 10, 8);
+            $table->decimal('lng', 11, 8);
             $table->timestamps();
         });
     }

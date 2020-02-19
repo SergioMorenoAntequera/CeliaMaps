@@ -29,27 +29,36 @@ class SearchController extends Controller
         //id, name, type
         $data = DB::table('streets')                          
                             ->join('street_types','streets.type_id','=','street_types.id')
-                            ->join('maps', 'streets.id','=','maps_streets.street_id')
-                            ->select('streets.*','street_types.*')
-                            ->where('streets.name', 'like','%'.$data.'%')->get();
+                            ->join('maps_streets', 'streets.id','=','maps_streets.street_id')
+                            ->select('streets.id','streets.street_name','street_types.name','maps_streets.map_id')
+                            //->select('streets.*','street_types.name')
+                            ->where('streets.street_name', 'like','%'.$data.'%')->get();
        // $data = Street::where('name', 'like','%'.$data.'%')->get();   
         return response()->json($data);       
     }
 
     public function download()
-    {
-    
-        $data = ['title' => 'CeliaMaps'];
-        $pdf = PDF::loadView('search.inform', $data);
+    {    
+        //$data = ['title' => 'CeliaMaps'];
+        //$street = Street::find($id);
+        $data = Street::all();
 
-          //->stream('informe.pdf'); para que se abra en otra pagina
+        $pdf = PDF::loadView('search.report', $data);
+
+          //->stream('report.pdf'); para que se abra en otra pagina
      
-        return $pdf->download('informe.pdf');
+        return $pdf->download('report.pdf');
        
     }
-    public function inform()
+    public function report($id)
     {
-       return view('search/inform');
+        $street = Street::find($id);
+        //dd($street);
+        $maps = MapStreet::all();
+        //dd($maps);
+        $types = StreetType::all();
+        //dd($types);
+       return view('search/report', array('street'=>$street, 'map'=>$maps, 'type'=>$types));
     }    
 }
 

@@ -44,7 +44,7 @@
                             @method("DELETE")
 
                             <div data-toggle="modal" data-target="#ModalCenter{{$map->id}}" class="deleteCornerButton cornerButton">
-                                <img class="center" src="{{url("img/icons/deleteWhite.png")}}" alt=""> 
+                                <img class="center" src="{{url("img/icons/delete.svg")}}" alt=""> 
                             </div>
                         </form>
                         <div id="ModalCenter{{$map->id}}" class="modal fade text-dark" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -70,7 +70,7 @@
                         <!-- Boton para modificar -->
                         <a href="{{route('map.edit', $map->id)}}">
                             <div class="cornerButton" style="right: 50px">
-                                <img class="center" src="{{url("img/icons/editWhite.png")}}" alt=""> 
+                                <img class="center" src="{{url("img/icons/edit.svg")}}" alt=""> 
                             </div>
                         </a><!-- FIN Boton para modificar -->
 
@@ -78,12 +78,12 @@
                         <a href="{{route('map.align', $map->id)}}">
                             @if (empty($map->tlCornerLatitude))
                                 <div style="right: 100px" class="cornerButton bg-danger">
-                                    <img class="center" src="{{url("img/icons/align.png")}}" alt=""> 
+                                    <img class="center" src="{{url("img/icons/align.svg")}}" alt=""> 
                                 </div>
                                 <b class="text-warning"> Mapa no alineado, no se mostrará en página principal </b>
                             @else
                                 <div style="right: 100px" class="cornerButton">
-                                    <img class="center" src="{{url("img/icons/align.png")}}" alt=""> 
+                                    <img class="center" src="{{url("img/icons/align.svg")}}" alt=""> 
                                 </div>
                             @endif 
                         </a>
