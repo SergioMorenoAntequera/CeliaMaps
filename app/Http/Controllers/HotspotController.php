@@ -21,7 +21,7 @@ class HotspotController extends Controller
      */
     public function index(){
         $hotspot = Hotspot::all();
-        return view('hotspot.index', ['hotspotList'=>$hotspot]);
+        return view('hotspot.index', ['hotspots'=>$hotspot]);
     }
 
     /**
@@ -43,8 +43,8 @@ class HotspotController extends Controller
      */
     public function create(){
         $hotspots = Hotspot::all();
-        $maps = Map::all();
-        return view('hotspot.create', ['hotspotList'=>$hotspots, 'mapList'=>$maps]);
+        $map = Map::all();
+        return view('hotspot.test', ['hotspots'=>$hotspots, 'maps'=>$map]);
     }
     
     /**
