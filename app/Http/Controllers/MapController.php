@@ -116,6 +116,20 @@ class MapController extends Controller
             'miniature' => 'nullable|image',
         ]);
 
+        $img = $r->file('image');
+
+        // dd(getimagesize($img));
+        $dim = Array();
+        $dim[0] = getimagesize($img)[0]/4; 
+        $dim[1] = getimagesize($img)[1]/4;
+        $dim[2] = getimagesize($img)[1]/2;
+        $dim[3] = getimagesize($img)[1]/2;
+
+        dd($img->path());
+        
+        $img = imagecrop($img, $dim);
+        
+
         $map = new Map($r->all());
         $map->id = Map::max('id') + 1;
         $map->level = Map::max('level') + 1;
@@ -132,8 +146,13 @@ class MapController extends Controller
             $file->move(public_path("/img/miniatures/"), $map->id.$file->getClientOriginalName());
             $map->miniature = $map->id.$file->getClientOriginalName();
         } else {
-            $map->miniature = "NoMiniature.png";
+            // $map->miniature = "NoMiniature.png";
+
+            // dd(getimagesize($img));
+            
         }
+        
+        dd("Por los pelos");
 
         $map->save();
         return redirect(route('map.align', $map->id));

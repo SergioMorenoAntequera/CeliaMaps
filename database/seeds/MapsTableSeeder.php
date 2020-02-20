@@ -14,11 +14,11 @@ class MapsTableSeeder extends Seeder
         DB::table('maps')->truncate();
         DB::table('maps')->insert([    
             //La id no se pone porque se autoincrementa sola
-            'title' => 'Almería XXI',
+            'title' => 'Almería 1917',
             'description' => 'Mapa de la ciudad de Almeria en el siglo XXI',
             'city' => 'Almería',
-            'date' => '2012',
-            'image' => 'mapa1Modificado2.png',
+            'date' => '1917',
+            'image' => '1mapa1.png',
             'miniature' => 'MiniatureAlmeria2012.png',
             'level' => '1',
             'tlCornerLatitude' => '36.8509943512347000',
@@ -35,13 +35,34 @@ class MapsTableSeeder extends Seeder
 
         DB::table('maps')->insert([    
             //La id no se pone porque se autoincrementa sola
+            'title' => 'Perez de Rozas',
+            'description' => 'Mapa de Perez de Rozas',
+            'city' => 'Almeria',
+            'date' => '1864',
+            'image' => '2mapa2.png',
+            'miniature' => '2map.png',
+            'level' => '2',
+            'tlCornerLatitude' => '36.85510654769295',
+            'tlCornerLongitude' => '-2.471580505371094',
+            'trCornerLatitude' => '36.85297750491024',
+            'trCornerLongitude' => '-2.423171997070313',
+            'blCornerLatitude' => '36.83559955190906',
+            'blCornerLongitude' => '-2.4795627593994145',
+            'brCornerLatitude' => '36.82460750365017',
+            'brCornerLongitude' => '-2.4444580078125004',
+            'created_at' => date('Y-m-d H-m-s'),
+            'updated_at' => date('Y-m-d H-m-s'),
+        ]);
+
+        DB::table('maps')->insert([    
+            //La id no se pone porque se autoincrementa sola
             'title' => 'Huercal XXI',
             'description' => 'Mapa de la ciudad de Huercal en el siglo XXI',
             'city' => 'Huercal',
             'date' => '2019',
             'image' => 'NoMap.png',
             'miniature' => 'MiniatureHuercal2019.png',
-            'level' => '2',
+            'level' => '3',
             'tlCornerLatitude' => '36.85510654769295',
             'tlCornerLongitude' => '-2.471580505371094',
             'trCornerLatitude' => '36.85297750491024',
@@ -62,7 +83,7 @@ class MapsTableSeeder extends Seeder
             'date' => '1990',
             'image' => 'KindOfMap3.png',
             'miniature' => 'MiniatureAlmeria1990.png',
-            'level' => '3',
+            'level' => '4',
             'tlCornerLatitude' => null,
             'tlCornerLongitude' => null,
             'trCornerLatitude' => null,
@@ -83,7 +104,7 @@ class MapsTableSeeder extends Seeder
             'date' => '2000',
             'image' => 'Aguadulce2000.png',
             'miniature' => 'MiniatureAguadulce2000.png',
-            'level' => '4',
+            'level' => '5',
             'tlCornerLatitude' => null,
             'tlCornerLongitude' => null,
             'trCornerLatitude' => null,
@@ -104,7 +125,7 @@ class MapsTableSeeder extends Seeder
             'date' => '2001',
             'image' => 'Tabernas2001.png',
             'miniature' => 'MiniatureTabernas2001.png',
-            'level' => '5',
+            'level' => '6',
             'tlCornerLatitude' => null,
             'tlCornerLongitude' => null,
             'trCornerLatitude' => null,
