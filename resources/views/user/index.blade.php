@@ -62,7 +62,7 @@
                 {{$user->level}}
                 </div>
                 <div class="col-1">
-                <form action="{{route('user.edit',$user->id)}}" method="GET">
+                <form action="{{route('user.edit', ["user" => $user->id])}}" method="GET">
                         @csrf
                         @method("GET|HEAD")
                         <button class="btn" id="editar" type="submit" value="Editar">
