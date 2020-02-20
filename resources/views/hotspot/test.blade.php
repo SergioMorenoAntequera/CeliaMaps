@@ -281,22 +281,13 @@
                         <div class="modal-body">
                             <!-- Hotspot name -->
                             <div class="form-group">
-                                <label class="text-dark">Nombre del Hotspot</label>
-                                <input type="text" class="form-control" name="name">
+                                <label class="text-dark">Titulo del Hotspot</label>
+                                <input type="text" class="form-control" name="title">
                             </div>
                             <!-- Hotspot description -->
                             <div class="form-group">
                                 <label class="text-dark">Descripcion del Hotspot</label>
                                 <input type="text" class="form-control" name="description">
-                            </div>
-                            <!-- Hotspot maps -->
-                            <div class="form-group">
-                                @foreach ($maps as $map)
-                                    <input type="checkbox" name="maps_id[]" value="{{$map->id}}" checked>
-                                    <span class="text-dark">{{$map->title}} ({{$map->city}} - {{$map->date}})</span>
-                                    <input id="input_map{{$map->id}}" class="form-control" type="text" name="maps_name[]" placeholder="Sobreescribir el nombre del hotspot en el mapa {{$map->title}}">
-                                    <br>
-                                @endforeach
                             </div>
                             <!-- Hotspot points -->
                             <div>
@@ -408,13 +399,7 @@
             // Saved hotspots checking
             @isset($hotspots)
                 // Hotspots php array conversion to js
-                let hospots = @json($hotspots);
-                // Complete array with map relationship data
-                /*
-                @for ($i=0;$i<count($hotspots);$i++) 
-                    hotspots[{{$i}}].maps =  @json($hotspots[$i]->maps)
-                @endfor
-                */
+                let hotspots = @json($hotspots);
                 // Mark icon design
                 var markerImage = L.icon({
                     iconUrl: "{{url('img/icons/token.svg')}}",
@@ -424,24 +409,27 @@
 
                 // Write saved streets
                 @foreach ($hotspots as $hotspot)
-                    var marker = L.marker([{{$hotspot->lat}}, {{$hotspot->lng}}],{icon: markerImage, alt:"{{$hotspot->id}}"});    // Creating a Marker
+                    var marker{{$hotspot->id}} = L.marker([{{$hotspot->lat}}, {{$hotspot->lng}}],{icon: markerImage, alt:"{{$hotspot->id}}", draggable: true});    // Creating a Marker
                     marker.addTo(map); // Adding marker to the map
                 @endforeach
 
             @endisset
+        
 
             // Add hotspot
-
+            /*
             map.on('click', function(e) {
                 // Handle click point
                 var lat = e.latlng.lat;
                 var lng = e.latlng.lng;
+                console.log(lat + " " + lng);
+
                 // Clear fields
-                $("input[name='name']").val("");
+                $("input[name='title']").val("");
+                $("input[name='description']").val("");
                 // Form create attributes
                 $("#modal-form").attr("action", "{{route('hotspot.store')}}");
                 $("input[name='_method']").val("POST");
-
                 $(".modal-body #lat").val(lat);
                 $(".modal-body #lng").val(lng);
                 // Modal display
@@ -452,12 +440,13 @@
                 $("#btn-position").css("display", "none");
                 $('#modal').modal('show');
                 
+                
                 $("#btn-submit").click(function(){
                     let newMark = L.marker([lat, lng],{icon: markerImage});    // Creating a Marker
                     newMark.addTo(map); // Adding marker to the map
                 })
             });   
-            /*
+            */
             // Edit Hotspot
             $('.leaflet-marker-icon').on('click', function(){
                 $("#modal-form").attr("action", "{{route('hotspot.store')}}/"+this.alt);
@@ -468,10 +457,11 @@
                         hotspot = hotspots[i];
                 }
                 // Token change
-                $("#token").prop("src", "{{url('img/icons/token-selected.svg')}}" );
+                //$("#token").prop("src", "{{url('img/icons/token-selected.svg')}}" );
                 // Fill inputs fields
-                $("select[name='type_id']").val(street.type_id);
-                $("input[name='name']").val(street.name);
+                console.log(hotspot);
+                $("input[name='title']").val(hotspot.title);
+                $("input[name='description']").val(hotspot.description);
                 
                 // fill streets maps
 
@@ -482,25 +472,46 @@
                 $("#btn-position").prop("disabled", false);
                 $("#btn-position").css("display", "initial");
                 $('#modal').modal('show');
-            });
-            */
-            /*
-            // Rename streets fields
-            $("input[type='checkbox']").click(function(){
-                // Hide forms fields
-                $("#input_map"+this.value).toggle();
-                // Disable inputs to do not send
-                $("#input_map"+this.value).prop("disabled", function(){
-                    return !($(this).prop("disabled"));
+            
+                // Hotspots update position
+                $('#btn-position').on('click', function(){
+                    $(".leaflet-marker-icon:has(img[alt='" + this.alt + "'])").hide();
                 });
-            });
-            */
 
+                // Marker change the position
+                var marker = marker;
+                console.log(marker);
+                
+                /*
+                marker.on('dragend', function(event){
+                    var position = marker.getLatLng();
+                    marker.setLatLng(position, {
+                    draggable: 'true'
+                    }).bindPopup(position).update();
+                    $("#lat").val(position.lat);
+                    $("#lgn").val(position.lng).keyup();
+                });
+
+                $("#lat, #lgn").change(function() {
+                    var position = [parseInt($("#lat").val()), parseInt($("#lgn").val())];
+                    marker.setLatLng(position, {
+                    draggable: 'true'
+                    }).bindPopup(position).update();
+                    map.panTo(position);
+                });
+
+                map.addLayer(marker);
+                */
+            });
+            
             // Hotspots preview
+            /*
             $('.leaflet-marker-icon').hover(function(){
                 console.log(this.alt);
 
             });
+            */
+
         });
     </script>
 @endsection

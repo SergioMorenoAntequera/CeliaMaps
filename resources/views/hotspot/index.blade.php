@@ -16,7 +16,7 @@
 		</a>
 
 		<div class="row allElements justify-content-center">
-			@foreach ($hotspotList as $hotspot)
+			@foreach ($hotspots as $hotspot)
 				<div class="oneElement col-8">
 					<div class="textElement bg-primary">
 						<p><b class="text-white">{{$hotspot->id}} <a href="{{route("hotspot.show", $hotspot->id)}}"> {{$hotspot->title}} </a></b></p>
