@@ -307,9 +307,9 @@
         </div>
 
         <div id="preview" class="card" style="max-height: 245px">
-            <img src="" alt="Hotspot Preview" style="width:286px; max-heigth:180px">
+            <img src="{{url('img/hotspots/puerta-purchena-img-01.jpg')}}" alt="Hotspot Preview" style="width:286px; max-heigth:180px">
             <div class="card-body" style="color: black">
-              <h4><b></b></h4> 
+              <h4 id="previewTitle"><b></b></h4> 
             </div>
         </div>
     
@@ -409,7 +409,7 @@
 
                 // Write saved streets
                 @foreach ($hotspots as $hotspot)
-                    var marker{{$hotspot->id}} = L.marker([{{$hotspot->lat}}, {{$hotspot->lng}}],{icon: markerImage, alt:"{{$hotspot->id}}", draggable: true});    // Creating a Marker
+                    var marker = L.marker([{{$hotspot->lat}}, {{$hotspot->lng}}],{icon: markerImage, alt:"{{$hotspot->id}}", draggable: true});    // Creating a Marker
                     marker.addTo(map); // Adding marker to the map
                 @endforeach
 
@@ -417,7 +417,7 @@
         
 
             // Add hotspot
-            /*
+            
             map.on('click', function(e) {
                 // Handle click point
                 var lat = e.latlng.lat;
@@ -446,7 +446,7 @@
                     newMark.addTo(map); // Adding marker to the map
                 })
             });   
-            */
+            
             // Edit Hotspot
             $('.leaflet-marker-icon').on('click', function(){
                 $("#modal-form").attr("action", "{{route('hotspot.store')}}/"+this.alt);
@@ -457,13 +457,12 @@
                         hotspot = hotspots[i];
                 }
                 // Token change
-                //$("#token").prop("src", "{{url('img/icons/token-selected.svg')}}" );
+                $('.leaflet-marker-pane > img[alt="' + this.alt + '"]').attr("src", "{{url('img/icons/token-selected.svg')}}");
+                
                 // Fill inputs fields
                 console.log(hotspot);
                 $("input[name='title']").val(hotspot.title);
                 $("input[name='description']").val(hotspot.description);
-                
-                // fill streets maps
 
                 // Modal display
                 $(".modal-title").text("Editar hotspot");
@@ -475,42 +474,37 @@
             
                 // Hotspots update position
                 $('#btn-position').on('click', function(){
-                    $(".leaflet-marker-icon:has(img[alt='" + this.alt + "'])").hide();
+                    $('.leaflet-marker-pane > img[alt="' + hotspot.id + '"]').css("display", "none");
+                    
                 });
 
-                // Marker change the position
-                var marker = marker;
-                console.log(marker);
-                
-                /*
-                marker.on('dragend', function(event){
-                    var position = marker.getLatLng();
-                    marker.setLatLng(position, {
-                    draggable: 'true'
-                    }).bindPopup(position).update();
-                    $("#lat").val(position.lat);
-                    $("#lgn").val(position.lng).keyup();
-                });
-
-                $("#lat, #lgn").change(function() {
-                    var position = [parseInt($("#lat").val()), parseInt($("#lgn").val())];
-                    marker.setLatLng(position, {
-                    draggable: 'true'
-                    }).bindPopup(position).update();
-                    map.panTo(position);
-                });
-
-                map.addLayer(marker);
-                */
             });
+
             
             // Hotspots preview
-            /*
             $('.leaflet-marker-icon').hover(function(){
                 console.log(this.alt);
+                let hotspot;
+                for (let i = 0; i < hotspots.length; i++) {
+                    if(hotspots[i].id == this.alt)
+                        hotspot = hotspots[i];
+                }
+                console.log(hotspot);
+
+                // Coordinates mouse
+                $('.leaflet-marker-icon').mousemove(function(event){
+                    var latPreview = event.screenY -400;
+                    var lgnPreview = event.screenX -140;
+
+                // Display block no funciona con css
+                $("#preview").attr('style', 'display: block !important');
+                $("#preview").css({top: latPreview, left: lgnPreview});
+                });
+                $("#previewTitle").text(hotspot.title);
+            }, function(){
+                $('#preview').attr('style', 'display: none !important');
 
             });
-            */
 
         });
     </script>
