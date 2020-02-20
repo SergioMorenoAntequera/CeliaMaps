@@ -86,7 +86,16 @@ class MapController extends Controller
      * @return View
      */
     public function create(){
-        return view("map.create");
+        $maps = Map::all();
+        //We sort the maps depending on the level
+        $mapsSorted = Array();
+        for ($i = 0; $i < sizeof($maps); $i++) {
+            $mapsSorted[$maps[$i]->level - 1] = $maps[$i];
+        }
+        ksort($mapsSorted);
+        
+        $data['maps'] = $mapsSorted;
+        return view("map.create", $data);
     }
     
     // STORE FUNCTION ///////////////////////////////////////////////////////////////////////
@@ -203,6 +212,7 @@ class MapController extends Controller
             $mapAux->update();
         }
 
+        // Para borrar los archivos del servidor
         // if(file_exists(public_path('img/maps/'. $map->image))){
         //     unlink(public_path('img/maps/'. $map->image));
         // }
@@ -250,7 +260,10 @@ class MapController extends Controller
             return response()->json(['respond'=>false]);
         }
 
-        return response()->json(['level'=>$map->level]);
+        return response()->json([
+            'level'=>$map->level,
+            'levelOther'=>$mapNext->level
+        ]);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -285,7 +298,10 @@ class MapController extends Controller
             return response()->json(['lastOne'=>true]);
         }
 
-        return response()->json(['level'=>$map->level]);
+        return response()->json([
+            'level'=>$map->level,
+            'levelOther'=>$mapNext->level
+        ]);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -334,65 +350,77 @@ class MapController extends Controller
      */
     public function search(Request $r){
         //We have to look for the street name/type
-        $r->text = "Calle Avenida";
+        // $r->text = "ave med";
         $wordsAux = explode(" ", trim($r->text));
         $words = Array();
         foreach ($wordsAux as $word) {
-            if($word != ""){
+            if($word != "") {
                 $words[] = $word;
             }
         }
-        
-        //Array donde guardaremos todas las calles que hemos encontrado por los tipos de calles
-        $streetsByType = Array();
         $streetsFound = Array();
         
         // Tipos de calles que hemos concontrado
         $typesFound = Array();
+        //Recorremos las palabras
         for ($i = 0; $i < sizeof($words); $i++) {
-            $aux = DB::table('street_types')->where('name', 'like', '%'.$words[$i].'%')->get()->toArray();
-            if(sizeof($aux) != 0 && !in_array($aux, $typesFound)){
-                $typesFound[] = $aux[0]; 
+            //Buscamos por un tipo que contenga esa palabra
+            $auxTypes = DB::table('street_types')->where('name', 'like', '%'.$words[$i].'%')->get()->toArray();
+            //Miramos a ver si encuentra o si ya lo hemos añadido
+            if(sizeof($auxTypes) != 0 && !in_array($auxTypes[0], $typesFound)){
+                $typesFound[] = $auxTypes[0];
+                // Si no, buscamos las calles que se correspondan
+                $aux = DB::table('streets')->where('type_id', $auxTypes[0]->id)->get()->toArray();
+                // Por cada calle que encuentre de ese tipo lo añadimos
+                foreach ($aux as $street) {
+                    // Comprobamos que no la añada si ya está
+                    if(!in_array($street, $streetsFound)){
+                        $street->type = DB::table('street_types')->where('id', $street->type_id)->first();
+                        $streetsFound[] = $street;    
+                    }
+                }
             }
-        }
-        
-        // Aqui tenemos todos las calles de los tipos que se han podido deducir de lo que se ha metido
-        for($i = 0; $i < sizeof($typesFound); $i++){
-            $aux = DB::table('streets')->where('type_id', $typesFound[$i]->id)->get()->toArray();
-            foreach ($aux as $street) {
-                if(!in_array($street, $streetsByType))
-                $streetsByType[] = $street;    
-            }
-        }
-        dd($streetsByType);
-        
-        for ($i = 0; $i < sizeof($streetsByType); $i++) { 
-            for ($j = 0; $j < sizeof($streetsByType[$i]); $j++) {
-                $streetsFound[] = $streetsByType[$i][$j];
-            }
-        }
-        
-        // Buscamos por el nombre de la calle 
-        $auxNames = DB::table('streets')->where('name', 'like', '%'.$r->text.'%')->get();
-        for($i = 0; $i < sizeof($auxNames); $i++){
-            //Miramos si ya lo hemos añadido antes al poner los tipos de calles
-            if(!in_array($auxNames[$i], $streetsFound)){
-                $streetsFound[] = $auxNames[$i];
 
+            //Busamos por un nombre que contenga esa palabra
+            $auxNames = DB::table('streets')->where('name', 'like', '%'.$words[$i].'%')->get()->toArray();
+            foreach ($auxNames as $street) {
+                $street->type = DB::table('street_types')->where('id', $street->type_id)->first();
+                if(!in_array($street, $streetsFound)){
+                    $streetsFound[] = $street;
+                }
             }
         }
-        //Le añadimos a el array Calle un objeto type 
-        for($i = 0; $i < sizeof($streetsFound); $i++){
-            $type = DB::table('street_types')->where("id", $streetsFound[$i]->type_id)->get()->first();
-            $streetsFound[$i]->type = $type;    
-        } 
         
+        
+        // dd($streetsFound);
         //And then in the hotspot title
         $hotSpotsFound = DB::table('hotspots')->where('title', 'like', '%'.$r->text.'%')->get();
-
+        // dd($streetsFound[0]->type);
         return response()->json([
             'streets'=>$streetsFound,
             'hotspots'=>$hotSpotsFound,
+        ]);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    // LOOK FOR THINGS IN THE MAP /////////////////////////////////////////////////////////////
+    /**
+     * Method that gets the info from the database
+     * 
+     * @param id
+     * @return View
+     */
+    public function getStreets(Request $r){
+        $map = DB::table('maps')->where('title', $r->title)->first();
+        $map = Map::find($map->id);
+
+        $streets = $map->streets;
+        foreach ($streets as $street) {
+            $street->type = $street->type()->first()->toArray();
+        }
+        
+        return response()->json([
+            'streets' => $streets->toArray(),
         ]);
     }
 }

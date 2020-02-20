@@ -54,12 +54,10 @@
     background-color: #f79502 !important; border-color: #f79502 !important;
 }
 /********* SUCCESS *********/
-.text-success{
-    color: #3ab398 !important;
-}
+.text-success{ color: #3ab398 !important; }
 .bg-success{background-color: #3ab398 !important;}
 .btn-success { background-color: #3ab398 !important; border-color: #3ab398 !important;}
-
+.border-success { border-color: #3ab398 !important; }
 /********* LIGHT *********/
 .text-light{
     color: #c9959f !important;

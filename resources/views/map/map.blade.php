@@ -204,23 +204,22 @@
                                     //Nos devuelve un array con los elementos que contengan ese aspecto
                                     //Quitramos lo que ya tenemos
                                     $('#streetsFound .street').remove();
+
                                     //Guardamos las cosas en los arrays por comodidad
-                                    hotspots = data.hotspots;
-                                    streets = data.streets;
+                                    var hotspots = data.hotspots;
+                                    var streets = data.streets;
+
                                     //Ponemos los hotspots primero aquí y si es más de 4 en hidden
                                     for(var i = 0; i < hotspots.length; i++){
-                                        if(i < 4){
+                                        // if(i < 4){
                                             $('#streetsFound').append("<div class='street'>"+hotspots[i].title +"</div>");
-                                        }// else {
-                                        //     $('#streetsFound').append("<div style=\"display: none;\" class='street'>"+hotspots[i].title +"</div>");
                                         // }
                                     }
+                                    
                                     //Ponemos las calles después aquí y si es más de 4 en hidden
                                     for(var i = 0; i < streets.length; i++){
-                                        if(i < 4){
+                                        // if(streets.length <= 4 || i < 4){
                                             $('#streetsFound').append("<div class='street'>"+streets[i].type.name + " " + streets[i].name +"</div>");
-                                        }// else {
-                                        //     $('#streetsFound').append("<div style=\"display: none;\" class='street'>"+streets[i].name +"</div>");
                                         // }
                                     }
                                 },

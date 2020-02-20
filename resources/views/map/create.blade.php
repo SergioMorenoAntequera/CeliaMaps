@@ -40,6 +40,7 @@
                         <input id="uploadImage" type="file" accept=".png, .jpeg, .jpg" value="{{old('image')}}" class="form-control clearInput" name="image" placeholder="Archivo del mapa">
                     </div>
 
+                    {{-- Show more para poder meter información adicional --}}
                     <div class="showMore noselect">
                         <p><i class="fa fa-caret-right"></i> Información adicional </p>
                     </div>
@@ -57,6 +58,72 @@
                             <input type="file" class="form-control clearInput" accept=".png, .jpeg, .jpg" name="miniature" value="{{old('miniature')}}" placeholder="Miniatura del mapa">
                         </div>
                     </div>
+
+                    {{-- Show more para pooder herdar calles --}}
+                    <div class="showMore noselect mt-3">
+                        <p><i class="fa fa-caret-right"></i> Heredar calles de otro mapa </p>
+                    </div>
+                    <div class="more" style="display: none;">
+                        <div class="row ml-1 mr-1">
+                            <div id="mapsList" class="col-4 border-right border-success">
+                                <p><b> Listado de Mapas </b></p> 
+                                <p class="mapToInherit selected"> Ninguno </p>
+                                @foreach ($maps as $map)
+                                    <p class="mapToInherit"> {{$map->title}} </p>
+                                @endforeach
+                            </div>
+                            <div class="col-8">
+                                <p><b> Listado de Calles </b></p> 
+                                <div id="streetsList">
+                                    <p> Selecciona el nombre de un mapa a la izquierda para ver sus calles y heredarlas </p>
+                                </div>
+                            </div>
+                            <script>
+                                $(".mapToInherit").on("click", function(){
+                                    $("#mapsList .selected").removeClass("selected");
+                                    $(this).addClass("selected");
+                                    
+                                    if($(this).text().includes("Ninguno")){
+                                        $("#streetsList").empty();
+                                        $("#streetsList").append("<p> Selecciona el nombre de un mapa a la izquierda para ver sus calles y heredarlas </p>");
+                                        return;
+                                    }
+
+                                    var url = window.location.href.replace("create", "streets");
+
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: url,
+                                        data: {title : $(this).text()},
+
+                                        success: function(data) {
+                                            $("#streetsList").empty();
+                                            if(data.streets.length == 0){
+                                                $("#streetsList").append("<p class='text-danger'> Este mapa no contiene ninguna calle que puedas heredar </p>");
+                                                return;
+                                            }
+                                            
+                                            data.streets.forEach(street => {
+                                                $("#streetsList").append("<p>"+ street.type.name + " " + street.name +"</p>");
+                                            });
+                                        },
+                                    });
+                                });
+                            </script>
+                        </div>
+                        {{-- <div>
+                            <div class="leftPanel" style="padding: 30px">
+                                <p><b> Listado de Mapas </b></p> 
+                                <div class="mt-2 ml-4">
+                                   
+                                </div>
+                            </div>
+                            <div class="rightPanel">
+                                <p><b> Listado de calles </b></p> 
+                            </div>
+                        </div> --}}
+                    </div>
+
                     <script>
                         $(document).ready(function(){
                             $(".showMore").on("click", function(){
@@ -67,7 +134,7 @@
                                     $(this).find(".fa").removeClass("fa-caret-down");
                                     $(this).find(".fa").addClass("fa-caret-right");
                                 }
-                                $(this).siblings(".more").slideToggle(200);
+                                $(this).next(".more").slideToggle(200);
                             });
                         });
                     </script>
