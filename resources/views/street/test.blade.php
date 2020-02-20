@@ -270,55 +270,76 @@
     <div class="modal fade" id="modal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                    <form id="modal-form" method="POST" action="" enctype="multipart/form-data">
-                        @csrf
-                        <input type="hidden" name="_method">
-                        <div class="modal-header border-bottom-0">
-                            <h5 class="modal-title text-primary"></h5>
-                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-                        </div>
-                        <!-- Street type -->
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label class="text-dark">Tipo de vía</label>
-                                <select name="type_id" class="form-control">
-                                    @foreach ($streetsTypes as $streetType)
-                                    <option value="{{$streetType->id}}">({{$streetType->abbreviation}}) {{$streetType->type}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <!-- Street name -->
-                            <div class="form-group">
-                                <label class="text-dark">Nombre de la vía</label>
-                                <input type="text" class="form-control" name="name">
-                            </div>
-                            <!-- Street maps -->
-                            <div class="form-group">
-                                <label class="text-dark">Mapas que lo contienen</label><br>
-                                @foreach ($maps as $map)
-                                    <input type="checkbox" name="maps_id[]" value="{{$map->id}}" checked>
-                                    <span class="text-dark">{{$map->title}} ({{$map->city}} - {{$map->date}})</span>
-                                    <input id="input_map{{$map->id}}" class="form-control" type="text" name="maps_name[]" placeholder="Sobreescribir el nombre de la vía en el mapa {{$map->title}}">
-                                    <br>
+                <form id="modal-form" method="POST" action="" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="_method">
+                    <div class="modal-header border-bottom-0">
+                        <h5 id="modal-title" class="modal-title text-primary"></h5>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <!-- Street type -->
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="text-dark">Tipo de vía</label>
+                            <select name="type_id" class="form-control">
+                                @foreach ($streetsTypes as $streetType)
+                                <option value="{{$streetType->id}}">({{$streetType->abbreviation}}) {{$streetType->type}}</option>
                                 @endforeach
-                            </div>
-                            <!-- Street points -->
-                            <div>
-                                <input type="hidden" id="lat" name="lat">
-                                <input type="hidden" id="lng" name="lng">
-                            </div>
+                            </select>
                         </div>
-                        <div class="modal-footer">
-                            <button id="btn-remove" type="button" class="btn btn-danger" data-dismiss="modal">Eliminar</button>
-                            <button id="btn-position" type="button" class="btn btn-warning mr-auto" data-dismiss="modal">Cambiar posición</button>
-                            <button id="btn-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button id="btn-submit" type="submit" class="btn btn-primary">Guardar</button>
+                        <!-- Street name -->
+                        <div class="form-group">
+                            <label class="text-dark">Nombre de la vía</label>
+                            <input type="text" class="form-control" name="name">
                         </div>
-                    </form>
+                        <!-- Street maps -->
+                        <div class="form-group">
+                            <label class="text-dark">Mapas que lo contienen</label><br>
+                            @foreach ($maps as $map)
+                            
+                                <input type="checkbox" class="checkbox-text" name="maps_id[]" value="{{$map->id}}" checked>
+                                <span class="text-dark checkbox-text">{{$map->title}} ({{$map->city}} - {{$map->date}})</span>
+                            
+                                <input id="input_map{{$map->id}}" class="form-control" type="text" name="maps_name[]" placeholder="Sobreescribir el nombre de la vía en el mapa {{$map->title}}">
+                                <br>
+                            @endforeach
+                        </div>
+                        <!-- Street points -->
+                        <div>
+                            <input type="hidden" id="lat" name="lat">
+                            <input type="hidden" id="lng" name="lng">
+                            <input type="hidden" id="id" name="id">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btn-remove" value="" type="button" class="btn btn-danger">Eliminar</button>
+                        <button id="btn-position" value="" type="button" class="btn text-white btn-warning mr-auto">Cambiar posición</button>
+                        <!--
+                        <button id="btn-cancel" type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
+                        -->
+                        <button id="btn-submit" type="submit" class="btn btn-success">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div id="confirmModal" class="modal fade text-dark" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="confirm-modal-title" class="modal-title">Eliminar vía</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <p>¿Está seguro de que desea eliminar la vía?</p>
+                    <button id="btn-cancel" type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+                    <button id="btn-confirm" type="button" class="btn btn-danger deleteConfirm" data-dismiss="modal">Eliminar</button>
                 </div>
             </div>
         </div>
-    
+    </div>
     
 @endsection
 
@@ -359,15 +380,7 @@
 
         //Here we are adding the images(of the diferent maps) on top of the map
         map.whenReady(function() {
-            
-            map.on('click', function(e) {
-                console.log(map._layers );
-                console.log(e.latlng .lat + ", " + e.latlng.lng);    
-            });
-            images[0].on('click', function(e) {
-                console.log("PRA");
-                console.log(e.latlng.lat + ", " + e.latlng.lng);
-            });
+
             //Añadimos la imagen al mapa
             images.forEach(function(img) {
                 //Then we add all the different maps
@@ -402,57 +415,134 @@
     {{-- STREET MANAGEMENT --}}
     <script>
         $(function(){
-            // Saved streets checking
+            // Mark icon design
+            var markerImage = L.icon({
+                iconUrl: "{{url('img/icons/token.svg')}}",
+                iconSize:     [30, 90],
+                iconAnchor:   [15,60],
+            });
+            // Marker collection
+            var markersList = new Array();
+            var newStreet = true;
+            // Check saved streets
             @isset($streets)
-                // Streets php array conversion to js
+                // Streets php array conversion to js array
                 let streets = @json($streets);
                 // Complete array with map relationship data
                 @for ($i=0;$i<count($streets);$i++) 
-                    streets[{{$i}}].maps =  @json($streets[$i]->maps)
+                    streets[{{$i}}].maps =  @json($streets[$i]->maps);
                 @endfor
-
-                // Mark icon design
-                var markerImage = L.icon({
-                    iconUrl: "{{url('img/icons/token.svg')}}",
-                    iconSize:     [30, 90],
-                    iconAnchor:   [15,60],
-                });
+                // Complete array with points relationship data
+                @for ($i=0;$i<count($streets);$i++) 
+                    streets[{{$i}}].points =  @json($streets[$i]->points[0]);
+                @endfor
 
                 // Write saved streets
                 @foreach ($streets as $street)
-                    var marker = L.marker([{{$street->points[0]->lat}}, {{$street->points[0]->lng}}],{icon: markerImage, alt:"{{$street->id}}"});    // Creating a Marker
-                    marker.addTo(map); // Adding marker to the map
+                    // Creating a Marker
+                    var marker{{$street->id}} = L.marker([{{$street->points[0]->lat}}, {{$street->points[0]->lng}}],{icon: markerImage, alt:"{{$street->id}}", draggable:false});
+                    // Adding marker to the markers list
+                    markersList.push(marker{{$street->id}});
+                    // Adding marker to the map
+                    marker{{$street->id}}.addTo(map); 
                 @endforeach
-
             @endisset
-            // Add street
-            // Image click
-           $(".leaflet-image-layer").click(function(realEvent){
-                /*let similatedEvent = new jQuery.Event("click");
-                similatedEvent.pageX = realEvent.pageX;
-                similatedEvent.pageY = realEvent.pageY;
-                $(".leaflet-map-pane").trigger(similatedEvent);
-                console.log("post-click");*/
+            /*
+            if(newStreet){
+                // Map images click handler
+                $(".leaflet-image-layer").click(function(e){
+                    console.log(e);
+                    // Calculate backend menu width
+                    let menuWidth = screen.width * 0.05;
+                    // Create leaflet point with client x/y coordinates
+                    let point = L.point(e.clientX-menuWidth, e.clientY);
+                    // Conversion from point to leaflet latitude longitude object
+                    let latlng = map.containerPointToLatLng(point);
+                    // Create modal trigger
+                    createStreet(latlng.lat, latlng.lng);
+                });
+                // Leaflet map click handler
+                map.on('click', function(e) {
+                    // Create modal trigger with lat/lng coordinates
+                    createStreet(e.latlng.lat, e.latlng.lng);
+                });
+            }
+            */
+            $('.leaflet-marker-icon').on('mouseenter', function(){
+                newStreet = false;
+                console.log(newStreet);
+            });
+            
+            $('.leaflet-marker-icon').on('mouseleave', function(){
+                //newStreet = true;
+                console.log(newStreet);
+            });
+            $('#modal').on('mouseenter', function(){
+                //newStreet = true;
+                console.log(newStreet);
+            });
+            // Leaflet mark click handler
+            $('.leaflet-marker-icon').on('click', function(){
+                // Selected street searching
+                let street;
+                for (let i = 0; i < streets.length; i++) {
+                    if(streets[i].id == this.alt)
+                        street = streets[i]; // Streets of array with selected street comparison
+                }
+                // Edit modal trigger with selected street
+                editStreet(street); 
+            });
+
+            // Rename streets fields
+            $(".checkbox-text").on("click", function(){
+                // Hide forms fields
+                $("#input_map"+this.value).slideToggle(200, function(){
+                    // Disable inputs to do not send
+                    $("#input_map"+this.value).prop("disabled", function(){
+                    return !($(this).prop("disabled"));
+                    });
+                });
+            });
+            // Replace street position
+            $("#btn-position").on("click", function(){
+                //console.log($(".leaflet-marker-pane img[alt='"+this.value+"']"));
+
+                let markerId = $(".leaflet-marker-pane img[alt='"+this.value+"']")[0].alt;
+                let markerVarName = "marker"+markerId;
+                let leafletMarker = eval(markerVarName);
+                console.log(leafletMarker.getLatLng());
+                leafletMarker.dragging.enable();
+                $('#modal').modal('hide');
+                leafletMarker.on("moveend", function(e){
+                    leafletMarker.dragging.disable();
+                    console.log(leafletMarker.getLatLng());
+                    $(".modal-body #lat").val(leafletMarker.getLatLng().lat);
+                    $(".modal-body #lng").val(leafletMarker.getLatLng().lng);
+                    $('#modal').modal('show');
+                    console.log($(".modal-body #lat").val())
+                    console.log($(".modal-body #lng").val())
+                });
                 
-           });
-            // Map click
-            map.on('click', function(e) {
-            //$(".leaflet-tile-pane").on("click", function(e){
-                // Handle click point
-                var lat = e.latlng.lat;
-                var lng = e.latlng.lng;
-                console.log(lat + " " + lng);
+            });
+
+
+            function createStreet(lat, lng) {
+                //
+                let newMark = L.marker([lat, lng],{icon: markerImage});    // Creating a Marker
+                        newMark.addTo(map); // Adding marker to the map
+                //
+
+                // Create form attributes
+                $("#modal-form").attr("action", "{{route('street.store')}}");
+                $("input[name='_method']").val("POST");
                 // Clear fields
                 $("select[name='type_id']").val("");
                 $("input[name='name']").val("");
-                // Form create attributes
-                $("#modal-form").attr("action", "{{route('street.store')}}");
-                $("input[name='_method']").val("POST");
-
+                // Fill position values
                 $(".modal-body #lat").val(lat);
                 $(".modal-body #lng").val(lng);
                 // Modal display
-                $(".modal-title").text("Nueva vía");
+                $("#modal-title").text("Nueva vía");
                 $("#btn-remove").prop("disabled", true);
                 $("#btn-remove").css("display", "none");
                 $("#btn-position").prop("disabled", true);
@@ -462,44 +552,48 @@
                 $("#btn-submit").click(function(){
                     let newMark = L.marker([lat, lng],{icon: markerImage});    // Creating a Marker
                     newMark.addTo(map); // Adding marker to the map
-                })
-            });
-            // Edit Street
-            $('.leaflet-marker-icon').on('click', function(){
-                $("#modal-form").attr("action", "{{route('street.store')}}/"+this.alt);
+                });
+            }
+            function editStreet(street) {
+                // Edit form attributes
+                $("#modal-form").attr("action", "{{route('street.store')}}/"+street.id);
                 $("input[name='_method']").val("PUT");
-                let street;
-                for (let i = 0; i < streets.length; i++) {
-                    if(streets[i].id == this.alt)
-                        street = streets[i];
-                }
-                // Token change
-                //$("#token").prop("src", "{{url('img/icons/token-selected.svg')}}" );
-                console.log(street);
                 // Fill inputs fields
                 $("select[name='type_id']").val(street.type_id);
                 $("input[name='name']").val(street.name);
-                
+                // Fill hidden values
+                $(".modal-body #lat").val(street.points.lat);
+                $(".modal-body #lng").val(street.points.lng);
+                $(".modal-body #id").val(street.id);
+
                 // fill streets maps
 
                 // Modal display
-                $(".modal-title").text("Editar vía");
+                $("#modal-title").text("Editar vía");
                 $("#btn-remove").prop("disabled", false);
+                $("#btn-remove").prop("value", street.id);
                 $("#btn-remove").css("display", "initial");
                 $("#btn-position").prop("disabled", false);
+                $("#btn-position").prop("value", street.id);
                 $("#btn-position").css("display", "initial");
                 $('#modal').modal('show');
-            });
 
-            // Rename streets fields
-            $("input[type='checkbox']").click(function(){
-                // Hide forms fields
-                $("#input_map"+this.value).toggle();
-                // Disable inputs to do not send
-                $("#input_map"+this.value).prop("disabled", function(){
-                    return !($(this).prop("disabled"));
+                // Delete street button
+                $("#btn-remove").on("click", function(){
+                    $("#modal-form").attr("action", "{{route('street.store')}}/"+this.value);
+                    $("input[name='_method']").val("DELETE");
+                    $('#modal').modal('hide');
+                    $('#confirmModal').modal('show');
+                    $("#btn-confirm").click(function(){
+                        $("#modal-form").submit();
+                    });
+                    $("#btn-cancel").click(function(){
+                        $('#confirmModal').modal('hide');
+                        $('#modal').modal('show');
+                    });
                 });
-            });
+            
+            }
         });
     </script>
 @endsection
