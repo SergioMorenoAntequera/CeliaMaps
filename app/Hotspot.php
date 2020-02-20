@@ -8,7 +8,7 @@ class Hotspot extends Model
 {
     //The attributes that are mass assignable.
     protected $fillable = [
-        'title', 'description', 'point_x', 'point_y',
+        'title', 'description', 'lat', 'lng',
     ];
 
     public function maps() {

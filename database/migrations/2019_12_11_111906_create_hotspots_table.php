@@ -33,4 +33,6 @@ class CreateHotspotsTable extends Migration
     {
         Schema::dropIfExists('hotspots');
     }
+
+    
 }

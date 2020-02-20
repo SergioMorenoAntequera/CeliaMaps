@@ -14,7 +14,7 @@
 		</a>
 
 		<div class="row allElements justify-content-center">
-			<?php $__currentLoopData = $hotspotList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $hotspot): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+			<?php $__currentLoopData = $hotspots; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $hotspot): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 				<div class="oneElement col-8">
 					<div class="textElement bg-primary">
 						<p><b class="text-white"><?php echo e($hotspot->id); ?> <a href="<?php echo e(route("hotspot.show", $hotspot->id)); ?>"> <?php echo e($hotspot->title); ?> </a></b></p>

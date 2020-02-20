@@ -122,7 +122,8 @@ class StreetController extends Controller
         // corregir nombres alternativos
         $street->maps()->sync($r->maps_id);
         // localización
-        $street->points()->sync();
+        $street->points[0]->lat = $r->lat;
+        $street->points[0]->lng = $r->lng;
         $street->save();
         return redirect(route('street.index'));
     }
