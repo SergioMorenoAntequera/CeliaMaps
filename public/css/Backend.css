@@ -113,7 +113,7 @@ los formularios y seguramente algo más, pa quién lo quiera */
     -moz-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.13);
     box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.13);
 }
-.wholePanel .leftPanel {
+.wholePanel > .leftPanel {
     width: 40%;
     height: auto;
 
@@ -130,7 +130,7 @@ los formularios y seguramente algo más, pa quién lo quiera */
     border-radius: 10px;
     border-radius: 10px 0px 0px 10px;
 }
-.wholePanel .leftPanel .content{
+.wholePanel > .leftPanel > .content{
     position: relative;
     top: 50%; left: 50%;
     transform: translate(-50%,-50%);
@@ -139,7 +139,7 @@ los formularios y seguramente algo más, pa quién lo quiera */
     font-size: 40px;
     font-weight: bold;
 }
-.wholePanel .leftPanel .content img{
+.wholePanel > .leftPanel > .content > img{
     width: 60%;
 }
 
@@ -172,6 +172,9 @@ los formularios y seguramente algo más, pa quién lo quiera */
 .leftPanel input { width: 70%;}
 .leftPanel .bDown { position: absolute; left: 15%; bottom: 5%;}
 .leftPanel .bUp { position: absolute; left: 15%; top: 5%;}
+.mapToInherit:hover { cursor: pointer; color: #3ab398; }
+.selected {color: #3ab398; font-weight: bold;}
+
 
 /* Boton para añadir registros y tal */
 #addButton{

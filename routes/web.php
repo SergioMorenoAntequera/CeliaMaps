@@ -23,6 +23,7 @@ Route::get('/', 'MapController@map')->name('map.map');
 Route::get('map/up', 'MapController@moveUp')->name('map.up');
 Route::get('map/down', 'MapController@moveDown')->name('map.down');
 Route::get('map/search', 'MapController@search')->name('map.search');
+Route::get('map/streets', 'MapController@getStreets')->name('map.streets');
 Route::get('map/align/{id}', 'MapController@alignMap')->name('map.align');
 Route::get('map/saveAlign/{id}', 'MapController@saveAlign')->name('map.saveAlign');
 Route::resource('map', 'MapController');
