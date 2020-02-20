@@ -86,7 +86,16 @@ class MapController extends Controller
      * @return View
      */
     public function create(){
-        return view("map.create");
+        $maps = Map::all();
+        //We sort the maps depending on the level
+        $mapsSorted = Array();
+        for ($i = 0; $i < sizeof($maps); $i++) {
+            $mapsSorted[$maps[$i]->level - 1] = $maps[$i];
+        }
+        ksort($mapsSorted);
+        
+        $data['maps'] = $mapsSorted;
+        return view("map.create", $data);
     }
     
     // STORE FUNCTION ///////////////////////////////////////////////////////////////////////
@@ -289,7 +298,10 @@ class MapController extends Controller
             return response()->json(['lastOne'=>true]);
         }
 
-        return response()->json(['level'=>$map->level]);
+        return response()->json([
+            'level'=>$map->level,
+            'levelOther'=>$mapNext->level
+        ]);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -387,6 +399,28 @@ class MapController extends Controller
         return response()->json([
             'streets'=>$streetsFound,
             'hotspots'=>$hotSpotsFound,
+        ]);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    // LOOK FOR THINGS IN THE MAP /////////////////////////////////////////////////////////////
+    /**
+     * Method that gets the info from the database
+     * 
+     * @param id
+     * @return View
+     */
+    public function getStreets(Request $r){
+        $map = DB::table('maps')->where('title', $r->title)->first();
+        $map = Map::find($map->id);
+
+        $streets = $map->streets;
+        foreach ($streets as $street) {
+            $street->type = $street->type()->first()->toArray();
+        }
+        
+        return response()->json([
+            'streets' => $streets->toArray(),
         ]);
     }
 }

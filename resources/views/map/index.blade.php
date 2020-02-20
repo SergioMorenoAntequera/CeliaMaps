@@ -11,7 +11,7 @@
     <!-- One div to get all the maps -->
     <div class="container text-center">
         <!-- Todos los elementos de la página -->
-        <div id="allElements" class="justify-content-center mt-3 text-white">
+        <div id="allElements">
             @foreach ($maps as $map)
                 <!-- Cada uno de los elementos de la página -->
                 <div class="wholePanel">
@@ -36,7 +36,6 @@
                         <!-- Algunos detalles -->
                         <p>{{$map->city}} - {{$map->date}}</p>
                         <p> {{$map->description}}</p>
-                        <div style="clear: both"></div>
 
                         <!-- Boton para Borrar  -->
                         <form method="POST" action="{{route('map.destroy', $map->id)}}">
@@ -80,12 +79,14 @@
                                 <div style="right: 100px" class="cornerButton bg-danger">
                                     <img class="center" src="{{url("img/icons/align.svg")}}" alt=""> 
                                 </div>
-                                <b class="text-warning"> Mapa no alineado, no se mostrará en página principal </b>
+                                <b class="text-warning"> Mapa no alineado </b>
+                                
                             @else
                                 <div style="right: 100px" class="cornerButton">
                                     <img class="center" src="{{url("img/icons/align.svg")}}" alt=""> 
                                 </div>
-                            @endif 
+                            @endif
+                            <div style="clear: both"></div>
                         </a>
                     </div><!-- FINAL columna con info del mapa -->
                 </div> <!-- FINAL .oneElement -->

@@ -117,10 +117,9 @@
                             <div class="lateralExpandMenu">
                                 <b> Backup </b>
                                 <div class="line"></div>
-                                <a href="<?php echo e(route('backup.index')); ?>"><li>Indice</li></a>
-                                <a href="<?php echo e(route('backup.index')); ?>"><li>Insertar</li></a>
-                                <a href="<?php echo e(route('backup.index')); ?>"><li>Modificar</li></a>
-                                <a href="<?php echo e(route('backup.index')); ?>"><li>Elminar</li></a>
+                                <a href="<?php echo e(route('backup.create')); ?>"><li>Copia de Seguridad</li></a>
+                                <a href="<?php echo e(route('backup.restore')); ?>"><li>Restaurar</li></a>
+                                
                             </div>
                         </div>
 
