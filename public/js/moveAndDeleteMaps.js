@@ -49,7 +49,7 @@ $(document).ready(function(){
     // MOVE UP /////////////////////////////////////////////////////////////////////////////
     $('.bUp').click(function(){
         var button = $(this);
-        // button.prop('disabled', true);
+        button.prop('disabled', true);
         var parent = $(this).parents("#allElements");
         var mapSelected = $(this).parents(".wholePanel");
         var level = mapSelected.find(".mapLevel");
@@ -76,37 +76,17 @@ $(document).ready(function(){
                 //Now we swap to the parents to be able to move them
                 goingDown = goingDown.parents(".wholePanel");
                 goingUp = goingUp.parents(".wholePanel");
-                goingUp.after(goingDown);
-                // goingDown.css({"position":"relative"});
-                // goingUp.css({"position":"relative"});
-
-                // for (var i = 0; i < parent.children().length; i++) {
-                //     //We get the id of all the elements
-                //     var mapOther = jQuery(parent.children().get(i-1));
-                //     var levelOther = jQuery(mapOther.children()[0]);
-                //     levelOther = jQuery(levelOther.children()[2]);
-                //     //var levelOther = parseInt(mapOther.attr('id').replace("mapLevel", ""));
-                //     //console.log(idElement);
-
-                //     if(levelOther.text() == level.text() - 1){
-                //         mapOther.fadeOut(300);
-                //         mapSelected.fadeOut(300, function(){
-                //             level.text(parseInt(level.text()) - 1);
-                //             levelOther.text(parseInt(levelOther.text()) + 1);
-                            
-                //             level.attr('id', "level"+level.text());
-                //             levelOther.attr('id', "level"+levelOther.text());
-                //             mapSelected.attr('id', "oneElement"+level.text());
-                //             mapOther.attr('id', "oneElement"+levelOther.text());
-
-                //             mapSelected.after(mapOther);
-                //             mapOther.fadeIn(300);
-                //             mapSelected.fadeIn(300);
-                //             button.prop('disabled', false);
-                //         });
-                //         return;
-                //     }
-                // }                        
+                var dist = parseInt(goingUp.position().top) - parseInt(goingDown.position().top);
+                
+                goingDown.animate({
+                    top: "+="+dist,
+                }, 200);
+                goingUp.animate({
+                    top : "-="+dist,
+                }, 200, function(){
+                    // goingUp.after(goingDown);
+                    button.prop('disabled', false); 
+                });
             }
         });
     });
@@ -132,36 +112,29 @@ $(document).ready(function(){
                     return;
                 }
                 
-                //Here we update the position of the divs
-                //Here we have to update the numbers in the divs
-                // for (var i = 0; i < parent.children().length; i++) {
-                //     //We get the id of all the elements
+                //Here we get both of the divs that we are going to modify
+                var goingUp = parent.find(".mapLevel:contains("+data.level+")");
+                var goingDown = parent.find(".mapLevel:contains("+data.levelOther+")");
+                
+                //Here we modiffy the numbers
+                goingDown.text(parseInt(goingDown.text()) + 1);
+                goingUp.text(parseInt(goingUp.text()) - 1);
+                
+                //Now we swap to the parents to be able to move them
+                goingDown = goingDown.parents(".wholePanel");
+                goingUp = goingUp.parents(".wholePanel");
 
-
-                //     var mapOther = jQuery(parent.children().get(i+1));
-                //     var levelOther = jQuery(mapOther.children()[0]);
-                //     levelOther = jQuery(levelOther.children()[2]);
-                    
-                //     if(parseInt(levelOther.text()) == parseInt(level.text()) + 1){
-                //         mapOther.fadeOut(300);
-                //         mapSelected.fadeOut(300, function(){
-                //             mapSelected.before(mapOther);
-                            
-                //             level.text(parseInt(level.text()) + 1);
-                //             levelOther.text(parseInt(levelOther.text()) - 1);
-                //             button.prop('disabled', false);
-
-                //             level.attr('id', "level"+level.text());
-                //             levelOther.attr('id', "level"+levelOther.text());
-                //             mapSelected.attr('id', "oneElement"+level.text());
-                //             mapOther.attr('id', "oneElement"+levelOther.text());
-
-                //             mapOther.fadeIn(300);
-                //             mapSelected.fadeIn(300);
-                //         });
-                //         return;
-                //     }
-                // }                        
+                var dist = parseInt(goingUp.position().top) - parseInt(goingDown.position().top);
+                
+                goingDown.animate({
+                    top: "+="+dist,
+                }, 200);
+                goingUp.animate({
+                    top : "-="+dist,
+                }, 200, function(){
+                    // goingUp.after(goingDown);
+                    button.prop('disabled', false); 
+                });
             }
         });
     });
