@@ -125,9 +125,9 @@ class MapController extends Controller
         $dim[2] = getimagesize($img)[1]/2;
         $dim[3] = getimagesize($img)[1]/2;
 
-        dd($img->path());
         
-        $img = imagecrop($img, $dim);
+        dd($img);
+        $img = imagecrop($img->path(), $dim);
         
 
         $map = new Map($r->all());
