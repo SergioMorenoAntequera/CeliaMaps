@@ -53,10 +53,6 @@
                                 <div class="line"></div>
                                 <a href="<?php echo e(route('map.index')); ?>"><li>Indice</li></a>
                                 <a href="<?php echo e(route('map.create')); ?>"><li>Insertar</li></a>
-                                <a href="<?php echo e(route('map.index')); ?>"><li>Modificar</li></a>
-                                <a href="<?php echo e(route('map.index')); ?>"><li>Elminar</li></a>
-                                <a href="<?php echo e(route('map.index')); ?>"><li>Ordenar</li></a>
-                                <a href="<?php echo e(route('map.index')); ?>"><li>Alinear</li></a>
                             </div>
                         </div>
                         

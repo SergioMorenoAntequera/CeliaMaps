@@ -10,13 +10,13 @@ html body{
 #leftNavBar {
     position: fixed;
     z-index: 10000;
-    width: 5%;
+    width: 4%;
     height: 100%;
-    background-color: #283e65;
+    background-color: #253238;
 }
 #rightContent {
-    width: 95%;
-    margin-left: 5%;
+    width: 96%;
+    margin-left: 4%;
     
     background-color: #efefef;
 }
@@ -38,7 +38,7 @@ html body{
     /* border-radius: 0px 10px 10px 0px; */
     text-align: center;
     color: white;
-    background-color: #283e65;
+    background-color: #253238;
     padding: 10px 0px 10px 0px;
 }
 .lateralExpandMenu .line{

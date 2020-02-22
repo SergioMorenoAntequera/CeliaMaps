@@ -306,8 +306,8 @@
                         </div>
                         <!-- Street points -->
                         <div>
-                            <input type="hidden" id="lat" name="lat">
-                            <input type="hidden" id="lng" name="lng">
+                            <input type="hidden" id="modal-lat" name="lat">
+                            <input type="hidden" id="modal-lng" name="lng">
                             <input type="hidden" id="id" name="id">
                         </div>
                     </div>
@@ -423,7 +423,7 @@
             });
             // Marker collection
             var markersList = new Array();
-            var newStreet = true;
+            var dragging = false;
             // Check saved streets
             @isset($streets)
                 // Streets php array conversion to js array
@@ -447,91 +447,47 @@
                     marker{{$street->id}}.addTo(map); 
                 @endforeach
             @endisset
-            /*
-            if(newStreet){
-                // Map images click handler
-                $(".leaflet-image-layer").click(function(e){
-                    console.log(e);
-                    // Calculate backend menu width
-                    let menuWidth = screen.width * 0.05;
-                    // Create leaflet point with client x/y coordinates
-                    let point = L.point(e.clientX-menuWidth, e.clientY);
-                    // Conversion from point to leaflet latitude longitude object
-                    let latlng = map.containerPointToLatLng(point);
-                    // Create modal trigger
-                    createStreet(latlng.lat, latlng.lng);
-                });
-                // Leaflet map click handler
-                map.on('click', function(e) {
-                    // Create modal trigger with lat/lng coordinates
-                    createStreet(e.latlng.lat, e.latlng.lng);
-                });
-            }
-            */
-            $('.leaflet-marker-icon').on('mouseenter', function(){
-                newStreet = false;
-                console.log(newStreet);
-            });
             
-            $('.leaflet-marker-icon').on('mouseleave', function(){
-                //newStreet = true;
-                console.log(newStreet);
+            // Map images click handler
+            $(".leaflet-image-layer").click(function(e){
+                console.log("imagen");
+                // Calculate backend menu width
+                let menuWidth = screen.width * 0.05;
+                // Create leaflet point with client x/y coordinates
+                let point = L.point(e.clientX-menuWidth, e.clientY);
+                // Conversion from point to leaflet latitude longitude object
+                let latlng = map.containerPointToLatLng(point);
+                // Create modal trigger
+                createStreet(latlng.lat, latlng.lng);
             });
-            $('#modal').on('mouseenter', function(){
-                //newStreet = true;
-                console.log(newStreet);
+            // Leaflet map click handler
+            map.on('click', function(e) {
+                console.log("mapa");
+                // Create modal trigger with lat/lng coordinates
+                createStreet(e.latlng.lat, e.latlng.lng);
             });
+        
             // Leaflet mark click handler
-            $('.leaflet-marker-icon').on('click', function(){
-                // Selected street searching
-                let street;
-                for (let i = 0; i < streets.length; i++) {
-                    if(streets[i].id == this.alt)
-                        street = streets[i]; // Streets of array with selected street comparison
+            $('.leaflet-marker-icon').on('click', function(e){
+                // Stop event bubbling to prevent map object clicks
+                e.stopPropagation();
+                // Check if clicks comes from dragging or not
+                if(dragging){
+                    // After drag turn off dragging mode
+                    dragging = false
+                }else{
+                    // Selected street searching
+                    let street;
+                    for (let i = 0; i < streets.length; i++) {
+                        if(streets[i].id == this.alt)
+                            street = streets[i]; // Streets of array with selected street comparison
+                    }
+                    // Edit modal trigger with selected street
+                    editStreet(street); 
                 }
-                // Edit modal trigger with selected street
-                editStreet(street); 
             });
-
-            // Rename streets fields
-            $(".checkbox-text").on("click", function(){
-                // Hide forms fields
-                $("#input_map"+this.value).slideToggle(200, function(){
-                    // Disable inputs to do not send
-                    $("#input_map"+this.value).prop("disabled", function(){
-                    return !($(this).prop("disabled"));
-                    });
-                });
-            });
-            // Replace street position
-            $("#btn-position").on("click", function(){
-                //console.log($(".leaflet-marker-pane img[alt='"+this.value+"']"));
-
-                let markerId = $(".leaflet-marker-pane img[alt='"+this.value+"']")[0].alt;
-                let markerVarName = "marker"+markerId;
-                let leafletMarker = eval(markerVarName);
-                console.log(leafletMarker.getLatLng());
-                leafletMarker.dragging.enable();
-                $('#modal').modal('hide');
-                leafletMarker.on("moveend", function(e){
-                    leafletMarker.dragging.disable();
-                    console.log(leafletMarker.getLatLng());
-                    $(".modal-body #lat").val(leafletMarker.getLatLng().lat);
-                    $(".modal-body #lng").val(leafletMarker.getLatLng().lng);
-                    $('#modal').modal('show');
-                    console.log($(".modal-body #lat").val())
-                    console.log($(".modal-body #lng").val())
-                });
-                
-            });
-
 
             function createStreet(lat, lng) {
-                //
-                let newMark = L.marker([lat, lng],{icon: markerImage});    // Creating a Marker
-                        newMark.addTo(map); // Adding marker to the map
-                //
-
                 // Create form attributes
                 $("#modal-form").attr("action", "{{route('street.store')}}");
                 $("input[name='_method']").val("POST");
@@ -539,8 +495,8 @@
                 $("select[name='type_id']").val("");
                 $("input[name='name']").val("");
                 // Fill position values
-                $(".modal-body #lat").val(lat);
-                $(".modal-body #lng").val(lng);
+                $("#modal-lat").val(lat);
+                $("#modal-lng").val(lng);
                 // Modal display
                 $("#modal-title").text("Nueva vía");
                 $("#btn-remove").prop("disabled", true);
@@ -548,11 +504,11 @@
                 $("#btn-position").prop("disabled", true);
                 $("#btn-position").css("display", "none");
                 $('#modal').modal('show');
-                
+                /* Add marker to the map when we use ajax to insert
                 $("#btn-submit").click(function(){
                     let newMark = L.marker([lat, lng],{icon: markerImage});    // Creating a Marker
                     newMark.addTo(map); // Adding marker to the map
-                });
+                });*/
             }
             function editStreet(street) {
                 // Edit form attributes
@@ -562,20 +518,24 @@
                 $("select[name='type_id']").val(street.type_id);
                 $("input[name='name']").val(street.name);
                 // Fill hidden values
-                $(".modal-body #lat").val(street.points.lat);
-                $(".modal-body #lng").val(street.points.lng);
+                console.log("edit street latlng");
+                $("#modal-lat").val(street.points.lat);
+                $("#modal-lng").val(street.points.lng);
                 $(".modal-body #id").val(street.id);
 
+                //console.log(street);
+                
                 // fill streets maps
 
-                // Modal display
                 $("#modal-title").text("Editar vía");
+                // Show and enable buttons and also fill value with street id
                 $("#btn-remove").prop("disabled", false);
                 $("#btn-remove").prop("value", street.id);
                 $("#btn-remove").css("display", "initial");
                 $("#btn-position").prop("disabled", false);
                 $("#btn-position").prop("value", street.id);
                 $("#btn-position").css("display", "initial");
+                // Modal display
                 $('#modal').modal('show');
 
                 // Delete street button
@@ -588,12 +548,54 @@
                         $("#modal-form").submit();
                     });
                     $("#btn-cancel").click(function(){
+                        //$("#modal-form").attr("action", "{{route('street.store')}}/"+street.id);
+                        //$("input[name='_method']").val("PUT");
                         $('#confirmModal').modal('hide');
-                        $('#modal').modal('show');
+                        //$('#modal').modal('show');
                     });
                 });
-            
+                
+                // Replace street position
+                $("#btn-position").on("click", function(){
+                    // Turn dragging variable to true to disable marker click handle
+                    dragging = true;
+                    // Search for right marker
+                    let markerId = $(".leaflet-marker-pane img[alt='"+this.value+"']")[0].alt;
+                    // Build of marker variable name
+                    let markerVarName = "marker"+markerId;
+                    // Get marker js object
+                    let leafletMarker = eval(markerVarName);
+                    console.log("antes de mover "+leafletMarker.getLatLng());
+                    // Enable marker dragging mode
+                    leafletMarker.dragging.enable();
+                    // Hide edition modal
+                    $('#modal').modal('hide');
+                    // Dragging event handle
+                    leafletMarker.on("moveend", function(){
+                        // Disable dragging mode
+                        leafletMarker.dragging.disable();
+                        console.log("después de mover "+leafletMarker.getLatLng().lat);
+                        console.log("replace position street latlng");
+                        // Fill new position values
+                        $("#modal-lat").val(leafletMarker.getLatLng().lat);
+                        $("#modal-lng").val(leafletMarker.getLatLng().lng);
+                        // Show again edition modal
+                        $('#modal').modal('show');
+                        // Dragging will be set to false in click event triggered later
+                    });
+                });
             }
+            
+            // Rename streets fields
+            $(".checkbox-text").on("click", function(){
+                // Hide forms fields
+                $("#input_map"+this.value).slideToggle(200, function(){
+                    // Disable inputs to do not send
+                    $("#input_map"+this.value).prop("disabled", function(){
+                        return !($(this).prop("disabled"));
+                    });
+                });
+            });
         });
     </script>
 @endsection
