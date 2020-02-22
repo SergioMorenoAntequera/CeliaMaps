@@ -488,11 +488,6 @@
             });
 
             function createStreet(lat, lng) {
-                //
-                let newMark = L.marker([lat, lng],{icon: markerImage});    // Creating a Marker
-                        newMark.addTo(map); // Adding marker to the map
-                //
-
                 // Create form attributes
                 $("#modal-form").attr("action", "{{route('street.store')}}");
                 $("input[name='_method']").val("POST");
@@ -509,7 +504,7 @@
                 $("#btn-position").prop("disabled", true);
                 $("#btn-position").css("display", "none");
                 $('#modal').modal('show');
-                /* Add marker to the map when use ajax to insert
+                /* Add marker to the map when we use ajax to insert
                 $("#btn-submit").click(function(){
                     let newMark = L.marker([lat, lng],{icon: markerImage});    // Creating a Marker
                     newMark.addTo(map); // Adding marker to the map
