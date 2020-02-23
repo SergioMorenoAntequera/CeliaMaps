@@ -33,7 +33,8 @@
                         <div>
                             {{$map->description}}
                         </div> 
-                          <img src="/img/maps/{{$map->image}}" alt="...">
+                          <img src="D:/laragon/www/CeliaMaps/public/img/maps/{{$map->image}}"  alt="...">
+                        
                         @endforeach
                     </div>
 

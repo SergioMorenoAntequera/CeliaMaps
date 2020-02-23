@@ -14,18 +14,17 @@ use PDF;
 
 class SearchController extends Controller
 {
-    public function index()
-    {
+    // MUESTRA EL LISTADO DE LAS CALLES CON EL BUSCADOR ///////////////////////////
+    public function index()    {
 
         $streets = Street::all();
         $maps = Map::all();
         $types = StreetType::all();
         return view('search/searchStreet', ['streets' => $streets, 'maps' => $maps, 'types' => $types]);
     }
-
+    // PARA QUE FUNCIONE EL BUSCADOR //////////////////////////////////////////////
     public function search(Request $request)
     {
-
         $data = $request->text; // lo que escribimos en la caja de texto de la vista
         //id, name, type
         $data = DB::table('streets')
@@ -34,17 +33,17 @@ class SearchController extends Controller
             ->where('streets.name', 'like', '%' . $data . '%')->take(10)->get();
         return response()->json($data);
     }
+    // MUESTRA LA VISTA PREVIA DEL PDF, ES SÓLO PARA PROBARLO /////////////////////////
     public function show($id){
 
         $street = Street::find($id);        
         $street_type = StreetType::all();       
         $map = Map::all();
-        return view('search/informeImprimir', array('street' => $street, 'street_type' => $street_type, 'map' => $map));
-       
+        return view('search/informeImprimir', array('street' => $street, 'street_type' => $street_type, 'map' => $map));       
     }
+    // PARA CREAR EL PDF /////////////////////////////////////////////////////////////
     public function download($id)
     {
-
         $street = Street::find($id);        
         $street_type = StreetType::all();       
         $map = Map::all();
@@ -53,14 +52,12 @@ class SearchController extends Controller
         //return $pdf->download('Informe.pdf');
         return $pdf->stream('Informe.pdf');
     }
+    // MUESTRA LA VISTA DE LA CALLE SELECCIONADA //////////////////////////////////////
     public function inform($id)
     {
-        $street = Street::find($id);
-        //dd($street);
-        $street_type = StreetType::all();
-        //dd($street_type);
-        $map = Map::all();
-        //dd($map);
+        $street = Street::find($id);        
+        $street_type = StreetType::all();       
+        $map = Map::all();      
 
         return view('search/informe', array('street' => $street, 'street_type' => $street_type, 'map' => $map));
     }

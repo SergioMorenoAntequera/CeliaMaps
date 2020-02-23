@@ -10,9 +10,8 @@ use Illuminate\Support\Facades\Hash;
 use App\User;
 
 class UserController extends Controller
-{
-    
-
+{  
+    // CON EL CONSTRUCTOR IMPEDIMOS QUE ENTRE QUIEN NO ESTÉ LOGUEADO /////////////
     public function __construct(){
     //$this->middleware("auth")->only("create","edit","destroy");
     }
@@ -23,6 +22,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // LISTADO DE USUARIOS /////////////////////////////////////////////////////////
     public function index()
     {
         $userList = User::all();
@@ -35,6 +35,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // VISTA DEL FORMULARIO DE USUARIOS  /////////////////////////////////////////////
     public function create()
     {
         return view('user/form');
@@ -51,6 +52,7 @@ class UserController extends Controller
      * AÑADIR EL HASH:MAKE A LA PASSWORD
 
      */
+    // PARA INSERTAR NUEVOS USUARIOS ////////////////////////////////////////////////
     public function store(Request $r)
     {
        $user = new User();
@@ -84,6 +86,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // VISTA DEL FORMULARIO DE USUARIOS PERSONALIZADO PARA LA EDICIÓN ///////////////////////
     public function edit($id)
     {
         $user = User::find($id);
@@ -102,9 +105,9 @@ class UserController extends Controller
      * SI EL CAMPO PASSWORD ESTÁ VACIO EN EL FORMULARIO DE EDICIÓN DE USUARIO, LA PASSWORD
      * NO SE MODIFICA, ES DECIR, TOMA EL VALOR DE $clave.
      */
+    // PARA MODIFICAR USUARIOS ///////////////////////////////////////////////////////////////
     public function update(Request $r,$id)
-    {
-       
+    {       
         $user = User::find($id);
 
         $clave = $user->password;    
@@ -117,12 +120,9 @@ class UserController extends Controller
             $user->password = Hash::make($r->password);    ;
         }
         $user->level = $r->level;
-        $user->save();
-
-       
+        $user->save();       
         //return Response()->json(['success'=>'modificado con exito']);
         return redirect()->route('user.index');
-
     }
 
     /**
@@ -131,6 +131,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // BORRADO DE USUARIOS //////////////////////////////////////////////////////////////////
     public function destroy($id)
     {
        $user = User::find($id);
