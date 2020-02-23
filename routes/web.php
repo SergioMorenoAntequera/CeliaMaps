@@ -17,6 +17,7 @@
 Route::get('/test', function () {
     return view('test');
 });
+Route::get('/login', 'HomeController@login')->name('home.login');
 
 // MAPS /////////////////////////////////////////////////////////////////////////////////////
 Route::get('/', 'MapController@map')->name('map.map');
