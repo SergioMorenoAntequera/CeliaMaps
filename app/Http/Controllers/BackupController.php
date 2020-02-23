@@ -17,12 +17,12 @@ class BackupController extends Controller
         //$this->middleware("auth")->only("create", "restore");
     }
 
-  //////////////////////////// VISTA DONDE SE UBICAN LOS CONTROLES DEL BACKUP, POR AHORA //////////////////////////// 
+  //////////////////////////// VISTA DONDE SE UBICAN LOS CONTROLES DEL BACKUP, POR AHORA //////////
    public function index(){
        
        return view('backup.index');
    }
-   ///////////////////////////////// CREAR COPIA DE SEGURIDAD ////////////////////////////
+   ///////////////////////////////// CREAR COPIA DE SEGURIDAD ///////////////////////////////////
     public function create(){
 
         $dbhost = env('DB_HOST');
@@ -35,12 +35,11 @@ class BackupController extends Controller
         $command = "$mysqldump > mysqldump -h $dbhost -u $dbuser $dbname > $backup"; 
         
         system($command); 
-        
-        return view('map/index');
-    }
-      
-    //////////////////////////////// RESTAURAR COPIA DE SEGURIDAD /////////////////////////////
 
+        //redirigir al backend        
+        //return view('map/index');
+    }      
+    //////////////////////////////// RESTAURAR COPIA DE SEGURIDAD /////////////////////////////
     public function restore(){
                 
         $dbhost = env('DB_HOST');
