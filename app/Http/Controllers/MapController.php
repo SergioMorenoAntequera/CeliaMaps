@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Map;
 use App\Street;
+use App\MapStreet;
 use DB;
 
 
@@ -107,6 +108,7 @@ class MapController extends Controller
      * @return View
      */
     public function store(Request $r){
+        
         $r->validate([
             'title' => 'required|unique:maps',
             'date' => 'required|numeric|min:0|max:'.date("Y").'',
@@ -115,10 +117,32 @@ class MapController extends Controller
             'city' => 'nullable|string',
             'miniature' => 'nullable|image',
         ]);
-
+        
         $map = new Map($r->all());
         $map->id = Map::max('id') + 1;
         $map->level = Map::max('level') + 1;
+
+        //Herencia de calles de otro mapa
+        if($r->inherit != "Ninguno"){
+            $mapToInherit = DB::table('maps')->where('title', 'like',  $r->inherit)->first(); 
+            $mapToInherit = Map::find($mapToInherit->id);
+
+            $streets = $mapToInherit->streets->toArray();
+
+            foreach ($streets as $mapStreet) {
+                $mapStreet = DB::table('maps_streets')
+                        ->where('street_id', $mapStreet['id'])
+                        ->where('map_id', $mapToInherit->id)->first();
+                $info = MapStreet::find($mapStreet->id);
+
+                $newMapsStreet = new MapStreet();
+                $newMapsStreet->id = MapStreet::max('id') + 1;
+                $newMapsStreet->street_id = $info->street_id;
+                $newMapsStreet->map_id = $map->id;
+                
+                $newMapsStreet->save();
+            }
+        }
 
         //Now that we have to have a image we want it or not
         $file = $r->file('image');
@@ -182,6 +206,8 @@ class MapController extends Controller
         $map->miniature = $fileName;
         $map->image = $fileName;
     
+        
+
         $map->save();
         return redirect(route('map.align', $map->id));
     }

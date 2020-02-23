@@ -63,7 +63,10 @@
                     <div class="showMore noselect mt-3">
                         <p><i class="fa fa-caret-right"></i> Heredar calles de otro mapa </p>
                     </div>
-                    <div class="more" style="display: none;">
+                    <div class="more" style="display: none; max-height: 500px">
+                        {{-- Campo invisible que vamos actualizando para enviar el mapa del que heredar --}}
+                        <input id="inherateInput" type="hidden" name="inherit" value="Ninguno">
+
                         <div class="row ml-1 mr-1">
                             <div id="mapsList" class="col-4 border-right border-success">
                                 <p><b> Listado de Mapas </b></p> 
@@ -73,7 +76,7 @@
                                 @endforeach
                             </div>
                             <div class="col-8">
-                                <p><b> Listado de Calles </b></p> 
+                                <p><b> Calles que se heredarán </b></p> 
                                 <div id="streetsList">
                                     <p> Selecciona el nombre de un mapa a la izquierda para ver sus calles y heredarlas </p>
                                 </div>
@@ -82,6 +85,7 @@
                                 $(".mapToInherit").on("click", function(){
                                     $("#mapsList .selected").removeClass("selected");
                                     $(this).addClass("selected");
+                                    $("#inherateInput").val($(this).text().trim());
                                     
                                     if($(this).text().includes("Ninguno")){
                                         $("#streetsList").empty();
@@ -90,7 +94,8 @@
                                     }
 
                                     var url = window.location.href.replace("create", "streets");
-
+                                    
+                                    //Petición ajax para recuperar las calles de los mapas
                                     $.ajax({
                                         type: 'GET',
                                         url: url,
@@ -111,17 +116,6 @@
                                 });
                             </script>
                         </div>
-                        {{-- <div>
-                            <div class="leftPanel" style="padding: 30px">
-                                <p><b> Listado de Mapas </b></p> 
-                                <div class="mt-2 ml-4">
-                                   
-                                </div>
-                            </div>
-                            <div class="rightPanel">
-                                <p><b> Listado de calles </b></p> 
-                            </div>
-                        </div> --}}
                     </div>
 
                     <script>
