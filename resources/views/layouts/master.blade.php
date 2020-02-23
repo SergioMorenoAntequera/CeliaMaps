@@ -99,13 +99,13 @@
                                 <div class="line"></div>
                                 <a href="{{route('user.index')}}"><li>Indice</li></a>
                                 <a href="{{route('user.create')}}"><li>Insertar</li></a>
-                                <a href="{{route('user.index')}}"><li>Modificar</li></a>
-                                <a href="{{route('user.index')}}"><li>Elminar</li></a>
+                                <a href="{{route('user.index')}}"><li></li></a>
+                                <a href="{{route('user.index')}}"><li></li></a>
                             </div>
                         </div>
 
                         <div class="lateralMenuElement">
-                            <a class="lateralMenuLink" href="{{route('backup.index')}}">
+                            <a class="lateralMenuLink" href="">
                             <li class="lateralMenuImg">
                                 <img src="{{url('img/icons/database.svg')}}" class="img-fluid">
                             </li>
@@ -126,12 +126,12 @@
                             </li>
                             </a>
                             <div class="lateralExpandMenu">
-                                <b> Reporte </b>
+                                <b> Informes </b>
                                 <div class="line"></div>
-                                <a href=""><li>No sé</li></a>
-                                <a href=""><li>Que Poner</li></a>
-                                <a href=""><li>Aquí</li></a>
-                                <a href=""><li>jeje</li></a>
+                                <a href="{{route('search.index')}}"><li>Generar informe</li></a>
+                                <a href=""><li></li></a>
+                                <a href=""><li></li></a>
+                                <a href=""><li></li></a>
                             </div>
                         </div>
                     </ul>

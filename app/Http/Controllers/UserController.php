@@ -120,8 +120,8 @@ class UserController extends Controller
         $user->save();
 
        
-        return Response()->json(['success'=>'modificado con exito']);
-        // return redirect()->route('user.index');
+        //return Response()->json(['success'=>'modificado con exito']);
+        return redirect()->route('user.index');
 
     }
 

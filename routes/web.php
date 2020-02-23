@@ -50,6 +50,7 @@ Route::get('search/index', 'SearchController@index')->name('search.index');
 Route::post('search', 'SearchController@search')->name('search.search');
 Route::get('search/download/{id}', 'SearchController@download')->name('search.download');
 Route::get('search/inform/{id}', 'SearchController@inform')->name('search.inform');
+Route::get('search/show/{id}', 'SearchController@show')->name('search.show');
 // PDF /////////////////////////////////////////////////////////////////////////////////////////////
 //Route::get('pdf/ver', 'PdfController@ver')->name('pdf.ver');
 //Route::get('pdf/download', 'PdfController@download')->name('pdf.download');
