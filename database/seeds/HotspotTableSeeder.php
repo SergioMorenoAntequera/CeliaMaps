@@ -94,5 +94,15 @@ class HotspotTableSeeder extends Seeder
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
+        DB::table('hotspots')->insert([    
+            
+            'image' => 'puertaPurchena.png',
+            'title' => 'Estadio Municial Juan Rojas',
+            'description' => 'El primer estadio que he pillao',
+            'lat' => 36.862102782722665,
+            'lng' => -2.4453914165496826,
+            'created_at' => date('Y-m-d H-m-s'),
+            'updated_at' => date('Y-m-d H-m-s'),
+        ]);
     }
 }

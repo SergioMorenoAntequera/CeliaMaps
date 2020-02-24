@@ -234,37 +234,22 @@
                         c = 0;
                         hotspots.forEach(hotspot => {
                             if(hotspot.title.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
-                                $('#streetsFound').append("<div kind='hotspot' index='" + c + "' class='street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ hotspot.title + "</div>");
+                                $('#streetsFound').append("<div class='street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ hotspot.title + "</div>");
                                 if(c++ == 5){
                                     return;
                                 }  
                             }
                         });
-                        
                         c = 0;
                         streets.forEach(street => {
                             if(street.name.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
-                                $('#streetsFound').append("<div kind='street' index='" + c + "' class='street'> <img style='width:5%;' src='{{url('img/icons/token-selected.svg')}}'>"+ street.fullName + "</div>");
+                                $('#streetsFound').append("<div class='street'> <img style='width:5%;' src='{{url('img/icons/token-selected.svg')}}'>"+ street.fullName + "</div>");
                                 if(c++ == 5){
                                     return;
                                 }                                
                             }
                         });
                     }
-
-                    $('#streetsFound').on('click', '.street', function(){
-                        var lat, lng;
-                        if($(this).attr("kind") == "hotspot"){
-                            lat = hotspots[$(this).attr("index")].lat;
-                            lng = hotspots[$(this).attr("index")].lng;
-                        }
-                        if($(this).attr("kind") == "street"){
-                            lat = streets[$(this).attr("index")].lat;
-                            lng = streets[$(this).attr("index")].lng;
-                        }
-                        console.log("Latitude: " + lat + " // Longitude: " + lng);
-                        $('#streetsFound').empty();
-                    });
                 </script>
 
             </div>
@@ -371,6 +356,28 @@
                     }, 300);
                 }
             });
+        });
+
+        $('#streetsFound').on('click', '.street', function(){
+            var lat, lng;
+            hotspots.forEach(hotspot => {
+                if($(this).text().trim() == hotspot.title){
+                    lat = hotspot.lat;
+                    lng = hotspot.lng;
+                    return;
+                }
+            });
+            streets.forEach(street => {
+                console.log(street);
+                if($(this).text().trim() == street.fullName){
+                    lat = street.lat;
+                    lng = street.lng;
+                    return;
+                }
+            });
+            map.setView([lat, lng], 18);
+
+            $('#streetsFound').empty();
         });
     </script>
 </body>
