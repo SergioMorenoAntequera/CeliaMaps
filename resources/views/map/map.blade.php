@@ -176,60 +176,97 @@
             <div id="searchContent">
                 {{-- div donde se mostrarán todas las calles --}}
                 <div id="streetsFound">
+                    
                     {{-- <div class="street"> 
                         test
                     </div> --}}
                 </div>
 
                 <script>
-                    //We prepare the url for ajax
-                    var url = window.location.href + "map/search";
-                    //We prepare  the arrays of data that we will recieve
-                    var streets = []; 
+                    // ************************************************
+                    // CODIGO DE LA BARRA DE BSUCAR CALLES Y HOTSPOTS 
+                    // ************************************************
+                    //tHE VARIABLES TAHT WE ARE GONNA USE ALONG THE PROGRAM
+                    //We will fill this in the ajax request
+                    var streets = [];
                     var hotspots = [];
-                    //If we put data inside the input
-                    $("#streetsInput").on("input", function(e){
-                        //We get the text in the box
-                        var text = $(this).val();
-                        //Me da palo escribir inglés
-                        //Si es el primero o cada 3 hacemos una petición ajax
-                        //para evitar sobrecargar la base de datos
-                        if(text.length > 0){
-                            //Petición ajax, mandamos el texto de la caja
+                    //When we first click in the search bar (AJAX)
+                    $("#streetsInput").on("focusin", function(e){
+                        if($(this).val().length == 0){
+                            var url = window.location.href + "map/search";
                             $.ajax({
                                 type: 'GET',
                                 url: url,
-                                data: { text : text },
+                                // data: { text : text },
                                 success: function(data) {
-                                    //Nos devuelve un array con los elementos que contengan ese aspecto
-                                    //Quitramos lo que ya tenemos
-                                    $('#streetsFound .street').remove();
-
-                                    //Guardamos las cosas en los arrays por comodidad
-                                    var hotspots = data.hotspots;
-                                    var streets = data.streets;
-
-                                    //Ponemos los hotspots primero aquí y si es más de 4 en hidden
-                                    for(var i = 0; i < hotspots.length; i++){
-                                        // if(i < 4){
-                                            $('#streetsFound').append("<div class='street'>"+hotspots[i].title +"</div>");
-                                        // }
-                                    }
+                                    $('#streetsFound').empty();
+                                    streets = [];
+                                    hotspots = [];
                                     
-                                    //Ponemos las calles después aquí y si es más de 4 en hidden
-                                    for(var i = 0; i < streets.length; i++){
-                                        // if(streets.length <= 4 || i < 4){
-                                            $('#streetsFound').append("<div class='street'>"+streets[i].type.name + " " + streets[i].name +"</div>");
-                                        // }
-                                    }
+                                    data.streets.forEach(street => {
+                                        street.fullName = street.typeName + " " + street.name;
+                                        streets.push(street);
+                                    });
+                                    hotspots = data.hotspots;
                                 },
                             }); // FIN AJAX
-                        //If there is nothing in the bar we remove everything
-                        } else if(text.length == 0){
-                            $('#streetsFound .street').remove();
+                        } else {
+                            lookByText();
                         }
                     });
+
+                    // When we look for something we remove options depending of
+                    // the text in the box looking inside the first ajax request
+                    $("#streetsInput").on("input", function(e){
+                        $('#streetsFound').empty();
+                        if($(this).val().length != 0)
+                            lookByText();
+                    });
+
+                    // We hide everything when we unfocus
+                    $("#streetsInput").on("focusout", function(e){
+                        console.log($(".streetsMenu").is(":focus"));
+                        // $('#streetsFound').empty();
+                    });
+
+                    // Auxiliar function
+                    function lookByText(){
+                        c = 0;
+                        hotspots.forEach(hotspot => {
+                            if(hotspot.title.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
+                                $('#streetsFound').append("<div kind='hotspot' index='" + c + "' class='street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ hotspot.title + "</div>");
+                                if(c++ == 5){
+                                    return;
+                                }  
+                            }
+                        });
+                        
+                        c = 0;
+                        streets.forEach(street => {
+                            if(street.name.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
+                                $('#streetsFound').append("<div kind='street' index='" + c + "' class='street'> <img style='width:5%;' src='{{url('img/icons/token-selected.svg')}}'>"+ street.fullName + "</div>");
+                                if(c++ == 5){
+                                    return;
+                                }                                
+                            }
+                        });
+                    }
+
+                    $('#streetsFound').on('click', '.street', function(){
+                        var lat, lng;
+                        if($(this).attr("kind") == "hotspot"){
+                            lat = hotspots[$(this).attr("index")].lat;
+                            lng = hotspots[$(this).attr("index")].lng;
+                        }
+                        if($(this).attr("kind") == "street"){
+                            lat = streets[$(this).attr("index")].lat;
+                            lng = streets[$(this).attr("index")].lng;
+                        }
+                        console.log("Latitude: " + lat + " // Longitude: " + lng);
+                        $('#streetsFound').empty();
+                    });
                 </script>
+
             </div>
         </div>
     </div>

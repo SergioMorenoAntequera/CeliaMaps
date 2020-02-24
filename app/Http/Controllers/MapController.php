@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Map;
 use App\Street;
+use App\Hotspot;
 use App\MapStreet;
 use DB;
 
@@ -421,58 +422,73 @@ class MapController extends Controller
      * @param id
      * @return View
      */
-    public function search(Request $r){
+    public function search(/* Request $r */){
+
+        $streets = Street::all();
+        foreach ($streets as $street) {
+            $street->typeName = $street->type->name;
+            $street->lat = $street->points[0]->lat; 
+            $street->lng = $street->points[0]->lng; 
+        }
+
+        $hotspots = HotSpot::all();
+        
+        return response()->json([
+            'streets'=>$streets,
+            'hotspots'=>$hotspots,
+        ]);
+
         //We have to look for the street name/type
         // $r->text = "ave med";
-        $wordsAux = explode(" ", trim($r->text));
-        $words = Array();
-        foreach ($wordsAux as $word) {
-            if($word != "") {
-                $words[] = $word;
-            }
-        }
-        $streetsFound = Array();
+        // $wordsAux = explode(" ", trim($r->text));
+        // $words = Array();
+        // foreach ($wordsAux as $word) {
+        //     if($word != "") {
+        //         $words[] = $word;
+        //     }
+        // }
+        // $streetsFound = Array();
         
-        // Tipos de calles que hemos concontrado
-        $typesFound = Array();
-        //Recorremos las palabras
-        for ($i = 0; $i < sizeof($words); $i++) {
-            //Buscamos por un tipo que contenga esa palabra
-            $auxTypes = DB::table('street_types')->where('name', 'like', '%'.$words[$i].'%')->get()->toArray();
-            //Miramos a ver si encuentra o si ya lo hemos añadido
-            if(sizeof($auxTypes) != 0 && !in_array($auxTypes[0], $typesFound)){
-                $typesFound[] = $auxTypes[0];
-                // Si no, buscamos las calles que se correspondan
-                $aux = DB::table('streets')->where('type_id', $auxTypes[0]->id)->get()->toArray();
-                // Por cada calle que encuentre de ese tipo lo añadimos
-                foreach ($aux as $street) {
-                    // Comprobamos que no la añada si ya está
-                    if(!in_array($street, $streetsFound)){
-                        $street->type = DB::table('street_types')->where('id', $street->type_id)->first();
-                        $streetsFound[] = $street;    
-                    }
-                }
-            }
+        // // Tipos de calles que hemos concontrado
+        // $typesFound = Array();
+        // //Recorremos las palabras
+        // for ($i = 0; $i < sizeof($words); $i++) {
+        //     //Buscamos por un tipo que contenga esa palabra
+        //     $auxTypes = DB::table('street_types')->where('name', 'like', '%'.$words[$i].'%')->get()->toArray();
+        //     //Miramos a ver si encuentra o si ya lo hemos añadido
+        //     if(sizeof($auxTypes) != 0 && !in_array($auxTypes[0], $typesFound)){
+        //         $typesFound[] = $auxTypes[0];
+        //         // Si no, buscamos las calles que se correspondan
+        //         $aux = DB::table('streets')->where('type_id', $auxTypes[0]->id)->get()->toArray();
+        //         // Por cada calle que encuentre de ese tipo lo añadimos
+        //         foreach ($aux as $street) {
+        //             // Comprobamos que no la añada si ya está
+        //             if(!in_array($street, $streetsFound)){
+        //                 $street->type = DB::table('street_types')->where('id', $street->type_id)->first();
+        //                 $streetsFound[] = $street;    
+        //             }
+        //         }
+        //     }
 
-            //Busamos por un nombre que contenga esa palabra
-            $auxNames = DB::table('streets')->where('name', 'like', '%'.$words[$i].'%')->get()->toArray();
-            foreach ($auxNames as $street) {
-                $street->type = DB::table('street_types')->where('id', $street->type_id)->first();
-                if(!in_array($street, $streetsFound)){
-                    $streetsFound[] = $street;
-                }
-            }
-        }
+        //     //Busamos por un nombre que contenga esa palabra
+        //     $auxNames = DB::table('streets')->where('name', 'like', '%'.$words[$i].'%')->get()->toArray();
+        //     foreach ($auxNames as $street) {
+        //         $street->type = DB::table('street_types')->where('id', $street->type_id)->first();
+        //         if(!in_array($street, $streetsFound)){
+        //             $streetsFound[] = $street;
+        //         }
+        //     }
+        // }
         
         
-        // dd($streetsFound);
-        //And then in the hotspot title
-        $hotSpotsFound = DB::table('hotspots')->where('title', 'like', '%'.$r->text.'%')->get();
-        // dd($streetsFound[0]->type);
-        return response()->json([
-            'streets'=>$streetsFound,
-            'hotspots'=>$hotSpotsFound,
-        ]);
+        // // dd($streetsFound);
+        // //And then in the hotspot title
+        // $hotSpotsFound = DB::table('hotspots')->where('title', 'like', '%'.$r->text.'%')->get();
+        // // dd($streetsFound[0]->type);
+        // return response()->json([
+        //     'streets'=>$streetsFound,
+        //     'hotspots'=>$hotSpotsFound,
+        // ]);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
