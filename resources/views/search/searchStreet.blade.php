@@ -62,7 +62,9 @@
         var id; 
        
         console.log(elNombreDelaCalle)
-
+        // Capturamos en la variable la ruta generada por blade
+        let url = "{{url("search/inform")}}";
+        console.log(url);
           if(($('#cajaTexto').val().length)>=3){
 
             $.ajax({
@@ -76,8 +78,8 @@
                     id = response[i].id;
                     console.log(id);
                     //cuando haga el enlace hay qu incluir el a href en el append, igual que he metido el br 
-                                  
-                    $("#resultado").append('<a href="http://celiamaps.test/search/inform/'+response[i].id+'">' + response[i].name + ' ' + response[i].street_name + '</a></br>');
+                    // Usamos la variable url generada al cargar la página para crear la dirección del enlace
+                    $("#resultado").append('<a href='+url+"/"+response[i].id+'>' + response[i].name + ' ' + response[i].street_name + '</a></br>');
                     
                     } 
                 },
