@@ -174,7 +174,8 @@ los formularios y seguramente algo más, pa quién lo quiera */
 .leftPanel .bUp { position: absolute; left: 15%; top: 5%;}
 .mapToInherit:hover { cursor: pointer; color: #3ab398; }
 .selected {color: #3ab398; font-weight: bold;}
-#streetsList {  }
+#mapsList { max-height: 450px; overflow-y: auto; }
+#streetsList { max-height: 450px; overflow-y: auto; }
 
 /* Boton para añadir registros y tal */
 #addButton{

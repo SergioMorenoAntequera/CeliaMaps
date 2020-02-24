@@ -3,51 +3,69 @@
 @section('title', 'Celia Maps')
 
 @section('header')
+
 @endsection
 
 @section('content')
-<h3>informe situación calle</h3>
-    <div class="container">
-       
-        @isset($street)
-        <div class="wholePanel">
-           <div class="leftPanel width:60%" style="background-color:#FFFACD!important">
-                @foreach ($street->maps as $map)
-                    <img src="{{$map->image}}" alt="">  
-                @endforeach     
-           </div>          
+<h3 style="text-align:center;">Informe situación calle</h3>
+<div class="container">
 
-      
-            <div class="rightPanel">
-                <div class="row col-4">
-                    nombre calle
-                </div>
-                        
-                <div class="row col-4">
-                    {{$street->type->name }} &nbsp; {{$street->name}}
-                </div>
-                    mapa al que pertenece
-                
-                    @foreach ($street->maps as $map)
-                    <div class="row">
-                        {{$map->title}}
-                    </div>
-                    <div class="row">
-                        {{$map->description}} 
-                    </div>
-                @endforeach
-                <div class="row col-2 float-right">
-                    <!-- AQUÍ PONGO EL BOTÓN DE PDF -->
-                    <a href="{{route('search.download', $street->id)}}">
-                        <button type="button" class="btn btn-success">PDF</button>
-                    </a>
-                </div>
+    @isset($street)
+    <div class="wholePanel">
+        <!-- PANEL IZQUIERDO, POR  AHORA NO INCLUIMOS IMAGEN, MÁS QUE NADA, PORQUE NO CABE //////////////////////////////////////////// -->
+        <div class="leftPanel" style="width:60%;">
+            Aquí iba el mapa, pero no cabe.....
+            @foreach ($street->maps as $map)
+            <!-- <img src="/img/maps/{{$map->image}}" alt="..."> -->
+            @endforeach
+        </div>
+        <!-- FIN DE PANEL IZQUIERDO //////////////////////////////////////////// -->
 
-            </div>  
-                    
+        <!-- PANEL DERECHO //////////////////////////////////////////// -->
+        <div class="rightPanel">
+            <h4>Impresión de Informes</h4>
+            <div>
+                {{$street->type->name }} {{$street->name}}
             </div>
-        @endisset
-    </div> 
-    
- @endsection
- 
+           
+            <div>
+                @foreach($street->maps as $map)
+                    <div>
+                        <h5>Se encuentra en el mapa:</h5>
+                    </div> 
+                    <div>
+                        {{$map->title}}
+                    </div> 
+                    <div>
+                        <h5>Descripción del mapa</h5>
+                    </div> 
+                    <div>
+                        {{$map->description}}
+                    </div> 
+                    
+                @endforeach
+            </div>
+        <!-- BOTONES //////////////////////////////////////////// -->
+            <div class="row col-2 float-left">
+                <!-- sólo de prueba, para visualizar el informe -->
+                <a href="{{route('search.show', $street->id)}}">
+                    <button type="button" class="btn btn-success">ver</button>
+                </a>
+            </div>
+
+
+            <div class="row col-2 float-right">
+                <!-- AQUÍ PONGO EL BOTÓN DE PDF -->
+                <a href="{{route('search.download', $street->id)}}">
+                    <button type="button" class="btn btn-success">PDF</button>
+                </a>
+            </div>
+        <!-- FIN DE BOTONES  //////////////////////////////////////////// -->
+     
+        </div>
+        <!-- FIN DE PANEL DERECHO //////////////////////////////////////////// -->
+    </div>
+    @endisset
+</div>
+
+@endsection
