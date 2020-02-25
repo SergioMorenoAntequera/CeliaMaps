@@ -15,7 +15,6 @@ class CreateHotspotsTable extends Migration
     {
         Schema::create('hotspots', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('image', 250)->nullable();
             $table->string('title', 50);
             $table->string('description', 1600);
             $table->decimal('lat', 10, 8);
@@ -32,5 +31,5 @@ class CreateHotspotsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('hotspots');
-    }
+    }   
 }

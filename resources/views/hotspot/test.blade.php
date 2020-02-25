@@ -307,7 +307,7 @@
         </div>
 
         <div id="preview" class="card" style="max-height: 245px">
-            <img src="{{url('img/hotspots/puerta-purchena-img-01.jpg')}}" alt="Hotspot Preview" style="width:286px; max-heigth:180px">
+            <img id="previewImage" src="{{url('img/hotspots/')}}" alt="Hotspot Preview" style="width:286px; max-heigth:180px">
             <div class="card-body" style="color: black">
               <h4 id="previewTitle"><b></b></h4> 
             </div>
@@ -400,6 +400,11 @@
             @isset($hotspots)
                 // Hotspots php array conversion to js
                 let hotspots = @json($hotspots);
+                // Hotspots images relationships
+                @for ($i=0;$i<count($hotspots);$i++) 
+                    hotspots[{{$i}}].images =  @json($hotspots[$i]->images);
+                @endfor
+                console.log(hotspots)
                 // Mark icon design
                 var markerImage = L.icon({
                     iconUrl: "{{url('img/icons/token.svg')}}",
@@ -448,7 +453,9 @@
             });   
             
             // Edit Hotspot
-            $('.leaflet-marker-icon').on('click', function(){
+            $('.leaflet-marker-icon').on('click', function(e){
+                // Propagation event Edit, click on map
+                e.stopPropagation();
                 $("#modal-form").attr("action", "{{route('hotspot.store')}}/"+this.alt);
                 $("input[name='_method']").val("PUT");
                 let hotspot;
@@ -489,7 +496,6 @@
                     if(hotspots[i].id == this.alt)
                         hotspot = hotspots[i];
                 }
-                console.log(hotspot);
 
                 // Coordinates mouse
                 $('.leaflet-marker-icon').mousemove(function(event){
@@ -501,6 +507,10 @@
                 $("#preview").css({top: latPreview, left: lgnPreview});
                 });
                 $("#previewTitle").text(hotspot.title);
+                console.log(hotspot);
+                console.log(hotspot.images[0].file_name);
+                $("#previewImage").attr("src", $("#previewImage").attr("src")+hotspot.images[0].file_name);
+                
             }, function(){
                 $('#preview').attr('style', 'display: none !important');
 

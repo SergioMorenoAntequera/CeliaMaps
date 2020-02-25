@@ -97,15 +97,25 @@
                             <div class="lateralExpandMenu">
                                 <b> Users </b>
                                 <div class="line"></div>
+                                <?php if(auth()->guard()->check()): ?>                               
+                                     <!-- INCLUYO AQUÍ LA RUTA DEL LOGOUT DE LARAVEL PARA QUE NO PASE POR LA PÁGINA OFICIAL,
+                                    SINO QUE VAYA DIRECTAMENTE A LA PÁGINA PRINCIPAL --> 
+                                    <a href=""
+                                    onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">Logout</a>                               
+                                <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+                                    <?php echo csrf_field(); ?>
+                                </form>
+                                <?php else: ?>                                 
+                                    <a href="<?php echo e(route('login')); ?>">Login</a>                                
+                                <?php endif; ?>                                
                                 <a href="<?php echo e(route('user.index')); ?>"><li>Indice</li></a>
-                                <a href="<?php echo e(route('user.create')); ?>"><li>Insertar</li></a>
-                                <a href="<?php echo e(route('user.index')); ?>"><li>Modificar</li></a>
-                                <a href="<?php echo e(route('user.index')); ?>"><li>Elminar</li></a>
+                                <a href="<?php echo e(route('user.create')); ?>"><li>Insertar</li></a>                                
+                                <a href="<?php echo e(route('user.index')); ?>"><li></li></a>
                             </div>
                         </div>
-
                         <div class="lateralMenuElement">
-                            <a class="lateralMenuLink" href="<?php echo e(route('backup.index')); ?>">
+                            <a class="lateralMenuLink" href="">
                             <li class="lateralMenuImg">
                                 <img src="<?php echo e(url('img/icons/database.svg')); ?>" class="img-fluid">
                             </li>
@@ -126,12 +136,12 @@
                             </li>
                             </a>
                             <div class="lateralExpandMenu">
-                                <b> Reporte </b>
+                                <b> Informes </b>
                                 <div class="line"></div>
-                                <a href=""><li>No sé</li></a>
-                                <a href=""><li>Que Poner</li></a>
-                                <a href=""><li>Aquí</li></a>
-                                <a href=""><li>jeje</li></a>
+                                <a href="<?php echo e(route('search.index')); ?>"><li>Generar informe</li></a>
+                                <a href=""><li></li></a>
+                                <a href=""><li></li></a>
+                                <a href=""><li></li></a>
                             </div>
                         </div>
                     </ul>

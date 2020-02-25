@@ -19,6 +19,7 @@ class CreateImagesTable extends Migration
             $table->string('description')->nullable();
             $table->string('file_name');
             $table->string('file_path');
+            $table->integer('hotspot_id');
             $table->timestamps();
         });
     }
