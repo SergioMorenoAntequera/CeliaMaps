@@ -425,6 +425,7 @@
             var markersList = new Array();
             var dragging = false;
             // Check saved streets
+            
             @isset($streets)
                 // Streets php array conversion to js array
                 let streets = @json($streets);
@@ -436,7 +437,6 @@
                 @for ($i=0;$i<count($streets);$i++) 
                     streets[{{$i}}].points =  @json($streets[$i]->points[0]);
                 @endfor
-
                 // Write saved streets
                 @foreach ($streets as $street)
                     // Creating a Marker
@@ -523,10 +523,41 @@
                 $("#modal-lng").val(street.points.lng);
                 $(".modal-body #id").val(street.id);
 
-                //console.log(street);
                 
-                // fill streets maps
+                // Fill alternatives names
+                console.log(street);
+                let mapsList = $("input[name='maps_name[]']");
+                for (let i = 0; i < street.maps.length; i++) {
+                    let alternative_name = street.maps[i].pivot.alternative_name;
+                    if(alternative_name !== null)
+                        $("#input_map"+street.maps[i].id).val(alternative_name);
+                    else
+                        $("#input_map"+street.maps[i].id).val("");
+                }
+                // Fill null names
+      /*          let mapsListElements = $("input[name='maps_name[]']");
 
+                let mapsListId = new Array();
+                for (let i = 0; i < mapsList.length; i++) {
+                    mapsListId.push(mapsListElements[i].id.substring(9));
+                }
+                let belongsMaps = new Array();
+                street.maps.forEach(map => {
+                    belongsMaps.push(mapsListElements[i].id.substring(9));
+                });
+                for (let i = 0; i < street.maps.length; i++) {
+                    belongsMaps.push(mapsListElements[i].id.substring(9));
+                }
+                for (let i = 0; i < mapsListElements.length; i++) {
+                    
+                }
+
+                belongsMaps.forEach(mapId => {
+                    let alternative_name = street.maps[i].pivot.alternative_name;
+                    $("#input_map"+street.maps[i].id).val(alternative_name);
+                });
+                console.log(belongsMaps);
+*/
                 $("#modal-title").text("Editar vía");
                 // Show and enable buttons and also fill value with street id
                 $("#btn-remove").prop("disabled", false);
