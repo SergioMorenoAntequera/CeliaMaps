@@ -396,6 +396,17 @@
     {{-- HOTSPOT MANAGEMENT --}}
     <script>
         $(function(){
+            // Mark icon design
+            var markerImage = L.icon({
+                iconUrl: "{{url('img/icons/token.svg')}}",
+                iconSize:     [30, 90],
+                iconAnchor:   [15,60],
+            });
+
+            // Marker collection
+            var markersList = new Array();
+            var dragging = false;
+        
             // Saved hotspots checking
             @isset($hotspots)
                 // Hotspots php array conversion to js
@@ -405,24 +416,38 @@
                     hotspots[{{$i}}].images =  @json($hotspots[$i]->images);
                 @endfor
                 console.log(hotspots)
-                // Mark icon design
-                var markerImage = L.icon({
-                    iconUrl: "{{url('img/icons/token.svg')}}",
-                    iconSize:     [30, 90],
-                    iconAnchor:   [15,60],
-                });
 
                 // Write saved streets
                 @foreach ($hotspots as $hotspot)
-                    var marker = L.marker([{{$hotspot->lat}}, {{$hotspot->lng}}],{icon: markerImage, alt:"{{$hotspot->id}}", draggable: true});    // Creating a Marker
-                    marker.addTo(map); // Adding marker to the map
+                    // Creating a Marker
+                    var marker{{$hotspot->id}} = L.marker([{{$hotspot->lat}}, {{$hotspot->lng}}],{icon: markerImage, alt:"{{$hotspot->id}}", draggable:false});
+                    // Adding marker to the markers list
+                    markersList.push(marker{{$hotspot->id}});
+                    // Adding marker to the map
+                    marker{{$hotspot->id}}.addTo(map); 
                 @endforeach
-
             @endisset
         
 
+            // Map images click handler
+            $(".leaflet-image-layer").click(function(e){
+                // Calculate backend menu width
+                let menuWidth = screen.width * 0.05;
+                // Create leaflet point with client x/y coordinates
+                let point = L.point(e.clientX-menuWidth, e.clientY);
+                // Conversion from point to leaflet latitude longitude object
+                let latlng = map.containerPointToLatLng(point);
+                // Create modal trigger
+                createHotspot(latlng.lat, latlng.lng);
+            });
+            // Leaflet map click handler
+            map.on('click', function(e) {
+                // Create modal trigger with lat/lng coordinates
+                createHotspot(e.latlng.lat, e.latlng.lng);
+            });
+
+            /*
             // Add hotspot
-            
             map.on('click', function(e) {
                 // Handle click point
                 var lat = e.latlng.lat;
@@ -486,6 +511,114 @@
                 });
 
             });
+            */
+
+
+            // Leaflet mark click handler
+            $('.leaflet-marker-icon').on('click', function(e){
+                // Stop event bubbling to prevent map object clicks
+                e.stopPropagation();
+                // Check if clicks comes from dragging or not
+                if(dragging){
+                    // After drag turn off dragging mode
+                    dragging = false
+                }else{
+                    // Selected hotspot searching
+                    let hotspot;
+                    for (let i = 0; i < hotspots.length; i++) {
+                        if(hotspots[i].id == this.alt)
+                            hotspot = hotspots[i]; // Hotspots of array with selected hotspot comparison
+                    }
+                    // Edit modal trigger with selected hotspot
+                    editHotspot(hotspot); 
+                }
+            });
+
+            function createHotspot(lat, lng) {
+                // Create form attributes
+                $("#modal-form").attr("action", "{{route('hotspot.store')}}");
+                $("input[name='_method']").val("POST");
+                // Clear fields
+                $("input[name='title']").val("");
+                $("input[name='description']").val("");
+                // Fill position values
+                $("#modal-lat").val(lat);
+                $("#modal-lng").val(lng);
+                // Modal display
+                $("#modal-title").text("Nuevo hotspot");
+                $("#btn-remove").prop("disabled", true);
+                $("#btn-remove").css("display", "none");
+                $("#btn-position").prop("disabled", true);
+                $("#btn-position").css("display", "none");
+                $('#modal').modal('show');
+            }
+
+            function editHotspot(hotspot) {
+                // Edit form attributes
+                $("#modal-form").attr("action", "{{route('hotspot.store')}}/"+hotspot.id);
+                $("input[name='_method']").val("PUT");
+                // Fill inputs fields
+                $("input[name='title']").val(hotspot.title);
+                $("input[name='description']").val(hotspot.description);
+                // Fill hidden values
+                $("#modal-lat").val(hotspot.lat);
+                $("#modal-lng").val(hotspot.lng);
+                $(".modal-body #id").val(hotspot.id);
+                $("#modal-title").text("Editar hotspot");
+                // Show and enable buttons and also fill value with hotspot id
+                $("#btn-remove").prop("disabled", false);
+                $("#btn-remove").prop("value", hotspot.id);
+                $("#btn-remove").css("display", "initial");
+                $("#btn-position").prop("disabled", false);
+                $("#btn-position").prop("value", hotspot.id);
+                $("#btn-position").css("display", "initial");
+                // Modal display
+                $('#modal').modal('show');
+
+                // Delete hotspot button
+                $("#btn-remove").on("click", function(){
+                    $("#modal-form").attr("action", "{{route('hotspot.store')}}/"+this.value);
+                    $("input[name='_method']").val("DELETE");
+                    $('#modal').modal('hide');
+                    $('#confirmModal').modal('show');
+                    $("#btn-confirm").click(function(){
+                        $("#modal-form").submit();
+                    });
+                    $("#btn-cancel").click(function(){
+                        //$("#modal-form").attr("action", "{{route('street.store')}}/"+street.id);
+                        //$("input[name='_method']").val("PUT");
+                        $('#confirmModal').modal('hide');
+                        //$('#modal').modal('show');
+                    });
+                });
+                
+                // Replace hotspot position
+                $("#btn-position").on("click", function(){
+                    // Turn dragging variable to true to disable marker click handle
+                    dragging = true;
+                    // Search for right marker
+                    let markerId = $(".leaflet-marker-pane img[alt='"+this.value+"']")[0].alt;
+                    // Build of marker variable name
+                    let markerVarName = "marker"+markerId;
+                    // Get marker js object
+                    let leafletMarker = eval(markerVarName);
+                    // Enable marker dragging mode
+                    leafletMarker.dragging.enable();
+                    // Hide edition modal
+                    $('#modal').modal('hide');
+                    // Dragging event handle
+                    leafletMarker.on("moveend", function(){
+                        // Disable dragging mode
+                        leafletMarker.dragging.disable();
+                        // Fill new position values
+                        $("#modal-lat").val(leafletMarker.getLatLng().lat);
+                        $("#modal-lng").val(leafletMarker.getLatLng().lng);
+                        // Show again edition modal
+                        $('#modal').modal('show');
+                        // Dragging will be set to false in click event triggered later
+                    });
+                });
+            }
 
             
             // Hotspots preview
@@ -510,7 +643,7 @@
                 console.log(hotspot);
                 console.log(hotspot.images[0].file_name);
                 $("#previewImage").attr("src", $("#previewImage").attr("src")+hotspot.images[0].file_name);
-                
+
             }, function(){
                 $('#preview').attr('style', 'display: none !important');
 
