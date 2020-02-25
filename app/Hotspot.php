@@ -11,7 +11,7 @@ class Hotspot extends Model
         'title', 'description', 'lat', 'lng',
     ];
 
-    public function maps() {
-        return $this->belongsToMany('App\Map', 'hotspots_maps');
+    public function images() {
+        return $this->hasMany('App\Image');
     }
 }
