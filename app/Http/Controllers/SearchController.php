@@ -45,12 +45,15 @@ class SearchController extends Controller
     public function download($id)
     {
         $street = Street::find($id);        
-        $street_type = StreetType::all();       
+        $street_type = StreetType::all(); 
+        $data['maps']=Map::all();      
         $map = Map::all();
         $pdf = PDF::loadView('search/informeImprimir', array('street' => $street, 'street_type' => $street_type, 'map' => $map));       
 
         //return $pdf->download('Informe.pdf');
-        return $pdf->stream('Informe.pdf');
+        return $pdf->stream('Informe.pdf',$data);
+
+        
     }
     // MUESTRA LA VISTA DE LA CALLE SELECCIONADA //////////////////////////////////////
     public function inform($id)

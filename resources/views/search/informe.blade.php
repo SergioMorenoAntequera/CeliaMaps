@@ -12,17 +12,14 @@
 
     @isset($street)
     <div class="wholePanel">
-        <!-- PANEL IZQUIERDO, POR  AHORA NO INCLUIMOS IMAGEN, MÁS QUE NADA, PORQUE NO CABE //////////////////////////////////////////// -->
-        <div class="leftPanel" style="width:60%;">
-            Aquí iba el mapa, pero no cabe.....
-            @foreach ($street->maps as $map)
-            <!-- <img src="/img/maps/{{$map->image}}" alt="..."> -->
-            @endforeach
+        <!-- PANEL IZQUIERDO, POR  AHORA NO INCLUIMOS IMAGEN, MÁS QUE NADA, PORQUE NO CABE //////////////////////////////////////////// 
+        <div class="leftPanel" style="width:60%;">            
+            
         </div>
-        <!-- FIN DE PANEL IZQUIERDO //////////////////////////////////////////// -->
+         FIN DE PANEL IZQUIERDO //////////////////////////////////////////// -->
 
         <!-- PANEL DERECHO //////////////////////////////////////////// -->
-        <div class="rightPanel">
+        <div class="rightPanel" style="width:100%;">
             <h4>Impresión de Informes</h4>
             <div>
                 {{$street->type->name }} {{$street->name}}
@@ -54,7 +51,7 @@
             </div>
 
 
-            <div class="row col-2 float-right">
+            <div class="row col-2">
                 <!-- AQUÍ PONGO EL BOTÓN DE PDF -->
                 <a href="{{route('search.download', $street->id)}}">
                     <button type="button" class="btn btn-success">PDF</button>
@@ -63,7 +60,13 @@
         <!-- FIN DE BOTONES  //////////////////////////////////////////// -->
      
         </div>
+        <br>
         <!-- FIN DE PANEL DERECHO //////////////////////////////////////////// -->
+        <div class="rightPanel" style="width:100%;">       
+            @foreach ($street->maps as $map)
+                <img src="/img/maps/{{$map->image}}" alt="..." style="width: 75%;">             
+            @endforeach
+        </div>
     </div>
     @endisset
 </div>

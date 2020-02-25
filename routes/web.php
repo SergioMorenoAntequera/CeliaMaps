@@ -14,9 +14,9 @@
 /*Route::get('/', function () {
     return view('map');
 });*/
-Route::get('/test', function () {
-    return view('test');
-});
+
+// HOME /////////////////////////////////////////////////////////////////////////////////////////////
+Route::get('/home', 'HomeController@home')->name('home');
 Route::get('/login', 'HomeController@login')->name('home.login');
 
 // MAPS /////////////////////////////////////////////////////////////////////////////////////
@@ -38,10 +38,7 @@ Route::resource('point', 'PointController');
 Route::resource('hotspot', 'HotspotController');
 // AUTH ///////////////////////////////////////////////////////////////////////////////////////
 Auth::routes();
-//Auth::routes(['register' => false]);
-
-Route::get('/home', 'HomeController@index')->name('home');
-
+Auth::routes(['register' => false]);
 // BACKUP /////////////////////////////////////////////////////////////////////////////////////////
 Route::get('backup', 'BackupController@index')->name('backup.index');
 Route::get('backup/create', 'BackupController@create')->name('backup.create');
@@ -56,6 +53,5 @@ Route::get('search/show/{id}', 'SearchController@show')->name('search.show');
 //Route::get('pdf/ver', 'PdfController@ver')->name('pdf.ver');
 //Route::get('pdf/download', 'PdfController@download')->name('pdf.download');
 
-Route::get('/home', 'HomeController@index')->name('home');
 
 
