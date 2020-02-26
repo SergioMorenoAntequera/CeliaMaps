@@ -17,7 +17,7 @@
 
 // HOME /////////////////////////////////////////////////////////////////////////////////////////////
 Route::get('/home', 'HomeController@home')->name('home');
-Route::get('/login', 'HomeController@login')->name('home.login');
+// Route::get('/login', 'HomeController@login')->name('home.login');
 
 // MAPS /////////////////////////////////////////////////////////////////////////////////////
 Route::get('/', 'MapController@map')->name('map.map');

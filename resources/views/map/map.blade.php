@@ -225,7 +225,6 @@
 
                     // We hide everything when we unfocus
                     $("#streetsInput").on("focusout", function(e){
-                        console.log($(".streetsMenu").is(":focus"));
                         // $('#streetsFound').empty();
                     });
 
@@ -319,14 +318,11 @@
         //Here we are adding the images(of the diferent maps) on top of the map
         map.whenReady(function() {
             
-            map.on('click', function(e) {
-                console.log(map._layers );
-                console.log(e.latlng .lat + ", " + e.latlng.lng);    
-            });
-            images[0].on('click', function(e) {
-                console.log("PRA");
-                console.log(e.latlng.lat + ", " + e.latlng.lng);
-            });
+            // map.on('click', function(e) {
+            //     console.log(map._layers );
+            //     console.log(e.latlng .lat + ", " + e.latlng.lng);    
+            // });
+
             //Añadimos la imagen al mapa
             images.forEach(function(img) {
                 //Then we add all the different maps
@@ -368,7 +364,6 @@
                 }
             });
             streets.forEach(street => {
-                console.log(street);
                 if($(this).text().trim() == street.fullName){
                     lat = street.lat;
                     lng = street.lng;
