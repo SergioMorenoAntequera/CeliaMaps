@@ -16,8 +16,9 @@ class ImagesTableSeeder extends Seeder
             
             'title' => 'Catedral de Almeria',
             'description' => '',
-            'file_name' => 'catedral-almeria-img-01',
+            'file_name' => 'catedral-almeria-img-01.jpg',
             'file_path' => 'img/hotspots',
+            'hotspot_id' => 1,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -26,8 +27,9 @@ class ImagesTableSeeder extends Seeder
             
             'title' => 'Catedral de Almeria',
             'description' => '',
-            'file_name' => 'catedral-almeria-img-02',
+            'file_name' => 'catedral-almeria-img-02.jpg',
             'file_path' => 'img/hotspots',
+            'hotspot_id' => 1,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -36,8 +38,9 @@ class ImagesTableSeeder extends Seeder
             
             'title' => 'Catedral de Almeria',
             'description' => '',
-            'file_name' => 'catedral-almeria-img-03',
+            'file_name' => 'catedral-almeria-img-03.jpg',
             'file_path' => 'img/hotspots',
+            'hotspot_id' => 1,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -46,8 +49,9 @@ class ImagesTableSeeder extends Seeder
             
             'title' => 'Plaza Vieja',
             'description' => '',
-            'file_name' => 'plaza-vieja-img-01',
+            'file_name' => 'plaza-vieja-img-01.jpg',
             'file_path' => 'img/hotspots',
+            'hotspot_id' => 6,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -56,8 +60,9 @@ class ImagesTableSeeder extends Seeder
             
             'title' => 'Plaza Vieja',
             'description' => '',
-            'file_name' => 'plaza-vieja-img-02',
+            'file_name' => 'plaza-vieja-img-02.jpg',
             'file_path' => 'img/hotspots',
+            'hotspot_id' => 6,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -66,8 +71,9 @@ class ImagesTableSeeder extends Seeder
             
             'title' => 'Plaza Vieja',
             'description' => '',
-            'file_name' => 'plaza-vieja-img-03',
+            'file_name' => 'plaza-vieja-img-03.jpg',
             'file_path' => 'img/hotspots',
+            'hotspot_id' => 6,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -76,8 +82,9 @@ class ImagesTableSeeder extends Seeder
             
             'title' => 'Puerta Purchena',
             'description' => '',
-            'file_name' => 'puerta-purchena-img-01',
+            'file_name' => 'puerta-purchena-img-01.jpg',
             'file_path' => 'img/hotspots',
+            'hotspot_id' => 7,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -86,8 +93,9 @@ class ImagesTableSeeder extends Seeder
             
             'title' => 'Puerta Purchena',
             'description' => '',
-            'file_name' => 'puerta-purchena-img-02',
+            'file_name' => 'puerta-purchena-img-02.jpg',
             'file_path' => 'img/hotspots',
+            'hotspot_id' => 7,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -96,8 +104,9 @@ class ImagesTableSeeder extends Seeder
             
             'title' => 'Puerta Purchena',
             'description' => '',
-            'file_name' => 'puerta-purchena-img-03',
+            'file_name' => 'puerta-purchena-img-03.jpg',
             'file_path' => 'img/hotspots',
+            'hotspot_id' => 7,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -106,8 +115,9 @@ class ImagesTableSeeder extends Seeder
             
             'title' => 'Puerta Purchena',
             'description' => '',
-            'file_name' => 'puerta-purchena-img-04',
+            'file_name' => 'puerta-purchena-img-04.jpg',
             'file_path' => 'img/hotspots',
+            'hotspot_id' => 7,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);

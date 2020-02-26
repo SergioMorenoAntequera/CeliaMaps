@@ -13,8 +13,7 @@ class HotspotTableSeeder extends Seeder
     {
         DB::table('hotspots')->truncate();
         DB::table('hotspots')->insert([    
-            
-            'image' => 'catedralAlmeria.png',
+    
             'title' => 'Catedral de Almeria',
             'description' => 'La Catedral-Fortaleza de la Encarnación es la sede episcopal 
             de la diócesis de Almería. El edificio, con estructura de fortaleza, presenta una 
@@ -30,7 +29,6 @@ class HotspotTableSeeder extends Seeder
 
         DB::table('hotspots')->insert([    
             
-            'image' => 'Alcazaba.png',
             'title' => 'Alcazaba',
             'description' => 'Alcazaba de la ciudad de Almeria',
             'lat' => 36.8382030317319,
@@ -41,7 +39,6 @@ class HotspotTableSeeder extends Seeder
 
         DB::table('hotspots')->insert([    
             
-            'image' => 'mercadoCentral.png',
             'title' => 'Mercado Central',
             'description' => 'Mercado del paseo',
             'lat' => 36.82146698198432,
@@ -52,7 +49,6 @@ class HotspotTableSeeder extends Seeder
 
         DB::table('hotspots')->insert([    
             
-            'image' => 'REfugios.png',
             'title' => 'Refugios WW2',
             'description' => 'Refugios de la segunda guerra mundial',
             'lat' => 36.83115852885874,
@@ -63,7 +59,6 @@ class HotspotTableSeeder extends Seeder
 
         DB::table('hotspots')->insert([    
             
-            'image' => 'minihollywood.png',
             'title' => 'Minihollywood',
             'description' => 'Atracción del oeste y zoo para toda la familia',
             'lat' => 36.98115852885874,
@@ -74,7 +69,6 @@ class HotspotTableSeeder extends Seeder
 
         DB::table('hotspots')->insert([    
             
-            'image' => 'plazaVieja.png',
             'title' => 'Plaza Vieja',
             'description' => 'La Plaza de la Constitución, popularmente conocida como Plaza Vieja, es una plaza situada en el centro histórico de la ciudad española de Almería. Durante la época musulmana se encontraba en este lugar el zoco, consolidándose su carácter de plaza en el siglo XIX. Alberga la sede del Ayuntamiento de la ciudad, construido a finales de dicho siglo, proyecto del arquitecto almeriense Trinidad Cuartara.',
             'lat' => 34.83115852885874,
@@ -85,7 +79,6 @@ class HotspotTableSeeder extends Seeder
 
         DB::table('hotspots')->insert([    
             
-            'image' => 'puertaPurchena.png',
             'title' => 'Puerta Purchena',
             'description' => 'La Puerta de Purchena es una plaza situada en el centro de la ciudad de Almería. En ella se ubicó la antigua puerta de Pechina, aunque su nombre se vio alterado tras la conquista cristiana por un error de transcripción de los Reyes Católicos, quienes confundieron el nombre de los pueblos de Pechina (la antigua Bayyana) y Purchena, ambos almerienses. 
             La puerta homónima desapareció tras el derribo de la muralla en 1855, creándose por entonces la actual plaza. El urbanismo que la caracteriza es propio de la arquitectura burguesa del siglo XIX, representada en edificaciones como la Casa de las Mariposas. ',
@@ -97,7 +90,6 @@ class HotspotTableSeeder extends Seeder
         
         DB::table('hotspots')->insert([    
             
-            'image' => 'puertaPurchena.png',
             'title' => 'Estadio Municial Juan Rojas',
             'description' => 'El primer estadio que he pillao',
             'lat' => 36.862102782722665,
