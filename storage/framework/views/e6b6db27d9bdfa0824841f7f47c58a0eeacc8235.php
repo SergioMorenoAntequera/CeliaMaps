@@ -97,13 +97,23 @@
                             <div class="lateralExpandMenu">
                                 <b> Users </b>
                                 <div class="line"></div>
+                                <?php if(auth()->guard()->check()): ?>                               
+                                     <!-- INCLUYO AQUÍ LA RUTA DEL LOGOUT DE LARAVEL PARA QUE NO PASE POR LA PÁGINA OFICIAL,
+                                    SINO QUE VAYA DIRECTAMENTE A LA PÁGINA PRINCIPAL --> 
+                                    <a href=""
+                                    onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">Logout</a>                               
+                                <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+                                    <?php echo csrf_field(); ?>
+                                </form>
+                                <?php else: ?>                                 
+                                    <a href="<?php echo e(route('login')); ?>">Login</a>                                
+                                <?php endif; ?>                                
                                 <a href="<?php echo e(route('user.index')); ?>"><li>Indice</li></a>
-                                <a href="<?php echo e(route('user.create')); ?>"><li>Insertar</li></a>
-                                <a href="<?php echo e(route('user.index')); ?>"><li></li></a>
+                                <a href="<?php echo e(route('user.create')); ?>"><li>Insertar</li></a>                                
                                 <a href="<?php echo e(route('user.index')); ?>"><li></li></a>
                             </div>
                         </div>
-
                         <div class="lateralMenuElement">
                             <a class="lateralMenuLink" href="">
                             <li class="lateralMenuImg">
