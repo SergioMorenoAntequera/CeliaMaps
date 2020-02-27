@@ -129,7 +129,7 @@
                                 images.push(img);
                             </script>
                         @endif <!-- Si no tiene alineamiento no se pone el mapa -->
-                    @endforeach  
+                    @endforeach
                 </div>
         </div>
             
@@ -176,7 +176,6 @@
             <div id="searchContent">
                 {{-- div donde se mostrarán todas las calles --}}
                 <div id="streetsFound">
-                    
                     {{-- <div class="street"> 
                         test
                     </div> --}}
@@ -211,7 +210,9 @@
                                 },
                             }); // FIN AJAX
                         } else {
-                            lookByText();
+                            if($('#streetsFound').children().length == 0){
+                                lookByText();
+                            }
                         }
                     });
 
@@ -234,7 +235,7 @@
                         hotspots.forEach(hotspot => {
                             if(hotspot.title.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
                                 $('#streetsFound').append("<div class='street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ hotspot.title + "</div>");
-                                if(c++ == 5){
+                                if(++c == 5){
                                     return;
                                 }  
                             }
@@ -243,7 +244,7 @@
                         streets.forEach(street => {
                             if(street.name.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
                                 $('#streetsFound').append("<div class='street'> <img style='width:5%;' src='{{url('img/icons/token-selected.svg')}}'>"+ street.fullName + "</div>");
-                                if(c++ == 5){
+                                if(++c == 5){
                                     return;
                                 }                                
                             }
@@ -285,16 +286,14 @@
     {{---------------------------------------------------------------}}
     {{-- ALL OF THE PARTS RELATED WITH SHOWING THE MAPS AND LAYERS --}}
     {{---------------------------------------------------------------}}
-
     <script>
         // Pagina donde están los proveedores de mapas:
         // http://leaflet-extras.github.io/leaflet-providers/preview/index.html
         var map = L.map('map', {
             minZoom: 6,  //Dont touch, recommended
-            // maxZoom: 2, //Dont touch, max zoom 
             zoomControl: false,
         });
-        map.setView([36.844092, -2.457840], 14);
+        map.setView([36.83855339561703, -2.468887563476574], 14);
 
         //Global maps from the one we will be able to pick one
         var mapTiles = [
@@ -313,49 +312,24 @@
             })
         ];
         //Adding rhe layers to the map
-        map.addLayer(mapTile2);
+        map.addLayer(mapTile0);
 
         //Here we are adding the images(of the diferent maps) on top of the map
         map.whenReady(function() {
-            
+            //Añadimos la primera imagen para que se vea algo
+            map.addLayer(images[0]);
+
             // map.on('click', function(e) {
             //     console.log(map._layers );
             //     console.log(e.latlng .lat + ", " + e.latlng.lng);    
             // });
-
-            //Añadimos la imagen al mapa
-            images.forEach(function(img) {
-                //Then we add all the different maps
-                map.addLayer(img);
-                img.bringToFront();
-                //And if they are not the first one
-                if(img != images[0]){
-                    //We take the opacity to 0 so they are hidding now
-                    img.setOpacity(0);
-                }
-            });
-
-            // Small arrow to allow us to hide the menu at the bottom left
-            $('#mapsShow').click(function(){
-                // We control it using the icon
-                var icono = $(this).find('i');
-                //If it's up(Menu closed)
-                if(icono.hasClass("fa-chevron-up")){
-                    //We show it by moving it up
-                    $(this).parent().animate({
-                        top: "0px",
-                    }, 300);
-                } else {
-                    //If the menu is down we move it up
-                    $(this).parent().animate({
-                        top: "15px",
-                    }, 300);
-                }
-            });
         });
 
+        // Barra de busqueda y como nos mueve al punto en el que se encuentre el 
+        // hotspot o la calle en la que se pinche
         $('#streetsFound').on('click', '.street', function(){
             var lat, lng;
+            
             hotspots.forEach(hotspot => {
                 if($(this).text().trim() == hotspot.title){
                     lat = hotspot.lat;

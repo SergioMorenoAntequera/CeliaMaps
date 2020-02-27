@@ -50,6 +50,9 @@
                     </div>
                 </div>
             </div>
+            <div id="admin">
+                <img src="{{url('img/icons/admin.png')}}" alt="">
+            </div>
         </div>
     </div>
 
@@ -83,6 +86,10 @@
                         });
                     });
                 });
+            });
+
+            $("#admin").click(function(){
+                window.location.href = "{{route("map.index")}}";
             });
         });
     </script>
