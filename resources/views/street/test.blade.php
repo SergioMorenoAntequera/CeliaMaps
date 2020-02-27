@@ -23,6 +23,10 @@
     <script src="{{url('js/mapTlMenu.js')}}"></script>
     <script src="{{url('js/mapBlMenu.js')}}"></script>
     <script src="{{url('js/mapFullScreenMenu.js')}}"></script>
+    <!-- Disable Leaflet images clicks events -->
+    <style>.ldi .leaflet-pane .leaflet-overlay-pane img{
+        pointer-events:none!important}
+    </style>
 @endsection
 
 @section('header')
@@ -448,6 +452,10 @@
                 @endforeach
             @endisset
             
+            /*  Old overlay imagles click handler based
+             *  on click point over image to generate a 
+             *  leaflet point to be translated to latlng
+
             // Map images click handler
             $(".leaflet-image-layer").click(function(e){
                 console.log("imagen");
@@ -460,6 +468,8 @@
                 // Create modal trigger
                 createStreet(latlng.lat, latlng.lng);
             });
+            */
+
             // Leaflet map click handler
             map.on('click', function(e) {
                 console.log("mapa");
@@ -473,10 +483,10 @@
                 e.stopPropagation();
                 // Check if clicks comes from dragging or not
                 if(dragging){
-                    // After drag turn off dragging mode
+                    // After drag turn off dragging mode on after click
                     dragging = false
                 }else{
-                    // Selected street searching
+                    // Search for selected street
                     let street;
                     for (let i = 0; i < streets.length; i++) {
                         if(streets[i].id == this.alt)
