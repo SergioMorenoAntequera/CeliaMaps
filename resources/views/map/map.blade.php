@@ -22,6 +22,18 @@
     <!-- PERSONAL CSS -->
     <link rel="stylesheet" href="{{url('/css/frontend.css')}}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    {{-- <script> </script> --}}
+    
+    <script>
+    // Put all locations into array
+    var hotspots = [
+        @foreach ($hotspots as $hotspot)
+            
+            ["{{ $hotspot->title }}", "{{ $hotspot->lat }}", "{{ $hotspot->lng }}" ], 
+        @endforeach
+    ];
+    </script>
+
     <script src="{{url('js/mapTlMenu.js')}}"></script>
     <script src="{{url('js/mapBlMenu.js')}}"></script>
     <script src="{{url('js/mapFullScreenMenu.js')}}"></script>
@@ -134,22 +146,22 @@
         </div>
             
         {{-- Manú de los hotspots --}}
-        <div id="hotspotsMenu" class="menu noselect">
-            {{-- Cruz para cerrar el menú --}}
+        {{-- <div id="hotspotsMenu" class="menu noselect">
+
             <div class="closeMenuButton">
                 <i class="fa fa-times"></i>
             </div>
-            {{-- Iconito del pin para fijarla --}}
+
             <div class="pinMenuButton ">
                 <img class="pinIcon" src="{{url('/img/icons/pin.svg')}}" alt="">
             </div>
-            {{-- Icono que representa y contenido de la ventana --}}
+
             <img class="noselect" src="{{url('img/icons/tlMenuToken.png')}}" title="Puntos de interés">
             <div id="hotspotsContent">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium deserunt sint omnis, fuga nam blanditiis qui pariatur quidem repellat labore facere consequatur neque accusamus amet aspernatur fugit, enim aliquid autl!
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis architecto odit itaque incidunt necessitatibus cum, soluta quam beatae vel odio reiciendis repudiandae nam nobis optio vero corporis voluptatibus earum similique.
             </div>
-        </div>
+        </div> --}}
 
         {{-- Menú del callejero --}}
         <div id="streetsMenu" class="menu noselect">

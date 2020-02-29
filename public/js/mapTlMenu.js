@@ -27,7 +27,8 @@ $(document).ready(function(){
             $("#mapsMenu").fadeToggle(100);
         }
         if($(this).attr("id").includes("Hotspots")) {
-            $("#hotspotsMenu").fadeToggle(100);
+            // $("#hotspotsMenu").fadeToggle(100);
+            // console.log(hotspots);
         }
         if($(this).attr("id").includes("Streets")) {
             $("#streetsMenu").fadeToggle(100);
