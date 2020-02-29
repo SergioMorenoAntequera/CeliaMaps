@@ -23,6 +23,10 @@
     <script src="{{url('js/mapTlMenu.js')}}"></script>
     <script src="{{url('js/mapBlMenu.js')}}"></script>
     <script src="{{url('js/mapFullScreenMenu.js')}}"></script>
+    <!-- Disable Leaflet images clicks events -->
+    <style>.ldi .leaflet-pane .leaflet-overlay-pane img{
+        pointer-events:none!important}
+    </style>
 @endsection
 
 @section('header')
@@ -263,49 +267,68 @@
     <div id="fullScreenMenu">
         <img src="{{url('/img/icons/fsMaximize.png')}}" alt="">
     </div>
-    
 
-    <!-- Create/edit hotspot modal -->
+    <!-- HOTSPOTS -->
 
     <div class="modal fade" id="modal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                    <form id="modal-form" method="POST" action="" enctype="multipart/form-data">
-                        @csrf
-                        <input type="hidden" name="_method">
-                        <div class="modal-header border-bottom-0">
-                            <h5 class="modal-title text-primary"></h5>
-                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                <form id="modal-form" method="POST" action="" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="_method">
+                    <div class="modal-header border-bottom-0">
+                        <h5 id="modal-title" class="modal-title text-primary"></h5>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <!-- Hotspot title -->
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="text-dark">Titulo del Hotspot</label>
+                            <input type="text" class="form-control" name="title">
                         </div>
-                        <!-- Hotspot -->
-                        <div class="modal-body">
-                            <!-- Hotspot name -->
-                            <div class="form-group">
-                                <label class="text-dark">Titulo del Hotspot</label>
-                                <input type="text" class="form-control" name="title">
-                            </div>
-                            <!-- Hotspot description -->
-                            <div class="form-group">
-                                <label class="text-dark">Descripcion del Hotspot</label>
-                                <input type="text" class="form-control" name="description">
-                            </div>
-                            <!-- Hotspot points -->
-                            <div>
-                                <input type="hidden" id="lat" name="lat">
-                                <input type="hidden" id="lng" name="lng">
-                            </div>
+                        <!-- Hotspot description -->
+                        <div class="form-group">
+                            <label class="text-dark">Descripcion del Hotspot</label>
+                            <input type="text" class="form-control" name="description">
                         </div>
-                        <div class="modal-footer">
-                            <button id="btn-remove" type="button" class="btn btn-danger" data-dismiss="modal">Eliminar</button>
-                            <button id="btn-position" type="button" class="btn btn-warning mr-auto" data-dismiss="modal">Cambiar posición</button>
-                            <button id="btn-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button id="btn-submit" type="submit" class="btn btn-primary">Guardar</button>
+                        <!-- Hotspot points -->
+                        <div>
+                            <input type="hidden" id="modal-lat" name="lat">
+                            <input type="hidden" id="modal-lng" name="lng">
+                            <input type="hidden" id="id" name="id">
                         </div>
-                    </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btn-remove" value="" type="button" class="btn btn-danger">Eliminar</button>
+                        <button id="btn-position" value="" type="button" class="btn text-white btn-warning mr-auto">Cambiar posición</button>
+                        <button id="btn-submit" type="submit" class="btn btn-success">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+        <!-- Modal to confirm -->
+        <div id="confirmModal" class="modal fade text-dark" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 id="confirm-modal-title" class="modal-title">Eliminar hotspot</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+    
+                    <div class="modal-body">
+                        <p>¿Está seguro de que desea eliminar el hotspot?</p>
+                        <button id="btn-cancel" type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+                        <button id="btn-confirm" type="button" class="btn btn-danger deleteConfirm" data-dismiss="modal">Eliminar</button>
+                    </div>
                 </div>
             </div>
         </div>
 
+
+        <!-- Preview Hotspots -->
         <div id="preview" class="card" style="max-height: 245px">
             <img id="previewImage" src="{{url('img/hotspots/')}}" alt="Hotspot Preview" style="width:286px; max-heigth:180px">
             <div class="card-body" style="color: black">
@@ -428,7 +451,7 @@
                 @endforeach
             @endisset
         
-
+            /*
             // Map images click handler
             $(".leaflet-image-layer").click(function(e){
                 // Calculate backend menu width
@@ -440,78 +463,13 @@
                 // Create modal trigger
                 createHotspot(latlng.lat, latlng.lng);
             });
+            */
+
             // Leaflet map click handler
             map.on('click', function(e) {
                 // Create modal trigger with lat/lng coordinates
                 createHotspot(e.latlng.lat, e.latlng.lng);
             });
-
-            /*
-            // Add hotspot
-            map.on('click', function(e) {
-                // Handle click point
-                var lat = e.latlng.lat;
-                var lng = e.latlng.lng;
-                console.log(lat + " " + lng);
-
-                // Clear fields
-                $("input[name='title']").val("");
-                $("input[name='description']").val("");
-                // Form create attributes
-                $("#modal-form").attr("action", "{{route('hotspot.store')}}");
-                $("input[name='_method']").val("POST");
-                $(".modal-body #lat").val(lat);
-                $(".modal-body #lng").val(lng);
-                // Modal display
-                $(".modal-title").text("Nuevo Hotspot");
-                $("#btn-remove").prop("disabled", true);
-                $("#btn-remove").css("display", "none");
-                $("#btn-position").prop("disabled", true);
-                $("#btn-position").css("display", "none");
-                $('#modal').modal('show');
-                
-                
-                $("#btn-submit").click(function(){
-                    let newMark = L.marker([lat, lng],{icon: markerImage});    // Creating a Marker
-                    newMark.addTo(map); // Adding marker to the map
-                })
-            });   
-            
-            // Edit Hotspot
-            $('.leaflet-marker-icon').on('click', function(e){
-                // Propagation event Edit, click on map
-                e.stopPropagation();
-                $("#modal-form").attr("action", "{{route('hotspot.store')}}/"+this.alt);
-                $("input[name='_method']").val("PUT");
-                let hotspot;
-                for (let i = 0; i < hotspots.length; i++) {
-                    if(hotspots[i].id == this.alt)
-                        hotspot = hotspots[i];
-                }
-                // Token change
-                $('.leaflet-marker-pane > img[alt="' + this.alt + '"]').attr("src", "{{url('img/icons/token-selected.svg')}}");
-                
-                // Fill inputs fields
-                console.log(hotspot);
-                $("input[name='title']").val(hotspot.title);
-                $("input[name='description']").val(hotspot.description);
-
-                // Modal display
-                $(".modal-title").text("Editar hotspot");
-                $("#btn-remove").prop("disabled", false);
-                $("#btn-remove").css("display", "initial");
-                $("#btn-position").prop("disabled", false);
-                $("#btn-position").css("display", "initial");
-                $('#modal').modal('show');
-            
-                // Hotspots update position
-                $('#btn-position').on('click', function(){
-                    $('.leaflet-marker-pane > img[alt="' + hotspot.id + '"]').css("display", "none");
-                    
-                });
-
-            });
-            */
 
 
             // Leaflet mark click handler
