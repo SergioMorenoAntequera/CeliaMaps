@@ -28,7 +28,18 @@ $(document).ready(function(){
         }
         if($(this).attr("id").includes("Hotspots")) {
             // $("#hotspotsMenu").fadeToggle(100);
-            // console.log(hotspots);
+            if(activeMarkers.length == 0){
+                $("#ballHotspots img").css({opacity:1});
+                hotspotsFull.forEach(hotspot => {
+                    activeMarkers.push(L.marker([hotspot.lat, hotspot.lng], {icon: tokenIcon}).addTo(map));
+                });
+            } else {
+                $("#ballHotspots img").css({opacity:0.2});
+                activeMarkers.forEach(marker => {
+                    map.removeLayer(marker);
+                });
+                activeMarkers = [];
+            }
         }
         if($(this).attr("id").includes("Streets")) {
             $("#streetsMenu").fadeToggle(100);

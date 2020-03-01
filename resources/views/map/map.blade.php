@@ -21,19 +21,23 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!-- PERSONAL CSS -->
     <link rel="stylesheet" href="{{url('/css/frontend.css')}}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    {{-- <script> </script> --}}
-    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">    
     <script>
     // Put all locations into array
-    var hotspots = [
+    var map;
+    var activeMarkers = [];
+    var tokenIcon = L.icon({
+        iconUrl: "{{url('img/icons/token.svg')}}",
+        iconSize:     [38, 95], // size of the icon
+        iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
+    var hotspotsFull = [
         @foreach ($hotspots as $hotspot)
-            
-            ["{{ $hotspot->title }}", "{{ $hotspot->lat }}", "{{ $hotspot->lng }}" ], 
+            {title:"{{ $hotspot->title }}", image:"{{$hotspot->image}}", lat:"{{ $hotspot->lat }}", lng:"{{ $hotspot->lng }}" }, 
         @endforeach
     ];
     </script>
-
     <script src="{{url('js/mapTlMenu.js')}}"></script>
     <script src="{{url('js/mapBlMenu.js')}}"></script>
     <script src="{{url('js/mapFullScreenMenu.js')}}"></script>
@@ -69,7 +73,7 @@
          </div>
         <div id="ballHotspots" class="ball noselect">
             <div class="ballContent">
-                <img class="noselect" src="{{url('img/icons/tlMenuToken.png')}}" title="Puntos de interés">
+                <img style="opacity: 0.2" class="noselect" src="{{url('img/icons/tlMenuToken.png')}}" title="Puntos de interés">
             </div>
         </div>
 
@@ -301,12 +305,12 @@
     <script>
         // Pagina donde están los proveedores de mapas:
         // http://leaflet-extras.github.io/leaflet-providers/preview/index.html
-        var map = L.map('map', {
+        map = L.map('map', {
             minZoom: 6,  //Dont touch, recommended
             zoomControl: false,
         });
         map.setView([36.83855339561703, -2.468887563476574], 14);
-
+        
         //Global maps from the one we will be able to pick one
         var mapTiles = [
             mapTile0 = L.tileLayer.wms('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
