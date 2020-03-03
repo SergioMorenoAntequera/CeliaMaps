@@ -119,15 +119,23 @@ class StreetController extends Controller
     public function update(Request $r, $id){
         $street = Street::find($id);
         $street->fill($r->all());
-        // corregir nombres alternativos
-        $street->maps()->sync($r->maps_id);
-        // localización
+        
+        // Maps streets relationships update
+        $mapsRelationship = array();
+        // Array to complete junction table
+        for ($i=0; $i < count($r->maps_id); $i++) { 
+            $mapsRelationship[$r->maps_id[$i]] = ['alternative_name' => $r->maps_name[$i]];
+        }
+        $street->maps()->sync($mapsRelationship);
+        
+        // Point update
         $point = Point::find($street->points[0]->id);
         $point->lat = $r->lat;
         $point->lng = $r->lng;
         $point->save();
+
         $street->save();
-        return redirect(route('street.create'));
+        //return redirect(route('street.create'));
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////

@@ -298,10 +298,10 @@
                         </div>
                         <!-- Street maps -->
                         <div class="form-group">
-                            <label class="text-dark">Mapas que lo contienen</label><br>
+                            <label class="text-dark">Mapas que la contienen</label><br>
                             @foreach ($maps as $map)
                             
-                                <input type="checkbox" class="checkbox-text" name="maps_id[]" value="{{$map->id}}" checked>
+                                <input id="checkbox_map{{$map->id}}" type="checkbox" class="checkbox-text" name="maps_id[]" value="{{$map->id}}" checked>
                                 <span class="text-dark checkbox-text">{{$map->title}} ({{$map->city}} - {{$map->date}})</span>
                             
                                 <input id="input_map{{$map->id}}" class="form-control" type="text" name="maps_name[]" placeholder="Sobreescribir el nombre de la vía en el mapa {{$map->title}}">
@@ -338,8 +338,8 @@
 
                 <div class="modal-body">
                     <p>¿Está seguro de que desea eliminar la vía?</p>
-                    <button id="btn-cancel" type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
-                    <button id="btn-confirm" type="button" class="btn btn-danger deleteConfirm" data-dismiss="modal">Eliminar</button>
+                    <button id="btn-cancel" type="button" class="btn btn-success float-left" data-dismiss="modal">Cancelar</button>
+                    <button id="btn-confirm" type="button" class="btn btn-danger float-right deleteConfirm" data-dismiss="modal">Eliminar</button>
                 </div>
             </div>
         </div>
@@ -484,7 +484,7 @@
                 // Check if clicks comes from dragging or not
                 if(dragging){
                     // After drag turn off dragging mode on after click
-                    dragging = false
+                    dragging = false;
                 }else{
                     // Search for selected street
                     let street;
@@ -504,6 +504,14 @@
                 // Clear fields
                 $("select[name='type_id']").val("");
                 $("input[name='name']").val("");
+                // Clear maps alternatives names fields
+                let mapsList = $("input[name='maps_name[]']");
+                for (let i = 0; i < mapsList.length; i++) {
+                    mapsList[i].value = "";
+                    $(mapsList[i]).show();
+                    $(mapsList[i]).prop("disabled", false);
+                    $("#checkbox_map"+mapsList[i].id.substring(9)).prop("checked", true);
+                }
                 // Fill position values
                 $("#modal-lat").val(lat);
                 $("#modal-lng").val(lng);
@@ -533,16 +541,23 @@
                 $("#modal-lng").val(street.points.lng);
                 $(".modal-body #id").val(street.id);
 
-                
-                // Fill alternatives names
-                console.log(street);
+                // Clear maps alternatives names fields
                 let mapsList = $("input[name='maps_name[]']");
+                for (let i = 0; i < mapsList.length; i++) {
+                    mapsList[i].value = "";
+                    $(mapsList[i]).hide();
+                    $(mapsList[i]).prop("disabled", true);
+                    $("#checkbox_map"+mapsList[i].id.substring(9)).prop("checked", false);
+                }
+                // Uncheck maps
+                // Fill alternatives names
                 for (let i = 0; i < street.maps.length; i++) {
-                    let alternative_name = street.maps[i].pivot.alternative_name;
-                    if(alternative_name !== null)
-                        $("#input_map"+street.maps[i].id).val(alternative_name);
-                    else
-                        $("#input_map"+street.maps[i].id).val("");
+                    $("#checkbox_map"+street.maps[i].id).prop("checked", true);
+                    $("#input_map"+street.maps[i].id).prop("disabled", false);
+                    $("#input_map"+street.maps[i].id).show();
+                    if(street.maps[i].pivot.alternative_name !== null){
+                        $("#input_map"+street.maps[i].id).val(street.maps[i].pivot.alternative_name);
+                    }
                 }
                 // Fill null names
       /*          let mapsListElements = $("input[name='maps_name[]']");
@@ -627,12 +642,14 @@
                 });
             }
             
-            // Rename streets fields
+            // Rename streets fields display
             $(".checkbox-text").on("click", function(){
+                // Map id getted from checkbox value
+                let fieldId = this.value;
                 // Hide forms fields
-                $("#input_map"+this.value).slideToggle(200, function(){
+                $("#input_map"+fieldId).slideToggle(200, function(){
                     // Disable inputs to do not send
-                    $("#input_map"+this.value).prop("disabled", function(){
+                    $("#input_map"+fieldId).prop("disabled", function(){
                         return !($(this).prop("disabled"));
                     });
                 });
