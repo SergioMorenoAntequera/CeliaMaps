@@ -143,12 +143,11 @@ html, body {
 
 /*/////////////////////////// MENU DE MAPAS ///////////////////////////*/
 #mapsMenu {
-    left: 190px;
-    top: 20px;
+    top: 113px;
+    left: 5px;
 }
 
 #mapsTrans {
-    
     width: 190px;
     height: auto;
 }
