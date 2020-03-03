@@ -15,14 +15,9 @@ class HotspotTableSeeder extends Seeder
         DB::table('hotspots')->insert([    
     
             'title' => 'Catedral de Almeria',
-            'description' => 'La Catedral-Fortaleza de la Encarnación es la sede episcopal 
-            de la diócesis de Almería. El edificio, con estructura de fortaleza, presenta una 
-            arquitectura de transición entre el Gótico tardío y el Renacimiento, así como rasgos 
-            posteriores barrocos y neoclásicos. Constituye una de las manifestaciones artísticas de carácter 
-            arquitectónico y cultural más importantes y valiosas de Andalucía y, por ende, de España, al ser 
-            la única Catedral con naturaleza de fortaleza erigida en el siglo XVI. ',
-            'lat' => 36.854415703972165,
-            'lng' => -2.4474240161989163,
+            'description' => 'La Catedral-Fortaleza de la Encarnación es la sede episcopal de la diócesis de Almería. El edificio, con estructura de fortaleza, presenta una arquitectura de transición entre el Gótico tardío y el Renacimiento, así como rasgos posteriores barrocos y neoclásicos. Constituye una de las manifestaciones artísticas de carácter arquitectónico y cultural más importantes y valiosas de Andalucía y, por ende, de España, al ser la única Catedral con naturaleza de fortaleza erigida en el siglo XVI. ',
+            'lat' => 36.838036051870695,
+            'lng' => -2.467441694045514,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -31,8 +26,8 @@ class HotspotTableSeeder extends Seeder
             
             'title' => 'Alcazaba',
             'description' => 'Alcazaba de la ciudad de Almeria',
-            'lat' => 36.8382030317319,
-            'lng' => -2.4797878905928017,
+            'lat' => 36.841045612512296,
+            'lng' => -2.4715883687671685,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -41,28 +36,18 @@ class HotspotTableSeeder extends Seeder
             
             'title' => 'Mercado Central',
             'description' => 'Mercado del paseo',
-            'lat' => 36.82146698198432,
-            'lng' => -2.4393812851598966,
+            'lat' => 36.84035226488956,
+            'lng' => -2.4626323944043054,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
 
         DB::table('hotspots')->insert([    
             
-            'title' => 'Refugios WW2',
+            'title' => 'Refugios de la Guerra Civil',
             'description' => 'Refugios de la segunda guerra mundial',
-            'lat' => 36.83115852885874,
-            'lng' => -2.438952340303922,
-            'created_at' => date('Y-m-d H-m-s'),
-            'updated_at' => date('Y-m-d H-m-s'),
-        ]);
-
-        DB::table('hotspots')->insert([    
-            
-            'title' => 'Minihollywood',
-            'description' => 'Atracción del oeste y zoo para toda la familia',
-            'lat' => 36.98115852885874,
-            'lng' => -5.438952340303922,
+            'lat' => 36.841629479318954,
+            'lng' => -2.4646334325020063,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -82,30 +67,21 @@ class HotspotTableSeeder extends Seeder
             'title' => 'Puerta Purchena',
             'description' => 'La Puerta de Purchena es una plaza situada en el centro de la ciudad de Almería. En ella se ubicó la antigua puerta de Pechina, aunque su nombre se vio alterado tras la conquista cristiana por un error de transcripción de los Reyes Católicos, quienes confundieron el nombre de los pueblos de Pechina (la antigua Bayyana) y Purchena, ambos almerienses. 
             La puerta homónima desapareció tras el derribo de la muralla en 1855, creándose por entonces la actual plaza. El urbanismo que la caracteriza es propio de la arquitectura burguesa del siglo XIX, representada en edificaciones como la Casa de las Mariposas. ',
-            'lat' => 37.23115852885874,
-            'lng' => -2.217852340303922,
+            'lat' => 36.841592987774135,
+            'lng' => -2.463978894418473,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
         
         DB::table('hotspots')->insert([    
             
-            'title' => 'Estadio Municial Juan Rojas',
-            'description' => 'El primer estadio que he pillao',
-            'lat' => 36.862102782722665,
-            'lng' => -2.4453914165496826,
+            'title' => 'Estadio de los Juegos Mediterraneos',
+            'description' => '',
+            'lat' => 36.839995928990916,
+            'lng' => -2.4353805833544566,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
-        DB::table('hotspots')->insert([    
-            
-            'image' => 'puertaPurchena.png',
-            'title' => 'Tíjola',
-            'description' => 'Capital de Almería',
-            'lat' => 37.346822819116255,
-            'lng' => -2.4372549355030064,
-            'created_at' => date('Y-m-d H-m-s'),
-            'updated_at' => date('Y-m-d H-m-s'),
-        ]);
+        
     }
 }

@@ -121,5 +121,27 @@ class ImagesTableSeeder extends Seeder
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
+
+        DB::table('images')->insert([    
+            
+            'title' => 'Alcazaba',
+            'description' => '',
+            'file_name' => 'alcazaba-almeria-img-01.jpg',
+            'file_path' => 'img/hotspots',
+            'hotspot_id' => 2,
+            'created_at' => date('Y-m-d H-m-s'),
+            'updated_at' => date('Y-m-d H-m-s'),
+        ]);
+
+        DB::table('images')->insert([    
+            
+            'title' => 'Mercado Central',
+            'description' => '',
+            'file_name' => 'mercado-central-img-01.jpg',
+            'file_path' => 'img/hotspots',
+            'hotspot_id' => 3,
+            'created_at' => date('Y-m-d H-m-s'),
+            'updated_at' => date('Y-m-d H-m-s'),
+        ]);
     }
 }

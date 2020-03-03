@@ -169,11 +169,6 @@
                             }, function(e){
                                 $(this).children(".lateralExpandMenu").hide();
                             });
-                            // $(".lateralExpandMenu").hover(function(e){
-                            //     $(this).parents(".lateralMenuElement").css("background-color", "#6f7e96");
-                            // }, function(e) {
-                            //     $(this).parents(".lateralMenuElement").css("background-color", "#283e65");
-                            // });
                         });
                     </script>
 
@@ -196,7 +191,7 @@
                             });
                         });
                     </script>
-                    <a href="<?php echo e(route('map.map')); ?>">
+                    <a href="<?php echo e(route('home')); ?>">
                         <div style="position: absolute; bottom: 0px" class="lateralMenuImg">
                             <img src="<?php echo e(url('img/icons/turnOff.svg')); ?>" class="img-fluid">
                         </div>

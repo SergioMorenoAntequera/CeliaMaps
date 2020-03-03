@@ -329,8 +329,8 @@
 
 
         <!-- Preview Hotspots -->
-        <div id="preview" class="card" style="max-height: 245px">
-            <img id="previewImage" src="{{url('img/hotspots/')}}" alt="Hotspot Preview" style="width:286px; max-heigth:180px">
+        <div id="preview" class="card">
+            <img id="previewImage" src="" alt="Hotspot Preview" style="width:286px; max-heigth:180px">
             <div class="card-body" style="color: black">
               <h4 id="previewTitle"><b></b></h4> 
             </div>
@@ -588,19 +588,22 @@
                         hotspot = hotspots[i];
                 }
 
+                let host = "{{url('')}}";
+                $("#previewImage").attr("src", host+"/"+hotspot.images[0].file_path+"/"+hotspot.images[0].file_name);
+
                 // Coordinates mouse
                 $('.leaflet-marker-icon').mousemove(function(event){
-                    var latPreview = event.screenY -400;
+                    var latPreview = event.screenY -424;
                     var lgnPreview = event.screenX -140;
 
-                // Display block no funciona con css
-                $("#preview").attr('style', 'display: block !important');
-                $("#preview").css({top: latPreview, left: lgnPreview});
+                    // Display block no funciona con css
+                    $("#preview").attr('style', 'display: block !important');
+                    $("#preview").css({top: latPreview, left: lgnPreview});
                 });
                 $("#previewTitle").text(hotspot.title);
                 console.log(hotspot);
                 console.log(hotspot.images[0].file_name);
-                $("#previewImage").attr("src", $("#previewImage").attr("src")+hotspot.images[0].file_name);
+                console.log($("#previewImage").attr("src"));
 
             }, function(){
                 $('#preview').attr('style', 'display: none !important');
