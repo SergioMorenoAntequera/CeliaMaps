@@ -225,9 +225,7 @@
                                     for(var i = 0; i < streets.length; i++){
                                         if(i < 4){
                                             $('#streetsFound').append("<div class='street'>"+streets[i].type.name + " " + streets[i].name +"</div>");
-                                        }// else {
-                                        //     $('#streetsFound').append("<div style=\"display: none;\" class='street'>"+streets[i].name +"</div>");
-                                        // }
+                                        }
                                     }
                                 },
                             }); // FIN AJAX
@@ -290,6 +288,11 @@
                         <div class="form-group">
                             <label class="text-dark">Descripcion del Hotspot</label>
                             <input type="text" class="form-control" name="description">
+                        </div>
+                        <!-- Hotspot images -->
+                        <div class="form-group" id="imagesUpload">
+                            <label class="text-dark">Imagenes del Hotspot</label><br>
+                            <input type="file" name="images[]" class="fileToUpload">
                         </div>
                         <!-- Hotspot points -->
                         <div>
@@ -451,19 +454,6 @@
                 @endforeach
             @endisset
         
-            /*
-            // Map images click handler
-            $(".leaflet-image-layer").click(function(e){
-                // Calculate backend menu width
-                let menuWidth = screen.width * 0.05;
-                // Create leaflet point with client x/y coordinates
-                let point = L.point(e.clientX-menuWidth, e.clientY);
-                // Conversion from point to leaflet latitude longitude object
-                let latlng = map.containerPointToLatLng(point);
-                // Create modal trigger
-                createHotspot(latlng.lat, latlng.lng);
-            });
-            */
 
             // Leaflet map click handler
             map.on('click', function(e) {
@@ -543,10 +533,7 @@
                         $("#modal-form").submit();
                     });
                     $("#btn-cancel").click(function(){
-                        //$("#modal-form").attr("action", "{{route('street.store')}}/"+street.id);
-                        //$("input[name='_method']").val("PUT");
                         $('#confirmModal').modal('hide');
-                        //$('#modal').modal('show');
                     });
                 });
                 
@@ -601,13 +588,15 @@
                     $("#preview").css({top: latPreview, left: lgnPreview});
                 });
                 $("#previewTitle").text(hotspot.title);
-                console.log(hotspot);
-                console.log(hotspot.images[0].file_name);
-                console.log($("#previewImage").attr("src"));
 
             }, function(){
                 $('#preview').attr('style', 'display: none !important');
 
+            });
+
+            // Hotspot images file 
+            $('.fileToUpload').on('click', function(){
+                $('#imagesUpload').append("<input name='images[]' type='file' class='fileToUpload'>");
             });
 
         });

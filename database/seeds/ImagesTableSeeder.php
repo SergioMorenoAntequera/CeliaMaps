@@ -143,5 +143,16 @@ class ImagesTableSeeder extends Seeder
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
+
+        DB::table('images')->insert([    
+            
+            'title' => 'Refugios de la Guerra Civil',
+            'description' => '',
+            'file_name' => 'refugios-guerra-civil-img-01.jpg',
+            'file_path' => 'img/hotspots',
+            'hotspot_id' => 4,
+            'created_at' => date('Y-m-d H-m-s'),
+            'updated_at' => date('Y-m-d H-m-s'),
+        ]);
     }
 }
