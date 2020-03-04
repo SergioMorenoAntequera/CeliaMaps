@@ -91,13 +91,13 @@
 
                 <div class="col">
                     <div class="form-group">
-                        <button type="submit" id="modificarUsuario" class="btn btn-primary">Modificar</button>
+                        <button type="submit" id="modificarUsuario" class="btn btn-success">Modificar</button>
                     </div>
                 </div>
                 @else
                 <div class="col">
                     <div class="form-group">
-                        <button type="submit" id="enviarUsuario" class="btn btn-primary">Enviar</button>
+                        <button type="submit" id="enviarUsuario" class="btn btn-success">Enviar</button>
                     </div>
                 </div>
                 @endisset

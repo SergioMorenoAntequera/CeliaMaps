@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\formularioUsuarios;
 
 use App\User;
 
@@ -25,7 +26,7 @@ class UserController extends Controller
     // LISTADO DE USUARIOS /////////////////////////////////////////////////////////
     public function index()
     {
-        $userList = User::all();
+        $userList = User::all()->sortBy('name');
         return view('user/index',['userList'=>$userList]);
         
     }
@@ -53,7 +54,7 @@ class UserController extends Controller
 
      */
     // PARA INSERTAR NUEVOS USUARIOS ////////////////////////////////////////////////
-    public function store(Request $r)
+    public function store(formularioUsuarios $r)
     {
        $user = new User();
 
