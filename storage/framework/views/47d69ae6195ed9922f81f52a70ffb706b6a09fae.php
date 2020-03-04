@@ -23,7 +23,7 @@
 						}
 					?>
 					<div class="leftPanel" style="width:25%; position: relative; overflow: hidden">
-						<img src="<?php echo e(url('img/hotspots/', $filesnasmes[0])); ?>" style="width: 100%">
+						<img src="<?php echo e(url('img/hotspots/', $filesnasmes[0])); ?>" style="height: 100%">
                     </div>
 
                     <!-- Columna con la información del hotspot -->

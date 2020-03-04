@@ -7,14 +7,14 @@
     <title>Celia Maps</title>
 
     <!-- LEAFLET -->
-    <script src="{{url('/js/Leaflet/leaflet.js')}}"></script>
-    <link rel="stylesheet" href="{{'/js/Leaflet/leaflet.css'}}">
+    <script src="{{url('js/Leaflet/leaflet.js')}}"></script>
+    <link rel="stylesheet" href="{{'js/Leaflet/leaflet.css'}}">
     <!-- Plugin toolbar -->
-    <script src="{{url('/js/Leaflet/pluginToolbar/leaflet.toolbar-src.js')}}"></script>
-    <link rel="stylesheet" href="{{'/js/Leaflet/pluginToolbar/leaflet.toolbar-src.css'}}">
+    <script src="{{url('js/Leaflet/pluginToolbar/leaflet.toolbar-src.js')}}"></script>
+    <link rel="stylesheet" href="{{'js/Leaflet/pluginToolbar/leaflet.toolbar-src.css'}}">
     <!-- Plugin images -->
-    <script src="{{url('/js/Leaflet/pluginImages/leaflet.distortableimage.js')}}"></script>
-    <link rel="stylesheet" href="{{'/js/Leaflet/pluginImages/leaflet.distortableimage.css'}}">
+    <script src="{{url('js/Leaflet/pluginImages/leaflet.distortableimage.js')}}"></script>
+    <link rel="stylesheet" href="{{'js/Leaflet/pluginImages/leaflet.distortableimage.css'}}">
 
     <!-- JQUERY -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
