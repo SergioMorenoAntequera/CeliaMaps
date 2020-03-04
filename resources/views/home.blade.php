@@ -28,6 +28,7 @@
                     COMENZAR
                 </button>
 
+                {{-- Las tres cosillas esas de ahí abajo --}}
                 <div id="bottom">
                     <div id="bottomElements">
                         <a class="text-decoration-none text-reset" href="https://iescelia.org/web/">
@@ -36,7 +37,7 @@
                             </div>
                         </a>
                         |
-                        <a class="text-decoration-none text-reset" href="">
+                        <a class="devLink text-decoration-none text-reset" href="">
                             <div class="element">
                                <b>Desarrolladores</b>
                             </div>
@@ -50,6 +51,95 @@
                     </div>
                 </div>
             </div>
+
+            {{-- Ventana de los desarrolladores --}}
+            <div id="developers" >
+                <div class="container-fluid">
+                    <div class="row justify-content-center mt-4">
+                        <div class="col-2 mx-1">
+                            <div class="student">
+                                <div class="studentHead">
+                                    <img class="user" src="box.png" alt="">
+                                </div>
+                                
+                                <div class="studentBody">
+                                    <p class="name">
+                                        Sergio Moreno Antequera
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2 mx-1" style="margin-right: 15% !important">
+                            <div class="student">
+                                <div class="studentHead">
+                                    <img class="user" src="box.png" alt="">
+                                </div>
+                                
+                                <div class="studentBody">
+                    
+                                    <p class="name">
+                                        Sergio Moreno Antequera
+                                    </p>
+                                    <p class="avaliable">
+                                        Disponible
+                                    </p>
+                                    <div class="courses">
+                                        <span class="course"> DAW </span>
+                                        <span class="course"> DAM </span>
+                                        <span class="course"> ASIR </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2 mx-1" style="margin-left: 15% !important">
+                            <div class="student">
+                                <div class="studentHead">
+                                    <img class="user" src="box.png" alt="">
+                                </div>
+                                
+                                <div class="studentBody">
+                    
+                                    <p class="name">
+                                        Sergio Moreno Antequera
+                                    </p>
+                                    <p class="avaliable">
+                                        Disponible
+                                    </p>
+                                    <div class="courses">
+                                        <span class="course"> DAW </span>
+                                        <span class="course"> DAM </span>
+                                        <span class="course"> ASIR </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2 mx-1">
+                            <div class="student">
+                                <div class="studentHead">
+                                    <img class="user" src="box.png" alt="">
+                                </div>
+                                
+                                <div class="studentBody">
+                    
+                                    <p class="name">
+                                        Sergio Moreno Antequera
+                                    </p>
+                                    <p class="avaliable">
+                                        Disponible
+                                    </p>
+                                    <div class="courses">
+                                        <span class="course"> DAW </span>
+                                        <span class="course"> DAM </span>
+                                        <span class="course"> ASIR </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Boton para ir al menu de admin --}}
             <div id="admin">
                 <img src="{{url('img/icons/admin.png')}}" alt="">
             </div>
@@ -66,7 +156,7 @@
             //Celia maps aparece
             $("#title").animate({
                 opacity:1
-            }, 600, function(){
+                }, 600, function(){
                 //El subtitulo aparece
                 $("#subTitle").css({display:"block"});
                 $("#subTitle").animate({
@@ -90,6 +180,11 @@
 
             $("#admin").click(function(){
                 window.location.href = "{{route("map.index")}}";
+            });
+
+            $(".devLink").click(function(e){
+                e.preventDefault();
+
             });
         });
     </script>
