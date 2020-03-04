@@ -51,7 +51,7 @@ class ImagesTableSeeder extends Seeder
             'description' => '',
             'file_name' => 'plaza-vieja-img-01.jpg',
             'file_path' => 'img/hotspots',
-            'hotspot_id' => 6,
+            'hotspot_id' => 5,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -62,7 +62,7 @@ class ImagesTableSeeder extends Seeder
             'description' => '',
             'file_name' => 'plaza-vieja-img-02.jpg',
             'file_path' => 'img/hotspots',
-            'hotspot_id' => 6,
+            'hotspot_id' => 5,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -73,7 +73,7 @@ class ImagesTableSeeder extends Seeder
             'description' => '',
             'file_name' => 'plaza-vieja-img-03.jpg',
             'file_path' => 'img/hotspots',
-            'hotspot_id' => 6,
+            'hotspot_id' => 5,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -82,9 +82,9 @@ class ImagesTableSeeder extends Seeder
             
             'title' => 'Puerta Purchena',
             'description' => '',
-            'file_name' => 'puerta-purchena-img-01.jpg',
+            'file_name' => 'puerta-purchena-img-04-en-la-actualidad.jpg',
             'file_path' => 'img/hotspots',
-            'hotspot_id' => 7,
+            'hotspot_id' => 5,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -95,7 +95,7 @@ class ImagesTableSeeder extends Seeder
             'description' => '',
             'file_name' => 'puerta-purchena-img-02.jpg',
             'file_path' => 'img/hotspots',
-            'hotspot_id' => 7,
+            'hotspot_id' => 6,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -106,7 +106,7 @@ class ImagesTableSeeder extends Seeder
             'description' => '',
             'file_name' => 'puerta-purchena-img-03.jpg',
             'file_path' => 'img/hotspots',
-            'hotspot_id' => 7,
+            'hotspot_id' => 6,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -115,7 +115,18 @@ class ImagesTableSeeder extends Seeder
             
             'title' => 'Puerta Purchena',
             'description' => '',
-            'file_name' => 'puerta-purchena-img-04.jpg',
+            'file_name' => 'puerta-purchena-img-03.jpg',
+            'file_path' => 'img/hotspots',
+            'hotspot_id' => 6,
+            'created_at' => date('Y-m-d H-m-s'),
+            'updated_at' => date('Y-m-d H-m-s'),
+        ]);
+
+        DB::table('images')->insert([    
+            
+            'title' => 'Estadio de los juegos Mediterraneos',
+            'description' => '',
+            'file_name' => 'estadio-juegos-mediterraneos-img-01.jpg',
             'file_path' => 'img/hotspots',
             'hotspot_id' => 7,
             'created_at' => date('Y-m-d H-m-s'),
@@ -140,6 +151,17 @@ class ImagesTableSeeder extends Seeder
             'file_name' => 'mercado-central-img-01.jpg',
             'file_path' => 'img/hotspots',
             'hotspot_id' => 3,
+            'created_at' => date('Y-m-d H-m-s'),
+            'updated_at' => date('Y-m-d H-m-s'),
+        ]);
+
+        DB::table('images')->insert([    
+            
+            'title' => 'Refugios de la Guerra Civil',
+            'description' => '',
+            'file_name' => 'refugios-guerra-civil-img-01.jpg',
+            'file_path' => 'img/hotspots',
+            'hotspot_id' => 4,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);

@@ -22,6 +22,7 @@ class HotspotController extends Controller
      */
     public function index(){
         $hotspot = Hotspot::all();
+        //d($hotspot[0]->images[0]);
         return view('hotspot.index', ['hotspots'=>$hotspot]);
     }
 

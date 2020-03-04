@@ -50,3 +50,10 @@ body, html {
 .card-body {
     padding: 2px 16px;
 }
+
+.descriptionOverflow{
+    white-space: nowrap;
+    text-overflow: ellipsis;    
+    display: block;
+    overflow: hidden;
+}

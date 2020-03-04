@@ -5,89 +5,46 @@
 @section('header')
 @endsection
 
-
 @section('content')
 
-<div class="container mt-5">
-
-    <div class="row">
-        <form action="{{route('user.create')}}" method="GET">
-            @csrf
-            @method("GET|HEAD")
-            <input type="submit" value="Insertar">
-        </form>
-    </div>
-
-    <div id="cabecera" class="row font-weight-bold">
-        <div class="col-1">
-            Id
-        </div>
-        <div class="col-2">
-            Nombre
-        </div>
-        <div class="col-2">
-            Email
-        </div>
-        <!--
-        <div class="col-3">
-            Contraseña
-        </div>
--->
-        <div class="col-2 text-center">
-            Tipo
-        </div>
-        <div class="col-1">
-            Modificar
-        </div>
-        <div class="col-1">
-            Eliminar
-        </div>
-    </div>
-
-    @foreach ($userList as $user)
-    <div id="usuario" class="row mt-4">
-        <div id="id" class="col-1">
-            {{$user->id}}
-        </div>
-        <div class="col-2 text-left">
-            {{$user->name}}
-        </div>
-        <div class="col-2">
-            {{$user->email}}
-        </div>
-        <!--
-                <div class="col-3" style="overflow: hidden">
-                {{$user->password}}
+<div class="container text-center">
+    <div id="allelements">       
+        @foreach ($userList as $user)
+            <div class="wholePanel" style="height:13%">
+                <div class="leftPanel" style="width:10%; position: relative"> 
+                    <img src="/img/icons/userWhite.png" width="45%" alt="" class="img-fluid pt-1">
+                    <p><strong><span class="userId text-4 pb-2">{{$user->id}}</span></strong></p>
                 </div>
-                -->
-        <div class="col-2 text-center">
-            {{$user->level}}
-        </div>
-        <div class="col-1">
-            <form action="{{route('user.edit', ["user" => $user->id])}}" method="GET">
-                @csrf
-                @method("GET|HEAD")
-                <button class="btn" id="editar" type="submit" value="Editar">
-                    <img src="/img/icons/editYellow.png" style="height:2em" alt="">
-                </button>
-            </form>
-        </div>
-        <div class="col-1">
-            <form action="{{route('user.destroy',$user->id)}}" method="POST">
-                @csrf
-                @method("DELETE")
-                <button id="borrar" class="btn" type="submit" value="Borrar">
-                    <img src="/img/icons/deleteRed.png" style="height:2em" alt="">
-                </button>
-            </form>
-        </div>
-    </div>
-
-    @endforeach
-
-
+                <div class="rightPanel" style="width:90%; position: relative;">
+                    <!-- nombre usuario -->
+                    <p><b class="text-4">{{$user->name}}</b><br>
+                        {{$user->email}}
+                    </p>
+                    <!-- botones -->
+                     <!-- modificar -->
+                    <form action="{{route('user.edit', ["user" => $user->id])}}" method="GET">
+                        @csrf
+                        @method("GET|HEAD")
+                        <button class="btn" id="editar" type="submit" value="Editar">
+                            <div class="cornerButton" style="right: 50px">
+                                <img class="center" src="{{url("img/icons/edit.svg")}}" alt=""> 
+                            </div>
+                        </button>
+                    </form>
+                     <!-- borrar -->
+                    <form action="{{route('user.destroy',$user->id)}}" method="POST">
+                        @csrf
+                        @method("DELETE")
+                        <button id="borrar" class="btn" type="submit" value="Borrar">
+                            <div class="deleteCornerButton cornerButton">
+                                <img class="center" src="{{url("img/icons/delete.svg")}}" alt=""> 
+                            </div>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        @endforeach
+    </div>    
 </div>
-</div>
 
-</div>
 @endsection
