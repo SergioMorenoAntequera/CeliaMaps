@@ -1,7 +1,7 @@
 html, body {
     width: 100%;
     height: 100%;
-    
+    overflow: hidden;
 }
 
 .noselect {
@@ -158,11 +158,11 @@ button {
 /* Ventana de los desarrolladores */
 #developers{
     position: absolute;
+    display: none;
+    opacity: 0;
     width: 100%;
     height: auto;
-    /* left: 10%; */
-    top: 5%;
-
+    top: 30%;
     /* background-color: white;
     border: solid 1px #1c3668;
     border-radius: 20px; */
@@ -170,8 +170,8 @@ button {
 
 /* Cosas donde salimos la gente */
 .student {
-    height: 275px;
-    width: 100%;
+    height: 230px;
+    width: 150px;
 }
 .student > .studentHead {
     z-index: 2;
@@ -210,6 +210,18 @@ button {
     background: linear-gradient(135deg, rgba(37,143,117,1) 0%, rgba(58,179,153,1) 100%);
 }
 .student > .studentBody > .name {
-    
     font-weight: bold;
+}
+.student > .studentBody > .contact {
+    width: 100%;
+    background-color: red;
+    height: 30px;
+}
+.student > .studentBody > .contact > .contactThing {
+    width: 20%;
+    height: 100%;    
+    cursor: pointer;
+    margin-left: 3px;
+    margin-right: 3px;
+    float: left;
 }

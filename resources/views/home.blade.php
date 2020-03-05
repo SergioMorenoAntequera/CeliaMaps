@@ -56,81 +56,129 @@
             <div id="developers" >
                 <div class="container-fluid">
                     <div class="row justify-content-center mt-4">
-                        <div class="col-2 mx-1">
+                        <div class="studentContainer" style="margin-right: 5% !important">
                             <div class="student">
                                 <div class="studentHead">
-                                    <img class="user" src="box.png" alt="">
+                                    <img class="user" src="{{url("img/icons/admin.png")}}" alt="">
                                 </div>
-                                
                                 <div class="studentBody">
                                     <p class="name">
                                         Sergio Moreno Antequera
                                     </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-2 mx-1" style="margin-right: 15% !important">
-                            <div class="student">
-                                <div class="studentHead">
-                                    <img class="user" src="box.png" alt="">
-                                </div>
-                                
-                                <div class="studentBody">
-                    
-                                    <p class="name">
-                                        Sergio Moreno Antequera
-                                    </p>
-                                    <p class="avaliable">
-                                        Disponible
-                                    </p>
-                                    <div class="courses">
-                                        <span class="course"> DAW </span>
-                                        <span class="course"> DAM </span>
-                                        <span class="course"> ASIR </span>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col p-2">
+                                                <a href="mailto:seranmoreno500@gmail.com">
+                                                    <img class="img-fluid" src="{{url("img/icons/email.svg")}}" alt="">
+                                                </a>
+                                            </div>
+                                            <div class="col p-2">
+                                                <a href="https://github.com/SergioMorenoAntequera">
+                                                    <img class="img-fluid" src="{{url("img/icons/github.svg")}}" alt="">
+                                                </a>
+                                            </div>
+                                            <div class="col p-2">
+                                                <a href="https://www.linkedin.com/in/sergio-moreno-650133194/">
+                                                    <img class="img-fluid" src="{{url("img/icons/linkedin.svg")}}" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-2 mx-1" style="margin-left: 15% !important">
+                        <div class="studentContainer" style="margin-right: 13% !important">
                             <div class="student">
                                 <div class="studentHead">
-                                    <img class="user" src="box.png" alt="">
+                                    <img class="user" src="{{url("img/icons/admin.png")}}" alt="">
                                 </div>
                                 
                                 <div class="studentBody">
-                    
                                     <p class="name">
                                         Sergio Moreno Antequera
                                     </p>
-                                    <p class="avaliable">
-                                        Disponible
-                                    </p>
-                                    <div class="courses">
-                                        <span class="course"> DAW </span>
-                                        <span class="course"> DAM </span>
-                                        <span class="course"> ASIR </span>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col p-2">
+                                                <a href="mailto:seranmoreno500@gmail.com">
+                                                    <img class="img-fluid" src="{{url("img/icons/email.svg")}}" alt="">
+                                                </a>
+                                            </div>
+                                            <div class="col p-2">
+                                                <a href="https://github.com/SergioMorenoAntequera">
+                                                    <img class="img-fluid" src="{{url("img/icons/github.svg")}}" alt="">
+                                                </a>
+                                            </div>
+                                            <div class="col p-2">
+                                                <a href="https://www.linkedin.com/in/sergio-moreno-650133194/">
+                                                    <img class="img-fluid" src="{{url("img/icons/linkedin.svg")}}" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-2 mx-1">
+                        <div class="studentContainer" style="margin-left: 13% !important">
                             <div class="student">
                                 <div class="studentHead">
-                                    <img class="user" src="box.png" alt="">
+                                    <img class="user" src="{{url("img/icons/admin.png")}}" alt="">
                                 </div>
                                 
                                 <div class="studentBody">
-                    
                                     <p class="name">
                                         Sergio Moreno Antequera
                                     </p>
-                                    <p class="avaliable">
-                                        Disponible
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col p-2">
+                                                <a href="mailto:seranmoreno500@gmail.com">
+                                                    <img class="img-fluid" src="{{url("img/icons/email.svg")}}" alt="">
+                                                </a>
+                                            </div>
+                                            <div class="col p-2">
+                                                <a href="https://github.com/SergioMorenoAntequera">
+                                                    <img class="img-fluid" src="{{url("img/icons/github.svg")}}" alt="">
+                                                </a>
+                                            </div>
+                                            <div class="col p-2">
+                                                <a href="https://www.linkedin.com/in/sergio-moreno-650133194/">
+                                                    <img class="img-fluid" src="{{url("img/icons/linkedin.svg")}}" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="studentContainer" style="margin-left: 5% !important">
+                            <div class="student">
+                                <div class="studentHead">
+                                    <img class="user" src="{{url("img/icons/admin.png")}}" alt="">
+                                </div>
+                                
+                                <div class="studentBody">
+                                    <p class="name">
+                                        Sergio Moreno Antequera
                                     </p>
-                                    <div class="courses">
-                                        <span class="course"> DAW </span>
-                                        <span class="course"> DAM </span>
-                                        <span class="course"> ASIR </span>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col p-2">
+                                                <a href="mailto:seranmoreno500@gmail.com">
+                                                    <img class="img-fluid" src="{{url("img/icons/email.svg")}}" alt="">
+                                                </a>
+                                            </div>
+                                            <div class="col p-2">
+                                                <a href="https://github.com/SergioMorenoAntequera">
+                                                    <img class="img-fluid" src="{{url("img/icons/github.svg")}}" alt="">
+                                                </a>
+                                            </div>
+                                            <div class="col p-2">
+                                                <a href="https://www.linkedin.com/in/sergio-moreno-650133194/">
+                                                    <img class="img-fluid" src="{{url("img/icons/linkedin.svg")}}" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -182,9 +230,33 @@
                 window.location.href = "{{route("map.index")}}";
             });
 
+            var devsShow = false;
             $(".devLink").click(function(e){
                 e.preventDefault();
-
+                devsShow = !devsShow;
+                var devs = $("#developers");
+                if(devsShow){
+                    devs.css({
+                        display: "block",
+                    });
+                    devs.animate({
+                        opacity: 1,
+                        top: "5%",
+                    }, 600);
+                } else {
+                    devs.animate({
+                        opacity: 0,
+                        top: "30%",
+                    }, 600, function(){
+                        devs.css({
+                            display: "none",
+                        });
+                    });
+                }
+                
+                
+                
+                
             });
         });
     </script>
