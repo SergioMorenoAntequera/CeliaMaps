@@ -35,11 +35,11 @@
                     </div>
                     <div class="form-group">
                         <label>Descripcion <span class="text-danger">*</span></label>
-                        <textarea class="form-control" style="height: 110px"><?php echo e($hotspot->description); ?></textarea>
+                        <textarea class="form-control" style="height: 110px" name="description"><?php echo e($hotspot->description); ?></textarea>
                     </div>
                     <div class="form-group">
-                        <label>Imagen del hotspot <span class="text-danger">*</span></label>
-                        <input id="uploadImage" type="file" accept=".png, .jpeg, .jpg" value="<?php echo e($hotspot->images[0]->file_name); ?>" class="form-control clearInput" name="image" placeholder="Archivo del mapa">
+                        <input type="hidden" class="form-control" name="lat" value="<?php echo e($hotspot->lat); ?>">
+                        <input type="hidden" class="form-control" name="lng" value="<?php echo e($hotspot->lng); ?>">
                     </div>
 
                     <button type="submit" class="mt-3 btn btn-success"> Confirmar Cambios </button>

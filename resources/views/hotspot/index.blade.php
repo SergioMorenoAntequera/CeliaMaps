@@ -16,16 +16,9 @@
                 <!-- Cada uno de los elementos de la página -->
                 <div class="wholePanel" style="height: 186px;">
 
-					<!-- Columna con el numero y las flechas -->
-					@php
-						$images = $hotspot->images()->get();
-						$filesnasmes = null;
-						for($i = 0; $i < count($images); $i++){
-							$filesnasmes[] = $images[$i]->file_name;
-						}
-					@endphp
+                    <!-- Columna con el numero y las flechas -->
 					<div class="leftPanel" style="width:25%; position: relative; overflow: hidden">
-						<img src="{{url('img/hotspots/', $filesnasmes[0])}}" style="height: 100%">
+						<img src="{{url('img/hotspots/'.$hotspot->images[0]->file_name.'')}}" style="height: 100%">
                     </div>
 
                     <!-- Columna con la información del hotspot -->
@@ -83,3 +76,4 @@
     </div>
     </a>
 @endsection
+

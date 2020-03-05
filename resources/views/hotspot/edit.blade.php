@@ -37,11 +37,11 @@
                     </div>
                     <div class="form-group">
                         <label>Descripcion <span class="text-danger">*</span></label>
-                        <textarea class="form-control" style="height: 110px">{{$hotspot->description}}</textarea>
+                        <textarea class="form-control" style="height: 110px" name="description">{{$hotspot->description}}</textarea>
                     </div>
                     <div class="form-group">
-                        <label>Imagen del hotspot <span class="text-danger">*</span></label>
-                        <input id="uploadImage" type="file" accept=".png, .jpeg, .jpg" value="{{$hotspot->images[0]->file_name}}" class="form-control clearInput" name="image" placeholder="Archivo del mapa">
+                        <input type="hidden" class="form-control" name="lat" value="{{$hotspot->lat}}">
+                        <input type="hidden" class="form-control" name="lng" value="{{$hotspot->lng}}">
                     </div>
 
                     <button type="submit" class="mt-3 btn btn-success"> Confirmar Cambios </button>

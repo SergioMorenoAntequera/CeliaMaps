@@ -11,10 +11,10 @@
     <link rel="stylesheet" href="{{'js/Leaflet/leaflet.css'}}">
     <!-- Plugin toolbar -->
     <script src="{{url('js/Leaflet/pluginToolbar/leaflet.toolbar-src.js')}}"></script>
-    <link rel="stylesheet" href="{{'js/Leaflet/pluginToolbar/leaflet.toolbar-src.css'}}">
+    <link rel="stylesheet" href="{{url('js/Leaflet/pluginToolbar/leaflet.toolbar-src.css')}}">
     <!-- Plugin images -->
     <script src="{{url('js/Leaflet/pluginImages/leaflet.distortableimage.js')}}"></script>
-    <link rel="stylesheet" href="{{'js/Leaflet/pluginImages/leaflet.distortableimage.css'}}">
+    <link rel="stylesheet" href="{{url('js/Leaflet/pluginImages/leaflet.distortableimage.css')}}">
 
     <!-- JQUERY -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -249,7 +249,7 @@
                         c = 0;
                         hotspots.forEach(hotspot => {
                             if(hotspot.title.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
-                                $('#streetsFound').append("<div class='street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ hotspot.title + "</div>");
+                                $('#streetsFound').append("<div class='hotspot street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ hotspot.title + "</div>");
                                 if(++c == 5){
                                     return;
                                 }  
@@ -339,6 +339,23 @@
             // });
         });
 
+        
+        // Creamos los iconos del marcador
+        let markerHotspot = L.icon({
+            iconUrl: "{{url('img/icons/token.svg')}}",
+            iconSize:     [40, 100],
+            iconAnchor:   [15,60],
+        });
+        let markerStreet = L.icon({
+            iconUrl: "{{url('img/icons/token-selected.svg')}}",
+            iconSize:     [40, 100],
+            iconAnchor:   [15,60],
+        });
+        // Creamos un marcador global
+        let marker = L.marker([0,0],{icon:markerStreet ,opacity:0});
+        marker.addTo(map);
+
+
         // Barra de busqueda y como nos mueve al punto en el que se encuentre el 
         // hotspot o la calle en la que se pinche
         $('#streetsFound').on('click', '.street', function(){
@@ -358,6 +375,19 @@
                     return;
                 }
             });
+
+            // Comprobamos el tipo de marcador a mostrar para elegir icono
+            if($(this).hasClass("hotspot")){
+                marker.setIcon(markerHotspot);
+            }else{
+                marker.setIcon(markerStreet);
+            }
+            // Ubicamos el marcador en la posicion de la calle
+            marker.setLatLng([lat,lng]);
+            // Mostramos el marcador
+            marker.setOpacity(1);
+
+            // Centramos la pantalla en el marcador de la calle
             map.setView([lat, lng], 18);
 
             $('#streetsFound').empty();
