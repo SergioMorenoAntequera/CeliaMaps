@@ -174,9 +174,11 @@ class MapController extends Controller
             if(strpos($fileName, ".png")){
                 //Conseguimos la imagen
                 $miniature = imagecreatefrompng($mapsPath . $fileName);
+                
 
                 //Cortamos la imagen y comporbamos que la hemos cortado
-                $miniature = imagecrop($miniature, $dim);
+                //$miniature = imagecrop($miniature, $dim);
+                $miniature = (imagescale($miniature, $dim['x'], $dim['y'], IMG_NEAREST_NEIGHBOUR));
                 if ($miniature !== FALSE) {
                     // Header para visualizar
                     header("Content-type: image/png"); 
@@ -191,9 +193,10 @@ class MapController extends Controller
                 if(strpos($fileName, ".jpeg")){
                     //Conseguimos la imagen
                     $miniature = imagecreatefromjpeg($mapsPath . $fileName);
-
+                    
                     //Cortamos la imagen y comporbamos que la hemos cortado
-                    $miniature = imagecrop($miniature, $dim);
+                    //$miniature = imagecrop($miniature, $dim);
+                    $miniature = (imagescale($miniature, $dim['x'], $dim['y'], IMG_BILINEAR_FIXED));
                     if ($miniature !== FALSE) {
                         // Header para visualizar
                         header("Content-type: image/jpeg"); 

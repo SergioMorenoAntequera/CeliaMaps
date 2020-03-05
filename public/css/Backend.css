@@ -155,7 +155,7 @@ los formularios y seguramente algo más, pa quién lo quiera */
 }
 @media (max-width: 768px) {
     .wholePanel .leftPanel {display: none;}
-    .wholePanel .rightPanel {margin-left: auto; margin-right: auto; width: 100%; border-radius: 10px; margin: 0px;}
+    .wholePanel .rightPanel {margin-left: auto; margin-right: auto; width: 100% !important; border-radius: 10px; margin: 0px;}
 }
 .center {
     position: relative;
@@ -168,6 +168,8 @@ los formularios y seguramente algo más, pa quién lo quiera */
 .more {border: solid 0.5px #3ab398; padding: 2%; border-radius: 10px;}
 .clearInput { border: none; padding-left: 0px; padding-top: 1px;}
 .wholePanel .rightPanel label { font-weight: bold; }
+.wholePanel > .rightPanel .title { font-weight: bold; margin-bottom: 0px;}
+
 /* Las flechas del index para poder ordenar los mapas */
 .leftPanel input { width: 70%;}
 .leftPanel .bDown { position: absolute; left: 15%; bottom: 5%;}

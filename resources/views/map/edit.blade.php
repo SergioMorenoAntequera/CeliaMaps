@@ -10,7 +10,7 @@
     <div class="container text-center">
         <div class="wholePanel">
             <div class="leftPanel">
-                <div class="mt-3 content justify-content-center align-items-center">
+                <div class="mt-3 content ">
                     Modificando mapa
                     <br>
                     <p class="mb-3" style="margin-bottom: 0px;  font-size: 50px">{{$map->title}}</p>
