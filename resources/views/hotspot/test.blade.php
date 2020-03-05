@@ -6,13 +6,13 @@
 @section('cdn')
     <!-- LEAFLET -->
     <script src="{{url('/js/Leaflet/leaflet.js')}}"></script>
-    <link rel="stylesheet" href="{{'/js/Leaflet/leaflet.css'}}">
+    <link rel="stylesheet" href="{{url('/js/Leaflet/leaflet.css')}}">
     <!-- Plugin toolbar -->
     <script src="{{url('/js/Leaflet/pluginToolbar/leaflet.toolbar-src.js')}}"></script>
-    <link rel="stylesheet" href="{{'/js/Leaflet/pluginToolbar/leaflet.toolbar-src.css'}}">
+    <link rel="stylesheet" href="{{url('/js/Leaflet/pluginToolbar/leaflet.toolbar-src.css')}}">
     <!-- Plugin images -->
     <script src="{{url('/js/Leaflet/pluginImages/leaflet.distortableimage.js')}}"></script>
-    <link rel="stylesheet" href="{{'/js/Leaflet/pluginImages/leaflet.distortableimage.css'}}">
+    <link rel="stylesheet" href="{{url('/js/Leaflet/pluginImages/leaflet.distortableimage.css')}}">
 
     <!-- JQUERY -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -334,8 +334,7 @@
     
                     <div class="modal-body">
                         <p>¿Está seguro de que desea eliminar el hotspot?</p>
-                        <button id="btn-cancel" type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
-                        <button id="btn-confirm" type="button" class="btn btn-danger deleteConfirm" data-dismiss="modal">Eliminar</button>
+                        <button id="btn-confirm" type="button" class="btn btn-danger float-right deleteConfirm" data-dismiss="modal">Eliminar</button>
                     </div>
                 </div>
             </div>
@@ -497,6 +496,9 @@
                 // Create form attributes
                 $("#modal-form").attr("action", "{{route('hotspot.store')}}");
                 $("input[name='_method']").val("POST");
+                // Image filds
+                $(".images-fields").show();
+                $(".images-fields input").prop('disabled', false);
                 // Clear fields
                 $("input[name='title']").val("");
                 $("input[name='description']").val("");
@@ -595,8 +597,8 @@
 
                 // Coordinates mouse
                 $('.leaflet-marker-icon').mousemove(function(event){
-                    var latPreview = event.screenY -424;
-                    var lgnPreview = event.screenX -140;
+                    var latPreview = event.pageY -240;
+                    var lgnPreview = event.pageX -140;
 
                     // Display block no funciona con css
                     $("#preview").attr('style', 'display: block !important');
