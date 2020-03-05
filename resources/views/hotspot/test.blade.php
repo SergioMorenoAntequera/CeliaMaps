@@ -496,6 +496,9 @@
                 // Create form attributes
                 $("#modal-form").attr("action", "{{route('hotspot.store')}}");
                 $("input[name='_method']").val("POST");
+                // Image filds
+                $(".images-fields").show();
+                $(".images-fields input").prop('disabled', false);
                 // Clear fields
                 $("input[name='title']").val("");
                 $("input[name='description']").val("");
@@ -594,8 +597,8 @@
 
                 // Coordinates mouse
                 $('.leaflet-marker-icon').mousemove(function(event){
-                    var latPreview = event.screenY -424;
-                    var lgnPreview = event.screenX -140;
+                    var latPreview = event.pageY -240;
+                    var lgnPreview = event.pageX -140;
 
                     // Display block no funciona con css
                     $("#preview").attr('style', 'display: block !important');
