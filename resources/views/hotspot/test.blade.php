@@ -6,13 +6,13 @@
 @section('cdn')
     <!-- LEAFLET -->
     <script src="{{url('/js/Leaflet/leaflet.js')}}"></script>
-    <link rel="stylesheet" href="{{'/js/Leaflet/leaflet.css'}}">
+    <link rel="stylesheet" href="{{url('/js/Leaflet/leaflet.css')}}">
     <!-- Plugin toolbar -->
     <script src="{{url('/js/Leaflet/pluginToolbar/leaflet.toolbar-src.js')}}"></script>
-    <link rel="stylesheet" href="{{'/js/Leaflet/pluginToolbar/leaflet.toolbar-src.css'}}">
+    <link rel="stylesheet" href="{{url('/js/Leaflet/pluginToolbar/leaflet.toolbar-src.css')}}">
     <!-- Plugin images -->
     <script src="{{url('/js/Leaflet/pluginImages/leaflet.distortableimage.js')}}"></script>
-    <link rel="stylesheet" href="{{'/js/Leaflet/pluginImages/leaflet.distortableimage.css'}}">
+    <link rel="stylesheet" href="{{url('/js/Leaflet/pluginImages/leaflet.distortableimage.css')}}">
 
     <!-- JQUERY -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -334,8 +334,7 @@
     
                     <div class="modal-body">
                         <p>¿Está seguro de que desea eliminar el hotspot?</p>
-                        <button id="btn-cancel" type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
-                        <button id="btn-confirm" type="button" class="btn btn-danger deleteConfirm" data-dismiss="modal">Eliminar</button>
+                        <button id="btn-confirm" type="button" class="btn btn-danger float-right deleteConfirm" data-dismiss="modal">Eliminar</button>
                     </div>
                 </div>
             </div>
