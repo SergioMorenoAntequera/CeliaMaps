@@ -290,9 +290,20 @@
                             <input type="text" class="form-control" name="description">
                         </div>
                         <!-- Hotspot images -->
-                        <div class="form-group" id="imagesUpload">
+                        <div class="form-group images-fields" id="imagesUpload">
                             <label class="text-dark">Imagenes del Hotspot</label><br>
                             <input type="file" name="images[]" class="fileToUpload">
+                        </div>
+                        <div class="form-group images-fields" id="filePathUpdate">
+                            <input type="hidden" name="filePath" value="/img/hotspots/" disabled>
+                        </div>
+                        <div class="form-group images-fields">
+                            <label class="text-dark">Titulo de la imagen</label>
+                            <input type="text" class="form-control" name="titleImage">
+                        </div>
+                        <div class="form-group images-fields">
+                            <label class="text-dark">Descripcion de la imagen</label>
+                            <input type="text" class="form-control" name="descriptionImage">
                         </div>
                         <!-- Hotspot points -->
                         <div>
@@ -505,9 +516,13 @@
                 // Edit form attributes
                 $("#modal-form").attr("action", "{{route('hotspot.store')}}/"+hotspot.id);
                 $("input[name='_method']").val("PUT");
+                // Image filds
+                $(".images-fields").hide();
+                $(".images-fields input").prop('disabled', true);
                 // Fill inputs fields
                 $("input[name='title']").val(hotspot.title);
                 $("input[name='description']").val(hotspot.description);
+                ///////$("input[name='description']").val(hotspot->images[]);
                 // Fill hidden values
                 $("#modal-lat").val(hotspot.lat);
                 $("#modal-lng").val(hotspot.lng);
