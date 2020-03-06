@@ -141,7 +141,7 @@
                         <div class="studentContainer" style="margin-left: 5% !important">
                             <div class="student">
                                 <div class="studentHead">
-                                    <img class="user" src="{{url("img/icons/admin.png")}}" alt="">
+                                    <img class="user" src="{{url("img/resources/sergio.jpg")}}" alt="">
                                 </div>
                                 <div class="studentBody">
                                     <p class="name">

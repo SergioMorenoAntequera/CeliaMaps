@@ -79,6 +79,7 @@ class MapController extends Controller
      */
     public function show($id){
         $data['map'] = Map::find($id);
+        $data['streets'] = Street::all();
         return view("map.show", $data);
     }
     
@@ -227,6 +228,8 @@ class MapController extends Controller
      */
     public function edit($id){
         $data['map'] = Map::find($id);
+        $data['maps'] = Map::all();
+        $data['streets'] = Street::all();
         return view('map.edit', $data);
     }
 
@@ -261,6 +264,37 @@ class MapController extends Controller
             $file = $r->file('miniature');
             $file->move(public_path("/img/miniatures/"), $map->id.$file->getClientOriginalName());
             $map->miniature = $map->id.$file->getClientOriginalName();
+        }
+
+        if($r->streetsToDo == "Calles actuales"){
+            
+        } else {
+            //Herencia de calles de otro mapa
+            if($r->inherit != "Ninguno"){
+                //Borramos las que tenia antes
+                $map->streets()->detach();
+
+                //Añadimos las calles del nuevo mapa
+                $mapToInherit = DB::table('maps')->where('title', 'like',  $r->inherit)->first(); 
+                $mapToInherit = Map::find($mapToInherit->id);
+                $mapToInherit = Map::find($mapToInherit->id);
+                
+                $streets = $mapToInherit->streets->toArray();
+
+                foreach ($streets as $mapStreet) {
+                    $mapStreet = DB::table('maps_streets')
+                            ->where('street_id', $mapStreet['id'])
+                            ->where('map_id', $mapToInherit->id)->first();
+                    $info = MapStreet::find($mapStreet->id);
+
+                    $newMapsStreet = new MapStreet();
+                    $newMapsStreet->id = MapStreet::max('id') + 1;
+                    $newMapsStreet->street_id = $info->street_id;
+                    $newMapsStreet->map_id = $map->id;
+                    
+                    $newMapsStreet->save();
+                }
+            }
         }
 
         $map->update();

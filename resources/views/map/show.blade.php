@@ -28,23 +28,50 @@
                 <p class="title"> Fecha</p>
                 <p>{{$map->date}}</p>
 
-                <p class="title"> Descipción</p>
-                <p>{{$map->description}}</p>
-
+                {{-- Un more info donde se muestra la informacióon adicional --}}
                 <div class="showMore noselect">
                     <p><i class="fa fa-caret-right"></i> Información adicional </p>
                 </div>
                 <div class="more" style="display: none">
+                    <p class="title"> Descipción</p>
+                    <p>{{$map->description}}</p>
+
                     <p class="title"> Ciudad</p>
                     <p>{{$map->city}}</p>
 
                     <p class="title"> Nivel de la capa </p>
                     <p>{{$map->level}}</p>
                 </div>
-                <a class="btn btn-primary" href="{{route('map.edit', $map->id)}}" role="button">
-                    <img class="center img-fluid" src="{{url("img/icons/edit.svg")}}" alt=""> 
+
+                {{-- Un more info donde se muestran las calles de los mapas --}}
+                <div class="showMore noselect mt-4">
+                    <p><i class="fa fa-caret-right"></i> Calles asociadas </p>
+                </div>
+                <div class="more" style="display: none">
+                    @php $i = 1 @endphp
+                    
+                    @if (sizeof($map->streets) > 0)
+                        <b>Calles: </b> <br>
+                        @foreach ($map->streets as $street)
+                            <p class="streetInMap">
+                                {{$street->type->name}} {{$street->name}}
+                            </p>
+                        @endforeach
+                    @else
+                        <p class="text-danger"> Este mapa no tienen ninguna calle </p> <br>
+                        <a href="{{route('street.create')}}"> Añadir calles </a>
+                    @endif
+                        
+                    <div style="clear:both;"></div>
+                </div>
+
+                {{-- Boton para modificar --}}
+                <a href="{{route('map.edit', $map->id)}}">
+                    <button class=" mt-3 btn btn-warning text-white">
+                        Modificar
+                    </button>
                 </a>
-                
+                <!-- FIN Boton para modificar -->
 
                 <script>
                     $(document).ready(function(){
@@ -56,7 +83,7 @@
                                 $(this).find(".fa").removeClass("fa-caret-down");
                                 $(this).find(".fa").addClass("fa-caret-right");
                             }
-                            $(this).siblings(".more").slideToggle(200);
+                            $(this).next(".more").slideToggle(200);
                         });
                     });
                 </script>
