@@ -24,10 +24,10 @@ class formularioUsuarios extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required';
-            'email'=>'required|email';
-            'password'=>'required|password';
-            'level'=>'required';
+            'name'=>'required',
+            'email'=>'required|email',
+            'password'=>'required|password',
+            'level'=>'required',
         ];
     }
 }

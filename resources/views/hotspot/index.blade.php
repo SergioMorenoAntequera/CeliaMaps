@@ -77,3 +77,12 @@
     </a>
 @endsection
 
+@section('scripts')
+    <!------------------------------------ FUNCTIONS WITH AJAX ---------------------------------->
+    <!--------------------------------- DELETE, MOVE UP AND DOWN -------------------------------->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+    <script> var token = '{{csrf_token()}}'</script>
+    <script type="text/javascript" src="{{url('/js/moveAndDeleteMaps.js')}}">
+    </script>
+    
+@endsection
