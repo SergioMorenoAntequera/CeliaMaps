@@ -96,18 +96,38 @@
                             <div style="max-height: 400px; overflow-y: auto;" class="tab-pane fade show active ml-2" id="nav-streets" role="tabpanel" aria-labelledby="nav-streets-tab">
                                 <div>
                                     @if (sizeof($map->streets) > 0)
-                                        <b>Calles: </b> <br>
+                                        <b>Calles del mapa: </b> <br>
                                         @foreach ($map->streets as $street)
-                                            <p class="streetInMap">
-                                                <input type="checkbox" name="calles[]" value="{{$street->id}}" checked>
+                                            <p class="streetInList streetInMap">
+                                                <input type="checkbox" name="streetsInMap[]" value="{{$street->id}}" checked>
                                                 {{$street->type->name}} {{$street->name}}
                                             </p>
                                         @endforeach
                                     @else
                                         <p class="text-danger"> Este mapa no tienen ninguna calle </p> <br>
                                     @endif
-                                        
+
+                                    <div style="clear:both;"> </div>
+                                    
+                                    <b> Resto de calles: </b> <br>
+                                    @foreach ($streets as $street)
+                                        @php $found = false; @endphp
+
+                                        @foreach ($map->streets as $mapStreet)
+                                            @if ($street->id == $mapStreet->id)
+                                                @php $found = true; @endphp
+                                            @endif
+                                        @endforeach
+
+                                        @if (!$found)
+                                            <p class="streetInList streetInGeneral">
+                                                <input type="checkbox" name="streetsInGeneral[]" value="{{$street->id}}">
+                                                {{$street->type->name}} {{$street->name}}
+                                            </p>
+                                        @endif
+                                    @endforeach
                                     <div style="clear:both;"></div>
+                                    
                                 </div>
                                 
                             </div>
@@ -125,7 +145,7 @@
                                         <p class="mapToInherit selected"> Ninguno </p>
                                         @foreach ($maps as $mapInList)
                                             @if ($mapInList->title != $map->title)
-                                                <p class="mapToInherit"> {{$mapInList->title}} </p>
+                                                 <p class="mapToInherit"> {{$mapInList->title}} </p>
                                             @endif
                                             
                                             {{-- <script> mapsListed.push({id:"{{$map->id}}", title:"{{$map->title}}"}); </script> --}}

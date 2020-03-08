@@ -180,7 +180,7 @@ los formularios y seguramente algo más, pa quién lo quiera */
 .nav .nav-tabs .nav-item { color: black; }
 #mapsList { max-height: 450px; overflow-y: auto; }
 #streetsList { max-height: 450px; overflow-y: auto; }
-.more .streetInMap { width: 45%; float: left; margin-right: 5px; }
+.more .streetInList { width: 45%; float: left; margin-right: 5px; }
 /* Boton para añadir registros y tal */
 #addButton{
     position: fixed;
