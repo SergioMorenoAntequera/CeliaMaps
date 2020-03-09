@@ -59,7 +59,7 @@
                         @endforeach
                     @else
                         <p class="text-danger"> Este mapa no tienen ninguna calle </p> <br>
-                        <a href="{{route('street.create')}}"> Añadir calles </a>
+                        <a href="{{route('map.edit', $map->id)}}"> Añadir calles </a>
                     @endif
                         
                     <div style="clear:both;"></div>

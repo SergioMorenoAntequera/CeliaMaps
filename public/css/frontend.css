@@ -162,6 +162,7 @@ html, body {
     position: relative;
     top: -3px;
     margin-left: 2px;
+    font-size: 18px;
 }
 
 .mapTrans > input {
