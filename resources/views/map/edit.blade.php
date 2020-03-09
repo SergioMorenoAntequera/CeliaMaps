@@ -121,7 +121,7 @@
 
                                         @if (!$found)
                                             <p class="streetInList streetInGeneral">
-                                                <input type="checkbox" name="streetsInGeneral[]" value="{{$street->id}}">
+                                                <input type="checkbox" name="streetsInMap[]" value="{{$street->id}}">
                                                 {{$street->type->name}} {{$street->name}}
                                             </p>
                                         @endif

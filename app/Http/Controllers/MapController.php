@@ -267,7 +267,12 @@ class MapController extends Controller
         }
 
         if($r->streetsToDo == "Calles actuales"){
+            $map->streets()->detach();
             
+            foreach ($r->streetsInMap as $streetId) {
+                $streetIn = Street::find($streetId);
+                $map->streets()->attach($streetIn);
+            }
         } else {
             //Herencia de calles de otro mapa
             if($r->inherit != "Ninguno"){
