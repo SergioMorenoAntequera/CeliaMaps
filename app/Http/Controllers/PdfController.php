@@ -11,9 +11,6 @@ class PdfController extends Controller
 {
     
     public function ver(){
-       
-        
-
         return view('search.probandopdf');
     }
     
