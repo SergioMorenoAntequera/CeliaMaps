@@ -15,8 +15,16 @@
                 <div class="wholePanel" style="height: 186px;">
 
                     <!-- Columna con el numero y las flechas -->
+                    
+					<?php
+						$images = $hotspot->images()->get();
+						$filesnasmes = null;
+						for($i = 0; $i < count($images); $i++){
+							$filesnasmes[] = $images[$i]->file_name;
+						}
+					?>
 					<div class="leftPanel" style="width:25%; position: relative; overflow: hidden">
-						<img src="<?php echo e(url('img/hotspots/'.$hotspot->images[0]->file_name.'')); ?>" style="height: 100%">
+						<img src="<?php echo e(url('img/hotspots/', $filesnasmes[0])); ?>" style="height: 100%">
                     </div>
 
                     <!-- Columna con la información del hotspot -->
@@ -75,13 +83,5 @@
     </a>
 <?php $__env->stopSection(); ?>
 
-<?php $__env->startSection('scripts'); ?>
-    <!------------------------------------ FUNCTIONS WITH AJAX ---------------------------------->
-    <!--------------------------------- DELETE, MOVE UP AND DOWN -------------------------------->
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
-    <script> var token = '<?php echo e(csrf_token()); ?>'</script>
-    <script type="text/javascript" src="<?php echo e(url('/js/moveAndDeleteMaps.js')); ?>">
-    </script>
-    
-<?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts/master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /app/resources/views/hotspot/index.blade.php ENDPATH**/ ?>
