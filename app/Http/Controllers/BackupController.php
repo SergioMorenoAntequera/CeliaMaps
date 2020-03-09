@@ -35,9 +35,8 @@ class BackupController extends Controller
         $command = "$mysqldump > mysqldump -h $dbhost -u $dbuser $dbname > $backup"; 
         
         system($command); 
-
-        //redirigir al backend        
-        //return view('map/index');
+        
+       // return pendiente de redirección
     }      
     //////////////////////////////// RESTAURAR COPIA DE SEGURIDAD /////////////////////////////
     public function restore(){
@@ -53,7 +52,7 @@ class BackupController extends Controller
         
         system($command);
 
-        //redirigir al backend
+        //return pendiente de redirecciíon
     }
 }
 

@@ -108,14 +108,22 @@
                     </div>
                 </div>
                 @endisset
+                 <!-- SE AÑADE EL BOTÓN "X" PARA SALIR DEL FORMULARIO -->
+                        <a href="{{route('user.index')}}">
+                            <div class="cornerButton">
+                                <img class="center" src="{{url("img/icons/close.svg")}}" alt=""> 
+                            </div>
+                        </a>
+                         
 </form>
                 <div class="col">
                     <div class="inicio">
                         <form action="{{route('user.index')}}" method="GET">
                             @csrf
                                 @method("GET|HEAD")
-                                    <input type="submit"  class="btn btn-info" name="inicio" value="Volver">
+                                    <input type="submit"  class="btn btn-secondary" name="inicio" value="Volver">
                         </form>
+                       
                     </div>
 
                 </div>
@@ -129,6 +137,7 @@
     
 $(document).ready(function(){
 
+    // FUNCIÓN PARA LIMPIAR LOS CAMPOS DEL FORMULARIO DESPUÉS DE CADA INSERCIÓN //////
     function campoVacio(){
         $("#name").val('');
         $("#email").val('');
@@ -147,35 +156,30 @@ $(document).ready(function(){
     $("#enviarUsuario").click(function(e){
         // PARA QUE NO SE RECARGUE LA PÁGINA ////////// 
         e.preventDefault(); 
-    
-        
+        // SE RECOGEN  LOS VALORES DEL FORMULARIO Y SE GUARDAN EN VARIABLES
         var nombre = $("input[name = name]").val();
         var email = $("input[name = email]").val();
         var pass = $("input[name = password]").val();
         var level = $("input[name = level]").val();
-    
-       
-        
-        //var route =  "{{route('user.store')}}";
 
         $.ajax({
             type:'POST',
             dataType: 'json',
             url:  "{{route('user.store')}}",
-
             /*
             al pasar los datos del nuevo usuario se hace por par nombre del campo en la base
             de datos : nombre de la variable que hemos declarado con el campo.
             y se pasan en el mismo orden en el que están en la base de datos
             */
             data: {name:nombre, email:email, password:pass, level:level},
-            
+            // SI EL MÉTODO FUNCIONA NOS MUESTRA UN ALERT Y SE VACÍAN LOS CAMPOS DEL FORMULALRIO 
             success: function(){
                 //$("#respuesta").text();
                 //mostrarMensaje(data.mensaje);
                 alert("Usuario insertado con éxito");
                 campoVacio();
             },
+            // SI EL MÉTODO NO FUNCIONA NOS MUESTRA LOS MENSAJES DE ERROR DEBAJO DE CADA CAMPO DEL FORMULARIO
             error: function(e){
                 // Número de errores contenidos en la respuesta JSON
                 $('.error')[0].innerHTML = e.responseJSON.errors.name;
