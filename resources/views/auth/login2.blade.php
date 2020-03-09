@@ -16,7 +16,7 @@
             
             <div class="content">               
 
-                <img src="{{url('/img/icons/userWhite.png')}}" width="50%" alt="" class="img-fluid">
+                <img src="{{url('/img/icons/lock.png')}}" width="50%" alt="" class="img-fluid">
             </div>            
         </div>
         <div class="rightPanel">
