@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\formularioUsuarios;
+//use App\Http\Requests\formularioUsuarios;
 
 use App\User;
 
@@ -54,9 +54,16 @@ class UserController extends Controller
 
      */
     // PARA INSERTAR NUEVOS USUARIOS ////////////////////////////////////////////////
-    public function store(formularioUsuarios $r)
+    public function store(Request $r)
     {
-       $user = new User();
+        $r->validate([
+            'name'=>'required',
+            'email'=>'required|email',
+            'password'=>'required|max:255',
+            'level'=>'required',
+        ]);
+
+        $user = new User();
 
         $user->name = $r->name;
         $user->email = $r->email;

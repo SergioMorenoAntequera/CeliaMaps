@@ -36,6 +36,7 @@ Route::resource('street', 'StreetController');
 Route::resource('point', 'PointController');
 // HOTSPOT /////////////////////////////////////////////////////////////////////////////////////
 Route::resource('hotspot', 'HotspotController');
+Route::delete('hotspot/deleteAjax/{id}', 'HotspotController@deleteAjax')->name('hotspot.deleteAjax');
 // AUTH ///////////////////////////////////////////////////////////////////////////////////////
 Auth::routes();
 Auth::routes(['register' => false]);

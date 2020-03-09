@@ -107,4 +107,14 @@ class HotspotController extends Controller
         $hotspot->delete();
         return redirect()->route('hotspot.index');
     }
+
+    public function deleteAjax(Request $r, $id){
+
+        
+        Hotspot::destroy($r->id);
+        
+        return response()->json([
+            'delete' => true,
+        ]);
+    }
 }

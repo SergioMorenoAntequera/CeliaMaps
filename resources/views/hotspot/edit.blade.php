@@ -46,19 +46,12 @@
 
                     <button type="submit" class="mt-3 btn btn-success"> Confirmar Cambios </button>
                 </form>
+                <a href="{{route('hotspot.index')}}">
+                    <div class="cornerButton">
+                        <img class="center" src="{{url("img/icons/close.svg")}}" alt=""> 
+                    </div>
+                </a>
            </div>
         </div>    
-    </div>
-
-    <div class="container w-50 text-center">
-        <div class="card">
-            <div class="card-header">
-                Modificar mapa
-            </div>
-
-            <div class="card-body text-secondary">
-                
-            </div>
-        </div>
     </div>
 @endsection

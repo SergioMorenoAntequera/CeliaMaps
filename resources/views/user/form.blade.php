@@ -22,13 +22,15 @@
                     </div>
             @endisset
 
-                <img src="/img/icons/userWhite.png" width="50%" alt="" class="img-fluid">
+                <img src="{{url('/img/icons/userWhite.png')}}" width="50%" alt="" class="img-fluid">
             </div>            
         </div>
         <div class="rightPanel">
+            <!-- SI EXISTE EL USUARIO UTILIZAMOS ESTE FORMULARIO -->
             @isset($user)
                 <form class="" action="{{route('user.update', ["user" => $user->id])}}" method="POST">
                 @method("PUT")
+            <!-- SI NO EXISTE EL USUARIO UTILIZAMOS ESTE FORMULARIO -->
             @else 
                 <form action="{{route('user.store')}}" method="POST">                
             @endisset
@@ -47,6 +49,7 @@
                     <div class="form-group">
                         <label for="name">Nombre</label>
                         <input type="text" class="form-control"  name="name" id="name" value="{{$user->name??''}}" required>
+                        <div class="error text-danger"></div>
                     </div>
                 </div>
             </div>
@@ -55,6 +58,7 @@
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" class="form-control" name="email" id="email" value="{{$user->email??''}}" required>
+                        <div class="error text-danger"></div>
                     </div>
                 </div>
             </div>
@@ -66,12 +70,14 @@
                         <div class="form-group">
                             <label for="password">Contraseña</label>
                             <input type="password" class="form-control" name="password" id="password" placeholder="rellenar solo si desdea modificar" value="">
+                            <div class="error text-danger"></div>
                         </div>
                     <!-- COMPORTAMIENTO DEL FORMULARIO SI INSERTAMOS NUEVO USUARIO -->
                     @else
                         <div class="form-group">
-                            <label for="password">Password</label>
+                            <label for="password">Contraseña</label>
                             <input type="password"  class="form-control" name="password" id="password" value="{{$user->password??''}}" required>
+                            <div class="error text-danger"></div>
                         </div>
                     @endisset
                 </div>
@@ -81,6 +87,7 @@
                     <div class="form-group">
                         <label for="level">Level</label>
                         <input type="text" class="form-control" name="level" id="level" value="{{$user->level??''}}" required>
+                        <div class="error text-danger"></div>
                     </div>
                 </div>
             </div>
@@ -155,6 +162,7 @@ $(document).ready(function(){
             type:'POST',
             dataType: 'json',
             url:  "{{route('user.store')}}",
+
             /*
             al pasar los datos del nuevo usuario se hace por par nombre del campo en la base
             de datos : nombre de la variable que hemos declarado con el campo.
@@ -167,11 +175,18 @@ $(document).ready(function(){
                 //mostrarMensaje(data.mensaje);
                 alert("Usuario insertado con éxito");
                 campoVacio();
-            }            
+            },
+            error: function(e){
+                // Número de errores contenidos en la respuesta JSON
+                $('.error')[0].innerHTML = e.responseJSON.errors.name;
+                $('.error')[1].innerHTML = e.responseJSON.errors.email;
+                $('.error')[2].innerHTML = e.responseJSON.errors.password;
+                $('.error')[3].innerHTML = e.responseJSON.errors.level;
+
+            }    
+                    
         });
     });
-
-    
 
 });
 </script>
