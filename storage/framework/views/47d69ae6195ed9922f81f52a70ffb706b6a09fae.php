@@ -36,7 +36,7 @@
                         <p class="descriptionOverflow"><?php echo e($hotspot->description); ?></p>
 
                         <!-- Boton para Borrar  -->
-                        <form method="POST" action="<?php echo e(route('hotspot.destroy', $hotspot->id)); ?>">
+                        <form method="POST" action="<?php echo e(route('hotspot.deleteAjax', $hotspot->id)); ?>">
                             <?php echo csrf_field(); ?>
                             <?php echo method_field("DELETE"); ?>
 
@@ -83,5 +83,13 @@
     </a>
 <?php $__env->stopSection(); ?>
 
-
+<?php $__env->startSection('scripts'); ?>
+    <!------------------------------------ FUNCTIONS WITH AJAX ---------------------------------->
+    <!--------------------------------- DELETE, MOVE UP AND DOWN -------------------------------->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+    <script> var token = '<?php echo e(csrf_token()); ?>'</script>
+    <script type="text/javascript" src="<?php echo e(url('/js/deleteAjax.js')); ?>">
+    </script>
+    
+<?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts/master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /app/resources/views/hotspot/index.blade.php ENDPATH**/ ?>

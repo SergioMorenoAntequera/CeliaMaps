@@ -2,6 +2,7 @@
 //------------------------------------ FUNCTIONS WITH AJAX ---------------------------------->
 //--------------------------------- DELETE, MOVE UP AND DOWN -------------------------------->
 $(document).ready(function(){
+
     $(".cornerbutton").hover(function(){
         $(this).find("img").animate({
             width:"65%"
@@ -16,6 +17,8 @@ $(document).ready(function(){
     $(".deleteConfirm").on("click", function(){
         var route = window.location.href + "/" + $(this).attr("iddb");
         var panel = $(this).parents(".wholePanel")
+
+        
         $.ajax({
             type: "DELETE",
             "url": route,

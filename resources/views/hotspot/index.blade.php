@@ -38,7 +38,7 @@
                         <p class="descriptionOverflow">{{$hotspot->description}}</p>
 
                         <!-- Boton para Borrar  -->
-                        <form method="POST" action="{{route('hotspot.destroy', $hotspot->id)}}">
+                        <form method="POST" action="{{route('hotspot.deleteAjax', $hotspot->id)}}">
                             @csrf
                             @method("DELETE")
 
@@ -85,3 +85,12 @@
     </a>
 @endsection
 
+@section('scripts')
+    <!------------------------------------ FUNCTIONS WITH AJAX ---------------------------------->
+    <!--------------------------------- DELETE, MOVE UP AND DOWN -------------------------------->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+    <script> var token = '{{csrf_token()}}'</script>
+    <script type="text/javascript" src="{{url('/js/deleteAjax.js')}}">
+    </script>
+    
+@endsection
