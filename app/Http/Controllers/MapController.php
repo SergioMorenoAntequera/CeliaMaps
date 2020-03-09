@@ -268,6 +268,14 @@ class MapController extends Controller
 
         if($r->streetsToDo == "Calles actuales"){
             
+            $map->streets()->detach();
+
+            if($r->streetsInMap != null ){
+                foreach ($r->streetsInMap as $streetId) {
+                    $streetIn = Street::find($streetId);
+                    $map->streets()->attach($streetIn);
+                }
+            }
         } else {
             //Herencia de calles de otro mapa
             if($r->inherit != "Ninguno"){
@@ -313,9 +321,16 @@ class MapController extends Controller
     public function destroy(Request $r){
         
         $map = Map::where("id", $r->id)->first();
+        
+        if(sizeof($map->streets) > 0){
+            return response()->json([
+                'delete' => false,
+            ]);
+        }
+        
         $level = $map->level;
         //We destroy the map
-        Map::destroy($map->id);
+        //Map::destroy($map->id);
 
         //We change the next levels
         for($i = $level + 1; $i <= Map::count()+1; $i++){
@@ -325,15 +340,8 @@ class MapController extends Controller
             $mapAux->update();
         }
 
-        // Para borrar los archivos del servidor
-        // if(file_exists(public_path('img/maps/'. $map->image))){
-        //     unlink(public_path('img/maps/'. $map->image));
-        // }
-        // if(file_exists(public_path('img/miniatures/'. $map->miniature)) && $map->miniature != "NoMiniature.png"){
-        //     unlink(public_path('img/miniatures/'. $map->miniature));
-        // }
-
         return response()->json([
+            'delete' => true,
             'count'=> Map::count(),
             'levelSelected'=>$r->level,
         ]);

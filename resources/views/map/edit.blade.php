@@ -92,46 +92,72 @@
                         </nav>
                         {{-- Tabs con la info --}}
                         <div class="tab-content pt-4" id="nav-tabContent">
-                            {{-- Tab para Quitar calles de las que ya hay --}}
+                            {{-- Tab para poner y quitar calles manualmente --}}
                             <div style="max-height: 400px; overflow-y: auto;" class="tab-pane fade show active ml-2" id="nav-streets" role="tabpanel" aria-labelledby="nav-streets-tab">
                                 <div>
-                                    @if (sizeof($map->streets) > 0)
-                                        <b>Calles del mapa: </b> <br>
-                                        @foreach ($map->streets as $street)
-                                            <p class="streetInList streetInMap">
-                                                <input type="checkbox" name="streetsInMap[]" value="{{$street->id}}" checked>
-                                                {{$street->type->name}} {{$street->name}}
-                                            </p>
-                                        @endforeach
-                                    @else
-                                        <p class="text-danger"> Este mapa no tienen ninguna calle </p> <br>
-                                    @endif
-
-                                    <div style="clear:both;"> </div>
-                                    
-                                    <b> Resto de calles: </b> <br>
-                                    @foreach ($streets as $street)
-                                        @php $found = false; @endphp
-
-                                        @foreach ($map->streets as $mapStreet)
-                                            @if ($street->id == $mapStreet->id)
-                                                @php $found = true; @endphp
-                                            @endif
-                                        @endforeach
-
-                                        @if (!$found)
-                                            <p class="streetInList streetInGeneral">
-                                                <input type="checkbox" name="streetsInGeneral[]" value="{{$street->id}}">
-                                                {{$street->type->name}} {{$street->name}}
-                                            </p>
+                                    <div id="mapStreets">
+                                        @if (sizeof($map->streets) > 0)
+                                            <input  type="checkbox" class="selectAllCB"> <b> Calles del mapa: </b>
+                                            <div class="streetList">
+                                                @foreach ($map->streets as $street)
+                                                    <p class="streetInList streetInMap">
+                                                        <input class="cbStreet" type="checkbox" name="streetsInMap[]" value="{{$street->id}}" checked>
+                                                        {{$street->type->name}} {{$street->name}}
+                                                    </p>
+                                                @endforeach
+                                                <div style="clear:both;"> </div>
+                                            </div>
+                                        @else
+                                            <p class="text-danger"> Este mapa no tienen ninguna calle </p> <br>
                                         @endif
-                                    @endforeach
-                                    <div style="clear:both;"></div>
+                                    </div>
+
+                                    <div id="otherStreets">
+                                        <input  type="checkbox" class="selectAllCB"> <b> Resto de calles: </b> 
+                                        <div class="streetList">
+                                            @php $numberOfStreets = 0; @endphp
+                                            @foreach ($streets as $street)
+                                                @php $found = false; @endphp
+        
+                                                @foreach ($map->streets as $mapStreet)
+                                                    @if ($street->id == $mapStreet->id)
+                                                        @php $found = true; @endphp
+                                                    @endif
+                                                @endforeach
+        
+                                                @if (!$found)
+                                                    @php $numberOfStreets++; @endphp
+                                                    <p class="streetInList streetInGeneral">
+                                                        <input type="checkbox" name="streetsInMap[]" value="{{$street->id}}">
+                                                        {{$street->type->name}} {{$street->name}}
+                                                    </p>
+                                                @endif
+                                            @endforeach
+                                            <div style="clear:both;"></div>
+                                            @if ($numberOfStreets == 0)
+                                                <p class="text-warning mb-0"> No hay más calles que poder heredar </p> <br>
+                                            @endif
+                                        </div>
+                                    </div>
                                     
+                                    <script>
+                                        $(".selectAllCB").change(function(){
+                                            var cbs = $(this).siblings(".streetList").children(".streetInList").children();
+                                            if($(this).is(":checked")){
+                                                for (let i = 0; i < cbs.length; i++) {
+                                                    const checkboxInList = jQuery(cbs[i]);
+                                                    checkboxInList.prop("checked", true);
+                                                }
+                                            } else {
+                                                for (let i = 0; i < cbs.length; i++) {
+                                                    const checkboxInList = jQuery(cbs[i]);
+                                                    checkboxInList.prop("checked", false);
+                                                }
+                                            }
+                                        });
+                                    </script>
                                 </div>
-                                
                             </div>
-                            
 
                             {{-- Tab para heredar las calles de nuevo --}}
                             <div style="max-height: 400px; overflow-y: none;" class="tab-pane fade ml-2" id="nav-inherit" role="tabpanel" aria-labelledby="nav-inherit-tab">
@@ -171,13 +197,6 @@
                                                 return;
                                             }
                                             
-                                            // for (let i = 0; i < mapsListed.length; i++) {
-                                            //     const map = mapsListed[i];
-                                                
-                                            //     if($(this).text().trim() == map.title.trim()){
-                                            //         var id = map.id;
-                                            //     }
-                                            // }
                                             var url = window.location.href.replace(currentMapId+"/edit", "streets");
                                             //Petición ajax para recuperar las calles de los mapas
                                             $.ajax({

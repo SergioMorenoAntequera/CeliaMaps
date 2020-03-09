@@ -20,28 +20,32 @@ $(document).ready(function(){
             type: "DELETE",
             "url": route,
             data: {_token: token, id: $(this).attr("iddb")},
-            success: function(){
-                // Animación de borrar
-                panel.css({
-                    "position":"relative",
-                });
-                panel.animate({
-                    left: "50px",
-                }, 200, function(){
+            success: function(response){
+                if(response.delete){
+                    // Animación de borrar
+                    panel.css({
+                        "position":"relative",
+                    });
                     panel.animate({
-                        left: "-3000px"
-                    }, 450, function(){
-                        panel.slideToggle(function(){
-                            panel.remove();
-                            //Reordenarlo todo
-                            var index = 1;
-                            $(".mapLevel").each(function(){
-                                console.log($(this))
-                                $(this).text(index++);
+                        left: "50px",
+                    }, 200, function(){
+                        panel.animate({
+                            left: "-3000px"
+                        }, 450, function(){
+                            panel.slideToggle(function(){
+                                panel.remove();
+                                //Reordenarlo todo
+                                var index = 1;
+                                $(".mapLevel").each(function(){
+                                    $(this).text(index++);
+                                });
                             });
                         });
                     });
-                });
+                } else {
+                    alert("No puede eliminar un mapa con calles asociadas");
+                }
+                
             }
         });
     });
