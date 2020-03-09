@@ -491,7 +491,14 @@
                     editHotspot(hotspot); 
                 }
             });
-
+            /*
+            // Images Hotspots
+            $images = $hotspot->images()->get();
+			$filesnasmes = null;
+			for($i = 0; $i < count($images); $i++){
+				$filesnasmes[] = $images[$i]->file_name;
+			}
+            */
             function createHotspot(lat, lng) {
                 // Create form attributes
                 $("#modal-form").attr("action", "{{route('hotspot.store')}}");
