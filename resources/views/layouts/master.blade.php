@@ -107,14 +107,14 @@
                                     @csrf
                                 </form>
                                 @else                                 
-                                    <a href="{{route('login')}}"><li>Login</li></a>                                
+                                    {{-- <a href="{{route('login')}}"><li>Login</li></a>                                 --}}
                                 @endauth                                                               
                                 <a href="{{route('user.index')}}"><li>Indice</li></a>
                                 <a href="{{route('user.create')}}"><li>Insertar</li></a> 
                             </div>
                         </div>
                         <div class="lateralMenuElement">
-                            <a class="lateralMenuLink" href="">
+                            <a class="lateralMenuLink" href="{{route('backup.index')}}">
                             <li class="lateralMenuImg">
                                 <img src="{{url('img/icons/database.svg')}}" class="img-fluid">
                             </li>
