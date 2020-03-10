@@ -8,9 +8,7 @@
 @section('content')
 
 <div class="container">
-
-   
-
+    
     <div class="wholePanel" style="height:50%">
         <div class="leftPanel widht:40%">
             

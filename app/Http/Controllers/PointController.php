@@ -27,8 +27,7 @@ class PointController extends Controller
      * @return View
      */
     public function index(){
-        //$data['genres'] = Genre::all();
-        //return view("genre.index", $data);
+        
     }
 
     // SHOW A SOMETHING ///////////////////////////////////////////////////////////////////////

@@ -80,7 +80,7 @@
         {{-- Todos los menús que podemos poner --}}
 
         {{-- Menú de los mapas --}}
-        <div id="mapsMenu" style="font-family: Arial, Helvetica, sans-serif" class="menu noselect">
+        <div id="mapsMenu" style="max-height: 300px; font-family: Arial, Helvetica, sans-serif" class="menu noselect">
                 <!-- Todo el menú -->
                 <div class="closeMenuButton">
                     <i class="fa fa-times"></i>
@@ -90,7 +90,7 @@
                 </div>
 
                 <img src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
-                <div id="mapsTrans">
+                <div id="mapsTrans" style="max-height: 270px; overflow-y: auto;">
                     {{-- Para activar el primer mapa y los otros no  --}}
                     @php $first = true; @endphp
                     {{-- Variables donde metemos los mapas --}}

@@ -291,7 +291,9 @@
             </div>
             {{-- Boton para ir al menu de admin --}}
             <div id="admin">
-                <img src="{{url('img/icons/admin.png')}}" alt="">
+                <a href="{{route('login')}}">
+                    <img src="{{url('img/icons/admin.png')}}" alt="">
+                </a>
             </div>
         </div>
     </div>
