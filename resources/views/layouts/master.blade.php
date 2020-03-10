@@ -122,8 +122,9 @@
                             <div class="lateralExpandMenu">
                                 <b> Backup </b>
                                 <div class="line"></div>
-                                <a href="{{route('backup.create')}}"><li>Copia de Seguridad</li></a>
-                                <a href="{{route('backup.restore')}}"><li>Restaurar</li></a>
+                                <a href="{{route('backup.index')}}"><li>Índice</li></a>
+                                {{-- <a href="{{route('backup.index')}}"><li>Guardar</li></a>
+                                <a href="{{route('backup.index')}}"><li>Restaurar</li></a> --}}
                             </div>
                         </div>
 
