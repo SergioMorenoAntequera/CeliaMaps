@@ -51,9 +51,8 @@
                     @php $i = 1 @endphp
                     
                     @if (sizeof($map->streets) > 0)
-                        <b>Calles: </b> <br>
                         @foreach ($map->streets as $street)
-                            <p class="streetInMap">
+                            <p class="mb-0 streetInMap">
                                 {{$street->type->name}} {{$street->name}}
                             </p>
                         @endforeach

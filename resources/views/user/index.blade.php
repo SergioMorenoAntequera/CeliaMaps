@@ -12,7 +12,7 @@
         @foreach ($userList as $user)
             <div class="wholePanel" style="height:13%">
                 <div class="leftPanel" style="width:10%; position: relative"> 
-                    <img src="/img/icons/userWhite.png" width="45%" alt="" class="img-fluid pt-1">
+                    <img src="{{url('/img/icons/userWhite.png')}}" width="45%" alt="" class="img-fluid pt-1">
                     <p><strong><span class="userId text-4 pb-2">{{$user->id}}</span></strong></p>
                 </div>
                 <div class="rightPanel" style="width:90%; position: relative;">
@@ -43,10 +43,17 @@
 
                                 <div class="modal-body">
                                     <p>Va a borrar el usuario {{$user->name}}?</p>
-                                    <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
-                                    <button iddb="{{$user->id}}" type="button" class="btn btn-danger deleteConfirm" data-dismiss="modal">
-                                        Eliminar
-                                    </button>
+                                    <div class="col">
+                                    <button type="button" class="col btn btn-info" data-dismiss="modal">Cancelar</button>
+                                </div>
+                                    <div class="col">
+                                    <form method="POST" action="{{route('user.destroy',$user->id)}}">
+                                        @csrf
+                                        @method("DELETE")  
+                                        
+                                        <input type="submit"  class="col btn btn-danger" name="borrar" value="Eliminar">  
+                                    </form>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -70,4 +77,52 @@
     </div>
     </a>
 
+@endsection
+
+@section('scripts')
+
+    <!------------------------------------ FUNCTIONS WITH AJAX ---------------------------------->
+    <!--------------------------------- DELETE, MOVE UP AND DOWN -------------------------------->
+    <!--
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+    <script> var token = '{{csrf_token()}}'</script>
+    <script type="text/javascript" src="{{url('/js/deleteAjax.js')}}">
+    </script>
+-->
+<script  type="text/javascript"> 
+
+      
+
+$('document').ready(function(){
+   
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(".deleteConfirm").on("click", function(){
+
+    var ruta = "{{route('user.destroy', ["user"=>$user->id])}}";
+    $.ajax({
+        type:"delete",
+        url: ruta,
+        data: {id:$(this).attr("iddb")},
+        success: function(e){
+            if(e['status']){
+                $(".wholePanel" + e['id']).remove();
+                alert("Usuario borrado con éxito");
+            }else{
+                alert("El borrado no funciona");
+            }
+           
+        }
+        
+
+        });
+    });
+
+});
+
+</script>
 @endsection
