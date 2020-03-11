@@ -129,4 +129,19 @@ class HotspotController extends Controller
             'delete' => true,
         ]);
     }
+
+    public function getAllAjax(Request $r){
+        $hotspotFound = Hotspot::find($r->id);
+        $imagesFound = Array();
+        
+        foreach ($hotspotFound->images as $image) {
+           array_push($imagesFound, $image->file_name);
+        }
+        
+        $hotspotFound->images = $imagesFound;
+        
+        return response()->json([
+            'hotspot' => $hotspotFound,
+        ]);
+    }
 }

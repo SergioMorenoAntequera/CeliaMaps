@@ -33,7 +33,7 @@
     });
     var hotspotsFull = [
         @foreach ($hotspots as $hotspot)
-            {title:"{{ $hotspot->title }}", image:"{{$hotspot->image}}", lat:"{{ $hotspot->lat }}", lng:"{{ $hotspot->lng }}" }, 
+            {id:"{{$hotspot->id}}", title:"{{ $hotspot->title }}", image:"{{$hotspot->image}}", lat:"{{ $hotspot->lat }}", lng:"{{ $hotspot->lng }}" }, 
         @endforeach
     ];
     </script>
@@ -335,9 +335,10 @@
             iconAnchor:   [15,60],
         });
         // Creamos un marcador global
+        
         let marker = L.marker([0,0],{icon:markerStreet ,opacity:0});
         marker.addTo(map);
-
+        
 
         // Barra de busqueda y como nos mueve al punto en el que se encuentre el 
         // hotspot o la calle en la que se pinche
@@ -374,7 +375,40 @@
             map.setView([lat, lng], 18);
 
             $('#streetsFound').empty();
+
         });
-    </script>
+
+        $(document).ready(function(){
+            console.log(hotspotsFull);
+            hotspotsFull.forEach(hotspot => {
+                console.log("sadasd");
+                var marker = L.marker([hotspot.lat, hotspot.lng], {icon: tokenIcon, alt:hotspot.id});
+                marker.addTo(map);
+                activeMarkers.push(marker);
+            });
+
+            // Hotspot Modal
+            $('.leaflet-marker-icon').on('click', function(e){
+                var altId = $(this).attr("alt");
+                var route = "{{route('hotspot.getAjax')}}";
+                
+                $.ajax({
+                    url: route,
+                    data: {id:altId},
+
+                    success: function(response){
+                        let hotspotClicked = response.hotspot;
+                         
+                        console.log("Nombre: " +hotspotClicked.title);
+                        console.log(hotspotClicked.images);
+                    },
+                });
+            })
+
+        });
+        
+
+        
+        </script>
 </body>
 </html>
