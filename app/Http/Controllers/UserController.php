@@ -43,15 +43,9 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     * 
      * PARA ENCRIPTAR LA CONTRASEÑA SIN UTILIZAR EL REGISTER QUE TRAE LARAVEL POR DEFECTO, HAY QUE
      * ANADIR EN LA CABECERA "use Illuminate\Support\Facades\Hash;" Y EN EL MÉTODO STORE DEL CONTROLADOR
      * AÑADIR EL HASH:MAKE A LA PASSWORD
-
      */
     // PARA INSERTAR NUEVOS USUARIOS ////////////////////////////////////////////////
     public function store(Request $r)
@@ -77,23 +71,13 @@ class UserController extends Controller
         //return redirect()->route("user.index");
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     // VISTA DEL FORMULARIO DE USUARIOS PERSONALIZADO PARA LA EDICIÓN ///////////////////////
     public function edit($id)
     {
@@ -103,16 +87,11 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     * 
      * EN EL MÉTODO UPDATE, LE DAMOS A $clave EL VALOR DE LA PASSWORD Y ESTABLECEMOS QUE,
      * SI EL CAMPO PASSWORD ESTÁ VACIO EN EL FORMULARIO DE EDICIÓN DE USUARIO, LA PASSWORD
      * NO SE MODIFICA, ES DECIR, TOMA EL VALOR DE $clave.
      */
+
     // PARA MODIFICAR USUARIOS ///////////////////////////////////////////////////////////////
     public function update(Request $r,$id)
     {       
@@ -129,23 +108,26 @@ class UserController extends Controller
         }
         $user->level = $r->level;
         $user->save();       
-        //return Response()->json(['success'=>'modificado con exito']);
+        
         return redirect()->route('user.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    // BORRADO DE USUARIOS //////////////////////////////////////////////////////////////////
+    
+    // BORRADO DE USUARIOS INICIAL ////////////////////////////////////////////
     public function destroy($id)
     {
        $user = User::find($id);
        $user->delete();
 
        return redirect()->route('user.index');
+    }
+
+    // BORRADO DE USUARIOS NUEVO, SE USA ESTE PARA IGUALAR CON  EL RESTO ////////////
+    public function deleteAjax(Request $r, $id){        
+        User::destroy($r->id);        
+        return response()->json([
+            'delete' => true,
+        ]);
     }
   
     

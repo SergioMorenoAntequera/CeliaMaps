@@ -37,7 +37,7 @@ class SearchController extends Controller
             ->join('maps_streets', 'streets.id', '=', 'maps_streets.street_id')
             ->select('streets.id', 'streets.name as street_name', 'street_types.name', 'maps_streets.alternative_name')
             ->where('streets.name', 'like', '%' . $data . '%')
-            ->orWhere('maps_streets.alternative_name', 'like', '%' . $data . '%')->take(10)->get();
+            ->orWhere('maps_streets.alternative_name', 'like', '%' . $data . '%')->distinct()->take(10)->get();
         return response()->json($data);
     }
     // MUESTRA LA VISTA PREVIA DEL PDF, ES SÓLO PARA PROBARLO /////////////////////////

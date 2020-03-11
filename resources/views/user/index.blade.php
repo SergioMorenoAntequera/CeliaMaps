@@ -26,7 +26,7 @@
                     <!-- botones -->
 
                       <!-- Boton para Borrar con modal incluida -->
-                      <form method="POST" action="{{route('user.destroy',$user->id)}}">
+                      <form method="POST" action="{{route('user.deleteAjax', $user->id)}}">
                         @csrf
                         @method("DELETE")
 
@@ -38,28 +38,22 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">¿Está seguro?</h4>
+                                    <h4 class="modal-title">Has seleccionado borrar</h4>
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
 
                                 <div class="modal-body">
-                                    <p>Va a borrar el usuario {{$user->name}}?</p>
-                                    <div class="col">
-                                    <button type="button" class="col btn btn-info" data-dismiss="modal">Cancelar</button>
-                                </div>
-                                    <div class="col">
-                                    <form method="POST" action="{{route('user.destroy',$user->id)}}">
-                                        @csrf
-                                        @method("DELETE")  
-                                        
-                                        <input type="submit"  class="col btn btn-danger" name="borrar" value="Eliminar">  
-                                    </form>
-                                </div>
+                                    <p>¿Seguro que quieres borrar el usuario {{$user->name}}?</p>
+                                    <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+                                    <button iddb="{{$user->id}}" type="button" class="btn btn-danger deleteConfirm" data-dismiss="modal">
+                                        Eliminar
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- FINAL modal para borrar -->
+                   
                      <!-- modificar -->
                         <a href="{{route('user.edit', ["user"=>$user->id])}}">
                             <div class="cornerButton" style="right:50px">
@@ -81,49 +75,11 @@
 @endsection
 
 @section('scripts')
-
     <!------------------------------------ FUNCTIONS WITH AJAX ---------------------------------->
     <!--------------------------------- DELETE, MOVE UP AND DOWN -------------------------------->
-    <!--
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
-    <script> var token = '{{csrf_token()}}'</script>
+    <script> var token = '{{csrf_token()}}';</script>
     <script type="text/javascript" src="{{url('/js/deleteAjax.js')}}">
     </script>
--->
-<script  type="text/javascript"> 
-
-      
-
-$('document').ready(function(){
-   
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $(".deleteConfirm").on("click", function(){
-
-    var ruta = "{{route('user.destroy', ["user"=>$user->id])}}";
-    $.ajax({
-        type:"delete",
-        url: ruta,
-        data: {id:$(this).attr("iddb")},
-        success: function(e){
-            if(e['status']){
-                $(".wholePanel" + e['id']).remove();
-                alert("Usuario borrado con éxito");
-            }else{
-                alert("El borrado no funciona");
-            }
-           
-        }
-        
-
-        });
-    });
-
-});
-
-</script>
+    
 @endsection
