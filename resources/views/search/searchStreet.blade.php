@@ -74,17 +74,20 @@
               data: {text:elNombreDelaCalle},              
                 success: function(response){ 
                   $("#resultado").html(""); 
-                  for(var i = 0; i< response.length; i++){
+                  $("#resultado").append('<a href='+url+"/"+response[0].id+'>' + response[0].name + ' ' + response[0].street_name + '</a></br>');
+                  for(var i = 1; i< response.length; i++){
                     id = response[i].id;
-                    console.log(id);
-                    //cuando haga el enlace hay qu incluir el a href en el append, igual que he metido el br 
-                    // Usamos la variable url generada al cargar la página para crear la dirección del enlace
-                    $("#resultado").append('<a href='+url+"/"+response[i].id+'>' + response[i].name + ' ' + response[i].street_name + '</a></br>');
-                    
+                    console.log(response[i]);
+                    let name = response[i].name;
+                    if(name != response[i-1].name){
+                      //cuando haga el enlace hay qu incluir el a href en el append, igual que he metido el br 
+                      // Usamos la variable url generada al cargar la página para crear la dirección del enlace
+                      $("#resultado").append('<a href='+url+"/"+response[i].id+'>' + response[i].name + ' ' + response[i].street_name + '</a></br>');
+                    }                    
                     } 
                 },
                 error:function(){
-                  alert("no funciona");
+                  //alert("no funciona");
                 }              
             });
           } 
