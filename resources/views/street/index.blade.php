@@ -6,48 +6,69 @@
     <!--  Head html  -->
 @endsection
 
-{{-- 
-@section('content')
-
-    <!-- Maps list to filter street list -->
-    <div class="row text-center my-5">
-        <div class="col-12">
-            <button class="btn btn-primary" >Todas</button>
-            @foreach ($maps as $map)
-                <button class="btn btn-primary">{{$map->title}}</button>
-            @endforeach
-        </div>
-    </div>
-
-    <!-- Strees list -->
-    <div class="container text-left">
-        
-        <a class="position-fixed" style="bottom:5%;right:5%" href="{{route('street.create')}}"><button class="btn btn-primary">Añadir</button></a>
-        
-        @foreach ($streets as $street)
-            <!-- Street row -->
-            <div class="row justify-content-center">
-                <a href="{{route('street.show',$street->id)}}" class="w-50 my-1 list-group-item list-group-item-action list-group-item-light">{{$street->type->type}} {{$street->name}}</a>
-                <!-- Modify button -->
-                <a href="{{route('street.edit', $street->id)}}"><button class="mx-2 mt-3 btn btn-primary">Editar</button></a>
-                <!-- Boton para borrar -->
-                <form method="POST" action="{{route('street.destroy', $street->id)}}">
-                    @csrf
-                    @method("DELETE")
-                    <input class="mx-2 mt-3 btn btn-primary" type="submit" value="Eliminar"> 
-                </form>
-            </div>
-        @endforeach
-    </div>
-
-@endsection
---}}
-
 
 @section('content')
     
+    <div class="container text-center mt-5">
+        <div class="wholePanel" style="min-height: 570px">
+            <div id="mapsList" class="leftPanel" style="min-height: 570px">
+                <div class="content" style="font-size: 18px; font-weight: normal">
+                    <p style="font-size: 30px"><b> Listado de Mapas </b></p>
+                    <p class="mapToInherit selected"> Todos </p>
+                    @foreach ($maps as $map)
+                        <p class="mapToInherit"> {{$map->title}} </p>
+                    @endforeach
+                    </div>
+            </div>
+            <div class="rightPanel">
+                <p><b> Calles del mapa </b></p> 
+                <div id="streetsList">
+                    @foreach ($streets as $street)
+                        <p> {{$street->name}} </p>
+                        <p>asdasd</p> psadada <p>sadasd</p>
+                    @endforeach
+                </div>
+            </div>
+            <style>
+                .selected{color: white;}
+                .mapToInherit:hover{color: white; font-weight: bold;} 
+            </style>
+            <script>
+                $(".mapToInherit").on("click", function(){
+                    $("#mapsList .selected").removeClass("selected");
+                    $(this).addClass("selected");
+                    $("#inherateInput").val($(this).text().trim());
+    
+                    console.log();
+                    var url = window.location.href.replace("street", "map/streets");
+                    console.log(url);
+                    // Petición ajax para recuperar las calles de los mapas
+                    $.ajax({
+                        type: 'GET',
+                        url: url,
+                        data: {title : $(this).text()},
+    
+                        success: function(data) {
+                            
+                            $("#streetsList").empty();
+                            if(data.streets.length == 0){
+                                $("#streetsList").append("<p class='text-danger'> Este mapa no contiene ninguna calle que puedas heredar </p>");
+                                return;
+                            }
+                            
+                            data.streets.forEach(street => {
+                                $("#streetsList").append("<p>"+ street.type.name + " " + street.name +"</p>");
+                            });
+                        },
+                    });
+                });
+            </script>
+        </div>
+    </div>
+    
+
     <!-- One div to get all the maps -->
-    <div class="container text-center">
+    {{-- <div class="container text-center">
         <div class="row text-center my-5">
             <div class="col-12">
                 <button class="btn btn-primary" >Todas</button>
@@ -56,6 +77,7 @@
                 @endforeach
             </div>
         </div>
+        
         <a href="{{route('street.create')}}"> 
             <button>Nueva</button> 
         </a>
@@ -91,7 +113,7 @@
                 </div> <!-- FINAL .oneElement -->
             @endforeach
         </div> <!-- FINAL .allEments -->
-    </div>
+    </div> --}}
 
 @endsection
 

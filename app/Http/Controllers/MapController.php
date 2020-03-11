@@ -484,10 +484,15 @@ class MapController extends Controller
      * @return View
      */
     public function getStreets(Request $r){
-        $map = DB::table('maps')->where('title', $r->title)->first();
-        $map = Map::find($map->id);
-
-        $streets = $map->streets;
+        if($r->title == "Todos"){
+            $streets = Street::all();
+        } else {
+            $map = DB::table('maps')->where('title', $r->title)->first();
+            $map = Map::find($map->id);
+            $streets = $map->streets;
+        }
+        
+        
         foreach ($streets as $street) {
             $street->type = $street->type()->first()->toArray();
         }
