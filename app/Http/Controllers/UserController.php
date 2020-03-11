@@ -14,7 +14,7 @@ class UserController extends Controller
 {  
     // CON EL CONSTRUCTOR IMPEDIMOS QUE ENTRE QUIEN NO ESTÉ LOGUEADO /////////////
     public function __construct(){
-        // $this->middleware("auth")->only("create","edit","destroy");
+        $this->middleware("auth")->only("create","edit","destroy","update","deleteAjax");
     }
     
 

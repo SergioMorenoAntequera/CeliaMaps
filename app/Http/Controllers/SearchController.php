@@ -17,7 +17,7 @@ class SearchController extends Controller
 
     public function __construct()
     {
-        //$this->middleware('auth')->except('index', 'show');     
+        $this->middleware("auth")->only("download","show");    
     }
 
     // MUESTRA EL LISTADO DE LAS CALLES CON EL BUSCADOR ///////////////////////////
@@ -48,7 +48,7 @@ class SearchController extends Controller
         $map = Map::all();
         return view('search/informeImprimir', array('street' => $street, 'street_type' => $street_type, 'map' => $map));       
     }
-    // PARA CREAR EL PDF /////////////////////////////////////////////////////////////
+    // PARA CREAR EL PDF , YA NO SE USA /////////////////////////////////////////////////////////////
     public function download($id)
     {
         $street = Street::find($id);        
