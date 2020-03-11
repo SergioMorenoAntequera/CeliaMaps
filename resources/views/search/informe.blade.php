@@ -33,6 +33,7 @@
                 <h2>
                     {{$street->type->name }} {{$street->name}}
                 </h2>
+               
             </div>
             <div>
                 <h5>Se encuentra
@@ -70,12 +71,13 @@
 
             <br>
 
-            <div class="row col-2">
+            <div class="row col-2 float-right">
                 <!-- AQUÍ PONGO EL BOTÓN DE PDF -->
                 <button id="btn-pdf" type="button" class="btn btn-success">PDF</button>
             </div>
         <!-- FIN DE BOTONES  //////////////////////////////////////////// -->
-     
+            <br>
+            <br>
 
     <!-- DIV QUE CONTIENE EL MAPA CON LA SITUACIÓN DE LA CALLE BUSCADA ///////////////////// -->            
         <div id="map" style="width:100%;height: 480px;"></div>

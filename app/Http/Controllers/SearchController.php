@@ -53,6 +53,7 @@ class SearchController extends Controller
     {
         $street = Street::find($id);        
         $street_type = StreetType::all(); 
+        $map_street = MapStreet::all();
         $data['maps']=Map::all();      
         $map = Map::all();
         $pdf = PDF::loadView('search/informeImprimir', array('street' => $street, 'street_type' => $street_type, 'map' => $map));       
@@ -66,7 +67,8 @@ class SearchController extends Controller
     public function inform($id)
     {
         $street = Street::find($id);        
-        $street_type = StreetType::all();       
+        $street_type = StreetType::all(); 
+        $map_street = MapStreet::all();      
         $map = Map::all();      
 
         return view('search/informe', array('street' => $street, 'street_type' => $street_type, 'map' => $map));
