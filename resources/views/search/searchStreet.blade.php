@@ -78,7 +78,12 @@
                   for(var i = 1; i< response.length; i++){
                     id = response[i].id;
                     console.log(response[i]);
+                    // damos a la variable name el valor del nombre de la calle
                     let name = response[i].name;
+                    /*si el nombre contenido en la variable es diferente al nombre de esa misma variable
+                    name en la vuelta anterior, entonces ese nombre de calle aparece en la vista, si el nombre anterior
+                    se repite, entonces no aparece en la vista por segunda vez.
+                    */
                     if(name != response[i-1].name){
                       //cuando haga el enlace hay qu incluir el a href en el append, igual que he metido el br 
                       // Usamos la variable url generada al cargar la página para crear la dirección del enlace

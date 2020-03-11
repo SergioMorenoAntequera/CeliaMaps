@@ -77,8 +77,10 @@
         <!-- FIN DE BOTONES  //////////////////////////////////////////// -->
      
 
-
+    <!-- DIV QUE CONTIENE EL MAPA CON LA SITUACIÓN DE LA CALLE BUSCADA ///////////////////// -->            
         <div id="map" style="width:100%;height: 480px;"></div>
+
+        <!--SCRIPT QUE NOS MUESTRA LA SITUACIÓN DE LA CALLE EN EL MAPA ////////////////////// -->
         <script>
             map = L.map('map', {
                 minZoom: 10,  //Dont touch, recommended
@@ -110,9 +112,10 @@
         </script>
     </div>
     
-    {{--    Imagenes mapas 
+    
     <br>
     <!-- FIN DE PANEL DERECHO //////////////////////////////////////////// -->
+    {{--    Imagenes mapas 
     <div class="rightPanel" style="width:100%;">       
         @foreach ($street->maps as $map)
         <img src="/img/maps/{{$map->image}}" alt="..." style="width: 75%;">             
