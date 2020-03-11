@@ -391,15 +391,16 @@
             $('.leaflet-marker-icon').on('click', function(e){
                 var altId = $(this).attr("alt");
                 var route = "{{route('hotspot.getAjax')}}";
-                console.log(route);
                 
                 $.ajax({
                     url: route,
+                    data: {id:altId},
+
                     success: function(response){
-                        console.log("Esta si");
-                    },
-                    error: function(){
-                        console.log("fail")
+                        let hotspotClicked = response.hotspot;
+                         
+                        console.log("Nombre: " +hotspotClicked.title);
+                        console.log(hotspotClicked.images);
                     },
                 });
             })
