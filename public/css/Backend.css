@@ -266,8 +266,5 @@ los formularios y seguramente algo más, pa quién lo quiera */
     #rightContent{
         width: 100%!important;
         margin-left: 0!important;
-    }
-    div:has(> #btn-pdf){
-        display: none;
     } 
 }

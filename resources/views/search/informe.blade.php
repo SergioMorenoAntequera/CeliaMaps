@@ -16,7 +16,7 @@
 @endsection
 
 @section('content')
-<h3 style="text-align:center;">Informe situación calle</h3>
+<h3 style="text-align:center;" class="my-3">Informe de situación</h3>
 <div class="container">
 
     @isset($street)
@@ -29,24 +29,30 @@
 
         <!-- PANEL DERECHO //////////////////////////////////////////// -->
         <div class="rightPanel" style="width:100%;">
-            <h4>Impresión de Informes</h4>
             <div>
-                {{$street->type->name }} {{$street->name}}
+                <h2>
+                    {{$street->type->name }} {{$street->name}}
+                </h2>
             </div>
-           
+            <div>
+                <h5>Se encuentra
+                @if (count($street->maps) > 1)
+                    en los siguientes mapas
+                @else
+                    en el mapa
+                @endif
+                : </h5>
+            </div> 
+            <br>
             <div>
                 @foreach($street->maps as $map)
                     <div>
-                        <h5>Se encuentra en el mapa:</h5>
+                        <h5>
+                            {{$map->title}}
+                        </h5>
                     </div> 
                     <div>
-                        {{$map->title}}
-                    </div> 
-                    <div>
-                        <h5>Descripción del mapa</h5>
-                    </div> 
-                    <div>
-                        {{$map->description}}
+                        <p>{{$map->description}}</p>
                     </div> 
                     
                 @endforeach
@@ -62,6 +68,7 @@
             </div>
             --}}
 
+            <br>
 
             <div class="row col-2">
                 <!-- AQUÍ PONGO EL BOTÓN DE PDF -->
@@ -94,6 +101,7 @@
             marker.on("click", function(){
                 map.setView([{{$street->points[0]->lat}}, {{$street->points[0]->lng}}]);
             })
+
             $("#btn-pdf").click(function(){
                 $(this).parent().hide();
                 window.print();
