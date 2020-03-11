@@ -168,7 +168,8 @@
                 <div class="divInput">
                     <input id="streetsInput" placeholder="Buscar en el mapa...">
                 </div>
-            </div>
+            </div> 
+
             {{-- Contenido de las busquedas y petición con AJAX --}}
             <div id="searchContent">
                 {{-- div donde se mostrarán todas las calles --}}

@@ -34,7 +34,7 @@
 @endsection
 
 @section('content')
- <!-- Div where the map and all the menus will
+<!-- Div where the map and all the menus will
     go so we are able to drag booth the menues and go 
     trought the map -->
     <div id="draggableArea">
@@ -63,7 +63,7 @@
          </div>
         <div id="ballHotspots" class="ball noselect">
             <div class="ballContent">
-                <img class="noselect" src="{{url('img/icons/tlMenuToken.png')}}" title="Puntos de interés">
+                <img style="opacity: 0.2" class="noselect" src="{{url('img/icons/tlMenuToken.png')}}" title="Puntos de interés">
             </div>
         </div>
 
@@ -71,7 +71,7 @@
         {{-- Todos los menús que podemos poner --}}
 
         {{-- Menú de los mapas --}}
-        <div id="mapsMenu" class="menu noselect">
+        <div id="mapsMenu" style="max-height: 300px; font-family: Arial, Helvetica, sans-serif" class="menu noselect">
                 <!-- Todo el menú -->
                 <div class="closeMenuButton">
                     <i class="fa fa-times"></i>
@@ -81,7 +81,7 @@
                 </div>
 
                 <img src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
-                <div id="mapsTrans">
+                <div id="mapsTrans" style="max-height: 270px; overflow-y: auto;">
                     {{-- Para activar el primer mapa y los otros no  --}}
                     @php $first = true; @endphp
                     {{-- Variables donde metemos los mapas --}}
@@ -135,26 +135,8 @@
                                 images.push(img);
                             </script>
                         @endif <!-- Si no tiene alineamiento no se pone el mapa -->
-                    @endforeach  
+                    @endforeach
                 </div>
-        </div>
-            
-        {{-- Manú de los hotspots --}}
-        <div id="hotspotsMenu" class="menu noselect">
-            {{-- Cruz para cerrar el menú --}}
-            <div class="closeMenuButton">
-                <i class="fa fa-times"></i>
-            </div>
-            {{-- Iconito del pin para fijarla --}}
-            <div class="pinMenuButton ">
-                <img class="pinIcon" src="{{url('/img/icons/pin.svg')}}" alt="">
-            </div>
-            {{-- Icono que representa y contenido de la ventana --}}
-            <img class="noselect" src="{{url('img/icons/tlMenuToken.png')}}" title="Puntos de interés">
-            <div id="hotspotsContent">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium deserunt sint omnis, fuga nam blanditiis qui pariatur quidem repellat labore facere consequatur neque accusamus amet aspernatur fugit, enim aliquid autl!
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis architecto odit itaque incidunt necessitatibus cum, soluta quam beatae vel odio reiciendis repudiandae nam nobis optio vero corporis voluptatibus earum similique.
-            </div>
         </div>
 
         {{-- Menú del callejero --}}
@@ -177,7 +159,8 @@
                 <div class="divInput">
                     <input id="streetsInput" placeholder="Buscar en el mapa...">
                 </div>
-            </div>
+            </div> 
+
             {{-- Contenido de las busquedas y petición con AJAX --}}
             <div id="searchContent">
                 {{-- div donde se mostrarán todas las calles --}}
@@ -188,52 +171,74 @@
                 </div>
 
                 <script>
-                    //We prepare the url for ajax
-                    var url = window.location.href + "map/search";
-                    //We prepare  the arrays of data that we will recieve
-                    var streets = []; 
+                    // ************************************************
+                    // CODIGO DE LA BARRA DE BSUCAR CALLES Y HOTSPOTS 
+                    // ************************************************
+                    //tHE VARIABLES TAHT WE ARE GONNA USE ALONG THE PROGRAM
+                    //We will fill this in the ajax request
+                    var streets = [];
                     var hotspots = [];
-                    //If we put data inside the input
-                    $("#streetsInput").on("input", function(e){
-                        //We get the text in the box
-                        var text = $(this).val();
-                        //Me da palo escribir inglés
-                        //Si es el primero o cada 3 hacemos una petición ajax
-                        //para evitar sobrecargar la base de datos
-                        if(text.length > 0){
-                            //Petición ajax, mandamos el texto de la caja
+                    //When we first click in the search bar (AJAX)
+                    $("#streetsInput").on("focusin", function(e){
+                        if($(this).val().length == 0){
+                            var url = window.location.href + "map/search";
                             $.ajax({
                                 type: 'GET',
                                 url: url,
-                                data: { text : text },
+                                // data: { text : text },
                                 success: function(data) {
-                                    //Nos devuelve un array con los elementos que contengan ese aspecto
-                                    //Quitramos lo que ya tenemos
-                                    $('#streetsFound .street').remove();
-                                    //Guardamos las cosas en los arrays por comodidad
+                                    $('#streetsFound').empty();
+                                    streets = [];
+                                    hotspots = [];
+                                    
+                                    data.streets.forEach(street => {
+                                        street.fullName = street.typeName + " " + street.name;
+                                        streets.push(street);
+                                    });
                                     hotspots = data.hotspots;
-                                    streets = data.streets;
-                                    //Ponemos los hotspots primero aquí y si es más de 4 en hidden
-                                    for(var i = 0; i < hotspots.length; i++){
-                                        if(i < 4){
-                                            $('#streetsFound').append("<div class='street'>"+hotspots[i].title +"</div>");
-                                        }// else {
-                                        //     $('#streetsFound').append("<div style=\"display: none;\" class='street'>"+hotspots[i].title +"</div>");
-                                        // }
-                                    }
-                                    //Ponemos las calles después aquí y si es más de 4 en hidden
-                                    for(var i = 0; i < streets.length; i++){
-                                        if(i < 4){
-                                            $('#streetsFound').append("<div class='street'>"+streets[i].type.name + " " + streets[i].name +"</div>");
-                                        }
-                                    }
                                 },
                             }); // FIN AJAX
-                        //If there is nothing in the bar we remove everything
-                        } else if(text.length == 0){
-                            $('#streetsFound .street').remove();
+                        } else {
+                            if($('#streetsFound').children().length == 0){
+                                lookByText();
+                            }
                         }
                     });
+
+                    // When we look for something we remove options depending of
+                    // the text in the box looking inside the first ajax request
+                    $("#streetsInput").on("input", function(e){
+                        $('#streetsFound').empty();
+                        if($(this).val().length != 0)
+                            lookByText();
+                    });
+
+                    // We hide everything when we unfocus
+                    $("#streetsInput").on("focusout", function(e){
+                        // $('#streetsFound').empty();
+                    });
+
+                    // Auxiliar function
+                    function lookByText(){
+                        c = 0;
+                        hotspots.forEach(hotspot => {
+                            if(hotspot.title.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
+                                $('#streetsFound').append("<div class='hotspot street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ hotspot.title + "</div>");
+                                if(++c == 5){
+                                    return;
+                                }  
+                            }
+                        });
+                        c = 0;
+                        streets.forEach(street => {
+                            if(street.fullName.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
+                                $('#streetsFound').append("<div class='street'> <img style='width:5%;' src='{{url('img/icons/token-selected.svg')}}'>"+ street.fullName + "</div>");
+                                if(++c == 5){
+                                    return;
+                                }                                
+                            }
+                        });
+                    }
                 </script>
             </div>
         </div>
@@ -243,10 +248,10 @@
     {{-- BOTTOM LEFT MENU TO CHANGE THE KIND OF MAP TO DISPLAY --}}
     {{-----------------------------------------------------------}}
     <div id="tilesMenu">
-        <div id="tilesShow">
+        <div id="tilesShow" style="margin-left: 62px">
             <i class="fa fa-chevron-down"></i>
         </div>
-        <div id="tileChooser">
+        <div id="tileChooser" style="margin-left: 72px">
             <div class="tiles"> 
                 <img src="{{url("img/maps/KindOfMap1.png")}}" alt="">
             </div>
@@ -343,7 +348,7 @@
 
         <!-- Preview Hotspots -->
         <div id="preview" class="card">
-            <img id="previewImage" src="" alt="Hotspot Preview" style="width:286px; max-heigth:180px">
+            <img id="previewImage" src="" alt="Hotspot Preview" style="width:286px; max-heigth:180px !important;">
             <div class="card-body" style="color: black">
               <h4 id="previewTitle"><b></b></h4> 
             </div>
@@ -385,7 +390,7 @@
             })
         ];
         //Adding rhe layers to the map
-        map.addLayer(mapTile2);
+        map.addLayer(mapTile0);
 
         //Here we are adding the images(of the diferent maps) on top of the map
         map.whenReady(function() {
@@ -604,8 +609,8 @@
 
                 // Coordinates mouse
                 $('.leaflet-marker-icon').mousemove(function(event){
-                    var latPreview = event.pageY -240;
-                    var lgnPreview = event.pageX -140;
+                    var latPreview = event.screenY -400;
+                    var lgnPreview = event.screenX -140;
 
                     // Display block no funciona con css
                     $("#preview").attr('style', 'display: block !important');
