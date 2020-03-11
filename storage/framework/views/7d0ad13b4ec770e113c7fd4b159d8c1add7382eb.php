@@ -65,10 +65,9 @@
                             <div class="lateralExpandMenu">
                                 <b> Calles </b>
                                 <div class="line"></div>
-                                <a href="<?php echo e(route('street.index')); ?>"><li>Indice</li></a>
-                                <a href="<?php echo e(route('street.create')); ?>"><li>Insertar</li></a>
-                                <a href="<?php echo e(route('street.index')); ?>"><li>Modificar</li></a>
-                                <a href="<?php echo e(route('street.index')); ?>"><li>Elminar</li></a>
+                                <a href="<?php echo e(route('street.index')); ?>"><li>Índice</li></a>
+                                <a href="<?php echo e(route('street.create')); ?>"><li>Administrar</li></a>
+                                
                             </div>
                         </div>
 
@@ -81,10 +80,9 @@
                             <div class="lateralExpandMenu">
                                 <b> Puntos de interés </b>
                                 <div class="line"></div>
-                                <a href="<?php echo e(route('hotspot.index')); ?>"><li>Indice</li></a>
-                                <a href="<?php echo e(route('hotspot.create')); ?>"><li>Insertar</li></a>
-                                <a href="<?php echo e(route('hotspot.index')); ?>"><li>Modificar</li></a>
-                                <a href="<?php echo e(route('hotspot.index')); ?>"><li>Elminar</li></a>
+                                <a href="<?php echo e(route('hotspot.index')); ?>"><li>Índice</li></a>
+                                <a href="<?php echo e(route('hotspot.create')); ?>"><li>Administrar</li></a>
+                                
                             </div>
                         </div>
 
@@ -102,20 +100,19 @@
                                     SINO QUE VAYA DIRECTAMENTE A LA PÁGINA PRINCIPAL --> 
                                     <a href=""
                                     onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">Logout</a>                               
+                                    document.getElementById('logout-form').submit();"><li>Logout</li></a>                               
                                 <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
                                     <?php echo csrf_field(); ?>
                                 </form>
                                 <?php else: ?>                                 
-                                    <a href="<?php echo e(route('login')); ?>">Login</a>                                
+                                    
                                 <?php endif; ?>                                                               
                                 <a href="<?php echo e(route('user.index')); ?>"><li>Indice</li></a>
-                                <a href="<?php echo e(route('user.create')); ?>"><li>Insertar</li></a>                                
-                                <a href="<?php echo e(route('user.index')); ?>"><li></li></a>
+                                <a href="<?php echo e(route('user.create')); ?>"><li>Insertar</li></a> 
                             </div>
                         </div>
                         <div class="lateralMenuElement">
-                            <a class="lateralMenuLink" href="">
+                            <a class="lateralMenuLink" href="<?php echo e(route('backup.index')); ?>">
                             <li class="lateralMenuImg">
                                 <img src="<?php echo e(url('img/icons/database.svg')); ?>" class="img-fluid">
                             </li>
@@ -123,8 +120,7 @@
                             <div class="lateralExpandMenu">
                                 <b> Backup </b>
                                 <div class="line"></div>
-                                <a href="<?php echo e(route('backup.create')); ?>"><li>Copia de Seguridad</li></a>
-                                <a href="<?php echo e(route('backup.restore')); ?>"><li>Restaurar</li></a>
+                                <a href="<?php echo e(route('backup.index')); ?>"><li>Índice</li></a>
                                 
                             </div>
                         </div>
@@ -139,9 +135,6 @@
                                 <b> Informes </b>
                                 <div class="line"></div>
                                 <a href="<?php echo e(route('search.index')); ?>"><li>Generar informe</li></a>
-                                <a href=""><li></li></a>
-                                <a href=""><li></li></a>
-                                <a href=""><li></li></a>
                             </div>
                         </div>
                     </ul>
@@ -154,6 +147,8 @@
                             } else if(window.location.href.includes("/hotspot")){
                                 var element = $(".lateralMenuLink[href|='<?php echo e(route('hotspot.index')); ?>']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/user")){
+                                var element = $(".lateralMenuLink[href|='<?php echo e(route('user.index')); ?>']").parents(".lateralMenuElement");
+                            } else if(window.location.href.includes("/login")){
                                 var element = $(".lateralMenuLink[href|='<?php echo e(route('user.index')); ?>']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/backup")){
                                 var element = $(".lateralMenuLink[href|='<?php echo e(route('backup.index')); ?>']").parents(".lateralMenuElement");
@@ -173,24 +168,7 @@
                     </script>
 
                     
-                    <div id="notocar" style="position: absolute; bottom: 10%" class="lateralMenuImg">
-                        <img src="<?php echo e(url('img/icons/rip.svg')); ?>" class="img-fluid">
-                    </div>
-                    <script>
-                        $(document).ready(function(){
-                            $("#flotingMenu").css("top", -$("#flotingMenu").height());
-                            $("#notocar").on("click", function(){
-                                $("#flotingMenu").show()
-                                $("#flotingMenu").animate({
-                                    top: "20px",
-                                }, 200, function(e){
-                                    $("#flotingMenu").animate({
-                                        top: "0px",
-                                    }, 200);
-                                });
-                            });
-                        });
-                    </script>
+                    
                     <a href="<?php echo e(route('home')); ?>">
                         <div style="position: absolute; bottom: 0px" class="lateralMenuImg">
                             <img src="<?php echo e(url('img/icons/turnOff.svg')); ?>" class="img-fluid">
