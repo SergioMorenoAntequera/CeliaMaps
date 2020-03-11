@@ -129,4 +129,8 @@ class HotspotController extends Controller
             'delete' => true,
         ]);
     }
+
+    public function getAllAjax(){
+        dd("Hola que tal");
+    }
 }
