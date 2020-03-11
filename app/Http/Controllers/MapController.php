@@ -42,10 +42,11 @@ class MapController extends Controller
         ksort($mapsSorted);
         
         $data['hotspots'] = HotSpot::all();
+        $hotspots = Hotspot::all();
         // dd(json_encode($data['hotspots']));
         $data['maps'] = $mapsSorted;
         
-        return view("map.map", $data);
+        return view("map.map", $data, ['hotspots'=>$hotspots]);
     }
     
     ///////////////////////////////////////////////////////////////////////////////////////////
