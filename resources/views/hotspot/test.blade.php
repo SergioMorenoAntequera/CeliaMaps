@@ -343,7 +343,7 @@
 
         <!-- Preview Hotspots -->
         <div id="preview" class="card">
-            <img id="previewImage" src="" alt="Hotspot Preview" style="width:286px; max-heigth:180px">
+            <img id="previewImage" src="" alt="Hotspot Preview" style="width:286px; max-heigth:180px !important;">
             <div class="card-body" style="color: black">
               <h4 id="previewTitle"><b></b></h4> 
             </div>
@@ -604,8 +604,8 @@
 
                 // Coordinates mouse
                 $('.leaflet-marker-icon').mousemove(function(event){
-                    var latPreview = event.pageY -240;
-                    var lgnPreview = event.pageX -140;
+                    var latPreview = event.screenY -400;
+                    var lgnPreview = event.screenX -140;
 
                     // Display block no funciona con css
                     $("#preview").attr('style', 'display: block !important');

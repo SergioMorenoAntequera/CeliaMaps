@@ -64,10 +64,22 @@ class HotspotController extends Controller
             'titulo' => 'required|max:50',
         ]);
         */
-
         $hotspot = new Hotspot($r->all());
         $hotspot->save();
-        $hotspot->images()->attach($r->image_id);
+        
+        if(count($r->images) > 0){
+            foreach ($r->images as $requestImage) {
+                $requestImage->move('img/hotspots/', $requestImage->getClientOriginalName());
+                $image = new Image();
+                $image->title = $r->titleImage;
+                $image->description = $r->descriptionImage;
+                $image->file_name = $requestImage->getClientOriginalName();
+                $image->file_path = 'img/hotspots/';
+                $image->hotspot_id = $hotspot->id;
+                $image->save();
+            }
+        }
+
         return redirect()->route('hotspot.index');
     }
 

@@ -168,53 +168,7 @@
                 <div class="divInput">
                     <input id="streetsInput" placeholder="Buscar en el mapa...">
                 </div>
-            </div>
-
-            {{--  Codigo para vista Hotspot 
-                
-                <div class="hotspotInfo float-right" style="height: 100%; width: 10%">
-                    
-                    <div class="carousel slide" data-ride="carousel">
-                        
-                        <div class="carousel-inner">
-                            @foreach ($hotspots as $hotspot)
-                            <div class="carousel-item">
-                                dd{{$hotspot->images[0]->file_name}};
-                                
-                                    
-                                    @for ($i = 0; $i < count($hotspot->images); $i++)
-                                    <img src="{{url('img/hotspots/', $hostpot->images[$i]->file_name)}}" alt="Imagen Hotspot">
-                                    @endfor
-                                
-                                </div>
-                                @endforeach
-                            </div>
-                            <!-- The slideshow -->
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <img src="la.jpg" alt="Los Angeles">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="chicago.jpg" alt="Chicago">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="ny.jpg" alt="New York">
-                                </div>
-                            </div>
-                            
-                            <!-- Left and right controls -->
-                            <a class="carousel-control-prev" href="#demo" data-slide="prev">
-                                <span class="carousel-control-prev-icon"></span>
-                            </a>
-                            <a class="carousel-control-next" href="#demo" data-slide="next">
-                                <span class="carousel-control-next-icon"></span>
-                            </a>
-                            
-                        </div>
-                        
-                    </div>
-            --}}
-
+            </div> 
 
             {{-- Contenido de las busquedas y petición con AJAX --}}
             <div id="searchContent">

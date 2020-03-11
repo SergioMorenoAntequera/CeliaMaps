@@ -25,7 +25,7 @@ class HotspotTableSeeder extends Seeder
         DB::table('hotspots')->insert([    
             
             'title' => 'Alcazaba',
-            'description' => 'Alcazaba de la ciudad de Almeria',
+            'description' => 'La Alcazaba, Castillo y Murallas del Cerro de San Cristóbal de la ciudad española de Almería es uno de los conjuntos monumentales y arqueológicos andalusíes más importantes de la península ibérica.',
             'lat' => 36.841045612512296,
             'lng' => -2.4715883687671685,
             'created_at' => date('Y-m-d H-m-s'),
@@ -35,7 +35,7 @@ class HotspotTableSeeder extends Seeder
         DB::table('hotspots')->insert([    
             
             'title' => 'Mercado Central',
-            'description' => 'Mercado del paseo',
+            'description' => 'El Mercado Central de Almería fue el primer mercado de abastos, y el mayor durante mucho tiempo de la ciudad de Almería, España. Se sitúa cerca de la Puerta de Purchena, considerada popularmente como centro geográfico de la ciudad; concretamente en la Rambla Obispo Orberá.',
             'lat' => 36.84035226488956,
             'lng' => -2.4626323944043054,
             'created_at' => date('Y-m-d H-m-s'),
@@ -45,7 +45,7 @@ class HotspotTableSeeder extends Seeder
         DB::table('hotspots')->insert([    
             
             'title' => 'Refugios de la Guerra Civil',
-            'description' => 'Refugios de la guerra civil',
+            'description' => 'Sistema subterráneo de refugios antiaéreos de hormigón usado en la Guerra Civil española con visitas guiadas.',
             'lat' => 36.841629479318954,
             'lng' => -2.4646334325020063,
             'created_at' => date('Y-m-d H-m-s'),
@@ -76,7 +76,7 @@ class HotspotTableSeeder extends Seeder
         DB::table('hotspots')->insert([    
             
             'title' => 'Estadio de los Juegos Mediterraneos',
-            'description' => '',
+            'description' => 'El Estadio de los Juegos Mediterráneos​ es un estadio de fútbol de la ciudad de Almería, España, sede de los partidos de la U.D. Almería. Fue el estadio olímpico de los XV Juegos Mediterráneos del año 2005 celebrados en Almería entre el 24 de junio y el 3 de julio de 2005. ',
             'lat' => 36.839995928990916,
             'lng' => -2.4353805833544566,
             'created_at' => date('Y-m-d H-m-s'),
