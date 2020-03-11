@@ -202,9 +202,9 @@
                     @yield('content')
                     <!-- Footer -->
                     <footer>
-                        <div class="container-fluid">
+                        {{-- <div class="container-fluid bg-danger">
                             @yield('footer')    
-                        </div>
+                        </div> --}}
                     </footer>
                 </div>
             </div>
