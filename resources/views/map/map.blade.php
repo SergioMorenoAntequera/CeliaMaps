@@ -20,8 +20,11 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!-- PERSONAL CSS -->
-    <link rel="stylesheet" href="{{url('/css/frontend.css')}}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">    
+    <link rel="stylesheet" href="{{url('/css/frontend.css')}}">  
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
     <script>
     // Put all locations into array
     var map;
@@ -148,38 +151,6 @@
                 </div>
         </div>
 
-        {{-- Hotspots Modal Carousel --}}
-
-        <!-- Modal -->
-        <div class="modal fade" id="ModalView" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <img src="{{url('img/hotspots/estadio-juegos-mediterraneos-img-01.jpg')}}" alt="Vista de Hotspots" width="1100" height="500">
-                
-                    <div class="carousel slide" data-ride="carousel">
-                        
-                        <!-- The slideshow -->
-                        <div class="carousel-inner">    
-                            <div class="carousel-item active">
-                            </div>
-                        </div>
-                        
-                        <!-- Left and right controls -->
-                        <a class="carousel-control-prev" href="#demo" data-slide="prev">
-                          <span class="carousel-control-prev-icon"></span>
-                        </a>
-                        <a class="carousel-control-next" href="#demo" data-slide="next">
-                          <span class="carousel-control-next-icon"></span>
-                        </a>
-            
-                    </div>
-
-                </div>
-            </div>
-            </div>
-        </div>
-        {{-- Fin de Hotspots Modal Carousel --}}
 
         {{-- Menú del callejero --}}
         <div id="streetsMenu" class="menu noselect">
@@ -306,6 +277,47 @@
         </div>
     </div>
 
+
+
+
+
+        {{-- Hotspots Modal Carousel --}}
+
+        <!-- Modal -->
+        <div class="modal fade" id="ModalView" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border-bottom-0">
+                        <h5 id="modal-title" class="modal-title text-primary"></h5>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                        <!-- Street type -->
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="text-dark">Tipo de vía</label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btn-remove" value="" type="button" class="btn btn-danger">Eliminar</button>
+                            <button id="btn-position" value="" type="button" class="btn text-white btn-warning mr-auto">Cambiar posición</button>
+                            <!--
+                            <button id="btn-cancel" type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
+                            -->
+                            <button id="btn-submit" type="submit" class="btn btn-success">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {{-- Fin de Hotspots Modal Carousel --}}
+
+
+
+
+
+
+
+
     {{-------------------------------------------------------------}}
     {{-- BOTTOM RIGHT MENU SO WE CAN DISPLAY S WE CAN FULLSCREEN --}}
     {{-------------------------------------------------------------}}
@@ -412,9 +424,8 @@
         });
 
         $(document).ready(function(){
-            console.log(hotspotsFull);
+            
             hotspotsFull.forEach(hotspot => {
-                console.log("sadasd");
                 var marker = L.marker([hotspot.lat, hotspot.lng], {icon: tokenIcon, alt:hotspot.id});
                 marker.addTo(map);
                 activeMarkers.push(marker);
@@ -432,8 +443,8 @@
                     success: function(response){
                         let hotspotClicked = response.hotspot;
                          
-                        console.log("Nombre: " +hotspotClicked.title);
-                        console.log(hotspotClicked.images);
+                        //console.log("Nombre: " +hotspotClicked.title);
+                        //console.log(hotspotClicked.images);
 
                     },
                 });
