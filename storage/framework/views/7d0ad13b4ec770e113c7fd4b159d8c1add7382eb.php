@@ -182,9 +182,7 @@
                     <?php echo $__env->yieldContent('content'); ?>
                     <!-- Footer -->
                     <footer>
-                        <div class="container-fluid">
-                            <?php echo $__env->yieldContent('footer'); ?>    
-                        </div>
+                        
                     </footer>
                 </div>
             </div>
