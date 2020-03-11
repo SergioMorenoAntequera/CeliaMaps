@@ -608,6 +608,11 @@
                 $("#previewImage").attr("src", host+"/"+hotspot.images[0].file_path+"/"+hotspot.images[0].file_name);
 
                 // Coordinates mouse
+                /* Luis David manda puta
+                $('.leaflet-marker-icon, #preview').mousemove(function(event){
+                    var latPreview = event.pageY -250;
+                    var lgnPreview = event.pageX -140;
+                    */
                 $('.leaflet-marker-icon').mousemove(function(event){
                     var latPreview = event.screenY -400;
                     var lgnPreview = event.screenX -140;
@@ -618,10 +623,10 @@
                 });
                 $("#previewTitle").text(hotspot.title);
 
-            }, function(){
-                $('#preview').attr('style', 'display: none !important');
-
             });
+            $('.leaflet-marker-icon, #preview').mouseout(function(){
+                $('#preview').attr('style', 'display: none !important');
+            })
 
             // Hotspot images file 
             $('.fileToUpload').on('click', function(){

@@ -259,3 +259,12 @@ los formularios y seguramente algo más, pa quién lo quiera */
     font-size: 30px;
     color: black;
 }
+@media print {
+    #leftNavBar{
+        display: none;
+    }
+    #rightContent{
+        width: 100%!important;
+        margin-left: 0!important;
+    } 
+}

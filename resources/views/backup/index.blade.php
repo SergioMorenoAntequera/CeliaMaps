@@ -9,8 +9,8 @@
 
 
         {{-- GENERAR COPIA  --}}
-        <div class=" col-12 offset-md-1 col-md-5" data-toggle="modal" data-target="#saveModal">
-            <div id="createCopy" class="backupBox p-5">
+        <div class=" col-12 offset-md-1 col-md-5">
+            <div id="createCopy" class="backupBox p-5" data-toggle="modal" data-target="#saveModal">
                 <h1 class="mb-4">
                     <b> GUARDAR </b>   
                 </h1>
@@ -43,10 +43,9 @@
         </div>
 
         {{-- ------------------------------------------------------------------------------------------------ --}}
-        
         {{-- RESTAURAR COPIA --}}
         <div class="col-12 col-md-5">
-            <div id="restoreCopy" class="backupBox p-5"  data-toggle="modal" data-target="#restoreModal">
+            <div id="restoreCopy" class="backupBox p-5" data-toggle="modal" data-target="#restoreModal">
                 <h1 class="mb-4">
                     <b> RESTAURAR </b>   
                 </h1>
@@ -71,7 +70,7 @@
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-dismiss="modal"> Cancelar </button>
-                <button id="confirmRestore" type="button" class="btn btn-success" data-dismiss="modal">Crear copia</button>
+                <button id="confirmRestore" type="button" class="btn btn-success" data-dismiss="modal">Restaurar copia</button>
                 </div>
             </div>
             </div>

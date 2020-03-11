@@ -34,8 +34,10 @@ class SearchController extends Controller
         //id, name, type
         $data = DB::table('streets')
             ->join('street_types', 'streets.type_id', '=', 'street_types.id')
-            ->select('streets.id', 'streets.name as street_name', 'street_types.name')
-            ->where('streets.name', 'like', '%' . $data . '%')->take(10)->get();
+            ->join('maps_streets', 'streets.id', '=', 'maps_streets.street_id')
+            ->select('streets.id', 'streets.name as street_name', 'street_types.name', 'maps_streets.alternative_name')
+            ->where('streets.name', 'like', '%' . $data . '%')
+            ->orWhere('maps_streets.alternative_name', 'like', '%' . $data . '%')->take(10)->get();
         return response()->json($data);
     }
     // MUESTRA LA VISTA PREVIA DEL PDF, ES SÓLO PARA PROBARLO /////////////////////////
