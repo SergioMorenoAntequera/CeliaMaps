@@ -148,6 +148,39 @@
                 </div>
         </div>
 
+        {{-- Hotspots Modal Carousel --}}
+
+        <!-- Modal -->
+        <div class="modal fade" id="ModalView" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img src="{{url('img/hotspots/estadio-juegos-mediterraneos-img-01.jpg')}}" alt="Vista de Hotspots" width="1100" height="500">
+                
+                    <div class="carousel slide" data-ride="carousel">
+                        
+                        <!-- The slideshow -->
+                        <div class="carousel-inner">    
+                            <div class="carousel-item active">
+                            </div>
+                        </div>
+                        
+                        <!-- Left and right controls -->
+                        <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                          <span class="carousel-control-prev-icon"></span>
+                        </a>
+                        <a class="carousel-control-next" href="#demo" data-slide="next">
+                          <span class="carousel-control-next-icon"></span>
+                        </a>
+            
+                    </div>
+
+                </div>
+            </div>
+            </div>
+        </div>
+        {{-- Fin de Hotspots Modal Carousel --}}
+
         {{-- Menú del callejero --}}
         <div id="streetsMenu" class="menu noselect">
             {{-- Cruz para cerrar el menú --}}
@@ -401,8 +434,11 @@
                          
                         console.log("Nombre: " +hotspotClicked.title);
                         console.log(hotspotClicked.images);
+
                     },
                 });
+
+                $('#ModalView').modal('show');
             })
 
         });
