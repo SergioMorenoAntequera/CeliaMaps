@@ -14,7 +14,7 @@ class BackupController extends Controller
     //////////////////////// SOLO LOS USUARIOS LOGUEADOS PUEDEN UTILIZAR CREATE Y RESTORE /////////////////////////////
     public function __construct(){
 
-        //$this->middleware("auth")->only("create", "restore");
+        // $this->middleware("auth");
     }
 
   //////////////////////////// VISTA DONDE SE UBICAN LOS CONTROLES DEL BACKUP, POR AHORA //////////
@@ -35,8 +35,7 @@ class BackupController extends Controller
         $command = "$mysqldump > mysqldump -h $dbhost -u $dbuser $dbname > $backup"; 
         
         system($command); 
-        
-       // return pendiente de redirección
+        //return redirect(route('backup.index'));
     }      
     //////////////////////////////// RESTAURAR COPIA DE SEGURIDAD /////////////////////////////
     public function restore(){
@@ -52,7 +51,7 @@ class BackupController extends Controller
         
         system($command);
 
-        //return pendiente de redirecciíon
+        //return redirect(route('backup.index'));
     }
 }
 

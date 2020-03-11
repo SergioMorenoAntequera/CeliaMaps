@@ -9,35 +9,31 @@ use App\Street;
 
 class PdfController extends Controller
 {
+    public function __construct(){
+        // $this->middleware("auth");
+    }
     
     public function ver(){
         return view('search.probandopdf');
     }
     
-    public function download()
-{
-
-    $data = ['title' => 'CeliaMaps'];
-
-    $pdf = PDF::loadView('search.probandopdf', $data);
- 
-    return $pdf->download('probandopdf.pdf');
+    public function download() {
+        $data = ['title' => 'CeliaMaps'];
+        $pdf = PDF::loadView('search.probandopdf', $data);
+        return $pdf->download('probandopdf.pdf');
+    }
 
     //return PDF::loadView('search.probandopdf', $data)
     //->stream('probandopdf.pdf');
 
-/*
-   $data = ['title' => 'CeliaMaps'];
-   //$streetList = Street::all();
-   
+    /*
+    $data = ['title' => 'CeliaMaps'];
+    $streetList = Street::all();
     $pdf = PDF::loadView('search.probandopdf', $data);
- 
     return $pdf->download('probandopdf.pdf');
+    $pdf = \PDF::loadView('search/searchStreet', $data);
+    return $pdf->download('archivo.pdf');
+    return PDF::loadView('search/probandopdf', $data)->stream('archivo.pdf');
+    */
 
-    //$pdf = \PDF::loadView('search/searchStreet', $data);
- 
-    //return $pdf->download('archivo.pdf');
-
-   // return PDF::loadView('search/probandopdf', $data)->stream('archivo.pdf');
-*/
-}}
+}

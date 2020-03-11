@@ -65,10 +65,10 @@
                             <div class="lateralExpandMenu">
                                 <b> Calles </b>
                                 <div class="line"></div>
-                                <a href="{{route('street.index')}}"><li>Indice</li></a>
-                                <a href="{{route('street.create')}}"><li>Insertar</li></a>
-                                <a href="{{route('street.index')}}"><li>Modificar</li></a>
-                                <a href="{{route('street.index')}}"><li>Elminar</li></a>
+                                <a href="{{route('street.index')}}"><li>Índice</li></a>
+                                <a href="{{route('street.create')}}"><li>Administrar</li></a>
+                                {{-- <a href="{{route('street.index')}}"><li>Modificar</li></a>
+                                <a href="{{route('street.index')}}"><li>Elminar</li></a> --}}
                             </div>
                         </div>
 
@@ -81,10 +81,10 @@
                             <div class="lateralExpandMenu">
                                 <b> Puntos de interés </b>
                                 <div class="line"></div>
-                                <a href="{{route('hotspot.index')}}"><li>Indice</li></a>
-                                <a href="{{route('hotspot.create')}}"><li>Insertar</li></a>
-                                <a href="{{route('hotspot.index')}}"><li>Modificar</li></a>
-                                <a href="{{route('hotspot.index')}}"><li>Elminar</li></a>
+                                <a href="{{route('hotspot.index')}}"><li>Índice</li></a>
+                                <a href="{{route('hotspot.create')}}"><li>Administrar</li></a>
+                                {{-- <a href="{{route('hotspot.index')}}"><li>Modificar</li></a>
+                                <a href="{{route('hotspot.index')}}"><li>Elminar</li></a> --}}
                             </div>
                         </div>
 
@@ -102,20 +102,19 @@
                                     SINO QUE VAYA DIRECTAMENTE A LA PÁGINA PRINCIPAL --> 
                                     <a href=""
                                     onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">Logout</a>                               
+                                    document.getElementById('logout-form').submit();"><li>Logout</li></a>                               
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     @csrf
                                 </form>
                                 @else                                 
-                                    <a href="{{route('login')}}">Login</a>                                
+                                    {{-- <a href="{{route('login')}}"><li>Login</li></a>                                 --}}
                                 @endauth                                                               
                                 <a href="{{route('user.index')}}"><li>Indice</li></a>
-                                <a href="{{route('user.create')}}"><li>Insertar</li></a>                                
-                                <a href="{{route('user.index')}}"><li></li></a>
+                                <a href="{{route('user.create')}}"><li>Insertar</li></a> 
                             </div>
                         </div>
                         <div class="lateralMenuElement">
-                            <a class="lateralMenuLink" href="">
+                            <a class="lateralMenuLink" href="{{route('backup.index')}}">
                             <li class="lateralMenuImg">
                                 <img src="{{url('img/icons/database.svg')}}" class="img-fluid">
                             </li>
@@ -123,9 +122,9 @@
                             <div class="lateralExpandMenu">
                                 <b> Backup </b>
                                 <div class="line"></div>
-                                <a href="{{route('backup.create')}}"><li>Copia de Seguridad</li></a>
-                                <a href="{{route('backup.restore')}}"><li>Restaurar</li></a>
-                                
+                                <a href="{{route('backup.index')}}"><li>Índice</li></a>
+                                {{-- <a href="{{route('backup.index')}}"><li>Guardar</li></a>
+                                <a href="{{route('backup.index')}}"><li>Restaurar</li></a> --}}
                             </div>
                         </div>
 
@@ -139,9 +138,6 @@
                                 <b> Informes </b>
                                 <div class="line"></div>
                                 <a href="{{route('search.index')}}"><li>Generar informe</li></a>
-                                <a href=""><li></li></a>
-                                <a href=""><li></li></a>
-                                <a href=""><li></li></a>
                             </div>
                         </div>
                     </ul>
@@ -154,6 +150,8 @@
                             } else if(window.location.href.includes("/hotspot")){
                                 var element = $(".lateralMenuLink[href|='{{route('hotspot.index')}}']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/user")){
+                                var element = $(".lateralMenuLink[href|='{{route('user.index')}}']").parents(".lateralMenuElement");
+                            } else if(window.location.href.includes("/login")){
                                 var element = $(".lateralMenuLink[href|='{{route('user.index')}}']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/backup")){
                                 var element = $(".lateralMenuLink[href|='{{route('backup.index')}}']").parents(".lateralMenuElement");
@@ -173,7 +171,7 @@
                     </script>
 
                     {{-- div ausiliar para que todo sea responsivo --}}
-                    <div id="notocar" style="position: absolute; bottom: 10%" class="lateralMenuImg">
+                    {{-- <div id="notocar" style="position: absolute; bottom: 10%" class="lateralMenuImg">
                         <img src="{{url('img/icons/rip.svg')}}" class="img-fluid">
                     </div>
                     <script>
@@ -190,7 +188,7 @@
                                 });
                             });
                         });
-                    </script>
+                    </script> --}}
                     <a href="{{route('home')}}">
                         <div style="position: absolute; bottom: 0px" class="lateralMenuImg">
                             <img src="{{url('img/icons/turnOff.svg')}}" class="img-fluid">
