@@ -12,7 +12,7 @@ class HotspotController extends Controller
 {
     public function __construct()
     {
-        //$this->middleware('auth')->except('index', 'show');     
+        // $this->middleware('auth');     
     }
 
     /**
@@ -106,5 +106,15 @@ class HotspotController extends Controller
         $hotspot = Hotspot::find($id);
         $hotspot->delete();
         return redirect()->route('hotspot.index');
+    }
+
+    public function deleteAjax(Request $r, $id){
+
+        
+        Hotspot::destroy($r->id);
+        
+        return response()->json([
+            'delete' => true,
+        ]);
     }
 }

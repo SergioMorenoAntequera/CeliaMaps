@@ -80,7 +80,7 @@
         {{-- Todos los menús que podemos poner --}}
 
         {{-- Menú de los mapas --}}
-        <div id="mapsMenu" style="font-family: Arial, Helvetica, sans-serif" class="menu noselect">
+        <div id="mapsMenu" style="max-height: 300px; font-family: Arial, Helvetica, sans-serif" class="menu noselect">
                 <!-- Todo el menú -->
                 <div class="closeMenuButton">
                     <i class="fa fa-times"></i>
@@ -90,7 +90,7 @@
                 </div>
 
                 <img src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
-                <div id="mapsTrans">
+                <div id="mapsTrans" style="max-height: 270px; overflow-y: auto;">
                     {{-- Para activar el primer mapa y los otros no  --}}
                     @php $first = true; @endphp
                     {{-- Variables donde metemos los mapas --}}
@@ -147,24 +147,6 @@
                     @endforeach
                 </div>
         </div>
-            
-        {{-- Manú de los hotspots --}}
-        {{-- <div id="hotspotsMenu" class="menu noselect">
-
-            <div class="closeMenuButton">
-                <i class="fa fa-times"></i>
-            </div>
-
-            <div class="pinMenuButton ">
-                <img class="pinIcon" src="{{url('/img/icons/pin.svg')}}" alt="">
-            </div>
-
-            <img class="noselect" src="{{url('img/icons/tlMenuToken.png')}}" title="Puntos de interés">
-            <div id="hotspotsContent">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium deserunt sint omnis, fuga nam blanditiis qui pariatur quidem repellat labore facere consequatur neque accusamus amet aspernatur fugit, enim aliquid autl!
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis architecto odit itaque incidunt necessitatibus cum, soluta quam beatae vel odio reiciendis repudiandae nam nobis optio vero corporis voluptatibus earum similique.
-            </div>
-        </div> --}}
 
         {{-- Menú del callejero --}}
         <div id="streetsMenu" class="menu noselect">
@@ -257,7 +239,7 @@
                         });
                         c = 0;
                         streets.forEach(street => {
-                            if(street.name.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
+                            if(street.fullName.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
                                 $('#streetsFound').append("<div class='street'> <img style='width:5%;' src='{{url('img/icons/token-selected.svg')}}'>"+ street.fullName + "</div>");
                                 if(++c == 5){
                                     return;

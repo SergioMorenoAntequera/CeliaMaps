@@ -94,7 +94,7 @@
                                     }
 
                                     var url = window.location.href.replace("create", "streets");
-                                    
+                                    console.log(url);
                                     //Petición ajax para recuperar las calles de los mapas
                                     $.ajax({
                                         type: 'GET',

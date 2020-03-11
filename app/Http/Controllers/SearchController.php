@@ -14,9 +14,14 @@ use PDF;
 
 class SearchController extends Controller
 {
-    // MUESTRA EL LISTADO DE LAS CALLES CON EL BUSCADOR ///////////////////////////
-    public function index()    {
 
+    public function __construct()
+    {
+        //$this->middleware('auth')->except('index', 'show');     
+    }
+
+    // MUESTRA EL LISTADO DE LAS CALLES CON EL BUSCADOR ///////////////////////////
+    public function index() {
         $streets = Street::all();
         $maps = Map::all();
         $types = StreetType::all();

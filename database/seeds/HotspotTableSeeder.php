@@ -45,7 +45,7 @@ class HotspotTableSeeder extends Seeder
         DB::table('hotspots')->insert([    
             
             'title' => 'Refugios de la Guerra Civil',
-            'description' => 'Refugios de la segunda guerra mundial',
+            'description' => 'Refugios de la guerra civil',
             'lat' => 36.841629479318954,
             'lng' => -2.4646334325020063,
             'created_at' => date('Y-m-d H-m-s'),

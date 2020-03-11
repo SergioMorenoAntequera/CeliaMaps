@@ -29,13 +29,15 @@ Route::get('map/align/{id}', 'MapController@alignMap')->name('map.align');
 Route::get('map/saveAlign/{id}', 'MapController@saveAlign')->name('map.saveAlign');
 Route::resource('map', 'MapController');
 // USER /////////////////////////////////////////////////////////////////////////////////////
-Route::resource('user', 'UserController');
+Route::resource('user', 'UserController'); 
+Route::delete('user/deleteAjax/{id}', 'UserController@deleteAjax')->name('user.deleteAjax');
 // STREETS /////////////////////////////////////////////////////////////////////////////////////
 Route::resource('street', 'StreetController');
 // POINTS /////////////////////////////////////////////////////////////////////////////////////
 Route::resource('point', 'PointController');
 // HOTSPOT /////////////////////////////////////////////////////////////////////////////////////
 Route::resource('hotspot', 'HotspotController');
+Route::delete('hotspot/deleteAjax/{id}', 'HotspotController@deleteAjax')->name('hotspot.deleteAjax');
 // AUTH ///////////////////////////////////////////////////////////////////////////////////////
 Auth::routes();
 Auth::routes(['register' => false]);

@@ -44,20 +44,13 @@
 
                     <button type="submit" class="mt-3 btn btn-success"> Confirmar Cambios </button>
                 </form>
+                <a href="<?php echo e(route('hotspot.index')); ?>">
+                    <div class="cornerButton">
+                        <img class="center" src="<?php echo e(url("img/icons/close.svg")); ?>" alt=""> 
+                    </div>
+                </a>
            </div>
         </div>    
-    </div>
-
-    <div class="container w-50 text-center">
-        <div class="card">
-            <div class="card-header">
-                Modificar mapa
-            </div>
-
-            <div class="card-body text-secondary">
-                
-            </div>
-        </div>
     </div>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /app/resources/views/hotspot/edit.blade.php ENDPATH**/ ?>

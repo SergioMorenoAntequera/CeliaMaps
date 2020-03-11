@@ -22,7 +22,7 @@ class MapController extends Controller
      */
     public function __construct()
     {
-        //$this->middleware('auth')->except('index', 'show');     
+        // $this->middleware('auth')->except('map');     
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -79,6 +79,7 @@ class MapController extends Controller
      */
     public function show($id){
         $data['map'] = Map::find($id);
+        $data['streets'] = Street::all();
         return view("map.show", $data);
     }
     
@@ -147,69 +148,8 @@ class MapController extends Controller
             }
         }
 
-        //Now that we have to have a image we want it or not
-        $file = $r->file('image');
-        $dim = Array();
-        $dim['x'] = getimagesize($file)[0]/4; 
-        $dim['y'] = getimagesize($file)[1]/4;
-        $dim['width'] = getimagesize($file)[0]/2;
-        $dim['height'] = getimagesize($file)[1]/2;
-
-        $fileName = $map->id.$file->getClientOriginalName();
-        $mapsPath = public_path("img/maps/");
-        $miniaturesPath = public_path("img/miniatures/");
-        
-        //We move the file to this folder to save it
-        $file->move($mapsPath, $fileName);
-        
-        // we check if we already have a miniature
-        if($r->hasFile('miniature')){
-            //If we are introducing a miniature we just save it (boring)
-            $miniatureFile = $r->file('miniature');
-            $miniatureFile->move($miniaturesPath, $fileName);
-        } else {
-            // Let's gnerate the miniature by ourselfs
-            // We get the path that we are gonna use
-            // Miramos que sea un png (porque hay que usar un metodo especial)
-            if(strpos($fileName, ".png")){
-                //Conseguimos la imagen
-                $miniature = imagecreatefrompng($mapsPath . $fileName);
-
-                //Cortamos la imagen y comporbamos que la hemos cortado
-                $miniature = imagecrop($miniature, $dim);
-                if ($miniature !== FALSE) {
-                    // Header para visualizar
-                    header("Content-type: image/png"); 
-                    // Lo pasamos a imagen y lo guardamos
-                    
-                    imagepng($miniature, $miniaturesPath.$fileName);
-                    //Destruimos el archivo temporal
-                    imagedestroy($miniature);
-                }
-            } else {
-                // Miramos que sea un JPEG (porque hay que usar un metodo especial)
-                if(strpos($fileName, ".jpeg")){
-                    //Conseguimos la imagen
-                    $miniature = imagecreatefromjpeg($mapsPath . $fileName);
-
-                    //Cortamos la imagen y comporbamos que la hemos cortado
-                    $miniature = imagecrop($miniature, $dim);
-                    if ($miniature !== FALSE) {
-                        // Header para visualizar
-                        header("Content-type: image/jpeg"); 
-                        // Lo pasamos a imagen y lo guardamos
-                        
-                        imagejpeg($miniature, $miniaturesPath.$fileName);
-                        //Destruimos el archivo temporal
-                        imagedestroy($miniature);
-                    }
-                }
-            }
-        }
-        $map->miniature = $fileName;
-        $map->image = $fileName;
+        $map = $this->createMiniature($r, $map);
     
-        
 
         $map->save();
         return redirect(route('map.align', $map->id));
@@ -224,6 +164,8 @@ class MapController extends Controller
      */
     public function edit($id){
         $data['map'] = Map::find($id);
+        $data['maps'] = Map::all();
+        $data['streets'] = Street::all();
         return view('map.edit', $data);
     }
 
@@ -260,6 +202,45 @@ class MapController extends Controller
             $map->miniature = $map->id.$file->getClientOriginalName();
         }
 
+        //Para todo el tema de las calles y como se heredan y tal ...
+        if($r->streetsToDo == "Calles actuales"){
+            $map->streets()->detach();
+            
+            if($r->streetsInMap != null ){
+                foreach ($r->streetsInMap as $streetId) {
+                    $streetIn = Street::find($streetId);
+                    $map->streets()->attach($streetIn);
+                }
+            }
+        } else {
+            //Herencia de calles de otro mapa
+            if($r->inherit != "Ninguno"){
+                //Borramos las que tenia antes
+                $map->streets()->detach();
+
+                //Añadimos las calles del nuevo mapa
+                $mapToInherit = DB::table('maps')->where('title', 'like',  $r->inherit)->first(); 
+                $mapToInherit = Map::find($mapToInherit->id);
+                $mapToInherit = Map::find($mapToInherit->id);
+                
+                $streets = $mapToInherit->streets->toArray();
+
+                foreach ($streets as $mapStreet) {
+                    $mapStreet = DB::table('maps_streets')
+                            ->where('street_id', $mapStreet['id'])
+                            ->where('map_id', $mapToInherit->id)->first();
+                    $info = MapStreet::find($mapStreet->id);
+
+                    $newMapsStreet = new MapStreet();
+                    $newMapsStreet->id = MapStreet::max('id') + 1;
+                    $newMapsStreet->street_id = $info->street_id;
+                    $newMapsStreet->map_id = $map->id;
+                    
+                    $newMapsStreet->save();
+                }
+            }
+        }
+
         $map->update();
         return redirect(route("map.index"));
     }
@@ -276,6 +257,13 @@ class MapController extends Controller
     public function destroy(Request $r){
         
         $map = Map::where("id", $r->id)->first();
+        
+        if(sizeof($map->streets) > 0){
+            return response()->json([
+                'delete' => false,
+            ]);
+        }
+        
         $level = $map->level;
         //We destroy the map
         Map::destroy($map->id);
@@ -288,23 +276,15 @@ class MapController extends Controller
             $mapAux->update();
         }
 
-        // Para borrar los archivos del servidor
-        // if(file_exists(public_path('img/maps/'. $map->image))){
-        //     unlink(public_path('img/maps/'. $map->image));
-        // }
-        // if(file_exists(public_path('img/miniatures/'. $map->miniature)) && $map->miniature != "NoMiniature.png"){
-        //     unlink(public_path('img/miniatures/'. $map->miniature));
-        // }
-
         return response()->json([
+            'delete' => true,
             'count'=> Map::count(),
             'levelSelected'=>$r->level,
         ]);
         
-        //Map::destroy($id);  
         //return redirect(route("map.index"));
     }
-
+    
     ///////////////////////////////////////////////////////////////////////////////////////////
     // MOVE UP //////////////////////////////////////////////////////////////////////////////
     /**
@@ -393,6 +373,8 @@ class MapController extends Controller
         return view('map.align', $data);
     }
     
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    // SAVE ALIGN //////////////////////////////////////////////////////////////////////////////
     /**
      * Function where we will update the map position
      * 
@@ -513,5 +495,74 @@ class MapController extends Controller
         return response()->json([
             'streets' => $streets->toArray(),
         ]);
+    }
+
+    // Metodo auxiliar que me saca las miniaturas de los mapas ///////////////////////////////
+    private function createMiniature(Request $r, Map $map){
+        //Now that we have to have a image we want it or not
+        $file = $r->file('image');
+        $dim = Array();
+        $dim['x'] = getimagesize($file)[0]/4; 
+        $dim['y'] = getimagesize($file)[1]/4;
+        $dim['width'] = getimagesize($file)[0]/2;
+        $dim['height'] = getimagesize($file)[1]/2;
+
+        $fileName = $map->id.$file->getClientOriginalName();
+        $mapsPath = public_path("img/maps/");
+        $miniaturesPath = public_path("img/miniatures/");
+        
+        //We move the file to this folder to save it
+        $file->move($mapsPath, $fileName);
+        
+        // we check if we already have a miniature
+        if($r->hasFile('miniature')){
+            //If we are introducing a miniature we just save it (boring)
+            $miniatureFile = $r->file('miniature');
+            $miniatureFile->move($miniaturesPath, $fileName);
+        } else {
+            // Let's gnerate the miniature by ourselfs
+            // We get the path that we are gonna use
+            // Miramos que sea un png (porque hay que usar un metodo especial)
+            if(strpos($fileName, ".png")){
+                //Conseguimos la imagen
+                $miniature = imagecreatefrompng($mapsPath . $fileName);
+                
+
+                //Cortamos la imagen y comporbamos que la hemos cortado
+                //$miniature = imagecrop($miniature, $dim);
+                $miniature = (imagescale($miniature, $dim['x'], $dim['y'], IMG_NEAREST_NEIGHBOUR));
+                if ($miniature !== FALSE) {
+                    // Header para visualizar
+                    header("Content-type: image/png"); 
+                    // Lo pasamos a imagen y lo guardamos
+                    
+                    imagepng($miniature, $miniaturesPath.$fileName);
+                    //Destruimos el archivo temporal
+                    imagedestroy($miniature);
+                }
+            } else {
+                // Miramos que sea un JPEG (porque hay que usar un metodo especial)
+                if(strpos($fileName, ".jpeg")){
+                    //Conseguimos la imagen
+                    $miniature = imagecreatefromjpeg($mapsPath . $fileName);
+                    
+                    //Cortamos la imagen y comporbamos que la hemos cortado
+                    //$miniature = imagecrop($miniature, $dim);
+                    $miniature = (imagescale($miniature, $dim['x'], $dim['y'], IMG_BILINEAR_FIXED));
+                    if ($miniature !== FALSE) {
+                        // Header para visualizar
+                        header("Content-type: image/jpeg"); 
+                        // Lo pasamos a imagen y lo guardamos
+                        
+                        imagejpeg($miniature, $miniaturesPath.$fileName);
+                        //Destruimos el archivo temporal
+                        imagedestroy($miniature);
+                    }
+                }
+            }
+        }
+        $map->miniature = $fileName;
+        $map->image = $fileName;
+        return $map;
     }
 }
