@@ -10,18 +10,19 @@
 <div class="container text-center">
     <div id="allelements">       
         @foreach ($userList as $user)
-            <div class="wholePanel" style="height:13%">
-                <div class="leftPanel" style="width:10%; position: relative"> 
-                    <img src="{{url('/img/icons/userWhite.png')}}" width="45%" alt="" class="img-fluid pt-1">
-                    <p><strong><span class="userId text-4 pb-2">{{$user->id}}</span></strong></p>
+            <div class="wholePanel" style="height:auto">
+                <div class="leftPanel p-4" style="width:15%;"> 
+                    <div class="content">
+                        <img src="{{url('/img/icons/userWhite.png')}}" width="45%" alt="" class="img-fluid pt-1">
+                    </div>
                 </div>
-                <div class="rightPanel" style="width:90%; position: relative;">
+                <div class="rightPanel" style="width:85%; ">
                     <!-- nombre usuario -->
                     <div id="datos" style="pt-2">
                         <strong>{{$user->name}}</strong>
                         <br>
                         {{$user->email}}
-                    </div>
+                    </div> 
                     <!-- botones -->
 
                       <!-- Boton para Borrar con modal incluida -->
