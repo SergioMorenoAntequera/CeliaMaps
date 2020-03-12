@@ -283,11 +283,11 @@
 
         {{-- Hotspots Modal Carousel --}}
 
-        <div style="display: block;" class="modal-background">
+        <div style="display: none;" class="modal-background" id="hotspotModal" >
             <div class="modal-card">
-                <img src="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" alt="Hostpot Imagen">
-                <h2>Titulo del Hotspot</h2>
-                <p style="padding: 0 20px;">Descripcion super larga del Hotspot </p>
+                <img src="" alt="Hostpot Imagen" id="hotspotImageModal">
+                <h2 id="hotspotTitleModal">Hola</h2>
+                <p id="hotspotDescriptionModal" style="padding: 0 20px;"></p>
             </div>
         </div>
         
@@ -425,13 +425,19 @@
                     success: function(response){
                         let hotspotClicked = response.hotspot;
                          
-                        //console.log("Nombre: " +hotspotClicked.title);
-                        //console.log(hotspotClicked.images);
+                        console.log("Nombre: " +hotspotClicked.title);
+                        console.log(hotspotClicked.images);
 
+                        let host = "{{url('')}}"
+                        //$('#hotspotImageModal').attr("src", host+"/img/hotspots/"+hotspotClicked.images[0].file_name);
+                        $('#hotspotTitleModal').text(hotspotClicked.title);
+                        $('#hotspotDescriptionModal').text(hotspotClicked.description);
+                        $('#hotspotModal').css("display", "block");
+        
+                        //$("#previewImage").attr("src", host+"/"+hotspot.images[0].file_path+"/"+hotspot.images[0].file_name);
                     },
                 });
 
-                $('#ModalView').modal('show');
             })
 
         });
