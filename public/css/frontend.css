@@ -399,6 +399,7 @@ html, body {
     overflow: scroll;
     text-overflow: ellipsis;
     max-height: 800px;
+    overflow-x: hidden;
 }
 
 .modal-card img{
@@ -408,4 +409,10 @@ html, body {
 
 .modal-card p{
     text-align: justify;
+}
+
+#hotspotCloseModal {
+    width: 30px;
+    height: 30px;
+    position: absolute;
 }

@@ -284,9 +284,10 @@
         {{-- Hotspots Modal Carousel --}}
 
         <div style="display: none;" class="modal-background" id="hotspotModal" >
+            <img src="img/icons/menuCross.svg" id="hotspotCloseModal">
             <div class="modal-card">
                 <img src="" alt="Hostpot Imagen" id="hotspotImageModal">
-                <h2 id="hotspotTitleModal">Hola</h2>
+                <h2 id="hotspotTitleModal"></h2>
                 <p id="hotspotDescriptionModal" style="padding: 0 20px;"></p>
             </div>
         </div>
@@ -425,20 +426,23 @@
                     success: function(response){
                         let hotspotClicked = response.hotspot;
                          
-                        console.log("Nombre: " +hotspotClicked.title);
-                        console.log(hotspotClicked.images);
+                        //console.log("Nombre: " +hotspotClicked.title);
+                        console.log(hotspotClicked.images[0]);
 
                         let host = "{{url('')}}"
-                        //$('#hotspotImageModal').attr("src", host+"/img/hotspots/"+hotspotClicked.images[0].file_name);
+                        $('#hotspotImageModal').attr("src", host+"/img/hotspots/"+hotspotClicked.images[0].file_name);
                         $('#hotspotTitleModal').text(hotspotClicked.title);
                         $('#hotspotDescriptionModal').text(hotspotClicked.description);
                         $('#hotspotModal').css("display", "block");
-        
-                        //$("#previewImage").attr("src", host+"/"+hotspot.images[0].file_path+"/"+hotspot.images[0].file_name);
+                        
                     },
                 });
 
-            })
+            });
+
+            $('#hotspotCloseModal').on('click', function(e){
+                $('#hotspotModal').css("display", "none");
+            });
 
         });
         
