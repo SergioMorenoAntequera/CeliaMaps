@@ -93,7 +93,7 @@
                 </div>
 
                 <img src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
-                <div id="mapsTrans" style="max-height: 270px; overflow-y: auto;">
+                <div id="mapsTrans" style="max-height: 270px; overflow: hidden;">
                     {{-- Para activar el primer mapa y los otros no  --}}
                     @php $first = true; @endphp
                     {{-- Variables donde metemos los mapas --}}
@@ -184,9 +184,9 @@
                 </div>
 
                 <script>
-                    // ************************************************
+                    // ****************
                     // CODIGO DE LA BARRA DE BSUCAR CALLES Y HOTSPOTS 
-                    // ************************************************
+                    // ****************
                     //tHE VARIABLES TAHT WE ARE GONNA USE ALONG THE PROGRAM
                     //We will fill this in the ajax request
                     var streets = [];
@@ -207,6 +207,7 @@
                                     data.streets.forEach(street => {
                                         street.fullName = street.typeName + " " + street.name;
                                         streets.push(street);
+                                        console.log(street);
                                     });
                                     hotspots = data.hotspots;
                                 },
@@ -294,6 +295,16 @@
         
         {{-- Fin de Hotspots Modal Carousel --}}
 
+        {{-- Streets Modal 
+            
+            <div style="display: none;" class="modal-background" id="streetModal" >
+                <img src="img/icons/menuCross.svg" id="streetCloseModal">
+                <div class="modal-card">
+                    <h2 id="streetModalName"></h2>
+                </div>
+            </div>
+            --}}
+        
 
 
 
@@ -366,7 +377,7 @@
         
         let marker = L.marker([0,0],{icon:markerStreet ,opacity:0});
         marker.addTo(map);
-        
+        let selectedStreet;
 
         // Barra de busqueda y como nos mueve al punto en el que se encuentre el 
         // hotspot o la calle en la que se pinche
@@ -382,6 +393,7 @@
             });
             streets.forEach(street => {
                 if($(this).text().trim() == street.fullName){
+                    selectedStreet = street;
                     lat = street.lat;
                     lng = street.lng;
                     return;
@@ -404,6 +416,8 @@
 
             $('#streetsFound').empty();
 
+            marker.bindPopup(street.fullName).openPopup();  
+
         });
 
         $(document).ready(function(){
@@ -424,8 +438,11 @@
                     data: {id:altId},
 
                     success: function(response){
+                        console.log(response);
                         let hotspotClicked = response.hotspot;
-                         
+                        
+                        console.log("Nombre: " +hotspotClicked.title);
+                        console.log(hotspotClicked.images);
                         //console.log("Nombre: " +hotspotClicked.title);
                         console.log(hotspotClicked.images[0]);
 
@@ -434,10 +451,10 @@
                         $('#hotspotTitleModal').text(hotspotClicked.title);
                         $('#hotspotDescriptionModal').text(hotspotClicked.description);
                         $('#hotspotModal').css("display", "block");
-                        
+        
+                        //$("#previewImage").attr("src", host+"/"+hotspot.images[0].file_path+"/"+hotspot.images[0].file_name);
                     },
                 });
-
             });
 
             $('#hotspotCloseModal').on('click', function(e){
@@ -446,7 +463,6 @@
 
         });
         
-
         
         </script>
 </body>

@@ -21,7 +21,7 @@ class StreetController extends Controller
      */
     public function __construct()
     {
-        //$this->middleware('auth');     
+        $this->middleware('auth');     
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -34,6 +34,7 @@ class StreetController extends Controller
     public function index(){
         $data['maps'] = Map::all();
         $data['streets'] = Street::all();
+        
         return view("street.index", $data);
     }
 
@@ -127,7 +128,6 @@ class StreetController extends Controller
             $mapsRelationship[$r->maps_id[$i]] = ['alternative_name' => $r->maps_name[$i]];
         }
         $street->maps()->sync($mapsRelationship);
-        
         // Point update
         $point = Point::find($street->points[0]->id);
         $point->lat = $r->lat;
@@ -135,7 +135,7 @@ class StreetController extends Controller
         $point->save();
 
         $street->save();
-        //return redirect(route('street.create'));
+        return redirect(route('street.create'));
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -156,6 +156,6 @@ class StreetController extends Controller
 
         
         //Street::destroy($id);
-        return redirect(route('street.index'));
+        return redirect(route('street.create'));
     }
 }
