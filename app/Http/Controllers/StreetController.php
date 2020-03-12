@@ -34,6 +34,7 @@ class StreetController extends Controller
     public function index(){
         $data['maps'] = Map::all();
         $data['streets'] = Street::all();
+        
         return view("street.index", $data);
     }
 

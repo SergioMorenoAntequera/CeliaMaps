@@ -9,7 +9,7 @@
 
 @section('content')
     
-    <div class="container text-center mt-5">
+    <div class="container text-center mt-2">
         <div class="wholePanel" style="min-height: 570px">
             <div id="mapsList" class="leftPanel" style="min-height: 570px">
                 <div class="content" style="font-size: 18px; font-weight: normal">
@@ -24,8 +24,7 @@
                 <p><b> Calles del mapa </b></p> 
                 <div id="streetsList">
                     @foreach ($streets as $street)
-                        <p> {{$street->name}} </p>
-                        <p>asdasd</p> psadada <p>sadasd</p>
+                        <p>{{$street->type->name}} {{$street->name}}</p>
                     @endforeach
                 </div>
             </div>

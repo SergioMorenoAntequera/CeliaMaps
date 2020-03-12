@@ -379,9 +379,8 @@
         });
 
         $(document).ready(function(){
-            console.log(hotspotsFull);
+            //console.log(hotspotsFull);
             hotspotsFull.forEach(hotspot => {
-                console.log("sadasd");
                 var marker = L.marker([hotspot.lat, hotspot.lng], {icon: tokenIcon, alt:hotspot.id});
                 marker.addTo(map);
                 activeMarkers.push(marker);
@@ -398,7 +397,7 @@
 
                     success: function(response){
                         let hotspotClicked = response.hotspot;
-                         
+                        
                         console.log("Nombre: " +hotspotClicked.title);
                         console.log(hotspotClicked.images);
                     },
@@ -406,9 +405,6 @@
             })
 
         });
-        
-
-        
-        </script>
+    </script>
 </body>
 </html>
