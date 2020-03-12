@@ -184,9 +184,9 @@
                 </div>
 
                 <script>
-                    // ************************************************
+                    // ****************
                     // CODIGO DE LA BARRA DE BSUCAR CALLES Y HOTSPOTS 
-                    // ************************************************
+                    // ****************
                     //tHE VARIABLES TAHT WE ARE GONNA USE ALONG THE PROGRAM
                     //We will fill this in the ajax request
                     var streets = [];
@@ -283,34 +283,25 @@
 
         {{-- Hotspots Modal Carousel --}}
 
-        <!-- Modal -->
-        <div class="modal fade" id="ModalView" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header border-bottom-0">
-                        <h5 id="modal-title" class="modal-title text-primary"></h5>
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-                    </div>
-                        <!-- Street type -->
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label class="text-dark">Tipo de vía</label>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button id="btn-remove" value="" type="button" class="btn btn-danger">Eliminar</button>
-                            <button id="btn-position" value="" type="button" class="btn text-white btn-warning mr-auto">Cambiar posición</button>
-                            <!--
-                            <button id="btn-cancel" type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
-                            -->
-                            <button id="btn-submit" type="submit" class="btn btn-success">Guardar</button>
-                        </div>
-                    </form>
-                </div>
+        <div style="display: none;" class="modal-background" id="hotspotModal" >
+            <div class="modal-card">
+                <img src="" alt="Hostpot Imagen" id="hotspotImageModal">
+                <h2 id="hotspotTitleModal"></h2>
+                <p id="hotspotDescriptionModal" style="padding: 0 20px;"></p>
             </div>
         </div>
+        
         {{-- Fin de Hotspots Modal Carousel --}}
 
+        {{-- Streets Modal --}}
+
+        <div style="display: none;" class="modal-background" id="streetModal" >
+            <div class="modal-card">
+                <h2 id="streetModalName"></h2>
+                <ul id="streetModalMaps"></ul>
+            </div>
+        </div>
+        
 
 
 
@@ -383,7 +374,7 @@
         
         let marker = L.marker([0,0],{icon:markerStreet ,opacity:0});
         marker.addTo(map);
-        
+        let selectedStreet;
 
         // Barra de busqueda y como nos mueve al punto en el que se encuentre el 
         // hotspot o la calle en la que se pinche
@@ -399,6 +390,7 @@
             });
             streets.forEach(street => {
                 if($(this).text().trim() == street.fullName){
+                    selectedStreet = street;
                     lat = street.lat;
                     lng = street.lng;
                     return;
@@ -421,6 +413,8 @@
 
             $('#streetsFound').empty();
 
+            showStreet(selectedStreet);
+
         });
 
         $(document).ready(function(){
@@ -441,20 +435,30 @@
                     data: {id:altId},
 
                     success: function(response){
+                        console.log(response);
                         let hotspotClicked = response.hotspot;
                          
-                        //console.log("Nombre: " +hotspotClicked.title);
-                        //console.log(hotspotClicked.images);
+                        console.log("Nombre: " +hotspotClicked.title);
+                        console.log(hotspotClicked.images);
 
+                        let host = "{{url('')}}"
+                        $('#hotspotImageModal').attr("src", host+"/img/hotspots/"+hotspotClicked.images[0].file_name);
+                        $('#hotspotTitleModal').text(hotspotClicked.title);
+                        $('#hotspotDescriptionModal').text(hotspotClicked.description);
+                        $('#hotspotModal').css("display", "block");
+        
+                        //$("#previewImage").attr("src", host+"/"+hotspot.images[0].file_path+"/"+hotspot.images[0].file_name);
                     },
                 });
 
-                $('#ModalView').modal('show');
             })
+            
 
         });
         
-
+        function showStreet(selectedStreet){
+            console.log(selectedStreet);
+        }
         
         </script>
 </body>

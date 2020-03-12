@@ -135,7 +135,7 @@ class StreetController extends Controller
         $point->save();
 
         $street->save();
-        //return redirect(route('street.create'));
+        return redirect(route('street.create'));
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -156,6 +156,6 @@ class StreetController extends Controller
 
         
         //Street::destroy($id);
-        return redirect(route('street.index'));
+        return redirect(route('street.create'));
     }
 }
