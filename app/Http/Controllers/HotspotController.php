@@ -12,7 +12,7 @@ class HotspotController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', 'getAllAjax');     
+        $this->middleware('auth')->except('getAllAjax');     
     }
 
     /**
