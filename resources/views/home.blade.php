@@ -114,17 +114,18 @@
                         <div class="studentContainer" style="margin-left: 13% !important">
                             <div class="student">
                                 <div class="studentHead">
-                                    <img class="user" src="{{url("img/icons/admin.png")}}" alt="">
+                                    <img class="user" src="{{url("img/resources/paula.jpg")}}" alt="">
                                 </div>
                                 
                                 <div class="studentBody">
                                     <p class="name">
-                                        Paula
+                                        Paula Asensio Sánchez
                                     </p>
+                                    <br>
                                     <div class="container">
                                         <div class="row">
                                             <div class="col p-2">
-                                                <a href="mailto:seranmoreno500@gmail.com">
+                                                <a href="mailto:paulaasensiodaw@gmail.com">
                                                     <img class="img-fluid" src="{{url("img/icons/email.svg")}}" alt="">
                                                 </a>
                                             </div>
