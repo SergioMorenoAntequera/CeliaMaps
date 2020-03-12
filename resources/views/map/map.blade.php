@@ -177,7 +177,7 @@
             {{-- Contenido de las busquedas y petición con AJAX --}}
             <div id="searchContent">
                 {{-- div donde se mostrarán todas las calles --}}
-                <div id="streetsFound">
+                <div id="streetsFound" style="max-height: 400px; overflow-y: auto">
                     {{-- <div class="street"> 
                         test
                     </div> --}}
@@ -238,7 +238,7 @@
                         hotspots.forEach(hotspot => {
                             if(hotspot.title.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
                                 $('#streetsFound').append("<div class='hotspot street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ hotspot.title + "</div>");
-                                if(++c == 5){
+                                if(++c >= 5){
                                     return;
                                 }  
                             }
@@ -247,7 +247,7 @@
                         streets.forEach(street => {
                             if(street.fullName.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
                                 $('#streetsFound').append("<div class='street'> <img style='width:5%;' src='{{url('img/icons/token-selected.svg')}}'>"+ street.fullName + "</div>");
-                                if(++c == 5){
+                                if(++c >= 5){
                                     return;
                                 }                                
                             }
