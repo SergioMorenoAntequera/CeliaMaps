@@ -81,7 +81,7 @@
                 </div>
 
                 <img src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
-                <div id="mapsTrans" style="max-height: 270px; overflow-y: auto;">
+                <div id="mapsTrans" style="max-height: 270px; overflow: hidden;">
                     {{-- Para activar el primer mapa y los otros no  --}}
                     @php $first = true; @endphp
                     {{-- Variables donde metemos los mapas --}}
@@ -137,110 +137,6 @@
                         @endif <!-- Si no tiene alineamiento no se pone el mapa -->
                     @endforeach
                 </div>
-        </div>
-
-        {{-- Menú del callejero --}}
-        <div id="streetsMenu" class="menu noselect">
-            {{-- Cruz para cerrar el menú --}}
-            <div class="closeMenuButton">
-                <i class="fa fa-times"></i>
-            </div>
-            {{-- Iconito del pin para fijarla --}}
-            <div class="pinMenuButton ">
-                <img class="pinIcon" src="{{url('/img/icons/pin.svg')}}" alt="">
-            </div>
-            {{-- Icono que representa & Contenido de la ventana --}}
-            <div id="searchBar">    
-                {{-- Icono de la lupa --}}
-                <div class="divImg">
-                    <img class="noselect" src="{{url('img/icons/search.svg')}}" title="Callejero">
-                </div>
-                {{-- Barra de input para las calles --}}
-                <div class="divInput">
-                    <input id="streetsInput" placeholder="Buscar en el mapa...">
-                </div>
-            </div> 
-
-            {{-- Contenido de las busquedas y petición con AJAX --}}
-            <div id="searchContent">
-                {{-- div donde se mostrarán todas las calles --}}
-                <div id="streetsFound">
-                    {{-- <div class="street"> 
-                        test
-                    </div> --}}
-                </div>
-
-                <script>
-                    // ************************************************
-                    // CODIGO DE LA BARRA DE BSUCAR CALLES Y HOTSPOTS 
-                    // ************************************************
-                    //tHE VARIABLES TAHT WE ARE GONNA USE ALONG THE PROGRAM
-                    //We will fill this in the ajax request
-                    var streets = [];
-                    var hotspots = [];
-                    //When we first click in the search bar (AJAX)
-                    $("#streetsInput").on("focusin", function(e){
-                        if($(this).val().length == 0){
-                            var url = window.location.href + "map/search";
-                            $.ajax({
-                                type: 'GET',
-                                url: url,
-                                // data: { text : text },
-                                success: function(data) {
-                                    $('#streetsFound').empty();
-                                    streets = [];
-                                    hotspots = [];
-                                    
-                                    data.streets.forEach(street => {
-                                        street.fullName = street.typeName + " " + street.name;
-                                        streets.push(street);
-                                    });
-                                    hotspots = data.hotspots;
-                                },
-                            }); // FIN AJAX
-                        } else {
-                            if($('#streetsFound').children().length == 0){
-                                lookByText();
-                            }
-                        }
-                    });
-
-                    // When we look for something we remove options depending of
-                    // the text in the box looking inside the first ajax request
-                    $("#streetsInput").on("input", function(e){
-                        $('#streetsFound').empty();
-                        if($(this).val().length != 0)
-                            lookByText();
-                    });
-
-                    // We hide everything when we unfocus
-                    $("#streetsInput").on("focusout", function(e){
-                        // $('#streetsFound').empty();
-                    });
-
-                    // Auxiliar function
-                    function lookByText(){
-                        c = 0;
-                        hotspots.forEach(hotspot => {
-                            if(hotspot.title.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
-                                $('#streetsFound').append("<div class='hotspot street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ hotspot.title + "</div>");
-                                if(++c == 5){
-                                    return;
-                                }  
-                            }
-                        });
-                        c = 0;
-                        streets.forEach(street => {
-                            if(street.fullName.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
-                                $('#streetsFound').append("<div class='street'> <img style='width:5%;' src='{{url('img/icons/token-selected.svg')}}'>"+ street.fullName + "</div>");
-                                if(++c == 5){
-                                    return;
-                                }                                
-                            }
-                        });
-                    }
-                </script>
-            </div>
         </div>
     </div>
 

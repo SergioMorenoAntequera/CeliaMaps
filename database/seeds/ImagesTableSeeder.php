@@ -15,7 +15,7 @@ class ImagesTableSeeder extends Seeder
         DB::table('images')->insert([    
             
             'title' => 'Catedral de Almeria',
-            'description' => '',
+            'description' => 'La Catedral-Fortaleza de la Encarnación es la sede episcopal de la diócesis de Almería.',
             'file_name' => 'catedral-almeria-img-01.jpg',
             'file_path' => 'img/hotspots',
             'hotspot_id' => 1,
@@ -77,7 +77,7 @@ class ImagesTableSeeder extends Seeder
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
-
+ 
         DB::table('images')->insert([    
             
             'title' => 'Puerta Purchena',

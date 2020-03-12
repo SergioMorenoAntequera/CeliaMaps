@@ -20,8 +20,11 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!-- PERSONAL CSS -->
-    <link rel="stylesheet" href="{{url('/css/frontend.css')}}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">    
+    <link rel="stylesheet" href="{{url('/css/frontend.css')}}">  
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
     <script>
     // Put all locations into array
     var map;
@@ -90,7 +93,7 @@
                 </div>
 
                 <img src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
-                <div id="mapsTrans" style="max-height: 270px; overflow-y: auto;">
+                <div id="mapsTrans" style="max-height: 270px; overflow: hidden;">
                     {{-- Para activar el primer mapa y los otros no  --}}
                     @php $first = true; @endphp
                     {{-- Variables donde metemos los mapas --}}
@@ -148,6 +151,7 @@
                 </div>
         </div>
 
+
         {{-- Menú del callejero --}}
         <div id="streetsMenu" class="menu noselect">
             {{-- Cruz para cerrar el menú --}}
@@ -180,9 +184,9 @@
                 </div>
 
                 <script>
-                    // ************************************************
+                    // ****************
                     // CODIGO DE LA BARRA DE BSUCAR CALLES Y HOTSPOTS 
-                    // ************************************************
+                    // ****************
                     //tHE VARIABLES TAHT WE ARE GONNA USE ALONG THE PROGRAM
                     //We will fill this in the ajax request
                     var streets = [];
@@ -203,6 +207,7 @@
                                     data.streets.forEach(street => {
                                         street.fullName = street.typeName + " " + street.name;
                                         streets.push(street);
+                                        console.log(street);
                                     });
                                     hotspots = data.hotspots;
                                 },
@@ -273,6 +278,40 @@
         </div>
     </div>
 
+
+
+
+
+        {{-- Hotspots Modal Carousel --}}
+
+        <div style="display: none;" class="modal-background" id="hotspotModal" >
+            <img src="img/icons/menuCross.svg" id="hotspotCloseModal">
+            <div class="modal-card">
+                <img src="" alt="Hostpot Imagen" id="hotspotImageModal">
+                <h2 id="hotspotTitleModal"></h2>
+                <p id="hotspotDescriptionModal" style="padding: 0 20px;"></p>
+            </div>
+        </div>
+        
+        {{-- Fin de Hotspots Modal Carousel --}}
+
+        {{-- Streets Modal 
+            
+            <div style="display: none;" class="modal-background" id="streetModal" >
+                <img src="img/icons/menuCross.svg" id="streetCloseModal">
+                <div class="modal-card">
+                    <h2 id="streetModalName"></h2>
+                </div>
+            </div>
+            --}}
+        
+
+
+
+
+
+
+
     {{-------------------------------------------------------------}}
     {{-- BOTTOM RIGHT MENU SO WE CAN DISPLAY S WE CAN FULLSCREEN --}}
     {{-------------------------------------------------------------}}
@@ -338,7 +377,7 @@
         
         let marker = L.marker([0,0],{icon:markerStreet ,opacity:0});
         marker.addTo(map);
-        
+        let selectedStreet;
 
         // Barra de busqueda y como nos mueve al punto en el que se encuentre el 
         // hotspot o la calle en la que se pinche
@@ -354,6 +393,7 @@
             });
             streets.forEach(street => {
                 if($(this).text().trim() == street.fullName){
+                    selectedStreet = street;
                     lat = street.lat;
                     lng = street.lng;
                     return;
@@ -376,10 +416,12 @@
 
             $('#streetsFound').empty();
 
+            marker.bindPopup(street.fullName).openPopup();  
+
         });
 
         $(document).ready(function(){
-            //console.log(hotspotsFull);
+            
             hotspotsFull.forEach(hotspot => {
                 var marker = L.marker([hotspot.lat, hotspot.lng], {icon: tokenIcon, alt:hotspot.id});
                 marker.addTo(map);
@@ -396,15 +438,32 @@
                     data: {id:altId},
 
                     success: function(response){
+                        console.log(response);
                         let hotspotClicked = response.hotspot;
                         
                         console.log("Nombre: " +hotspotClicked.title);
                         console.log(hotspotClicked.images);
+                        //console.log("Nombre: " +hotspotClicked.title);
+                        console.log(hotspotClicked.images[0]);
+
+                        let host = "{{url('')}}"
+                        $('#hotspotImageModal').attr("src", host+"/img/hotspots/"+hotspotClicked.images[0].file_name);
+                        $('#hotspotTitleModal').text(hotspotClicked.title);
+                        $('#hotspotDescriptionModal').text(hotspotClicked.description);
+                        $('#hotspotModal').css("display", "block");
+        
+                        //$("#previewImage").attr("src", host+"/"+hotspot.images[0].file_path+"/"+hotspot.images[0].file_name);
                     },
                 });
-            })
+            });
+
+            $('#hotspotCloseModal').on('click', function(e){
+                $('#hotspotModal').css("display", "none");
+            });
 
         });
-    </script>
+        
+        
+        </script>
 </body>
 </html>

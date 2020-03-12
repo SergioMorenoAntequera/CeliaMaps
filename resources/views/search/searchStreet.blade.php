@@ -12,33 +12,51 @@
 <div id="contenedor" class="container">
   <div class="wholePanel">
 
-    <div class="rightPanel" style="width:100%;">
+    <div class="container text-center mt-5">
+      <div class="wholePanel" style="min-height: 570px">
+          <div class="leftPanel" style="min-height: 570px">
+              <div class="content" style="font-size: 18px; font-weight: normal">
+                  <p style="font-size: 30px"><b> Búsqueda de Calles </b></p>                  
+                  </div>
+
+                 
+                    <div id="buscadorVia" class="container align-center"  width="25%">
+                      <form class="form-inline float-right">
+                        <input type="text" id="cajaTexto" class="form-control" placeholder="Nombre Vía">
+                        <img src="{{url('/img/icons/lupa-blanca.png')}}" width="15%" alt="" class="img-fluid pt-1">
+                      </form>          
+                    </div>
+                  
+          </div>
+         
+
+    <div class="rightPanel" >
+      <!-- style="width:100%;" -->
 
       <!-- inicio cuadro de búsqueda -->
-      <div class="row float-right">
-        <div id="buscadorVia" class="container">
-          <form class="form-inline float-right">
-            <input type="text" id="cajaTexto" class="form-control" placeholder="Nombre Vía">
-          </form>
-        </div>
-      </div>
+      
       <br>
-      <!-- final cuadro de búsqueda -->
+      <br>
+      <br>
+      <!-- final cuadro de búsqueda 
+       <h4>Panel de búsqueda de calles</h4>
+      -->
 
-      <h4>Panel de búsqueda de calles</h4>
-
+     
+      <div id="container">
       <!-- Inicio listado calles -->
       <div id="resultado">
         @foreach ($streets as $street)
         <div class="row">
           <div class=" col-8">
             <div class="text-white">
-              <a href="{{route("search.inform", $street->id)}}">{{$street->type->name}} {{$street->name}}</a>
+              <b><a class="text-success" href="{{route("search.inform", $street->id)}}">{{$street->type->name}} {{$street->name}}</a></b>
             </div>
           </div>
         </div>
         @endforeach
       </div>
+    </div>
       <!-- final listado calles -->
     </div>
   </div>
@@ -74,17 +92,25 @@
               data: {text:elNombreDelaCalle},              
                 success: function(response){ 
                   $("#resultado").html(""); 
-                  for(var i = 0; i< response.length; i++){
+                  $("#resultado").append('<a class="text-success" href='+url+"/"+response[0].id+'>' + response[0].name + ' ' + response[0].street_name + '</a></br>');
+                  for(var i = 1; i< response.length; i++){
                     id = response[i].id;
-                    console.log(id);
-                    //cuando haga el enlace hay qu incluir el a href en el append, igual que he metido el br 
-                    // Usamos la variable url generada al cargar la página para crear la dirección del enlace
-                    $("#resultado").append('<a href='+url+"/"+response[i].id+'>' + response[i].name + ' ' + response[i].street_name + '</a></br>');
-                    
+                    console.log(response[i]);
+                    // damos a la variable name el valor del nombre de la calle
+                    let name = response[i].name;
+                    /*si el nombre contenido en la variable es diferente al nombre de esa misma variable
+                    name en la vuelta anterior, entonces ese nombre de calle aparece en la vista, si el nombre anterior
+                    se repite, entonces no aparece en la vista por segunda vez.
+                    */
+                    if(name != response[i-1].name){
+                      //cuando haga el enlace hay qu incluir el a href en el append, igual que he metido el br 
+                      // Usamos la variable url generada al cargar la página para crear la dirección del enlace
+                      $("#resultado").append('<a href='+url+"/"+response[i].id+'>' + response[i].name + ' ' + response[i].street_name + '</a></br>');
+                    }                    
                     } 
                 },
                 error:function(){
-                  alert("no funciona");
+                  //alert("no funciona");
                 }              
             });
           } 

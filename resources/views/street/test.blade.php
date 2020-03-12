@@ -61,11 +61,6 @@
                  <img style="width: 70%;position: absolute; top: 15%; left: 15%" class="noselect" src="{{url('img/icons/search.svg')}}" title="Buscador">
              </div>
          </div>
-        <div id="ballHotspots" class="ball noselect">
-            <div class="ballContent">
-                <img style="opacity: 0.2" class="noselect" src="{{url('img/icons/tlMenuToken.png')}}" title="Puntos de interés">
-            </div>
-        </div>
 
         {{-- CONTENIDO DE MENÚ --}}
         {{-- Todos los menús que podemos poner --}}
@@ -177,11 +172,10 @@
                     //tHE VARIABLES TAHT WE ARE GONNA USE ALONG THE PROGRAM
                     //We will fill this in the ajax request
                     var streets = [];
-                    var hotspots = [];
                     //When we first click in the search bar (AJAX)
                     $("#streetsInput").on("focusin", function(e){
                         if($(this).val().length == 0){
-                            var url = window.location.href + "map/search";
+                            var url = "{{url("map/search")}}";
                             $.ajax({
                                 type: 'GET',
                                 url: url,
@@ -189,13 +183,11 @@
                                 success: function(data) {
                                     $('#streetsFound').empty();
                                     streets = [];
-                                    hotspots = [];
                                     
                                     data.streets.forEach(street => {
                                         street.fullName = street.typeName + " " + street.name;
                                         streets.push(street);
                                     });
-                                    hotspots = data.hotspots;
                                 },
                             }); // FIN AJAX
                         } else {
@@ -221,18 +213,9 @@
                     // Auxiliar function
                     function lookByText(){
                         c = 0;
-                        hotspots.forEach(hotspot => {
-                            if(hotspot.title.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
-                                $('#streetsFound').append("<div class='hotspot street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ hotspot.title + "</div>");
-                                if(++c == 5){
-                                    return;
-                                }  
-                            }
-                        });
-                        c = 0;
                         streets.forEach(street => {
                             if(street.fullName.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
-                                $('#streetsFound').append("<div class='street'> <img style='width:5%;' src='{{url('img/icons/token-selected.svg')}}'>"+ street.fullName + "</div>");
+                                $('#streetsFound').append("<div class='street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ street.fullName + "</div>");
                                 if(++c == 5){
                                     return;
                                 }                                
@@ -248,10 +231,10 @@
     {{-- BOTTOM LEFT MENU TO CHANGE THE KIND OF MAP TO DISPLAY --}}
     {{-----------------------------------------------------------}}
     <div id="tilesMenu">
-        <div id="tilesShow">
+        <div id="tilesShow" style="margin-left: 62px">
             <i class="fa fa-chevron-down"></i>
         </div>
-        <div id="tileChooser">
+        <div id="tileChooser" style="margin-left: 72px">
             <div class="tiles"> 
                 <img src="{{url("img/maps/KindOfMap1.png")}}" alt="">
             </div>
@@ -263,6 +246,7 @@
             </div>
         </div>
     </div>
+
 
     {{-------------------------------------------------------------}}
     {{-- BOTTOM RIGHT MENU SO WE CAN DISPLAY S WE CAN FULLSCREEN --}}
@@ -499,6 +483,11 @@
                     editStreet(street); 
                 }
             });
+
+
+
+
+
 
             function createStreet(lat, lng) {
                 // Create form attributes

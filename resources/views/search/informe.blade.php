@@ -33,6 +33,7 @@
                 <h2>
                     {{$street->type->name }} {{$street->name}}
                 </h2>
+               
             </div>
             <div>
                 <h5>Se encuentra
@@ -70,15 +71,18 @@
 
             <br>
 
-            <div class="row col-2">
+            <div class="row col-2 float-right">
                 <!-- AQUÍ PONGO EL BOTÓN DE PDF -->
                 <button id="btn-pdf" type="button" class="btn btn-success">PDF</button>
             </div>
         <!-- FIN DE BOTONES  //////////////////////////////////////////// -->
-     
+            <br>
+            <br>
 
-
+    <!-- DIV QUE CONTIENE EL MAPA CON LA SITUACIÓN DE LA CALLE BUSCADA ///////////////////// -->            
         <div id="map" style="width:100%;height: 480px;"></div>
+
+        <!--SCRIPT QUE NOS MUESTRA LA SITUACIÓN DE LA CALLE EN EL MAPA ////////////////////// -->
         <script>
             map = L.map('map', {
                 minZoom: 10,  //Dont touch, recommended
@@ -110,9 +114,10 @@
         </script>
     </div>
     
-    {{--    Imagenes mapas 
+    
     <br>
     <!-- FIN DE PANEL DERECHO //////////////////////////////////////////// -->
+    {{--    Imagenes mapas 
     <div class="rightPanel" style="width:100%;">       
         @foreach ($street->maps as $map)
         <img src="/img/maps/{{$map->image}}" alt="..." style="width: 75%;">             
