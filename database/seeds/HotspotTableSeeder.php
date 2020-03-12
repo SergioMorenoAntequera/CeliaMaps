@@ -14,7 +14,7 @@ class HotspotTableSeeder extends Seeder
         DB::table('hotspots')->truncate();
         DB::table('hotspots')->insert([    
     
-            'title' => 'Catedral de Almeria',
+            'title' => 'Catedral de Almeria', 
             'description' => 'La Catedral-Fortaleza de la Encarnación es la sede episcopal de la diócesis de Almería. El edificio, con estructura de fortaleza, presenta una arquitectura de transición entre el Gótico tardío y el Renacimiento, así como rasgos posteriores barrocos y neoclásicos. Constituye una de las manifestaciones artísticas de carácter arquitectónico y cultural más importantes y valiosas de Andalucía y, por ende, de España, al ser la única Catedral con naturaleza de fortaleza erigida en el siglo XVI. ',
             'lat' => 36.838036051870695,
             'lng' => -2.467441694045514,

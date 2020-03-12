@@ -93,7 +93,7 @@
                 </div>
 
                 <img src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
-                <div id="mapsTrans" style="max-height: 270px; overflow-y: auto;">
+                <div id="mapsTrans" style="max-height: 270px; overflow: hidden;">
                     {{-- Para activar el primer mapa y los otros no  --}}
                     @php $first = true; @endphp
                     {{-- Variables donde metemos los mapas --}}
@@ -207,6 +207,7 @@
                                     data.streets.forEach(street => {
                                         street.fullName = street.typeName + " " + street.name;
                                         streets.push(street);
+                                        console.log(street);
                                     });
                                     hotspots = data.hotspots;
                                 },
@@ -284,6 +285,7 @@
         {{-- Hotspots Modal Carousel --}}
 
         <div style="display: none;" class="modal-background" id="hotspotModal" >
+            <img src="img/icons/menuCross.svg" id="hotspotCloseModal">
             <div class="modal-card">
                 <img src="" alt="Hostpot Imagen" id="hotspotImageModal">
                 <h2 id="hotspotTitleModal"></h2>
@@ -293,14 +295,15 @@
         
         {{-- Fin de Hotspots Modal Carousel --}}
 
-        {{-- Streets Modal --}}
-
-        <div style="display: none;" class="modal-background" id="streetModal" >
-            <div class="modal-card">
-                <h2 id="streetModalName"></h2>
-                <ul id="streetModalMaps"></ul>
+        {{-- Streets Modal 
+            
+            <div style="display: none;" class="modal-background" id="streetModal" >
+                <img src="img/icons/menuCross.svg" id="streetCloseModal">
+                <div class="modal-card">
+                    <h2 id="streetModalName"></h2>
+                </div>
             </div>
-        </div>
+            --}}
         
 
 
@@ -413,7 +416,7 @@
 
             $('#streetsFound').empty();
 
-            showStreet(selectedStreet);
+            marker.bindPopup(street.fullName).openPopup();  
 
         });
 
@@ -440,6 +443,8 @@
                          
                         console.log("Nombre: " +hotspotClicked.title);
                         console.log(hotspotClicked.images);
+                        //console.log("Nombre: " +hotspotClicked.title);
+                        console.log(hotspotClicked.images[0]);
 
                         let host = "{{url('')}}"
                         $('#hotspotImageModal').attr("src", host+"/img/hotspots/"+hotspotClicked.images[0].file_name);
@@ -450,15 +455,14 @@
                         //$("#previewImage").attr("src", host+"/"+hotspot.images[0].file_path+"/"+hotspot.images[0].file_name);
                     },
                 });
+            });
 
-            })
-            
+            $('#hotspotCloseModal').on('click', function(e){
+                $('#hotspotModal').css("display", "none");
+            });
 
         });
         
-        function showStreet(selectedStreet){
-            console.log(selectedStreet);
-        }
         
         </script>
 </body>

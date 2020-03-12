@@ -379,3 +379,48 @@ html, body {
               user-select: none; /* Non-prefixed version, currently
                                     supported by Chrome, Opera and Firefox */
   }
+
+
+/* Hotspots Images */
+.modal-background{
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 55%;
+    background-color: white;
+    text-align: center;
+}
+
+.modal-card{
+    margin: 0 auto;
+    width: 100%;
+    overflow: scroll;
+    text-overflow: ellipsis;
+    max-height: 800px;
+    overflow-x: hidden;
+}
+
+.modal-card img{
+    width: 100%;
+    height: 100%;
+}
+
+.modal-card p{
+    text-align: justify;
+}
+
+#hotspotCloseModal {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+}
+.leaflet-popup-pane{
+    left:5px;
+    top:-30px;
+    position: relative;
+}
+.leaflet-popup-content{
+    text-align: center;
+}

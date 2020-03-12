@@ -25,7 +25,6 @@
                 <div id="streetsList">
                     @foreach ($streets as $street)
                         <p> {{$street->name}} </p>
-                        <p>asdasd</p> psadada <p>sadasd</p>
                     @endforeach
                 </div>
             </div>
