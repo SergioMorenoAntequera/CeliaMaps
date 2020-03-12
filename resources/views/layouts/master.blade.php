@@ -171,7 +171,7 @@
                     </script>
 
                     {{-- div ausiliar para que todo sea responsivo --}}
-                    {{-- <div id="notocar" style="position: absolute; bottom: 10%" class="lateralMenuImg">
+                    <div id="notocar" style="position: absolute; bottom: 10%" class="lateralMenuImg">
                         <img src="{{url('img/icons/rip.svg')}}" class="img-fluid">
                     </div>
                     <script>
@@ -188,7 +188,7 @@
                                 });
                             });
                         });
-                    </script> --}}
+                    </script>
                     <a href="{{route('home')}}">
                         <div style="position: absolute; bottom: 0px" class="lateralMenuImg">
                             <img src="{{url('img/icons/turnOff.svg')}}" class="img-fluid">
