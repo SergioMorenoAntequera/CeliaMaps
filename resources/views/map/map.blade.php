@@ -283,32 +283,14 @@
 
         {{-- Hotspots Modal Carousel --}}
 
-        <!-- Modal -->
-        <div class="modal fade" id="ModalView" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header border-bottom-0">
-                        <h5 id="modal-title" class="modal-title text-primary"></h5>
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-                    </div>
-                        <!-- Street type -->
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label class="text-dark">Tipo de vía</label>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button id="btn-remove" value="" type="button" class="btn btn-danger">Eliminar</button>
-                            <button id="btn-position" value="" type="button" class="btn text-white btn-warning mr-auto">Cambiar posición</button>
-                            <!--
-                            <button id="btn-cancel" type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
-                            -->
-                            <button id="btn-submit" type="submit" class="btn btn-success">Guardar</button>
-                        </div>
-                    </form>
-                </div>
+        <div style="display: block;" class="modal-background">
+            <div class="modal-card">
+                <img src="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" alt="Hostpot Imagen">
+                <h2>Titulo del Hotspot</h2>
+                <p style="padding: 0 20px;">Descripcion super larga del Hotspot </p>
             </div>
         </div>
+        
         {{-- Fin de Hotspots Modal Carousel --}}
 
 
