@@ -415,8 +415,8 @@
             map.setView([lat, lng], 18);
 
             $('#streetsFound').empty();
-
-            marker.bindPopup(street.fullName).openPopup();  
+        
+            marker.bindPopup(selectedStreet.fullName).openPopup();  
 
         });
 
