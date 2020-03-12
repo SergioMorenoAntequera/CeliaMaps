@@ -123,11 +123,12 @@ class StreetController extends Controller
         // Maps streets relationships update
         $mapsRelationship = array();
         // Array to complete junction table
+        !is_null($r->maps_id){
         for ($i=0; $i < count($r->maps_id); $i++) { 
             $mapsRelationship[$r->maps_id[$i]] = ['alternative_name' => $r->maps_name[$i]];
         }
         $street->maps()->sync($mapsRelationship);
-        
+        }
         // Point update
         $point = Point::find($street->points[0]->id);
         $point->lat = $r->lat;
