@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     
     <!-- PERSONAL CSS -->
-    <link rel="stylesheet" href="{{url('/css/Frontend.css')}}">
+    <link rel="stylesheet" href="{{url('/css/frontend.css')}}">
 </head>
 <body style="overflow: hidden;">
     
