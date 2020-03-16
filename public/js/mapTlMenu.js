@@ -24,24 +24,31 @@ $(document).ready(function(){
 
     $('.ball').on("click", function(){
         if($(this).attr("id").includes("Maps")) {
+            changeOpacity($(this).find("img"));
             $("#mapsMenu").fadeToggle(100);
         }
         if($(this).attr("id").includes("Hotspots")) {
+            // Ponerle o quitarle transparencia al icono
+            changeOpacity($(this).find("img"));
+            //console.log($(this).find("img").css({"opacity": 0.2}));
+            //
+
             // $("#hotspotsMenu").fadeToggle(100);
-            if(activeMarkers.length == 0){
-                $("#ballHotspots img").css({opacity:1});
-                hotspotsFull.forEach(hotspot => {
-                    activeMarkers.push(L.marker([hotspot.lat, hotspot.lng], {icon: tokenIcon}).addTo(map));
-                });
-            } else {
-                $("#ballHotspots img").css({opacity:0.2});
-                activeMarkers.forEach(marker => {
-                    map.removeLayer(marker);
-                });
-                activeMarkers = [];
-            }
+            // if(activeMarkers.length == 0){
+            //     $("#ballHotspots img").css({opacity:1});
+            //     hotspotsFull.forEach(hotspot => {
+            //         activeMarkers.push(L.marker([hotspot.lat, hotspot.lng], {icon: tokenIcon}).addTo(map));
+            //     });
+            // } else {
+            //     $("#ballHotspots img").css({opacity:0.2});
+            //     activeMarkers.forEach(marker => {
+            //         map.removeLayer(marker);
+            //     });
+            //     activeMarkers = [];
+            // }
         }
         if($(this).attr("id").includes("Streets")) {
+            changeOpacity($(this).find("img"));
             $("#streetsMenu").fadeToggle(100);
         }
     });
@@ -151,5 +158,14 @@ $(document).ready(function(){
         });
 
         images[mapIndex].setOpacity(0);
+    }
+
+    // Method that we use to see if an option is selected or not
+    function changeOpacity(img){
+        if(img.css("opacity") < 1){
+            img.css({"opacity": 1});
+        } else {
+            img.css({"opacity": 0.2});
+        }
     }
 });

@@ -24,25 +24,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-    <script>
-    // Put all locations into array
-    var map;
-    var activeMarkers = [];
-    var tokenIcon = L.icon({
-        iconUrl: "{{url('img/icons/token.svg')}}",
-        iconSize:     [40, 100], // size of the icon
-        iconAnchor:   [15, 60], // point of the icon which will correspond to marker's location
-    });
-    var hotspotsFull = [
-        @foreach ($hotspots as $hotspot)
-            {id:"{{$hotspot->id}}", title:"{{ $hotspot->title }}", image:"{{$hotspot->image}}", lat:"{{ $hotspot->lat }}", lng:"{{ $hotspot->lng }}" }, 
-        @endforeach
-    ];
-    </script>
-    <script src="{{url('js/mapTlMenu.js')}}"></script>
-    <script src="{{url('js/mapBlMenu.js')}}"></script>
-    <script src="{{url('js/mapFullScreenMenu.js')}}"></script>
 </head>
 
 <body id="body">
@@ -354,11 +335,6 @@
         map.whenReady(function() {
             //Añadimos la primera imagen para que se vea algo
             map.addLayer(images[0]);
-
-            // map.on('click', function(e) {
-            //     console.log(map._layers );
-            //     console.log(e.latlng .lat + ", " + e.latlng.lng);    
-            // });
         });
 
         
@@ -464,6 +440,32 @@
         });
         
         
-        </script>
+    </script>
+
+    {{-- Algo que tiene que ver con los hotspots  --}}
+    <script>
+        var jsHotspots = [
+            @foreach ($hotspots as $hotspot)
+                {id:"{{$hotspot->id}}", title:"{{ $hotspot->title }}", image:"{{$hotspot->image}}", lat:"{{ $hotspot->lat }}", lng:"{{ $hotspot->lng }}" }, 
+            @endforeach
+        ];
+        
+        // Put all locations into array
+        // var activeMarkers = [];
+        // var tokenIcon = L.icon({
+        //     iconUrl: "{{url('img/icons/token.svg')}}",
+        //     iconSize:     [40, 100], // size of the icon
+        //     iconAnchor:   [15, 60], // point of the icon which will correspond to marker's location
+        // });
+        // var hotspotsFull = [
+        //     @foreach ($hotspots as $hotspot)
+        //         {id:"{{$hotspot->id}}", title:"{{ $hotspot->title }}", image:"{{$hotspot->image}}", lat:"{{ $hotspot->lat }}", lng:"{{ $hotspot->lng }}" }, 
+        //     @endforeach
+        // ];
+    </script>
+
+    <script src="{{url('js/mapTlMenu.js')}}"></script>
+    <script src="{{url('js/mapBlMenu.js')}}"></script>
+    <script src="{{url('js/mapFullScreenMenu.js')}}"></script>
 </body>
 </html>
