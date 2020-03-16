@@ -444,19 +444,35 @@
 
     {{-- Algo que tiene que ver con los hotspots  --}}
     <script>
+        // Preparamos lo que tiene que ver con los hotspots para enviarlo al script
         var jsHotspots = [
             @foreach ($hotspots as $hotspot)
-                {id:"{{$hotspot->id}}", title:"{{ $hotspot->title }}", image:"{{$hotspot->image}}", lat:"{{ $hotspot->lat }}", lng:"{{ $hotspot->lng }}" }, 
+                {
+                    id:"{{$hotspot->id}}", 
+                    title:"{{ $hotspot->title }}", 
+                    images: [
+                        @foreach ($hotspot->images as $image)
+                            {
+                                title: "{{ $image['title'] }}",
+                                description: "{{ $image['description'] }}",
+                                file_path: "{{ $image['file_path'] }}",
+                                file_name: "{{ $image['file_name'] }}",
+                            },
+                        @endforeach
+                    ],
+                    lat:"{{ $hotspot->lat }}", 
+                    lng:"{{ $hotspot->lng }}"
+                },
             @endforeach
         ];
+        var hpIcon = L.icon({
+            iconUrl: "{{url('img/icons/token.svg')}}",
+            iconSize:     [40, 100], // size of the icon
+            iconAnchor:   [15, 60], // point of the icon which will correspond to marker's location
+        });
         
         // Put all locations into array
         // var activeMarkers = [];
-        // var tokenIcon = L.icon({
-        //     iconUrl: "{{url('img/icons/token.svg')}}",
-        //     iconSize:     [40, 100], // size of the icon
-        //     iconAnchor:   [15, 60], // point of the icon which will correspond to marker's location
-        // });
         // var hotspotsFull = [
         //     @foreach ($hotspots as $hotspot)
         //         {id:"{{$hotspot->id}}", title:"{{ $hotspot->title }}", image:"{{$hotspot->image}}", lat:"{{ $hotspot->lat }}", lng:"{{ $hotspot->lng }}" }, 

@@ -33,20 +33,24 @@ class MapController extends Controller
      * @return View
      */
     public function map(){
+        // Preparamos los mapas ordenados
         $maps = Map::all();
-        //We sort the maps depending on the level
         $mapsSorted = Array();
         for ($i = 0; $i < sizeof($maps); $i++) {
             $mapsSorted[$maps[$i]->level - 1] = $maps[$i];
         }
         ksort($mapsSorted);
-        
-        $data['hotspots'] = HotSpot::all();
-        $hotspots = Hotspot::all();
-        // dd(json_encode($data['hotspots']));
         $data['maps'] = $mapsSorted;
         
-        return view("map.map", $data, ['hotspots'=>$hotspots]);
+        // Preparamos los hps con sus imagenes
+        $hotspots = HotSpot::all();
+        foreach ($hotspots as $hp) {
+            $hp->images = $hp->images->toArray();
+        }
+        
+        $data['hotspots'] = $hotspots;
+        
+        return view("map.map", $data);
     }
     
     ///////////////////////////////////////////////////////////////////////////////////////////

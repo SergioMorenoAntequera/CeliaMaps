@@ -24,20 +24,33 @@ $(document).ready(function(){
 
     $('.ball').on("click", function(){
         if($(this).attr("id").includes("Maps")) {
-            changeOpacity($(this).find("img"));
+            swapOpacity($(this).find("img"));
             $("#mapsMenu").fadeToggle(100);
         }
         if($(this).attr("id").includes("Hotspots")) {
             // Ponerle o quitarle transparencia al icono
-            changeOpacity($(this).find("img"));
-            //console.log($(this).find("img").css({"opacity": 0.2}));
-            //
+            swapOpacity($(this).find("img"));
 
+            // Mostramos todos los hotspot que nos hemos preparado en 
+            // la variable jsHotspots antes de llamar este script
+            // swapHotspots();
+            jsHotspots.forEach(hp => {
+                var marker = L.marker([hp.lat, hp.lng], 
+                    {icon: hpIcon})
+                    .on('click', function(e){
+                        console.log(e);
+                    }
+                );
+                marker = $.extend(marker, {"hotspotInfo": hp});
+                
+                marker.addTo(map);
+            });
+            
+            
             // $("#hotspotsMenu").fadeToggle(100);
             // if(activeMarkers.length == 0){
             //     $("#ballHotspots img").css({opacity:1});
             //     hotspotsFull.forEach(hotspot => {
-            //         activeMarkers.push(L.marker([hotspot.lat, hotspot.lng], {icon: tokenIcon}).addTo(map));
             //     });
             // } else {
             //     $("#ballHotspots img").css({opacity:0.2});
@@ -48,7 +61,7 @@ $(document).ready(function(){
             // }
         }
         if($(this).attr("id").includes("Streets")) {
-            changeOpacity($(this).find("img"));
+            swapOpacity($(this).find("img"));
             $("#streetsMenu").fadeToggle(100);
         }
     });
@@ -161,11 +174,15 @@ $(document).ready(function(){
     }
 
     // Method that we use to see if an option is selected or not
-    function changeOpacity(img){
+    function swapOpacity(img){
         if(img.css("opacity") < 1){
             img.css({"opacity": 1});
         } else {
             img.css({"opacity": 0.2});
         }
     }
+
+    function test(e){
+        console.log(e);
+    };
 });
