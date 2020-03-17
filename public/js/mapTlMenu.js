@@ -34,15 +34,16 @@ $(document).ready(function(){
             // Mostramos todos los hotspot que nos hemos preparado en 
             // la variable jsHotspots antes de llamar este script
             // swapHotspots();
+            var markers = [];
             jsHotspots.forEach(hp => {
                 var marker = L.marker([hp.lat, hp.lng], 
                     {icon: hpIcon})
                     .on('click', function(e){
-                        console.log(e);
+                        console.log(e.target.hotspotInfo);
                     }
                 );
                 marker = $.extend(marker, {"hotspotInfo": hp});
-                
+                markers.push(marker);
                 marker.addTo(map);
             });
             
@@ -67,6 +68,7 @@ $(document).ready(function(){
     });
     
     $(".menu").draggable();
+
 
     $('.closeMenuButton').on("click", function(){
         $(this).parents(".menu").fadeOut(100);

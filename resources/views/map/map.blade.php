@@ -62,7 +62,6 @@
 
         {{-- CONTENIDO DE MENÚ --}}
         {{-- Todos los menús que podemos poner --}}
-
         {{-- Menú de los mapas --}}
         <div id="mapsMenu" style="max-height: 300px; font-family: Arial, Helvetica, sans-serif" class="menu noselect">
                 <!-- Todo el menú -->
@@ -237,6 +236,32 @@
                 </script>
             </div>
         </div>
+
+        {{-- Menú con la info de lps hotspots --}}
+        <div class="hotspotModal menu noselect">
+            {{-- Cruz para cerrar el menú --}}
+            <div class="closeMenuButton" style="z-index: 1">
+                <i class="fa fa-times"></i>
+            </div>
+            {{-- Iconito del pin para fijarla --}}
+            <div class="pinMenuButton" style="z-index: 1">
+                <img class="pinIcon" src="{{url('/img/icons/pin.svg')}}" style="margin-right: 10px">
+            </div>
+            <div class="content">
+                <div class="header">
+                    <h1 id="hp-title"> Pues yo que se, la alcazaba, por ejemplo </h1>
+                    <img id="hp-img" class="noselect" src="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" alt="">
+                </div>
+                <div class="body">
+                    <p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p>
+                    <p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p>
+                    <p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p>
+                    <p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p>
+                </div>
+                
+            </div>
+            
+        </div>
     </div>
 
     {{-----------------------------------------------------------}}
@@ -260,37 +285,28 @@
     </div>
 
 
+    {{-- Hotspots Modal Carousel --}}
 
-
-
-        {{-- Hotspots Modal Carousel --}}
-
-        <div style="display: none;" class="modal-background" id="hotspotModal" >
-            <img src="img/icons/menuCross.svg" id="hotspotCloseModal">
-            <div class="modal-card">
-                <img src="" alt="Hostpot Imagen" id="hotspotImageModal">
-                <h2 id="hotspotTitleModal"></h2>
-                <p id="hotspotDescriptionModal" style="padding: 0 20px;"></p>
-            </div>
+    {{-- <div style="display: none;" class="modal-background" id="hotspotModal" >
+        <img src="img/icons/menuCross.svg" id="hotspotCloseModal">
+        <div class="modal-card">
+            <img src="" alt="Hostpot Imagen" id="hotspotImageModal">
+            <h2 id="hotspotTitleModal"></h2>
+            <p id="hotspotDescriptionModal" style="padding: 0 20px;"></p>
         </div>
+    </div> --}}
+    
+    {{-- Fin de Hotspots Modal Carousel --}}
+
+    {{-- Streets Modal 
         
-        {{-- Fin de Hotspots Modal Carousel --}}
-
-        {{-- Streets Modal 
-            
-            <div style="display: none;" class="modal-background" id="streetModal" >
-                <img src="img/icons/menuCross.svg" id="streetCloseModal">
-                <div class="modal-card">
-                    <h2 id="streetModalName"></h2>
-                </div>
-            </div>
-            --}}
-        
-
-
-
-
-
+    <div style="display: none;" class="modal-background" id="streetModal" >
+        <img src="img/icons/menuCross.svg" id="streetCloseModal">
+        <div class="modal-card">
+            <h2 id="streetModalName"></h2>
+        </div>
+    </div>
+    --}}
 
 
     {{-------------------------------------------------------------}}
@@ -447,21 +463,17 @@
         // Preparamos lo que tiene que ver con los hotspots para enviarlo al script
         var jsHotspots = [
             @foreach ($hotspots as $hotspot)
-                {
-                    id:"{{$hotspot->id}}", 
-                    title:"{{ $hotspot->title }}", 
-                    images: [
-                        @foreach ($hotspot->images as $image)
-                            {
-                                title: "{{ $image['title'] }}",
-                                description: "{{ $image['description'] }}",
-                                file_path: "{{ $image['file_path'] }}",
-                                file_name: "{{ $image['file_name'] }}",
-                            },
-                        @endforeach
-                    ],
-                    lat:"{{ $hotspot->lat }}", 
-                    lng:"{{ $hotspot->lng }}"
+                { id:"{{$hotspot->id}}", title:"{{ $hotspot->title }}", 
+                images: [
+                    @foreach ($hotspot->images as $image)
+                        {
+                            title: "{{ $image['title'] }}",
+                            description: "{{ $image['description'] }}",
+                            file_path: "{{ $image['file_path'] }}",
+                            file_name: "{{ $image['file_name'] }}",
+                        },
+                    @endforeach
+                ], lat:"{{ $hotspot->lat }}", lng:"{{ $hotspot->lng }}"
                 },
             @endforeach
         ];
@@ -479,7 +491,6 @@
         //     @endforeach
         // ];
     </script>
-
     <script src="{{url('js/mapTlMenu.js')}}"></script>
     <script src="{{url('js/mapBlMenu.js')}}"></script>
     <script src="{{url('js/mapFullScreenMenu.js')}}"></script>
