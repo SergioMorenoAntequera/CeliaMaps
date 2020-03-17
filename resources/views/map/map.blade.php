@@ -157,10 +157,12 @@
             {{-- Contenido de las busquedas y petición con AJAX --}}
             <div id="searchContent">
                 {{-- div donde se mostrarán todas las calles --}}
-                <div id="streetsFound" style="max-height: 400px; overflow-y: auto">
-                    {{-- <div class="street"> 
+                <div id="streetsFound">
+                    {{-- 
+                    <div class="street"> 
                         test
-                    </div> --}}
+                    </div> 
+                    --}}
                 </div>
 
                 <script>
@@ -238,7 +240,7 @@
         </div>
 
         {{-- Menú con la info de lps hotspots --}}
-        <div class="hotspotModal menu noselect">
+        <div class="hotspotModal menu">
             {{-- Cruz para cerrar el menú --}}
             <div class="closeMenuButton" style="z-index: 1">
                 <i class="fa fa-times"></i>
@@ -253,67 +255,42 @@
                     <img id="hp-img" class="noselect" src="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" alt="">
                 </div>
                 <div class="body">
-                    <p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p>
-                    <p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p>
-                    <p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p>
-                    <p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p><p>hola</p>
+                    <p id="hp-description">
+                        Aqui va la descipciion del hotspot y toda la vaina o todo lo que le queramos meter
+                    </p>
                 </div>
-                
-            </div>
-            
-        </div>
-    </div>
-
-    {{-----------------------------------------------------------}}
-    {{-- BOTTOM LEFT MENU TO CHANGE THE KIND OF MAP TO DISPLAY --}}
-    {{-----------------------------------------------------------}}
-    <div id="tilesMenu">
-        <div id="tilesShow">
-            <i class="fa fa-chevron-down"></i>
-        </div>
-        <div id="tileChooser">
-            <div class="tiles"> 
-                <img src="{{url("img/maps/KindOfMap1.png")}}" alt="">
-            </div>
-            <div class="tiles"> 
-                <img src="{{url("img/maps/KindOfMap2.png")}}" alt="">
-            </div>
-            <div class="tiles"> 
-                <img src="{{url("img/maps/KindOfMap3.png")}}" alt="">
             </div>
         </div>
-    </div>
-
-
-    {{-- Hotspots Modal Carousel --}}
-
-    {{-- <div style="display: none;" class="modal-background" id="hotspotModal" >
-        <img src="img/icons/menuCross.svg" id="hotspotCloseModal">
-        <div class="modal-card">
-            <img src="" alt="Hostpot Imagen" id="hotspotImageModal">
-            <h2 id="hotspotTitleModal"></h2>
-            <p id="hotspotDescriptionModal" style="padding: 0 20px;"></p>
-        </div>
-    </div> --}}
     
-    {{-- Fin de Hotspots Modal Carousel --}}
 
-    {{-- Streets Modal 
-        
-    <div style="display: none;" class="modal-background" id="streetModal" >
-        <img src="img/icons/menuCross.svg" id="streetCloseModal">
-        <div class="modal-card">
-            <h2 id="streetModalName"></h2>
+        {{-----------------------------------------------------------}}
+        {{-- BOTTOM LEFT MENU TO CHANGE THE KIND OF MAP TO DISPLAY --}}
+        {{-----------------------------------------------------------}}
+        <div id="tilesMenu">
+            <div id="tilesShow">
+                <i class="fa fa-chevron-down"></i>
+            </div>
+            <div id="tileChooser">
+                <div class="tiles"> 
+                    <img src="{{url("img/maps/KindOfMap1.png")}}" alt="">
+                </div>
+                <div class="tiles"> 
+                    <img src="{{url("img/maps/KindOfMap2.png")}}" alt="">
+                </div>
+                <div class="tiles"> 
+                    <img src="{{url("img/maps/KindOfMap3.png")}}" alt="">
+                </div>
+            </div>
         </div>
-    </div>
-    --}}
 
 
-    {{-------------------------------------------------------------}}
-    {{-- BOTTOM RIGHT MENU SO WE CAN DISPLAY S WE CAN FULLSCREEN --}}
-    {{-------------------------------------------------------------}}
-    <div id="fullScreenMenu">
-        <img src="{{url('/img/icons/fsMaximize.png')}}" alt="">
+        {{-------------------------------------------------------------}}
+        {{-- BOTTOM RIGHT MENU SO WE CAN DISPLAY S WE CAN FULLSCREEN --}}
+        {{-------------------------------------------------------------}}
+        <div id="fullScreenMenu">
+            <img src="{{url('/img/icons/fsMaximize.png')}}" alt="">
+        </div>
+
     </div>
     
     {{---------------------------------------------------------------}}

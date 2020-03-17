@@ -211,10 +211,7 @@ html, body {
     border-radius: 10px;
 }
 /* Parte de arriba */
-#searchBar {
-    height: 40px;
-
-}
+#searchBar { height: 40px; }
 #searchBar .divImg {
     position: absolute;
     width: 10%;
@@ -243,9 +240,12 @@ html, body {
     font-size: 20px;
     border: none;
 }
+
 /* Parte de abajo  */
 #streetsFound{
     width: 100%;
+    max-height: 453px;
+    overflow-y: auto;
     text-align: center;
     background-color: white;
     border-bottom-left-radius: 10px;
