@@ -416,10 +416,11 @@ class MapController extends Controller
         $streets = Street::all();
         foreach ($streets as $street) {
             $street->typeName = $street->type->name;
+            $street->maps;
             $street->lat = $street->points[0]->lat; 
-            $street->lng = $street->points[0]->lng; 
+            $street->lng = $street->points[0]->lng;
         }
-
+        //dd($streets);
         $hotspots = HotSpot::all();
         
         return response()->json([
