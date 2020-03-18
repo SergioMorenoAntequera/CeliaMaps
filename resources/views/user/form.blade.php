@@ -69,7 +69,19 @@
                     @isset($user)
                         <div class="form-group">
                             <label for="password">Contraseña</label>
-                            <input type="password" class="form-control" name="password" id="password" placeholder="rellenar solo si desdea modificar" value="">
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Rellenar solo si desdea modificar" value="">
+                            <div id="diverror" class="error text-danger"></div>
+                            <label for="password_confirmation">Confirmar contraseña</label>                          
+                            <input type="password"  class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Rellenar solo si desdea modificar" value="">
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                             <div id="diverror" class="error text-danger"></div>
                         </div>
                     <!-- COMPORTAMIENTO DEL FORMULARIO SI INSERTAMOS NUEVO USUARIO -->
@@ -77,6 +89,9 @@
                         <div class="form-group">
                             <label for="password">Contraseña</label>
                             <input type="password"  class="form-control" name="password" id="password" value="{{$user->password??''}}" required>
+                            <div id="diverror" class="error text-danger"></div>
+                            <label for="password_confirmation">Confirmar contraseña</label>
+                            <input type="password"  class="form-control" name="password_confirmation" id="password_confirmation" value="" required>
                             <div id="diverror" class="error text-danger"></div>
                         </div>
                     @endisset
@@ -145,6 +160,7 @@ $(document).ready(function(){
         $("#name").val('');
         $("#email").val('');
         $("#password").val('');
+        $("#password_confirmation").val('');
         $("#level").val('');
     }  
 
@@ -163,6 +179,7 @@ $(document).ready(function(){
         var nombre = $("input[name = name]").val();
         var email = $("input[name = email]").val();
         var pass = $("input[name = password]").val();
+        var confPass = $("input[name = password_confirmation]").val();
         var level = $("input[name = level]").val();
 
            
@@ -176,7 +193,9 @@ $(document).ready(function(){
             de datos : nombre de la variable que hemos declarado con el campo.
             y se pasan en el mismo orden en el que están en la base de datos
             */
-            data: {name:nombre, email:email, password:pass, level:level},
+           
+            data: {name:nombre, email:email, password:pass, password_confirmation:confPass, level:level},
+           
             // SI EL MÉTODO FUNCIONA NOS MUESTRA UN ALERT Y SE VACÍAN LOS CAMPOS DEL FORMULALRIO 
             success: function(){  
                 alert("Usuario insertado con éxito");
@@ -185,6 +204,7 @@ $(document).ready(function(){
                 $('.error')[1].innerHTML = "";
                 $('.error')[2].innerHTML = "";
                 $('.error')[3].innerHTML = "";
+                $('.error')[4].innerHTML = "";
                 
             },
             // SI EL MÉTODO NO FUNCIONA NOS MUESTRA LOS MENSAJES DE ERROR DEBAJO DE CADA CAMPO DEL FORMULARIO
@@ -205,7 +225,11 @@ $(document).ready(function(){
                 }   else{$('.error')[2].innerHTML = "";}    
                 if (e.responseJSON.errors.level){
                 $('.error')[3].innerHTML = e.responseJSON.errors.level;
-                }   else{$('.error')[3].innerHTML = "";}    
+                }   else{$('.error')[3].innerHTML = "";}   
+                if (e.responseJSON.errors.level){
+                $('.error')[4].innerHTML = e.responseJSON.errors.level;
+                }   else{$('.error')[4].innerHTML = "";}   
+                 
                 /*
                 $('.error')[0].innerHTML = e.responseJSON.errors.name;
                 $('.error')[1].innerHTML = e.responseJSON.errors.email;
@@ -215,6 +239,7 @@ $(document).ready(function(){
             }    
                     
         });
+        
     });
 
 });

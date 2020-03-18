@@ -26,9 +26,6 @@
     <body class="bg-dark">
         <!-- Header -->
         <!-- Plantilla de la pagina principal -->
-        <div style="background-image: url({{url("img/resources/FallingMenuBackground.png")}})" id="flotingMenu"> 
-            <span>Me llamaban feo, <br> ahora no pueden dejar de mirarme</span>
-        </div>
         <div class="container-fluid">
             <div style="height: 100%" class="row">
                 {{-- Columna de la izquierda --}}
@@ -129,7 +126,7 @@
                         </div>
 
                         <div class="lateralMenuElement">
-                            <a class="lateralMenuLink" href="">
+                            <a class="lateralMenuLink" href="{{route('search.index')}}">
                             <li class="lateralMenuImg">
                                 <img src="{{url('img/icons/report.svg')}}" class="img-fluid">
                             </li>
@@ -155,6 +152,8 @@
                                 var element = $(".lateralMenuLink[href|='{{route('user.index')}}']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/backup")){
                                 var element = $(".lateralMenuLink[href|='{{route('backup.index')}}']").parents(".lateralMenuElement");
+                            } else if(window.location.href.includes("/search")){
+                                var element = $(".lateralMenuLink[href|='{{route('search.index')}}']").parents(".lateralMenuElement");
                             }
                             element.css("background-color", "#6f7e96")
                             
