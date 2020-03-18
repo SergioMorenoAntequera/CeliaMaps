@@ -30,6 +30,7 @@ $(document).ready(function(){
         if($(this).attr("id").includes("Hotspots")) {
             // Ponerle o quitarle transparencia al icono
             swapOpacity($(this).find("img"));
+            
 
             // Mostramos todos los hotspot que nos hemos preparado en 
             // la variable jsHotspots antes de llamar este script
@@ -39,7 +40,14 @@ $(document).ready(function(){
                 var marker = L.marker([hp.lat, hp.lng], 
                     {icon: hpIcon})
                     .on('click', function(e){
-                        console.log(e.target.hotspotInfo);
+                        var hpData = e.target.hotspotInfo;
+                        //Que aparezca la ventana y se complete la información
+                        $(".hotspotModal").fadeIn(100);
+                        $("#hp-title").text(hpData.title);
+                        $("#hp-img").attr("src", hpUrl + "/" + hpData.images[0].file_name);
+                        console.log(hpData);
+                        $("#hp-description").text(hpData.description);
+
                     }
                 );
                 marker = $.extend(marker, {"hotspotInfo": hp});

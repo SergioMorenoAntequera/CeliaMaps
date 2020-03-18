@@ -169,7 +169,6 @@ html, body {
 }
 
 /*/////////////////////////// MENU DE HOTSPOTS ///////////////////////////*/
-
 .hotspotModal{
     position: absolute;
     top: 12%;
@@ -192,8 +191,8 @@ html, body {
     overflow-y: auto; 
 }
 .hotspotModal > .content > .header { position: relative; }
-.hotspotModal > .content > .header > #hp-title { position: absolute; margin: 0px; margin-left: 5px; z-index: 1; width: 90%;}
-.hotspotModal > .content > .header > #hp-img { position: relative; width: 100%; }
+.hotspotModal > .content > .header > #hp-title { margin: 0px; margin-left: 5px; width: 90%; color: blue;}
+.hotspotModal > .content > .header > #hp-img {width: 100%; }
 .hotspotModal > .content > .body {
     padding: 0px 10px 0px 10px;
 }

@@ -251,13 +251,11 @@
             </div>
             <div class="content">
                 <div class="header">
-                    <h1 id="hp-title"> Pues yo que se, la alcazaba, por ejemplo </h1>
                     <img id="hp-img" class="noselect" src="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" alt="">
                 </div>
                 <div class="body">
-                    <p id="hp-description">
-                        Aqui va la descipciion del hotspot y toda la vaina o todo lo que le queramos meter
-                    </p>
+                    <h3 id="hp-title"> Pues yo que se, la alcazaba, por ejemplo </h3>
+                    <p id="hp-description"></p>
                 </div>
             </div>
         </div>
@@ -438,9 +436,11 @@
     {{-- Algo que tiene que ver con los hotspots  --}}
     <script>
         // Preparamos lo que tiene que ver con los hotspots para enviarlo al script
+        var hpUrl = "{{url('img/hotspots/')}}";
         var jsHotspots = [
             @foreach ($hotspots as $hotspot)
                 { id:"{{$hotspot->id}}", title:"{{ $hotspot->title }}", 
+                description: "{{ nl2br(e($hotspot->description)) }}" ,
                 images: [
                     @foreach ($hotspot->images as $image)
                         {
