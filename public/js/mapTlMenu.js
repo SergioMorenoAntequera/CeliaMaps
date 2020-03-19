@@ -42,10 +42,13 @@ $(document).ready(function(){
                         {icon: markerHotspot})
                         .on('click', function(e){
                             var hpData = e.target.hotspotInfo;
-                            // se complete la información y Que aparezca la ventana
+                            // Centramos la vista en el hotspot
+                            map.setView([hpData.lat, parseFloat(hpData.lng) + 0.00041], 18);
+                            // Se completa la información de la ventana
                             $("#hp-title").text(hpData.title);
                             $("#hp-img").attr("src", hpData.images[0].file_path + "/" + hpData.images[0].file_name);
                             $("#hp-description").text(hpData.description);
+                            // Aparece la ventana
                             $("#hotspotModal").fadeIn(200);
                         }
                     );
