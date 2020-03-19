@@ -22,6 +22,8 @@ $(document).ready(function(){
         toggleBalls();
     });
 
+    // Variable para controlar los marcadores cuando están activos
+    var hpMarkers = [];
     $('.ball').on("click", function(){
         if($(this).attr("id").includes("Maps")) {
             swapOpacity($(this).find("img"));
@@ -31,27 +33,35 @@ $(document).ready(function(){
             // Ponerle o quitarle transparencia al icono
             swapOpacity($(this).find("img"));
             
-
-            // Mostramos todos los hotspot que nos hemos preparado en 
-            // la variable jsHotspots antes de llamar este script
-            // swapHotspots();
-            var markers = [];
-            jsHotspots.forEach(hp => {
-                var marker = L.marker([hp.lat, hp.lng], 
-                    {icon: hpIcon})
-                    .on('click', function(e){
-                        var hpData = e.target.hotspotInfo;
-                        // se complete la información y Que aparezca la ventana
-                        $("#hp-title").text(hpData.title);
-                        $("#hp-img").attr("src", hpUrl + "/" + hpData.images[0].file_name);
-                        $("#hp-description").text(hpData.description);
-                        $("#hotspotModal").fadeIn(200);
-                    }
-                );
-                marker = $.extend(marker, {"hotspotInfo": hp});
-                markers.push(marker);
-                marker.addTo(map);
-            });
+            // We check if the opacity is 1 is that we have to show the hotspots
+            if($(this).find("img").css("opacity") == 1){
+                // Mostramos todos los hotspot que nos hemos preparado en 
+                // la variable jsHotspots antes de llamar este script
+                jsHotspots.forEach(hp => {
+                    var marker = L.marker([hp.lat, hp.lng], 
+                        {icon: markerHotspot})
+                        .on('click', function(e){
+                            var hpData = e.target.hotspotInfo;
+                            // se complete la información y Que aparezca la ventana
+                            $("#hp-title").text(hpData.title);
+                            $("#hp-img").attr("src", hpData.images[0].file_path + "/" + hpData.images[0].file_name);
+                            $("#hp-description").text(hpData.description);
+                            $("#hotspotModal").fadeIn(200);
+                        }
+                    );
+                    marker = $.extend(marker, {"hotspotInfo": hp});
+                    hpMarkers.push(marker);
+                    marker.addTo(map);
+                });
+            } else {
+                // If it's not 1 it means tht we have to hide them
+                // We check all the active markers and remove them from the map
+                hpMarkers.forEach(marker => {
+                    map.removeLayer(marker);
+                });
+                // Clear the active markers variable
+                hpMarkers = [];
+            }
             
             
             // $("#hotspotsMenu").fadeToggle(100);
@@ -67,6 +77,7 @@ $(document).ready(function(){
             //     activeMarkers = [];
             // }
         }
+
         if($(this).attr("id").includes("Streets")) {
             swapOpacity($(this).find("img"));
             $("#streetsMenu").fadeToggle(100);
@@ -189,8 +200,4 @@ $(document).ready(function(){
             img.css({"opacity": 0.2});
         }
     }
-
-    function test(e){
-        console.log(e);
-    };
 });
