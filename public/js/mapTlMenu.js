@@ -91,7 +91,12 @@ $(document).ready(function(){
 
 
     $('.closeMenuButton').on("click", function(){
+        // Hacemos desaparecer la ventana
         $(this).parents(".menu").fadeOut(100);
+        // La deseleccionamos del menú bola
+        var idAux = $(this).parents(".menu").attr("id").replace("Menu", "");
+        idAux = "ball" + idAux[0].toUpperCase() + idAux.substr(1);
+        $("#"+idAux).find("img").css({opacity:0.2});
     });
 
     $(".pinMenuButton").on("click", function(){
