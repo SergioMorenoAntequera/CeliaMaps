@@ -240,7 +240,7 @@
         </div>
 
         {{-- Menú con la info de lps hotspots --}}
-        <div class="hotspotModal menu">
+        <div id="hotspotModal" class="menu">
             {{-- Cruz para cerrar el menú --}}
             <div class="closeMenuButton" style="z-index: 1">
                 <i class="fa fa-times"></i>
@@ -249,14 +249,12 @@
             <div class="pinMenuButton" style="z-index: 1">
                 <img class="pinIcon" src="{{url('/img/icons/pin.svg')}}" style="margin-right: 10px">
             </div>
-            <div class="content">
-                <div class="header">
-                    <img id="hp-img" class="noselect" src="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" alt="">
-                </div>
-                <div class="body">
-                    <h3 id="hp-title"> Pues yo que se, la alcazaba, por ejemplo </h3>
-                    <p id="hp-description"></p>
-                </div>
+            <div class="header">
+                <img id="hp-img" class="noselect" src="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" alt="">
+            </div>
+            <div class="body">
+                <p id="hp-title"> Pues yo que se, la alcazaba, por ejemplo </p>
+                <p id="hp-description"></p>
             </div>
         </div>
     
@@ -440,7 +438,7 @@
         var jsHotspots = [
             @foreach ($hotspots as $hotspot)
                 { id:"{{$hotspot->id}}", title:"{{ $hotspot->title }}", 
-                description: "{{ nl2br(e($hotspot->description)) }}" ,
+                description: "{{ $hotspot->description }}" ,
                 images: [
                     @foreach ($hotspot->images as $image)
                         {

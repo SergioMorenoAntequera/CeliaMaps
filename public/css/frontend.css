@@ -169,33 +169,27 @@ html, body {
 }
 
 /*/////////////////////////// MENU DE HOTSPOTS ///////////////////////////*/
-.hotspotModal{
+#hotspotModal{
+    display: none;
     position: absolute;
     top: 12%;
     right: 10px;
     width: 400px;
-    height: 70%;
-    max-height: 70%;
+    height: auto;
+    max-height: 438px;
     
     padding: 0px;
-
+    overflow-y: auto;
     border-radius: 10px;
     background-color:#FFFFFF;
     border: solid 1 px #E0E0E0;
+    font-family: Arial, Helvetica, sans-serif;
 }
-.hotspotModal > .content {
-    height: 100%; 
-    width: 100%;
-    
-    border-radius: 10px;    
-    overflow-y: auto; 
-}
-.hotspotModal > .content > .header { position: relative; }
-.hotspotModal > .content > .header > #hp-title { margin: 0px; margin-left: 5px; width: 90%; color: blue;}
-.hotspotModal > .content > .header > #hp-img {width: 100%; }
-.hotspotModal > .content > .body {
-    padding: 0px 10px 0px 10px;
-}
+#hotspotModal > .header { position: relative; }
+#hotspotModal > .header > #hp-img {width: 100%; }
+#hotspotModal > .body { padding: 0px 20px 0px 20px; }
+#hotspotModal > .body > #hp-title { margin: 10px 0px 7px 0px; font-size: 20px; }
+#hotspotModal > .body > #hp-description { margin: 0px 0px 10px 0px;}
 
 
 /*/////////////////////////// MENU DE CALLEJERO ///////////////////////////*/

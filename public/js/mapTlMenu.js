@@ -41,13 +41,11 @@ $(document).ready(function(){
                     {icon: hpIcon})
                     .on('click', function(e){
                         var hpData = e.target.hotspotInfo;
-                        //Que aparezca la ventana y se complete la información
-                        $(".hotspotModal").fadeIn(100);
+                        // se complete la información y Que aparezca la ventana
                         $("#hp-title").text(hpData.title);
                         $("#hp-img").attr("src", hpUrl + "/" + hpData.images[0].file_name);
-                        console.log(hpData);
                         $("#hp-description").text(hpData.description);
-
+                        $("#hotspotModal").fadeIn(200);
                     }
                 );
                 marker = $.extend(marker, {"hotspotInfo": hp});
