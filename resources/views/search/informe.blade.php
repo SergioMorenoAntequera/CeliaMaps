@@ -52,16 +52,20 @@
                             {{$map->title}}
                         </h5>
                     </div> 
-                    <div>
-                        Con el nombre 
+
+                    @if (count($street->maps) > 1)  
+                     <div class="row offset-md-1">
+                        <p>
+                        Con el nombre: &nbsp;
                         @foreach ($street->maps as $alternativa)
                         <h6>
                              {{$alternativa->pivot->alternative_name}}
                              
                         </h6>                        
                         @endforeach
-                        
-                    </div>
+                    </p>
+                   </div>
+                    @endif
                     <!-- POR AHORA NO MOSTRAREMOS LA DESCRIPCIÓN DEL MAPA
                     <div>
                         
@@ -73,7 +77,7 @@
             <br>
             <!-- AQUÍ PONGO EL BOTÓN DE OBSERVACIONES -->
             <div class="row col-2 float-left">
-            <button id="botonObservaciones" type="button" class="btn btn-success" data-toggle="modal" data-target="#cuadroObservaciones">
+            <button id="botonObservaciones" type="button" class="btn btn-success" data-toggle="modal" data-target="#cuadroObservaciones" onclick="muestraTitulo()">
                 Observaciones
               </button>
             </div>                
@@ -92,11 +96,16 @@
                     </div>
                     <div class="modal-body">
                         
-                      <input id="observaciones" class="col-12" style="border:0;" onkeyup="texto()">
+                        
+                      <textarea id="observaciones" class="col-12" style="border:0" onkeyup="texto()"></textarea>
                    
                       <script>
-                          function texto(){
-                              parrafo = document.getElementById('observaciones').value;
+                          function muestraTitulo(){
+                            
+                            document.getElementById('encabezado').innerHTML = 'Observaciones: ' ;
+                          }
+                          function texto(){                              
+                              parrafo = document.getElementById('observaciones').value;                              
                               document.getElementById('contenido').innerHTML = ' ' + parrafo;
                           }
                       </script>
@@ -133,13 +142,10 @@
         <div id="map" style="width:100%;height: 480px;"></div>
 
         <!-- DIV QUE CONTIENE EL EDITOR DE TEXTO -->
-
-        <div id="contenido">
-
-        </div>
+        <br>
+        <div id="encabezado"></div>
+        <div id="contenido"></div>
        
-        
-
         <!--SCRIPT QUE NOS MUESTRA LA SITUACIÓN DE LA CALLE EN EL MAPA ////////////////////// -->
         <script>
             map = L.map('map', {
