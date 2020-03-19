@@ -24,29 +24,59 @@ $(document).ready(function(){
 
     $('.ball').on("click", function(){
         if($(this).attr("id").includes("Maps")) {
+            swapOpacity($(this).find("img"));
             $("#mapsMenu").fadeToggle(100);
         }
         if($(this).attr("id").includes("Hotspots")) {
+            // Ponerle o quitarle transparencia al icono
+            swapOpacity($(this).find("img"));
+            
+
+            // Mostramos todos los hotspot que nos hemos preparado en 
+            // la variable jsHotspots antes de llamar este script
+            // swapHotspots();
+            var markers = [];
+            jsHotspots.forEach(hp => {
+                var marker = L.marker([hp.lat, hp.lng], 
+                    {icon: hpIcon})
+                    .on('click', function(e){
+                        var hpData = e.target.hotspotInfo;
+                        //Que aparezca la ventana y se complete la información
+                        $(".hotspotModal").fadeIn(100);
+                        $("#hp-title").text(hpData.title);
+                        $("#hp-img").attr("src", hpUrl + "/" + hpData.images[0].file_name);
+                        console.log(hpData);
+                        $("#hp-description").text(hpData.description);
+
+                    }
+                );
+                marker = $.extend(marker, {"hotspotInfo": hp});
+                markers.push(marker);
+                marker.addTo(map);
+            });
+            
+            
             // $("#hotspotsMenu").fadeToggle(100);
-            if(activeMarkers.length == 0){
-                $("#ballHotspots img").css({opacity:1});
-                hotspotsFull.forEach(hotspot => {
-                    activeMarkers.push(L.marker([hotspot.lat, hotspot.lng], {icon: tokenIcon}).addTo(map));
-                });
-            } else {
-                $("#ballHotspots img").css({opacity:0.2});
-                activeMarkers.forEach(marker => {
-                    map.removeLayer(marker);
-                });
-                activeMarkers = [];
-            }
+            // if(activeMarkers.length == 0){
+            //     $("#ballHotspots img").css({opacity:1});
+            //     hotspotsFull.forEach(hotspot => {
+            //     });
+            // } else {
+            //     $("#ballHotspots img").css({opacity:0.2});
+            //     activeMarkers.forEach(marker => {
+            //         map.removeLayer(marker);
+            //     });
+            //     activeMarkers = [];
+            // }
         }
         if($(this).attr("id").includes("Streets")) {
+            swapOpacity($(this).find("img"));
             $("#streetsMenu").fadeToggle(100);
         }
     });
     
     $(".menu").draggable();
+
 
     $('.closeMenuButton').on("click", function(){
         $(this).parents(".menu").fadeOut(100);
@@ -152,4 +182,17 @@ $(document).ready(function(){
 
         images[mapIndex].setOpacity(0);
     }
+
+    // Method that we use to see if an option is selected or not
+    function swapOpacity(img){
+        if(img.css("opacity") < 1){
+            img.css({"opacity": 1});
+        } else {
+            img.css({"opacity": 0.2});
+        }
+    }
+
+    function test(e){
+        console.log(e);
+    };
 });

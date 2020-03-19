@@ -24,25 +24,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-    <script>
-    // Put all locations into array
-    var map;
-    var activeMarkers = [];
-    var tokenIcon = L.icon({
-        iconUrl: "{{url('img/icons/token.svg')}}",
-        iconSize:     [40, 100], // size of the icon
-        iconAnchor:   [15, 60], // point of the icon which will correspond to marker's location
-    });
-    var hotspotsFull = [
-        @foreach ($hotspots as $hotspot)
-            {id:"{{$hotspot->id}}", title:"{{ $hotspot->title }}", image:"{{$hotspot->image}}", lat:"{{ $hotspot->lat }}", lng:"{{ $hotspot->lng }}" }, 
-        @endforeach
-    ];
-    </script>
-    <script src="{{url('js/mapTlMenu.js')}}"></script>
-    <script src="{{url('js/mapBlMenu.js')}}"></script>
-    <script src="{{url('js/mapFullScreenMenu.js')}}"></script>
 </head>
 
 <body id="body">
@@ -81,7 +62,6 @@
 
         {{-- CONTENIDO DE MENÚ --}}
         {{-- Todos los menús que podemos poner --}}
-
         {{-- Menú de los mapas --}}
         <div id="mapsMenu" style="max-height: 300px; font-family: Arial, Helvetica, sans-serif" class="menu noselect">
                 <!-- Todo el menú -->
@@ -178,9 +158,11 @@
             <div id="searchContent">
                 {{-- div donde se mostrarán todas las calles --}}
                 <div id="streetsFound">
-                    {{-- <div class="street"> 
+                    {{-- 
+                    <div class="street"> 
                         test
-                    </div> --}}
+                    </div> 
+                    --}}
                 </div>
 
                 <script>
@@ -238,7 +220,7 @@
                         hotspots.forEach(hotspot => {
                             if(hotspot.title.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
                                 $('#streetsFound').append("<div class='hotspot street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ hotspot.title + "</div>");
-                                if(++c == 5){
+                                if(++c >= 5){
                                     return;
                                 }  
                             }
@@ -247,7 +229,7 @@
                         streets.forEach(street => {
                             if(street.fullName.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
                                 $('#streetsFound').append("<div class='street'> <img style='width:5%;' src='{{url('img/icons/token-selected.svg')}}'>"+ street.fullName + "</div>");
-                                if(++c == 5){
+                                if(++c >= 5){
                                     return;
                                 }                                
                             }
@@ -256,67 +238,57 @@
                 </script>
             </div>
         </div>
-    </div>
 
-    {{-----------------------------------------------------------}}
-    {{-- BOTTOM LEFT MENU TO CHANGE THE KIND OF MAP TO DISPLAY --}}
-    {{-----------------------------------------------------------}}
-    <div id="tilesMenu">
-        <div id="tilesShow">
-            <i class="fa fa-chevron-down"></i>
-        </div>
-        <div id="tileChooser">
-            <div class="tiles"> 
-                <img src="{{url("img/maps/KindOfMap1.png")}}" alt="">
+        {{-- Menú con la info de lps hotspots --}}
+        <div class="hotspotModal menu">
+            {{-- Cruz para cerrar el menú --}}
+            <div class="closeMenuButton" style="z-index: 1">
+                <i class="fa fa-times"></i>
             </div>
-            <div class="tiles"> 
-                <img src="{{url("img/maps/KindOfMap2.png")}}" alt="">
+            {{-- Iconito del pin para fijarla --}}
+            <div class="pinMenuButton" style="z-index: 1">
+                <img class="pinIcon" src="{{url('/img/icons/pin.svg')}}" style="margin-right: 10px">
             </div>
-            <div class="tiles"> 
-                <img src="{{url("img/maps/KindOfMap3.png")}}" alt="">
-            </div>
-        </div>
-    </div>
-
-
-
-
-
-        {{-- Hotspots Modal Carousel --}}
-
-        <div style="display: none;" class="modal-background" id="hotspotModal" >
-            <img src="img/icons/menuCross.svg" id="hotspotCloseModal">
-            <div class="modal-card">
-                <img src="" alt="Hostpot Imagen" id="hotspotImageModal">
-                <h2 id="hotspotTitleModal"></h2>
-                <p id="hotspotDescriptionModal" style="padding: 0 20px;"></p>
-            </div>
-        </div>
-        
-        {{-- Fin de Hotspots Modal Carousel --}}
-
-        {{-- Streets Modal 
-            
-            <div style="display: none;" class="modal-background" id="streetModal" >
-                <img src="img/icons/menuCross.svg" id="streetCloseModal">
-                <div class="modal-card">
-                    <h2 id="streetModalName"></h2>
+            <div class="content">
+                <div class="header">
+                    <img id="hp-img" class="noselect" src="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" alt="">
+                </div>
+                <div class="body">
+                    <h3 id="hp-title"> Pues yo que se, la alcazaba, por ejemplo </h3>
+                    <p id="hp-description"></p>
                 </div>
             </div>
-            --}}
-        
+        </div>
+    
+
+        {{-----------------------------------------------------------}}
+        {{-- BOTTOM LEFT MENU TO CHANGE THE KIND OF MAP TO DISPLAY --}}
+        {{-----------------------------------------------------------}}
+        <div id="tilesMenu">
+            <div id="tilesShow">
+                <i class="fa fa-chevron-down"></i>
+            </div>
+            <div id="tileChooser">
+                <div class="tiles"> 
+                    <img src="{{url("img/maps/KindOfMap1.png")}}" alt="">
+                </div>
+                <div class="tiles"> 
+                    <img src="{{url("img/maps/KindOfMap2.png")}}" alt="">
+                </div>
+                <div class="tiles"> 
+                    <img src="{{url("img/maps/KindOfMap3.png")}}" alt="">
+                </div>
+            </div>
+        </div>
 
 
+        {{-------------------------------------------------------------}}
+        {{-- BOTTOM RIGHT MENU SO WE CAN DISPLAY S WE CAN FULLSCREEN --}}
+        {{-------------------------------------------------------------}}
+        <div id="fullScreenMenu">
+            <img src="{{url('/img/icons/fsMaximize.png')}}" alt="">
+        </div>
 
-
-
-
-
-    {{-------------------------------------------------------------}}
-    {{-- BOTTOM RIGHT MENU SO WE CAN DISPLAY S WE CAN FULLSCREEN --}}
-    {{-------------------------------------------------------------}}
-    <div id="fullScreenMenu">
-        <img src="{{url('/img/icons/fsMaximize.png')}}" alt="">
     </div>
     
     {{---------------------------------------------------------------}}
@@ -354,11 +326,6 @@
         map.whenReady(function() {
             //Añadimos la primera imagen para que se vea algo
             map.addLayer(images[0]);
-
-            // map.on('click', function(e) {
-            //     console.log(map._layers );
-            //     console.log(e.latlng .lat + ", " + e.latlng.lng);    
-            // });
         });
 
         
@@ -415,8 +382,8 @@
             map.setView([lat, lng], 18);
 
             $('#streetsFound').empty();
-
-            marker.bindPopup(street.fullName).openPopup();  
+        
+            marker.bindPopup(selectedStreet.fullName).openPopup();  
 
         });
 
@@ -464,6 +431,45 @@
         });
         
         
-        </script>
+    </script>
+
+    {{-- Algo que tiene que ver con los hotspots  --}}
+    <script>
+        // Preparamos lo que tiene que ver con los hotspots para enviarlo al script
+        var hpUrl = "{{url('img/hotspots/')}}";
+        var jsHotspots = [
+            @foreach ($hotspots as $hotspot)
+                { id:"{{$hotspot->id}}", title:"{{ $hotspot->title }}", 
+                description: "{{ nl2br(e($hotspot->description)) }}" ,
+                images: [
+                    @foreach ($hotspot->images as $image)
+                        {
+                            title: "{{ $image['title'] }}",
+                            description: "{{ $image['description'] }}",
+                            file_path: "{{ $image['file_path'] }}",
+                            file_name: "{{ $image['file_name'] }}",
+                        },
+                    @endforeach
+                ], lat:"{{ $hotspot->lat }}", lng:"{{ $hotspot->lng }}"
+                },
+            @endforeach
+        ];
+        var hpIcon = L.icon({
+            iconUrl: "{{url('img/icons/token.svg')}}",
+            iconSize:     [40, 100], // size of the icon
+            iconAnchor:   [15, 60], // point of the icon which will correspond to marker's location
+        });
+        
+        // Put all locations into array
+        // var activeMarkers = [];
+        // var hotspotsFull = [
+        //     @foreach ($hotspots as $hotspot)
+        //         {id:"{{$hotspot->id}}", title:"{{ $hotspot->title }}", image:"{{$hotspot->image}}", lat:"{{ $hotspot->lat }}", lng:"{{ $hotspot->lng }}" }, 
+        //     @endforeach
+        // ];
+    </script>
+    <script src="{{url('js/mapTlMenu.js')}}"></script>
+    <script src="{{url('js/mapBlMenu.js')}}"></script>
+    <script src="{{url('js/mapFullScreenMenu.js')}}"></script>
 </body>
 </html>

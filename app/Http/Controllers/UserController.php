@@ -52,17 +52,19 @@ class UserController extends Controller
     {
         $r->validate([
             'name'=>'required',
-            'email'=>'required|email',
-            'password'=>'required|max:255',
+            'email'=>'required|email|unique:users,email',
+            'password'=>'required|confirmed|max:255',
+            'password_confirmation'=>'required',
             'level'=>'required',
         ]);
+        //|same:password:confirm_password
 
-        $user = new User();
+        $user = new User();         
 
         $user->name = $r->name;
-        $user->email = $r->email;
-        $user->password = Hash::make($r->password);        
-        $user->level = $r->level;
+        $user->email = $r->email;        
+        $user->password = Hash::make($r->password);                 
+        $user->level = $r->level;        
 
         $user->save();
 
@@ -94,17 +96,24 @@ class UserController extends Controller
 
     // PARA MODIFICAR USUARIOS ///////////////////////////////////////////////////////////////
     public function update(Request $r,$id)
-    {       
+    {    
+       
         $user = User::find($id);
 
-        $clave = $user->password;    
-        //dd($clave);
+        $clave = $user->password;        
+       
+        if($r->password != null){
+            $r->validate([ 
+                'password'=>'confirmed', 
+            ]);
+        }
+
         $user->name = $r->name;
         $user->email = $r->email;
        if($r->password == null){
             $user->password = $clave;
         }else{
-            $user->password = Hash::make($r->password);    ;
+            $user->password = Hash::make($r->password);              
         }
         $user->level = $r->level;
         $user->save();       

@@ -182,12 +182,24 @@
                                 // data: { text : text },
                                 success: function(data) {
                                     $('#streetsFound').empty();
+                                    console.log(data);
                                     streets = [];
                                     
                                     data.streets.forEach(street => {
+                                        // Save actual street
                                         street.fullName = street.typeName + " " + street.name;
                                         streets.push(street);
+                                        // Duplicate object for older streets
+                                        let alternativeStreet = {...street};
+                                        alternativeStreet.maps.forEach(mapStreet => {
+                                            if(mapStreet.pivot.alternative_name !== null){
+                                                alternativeStreet.name = mapStreet.pivot.alternative_name;
+                                                alternativeStreet.fullName = alternativeStreet.typeName + " " + alternativeStreet.name;
+                                                streets.push(alternativeStreet);
+                                            }
+                                        })
                                     });
+                                    console.log(streets)
                                 },
                             }); // FIN AJAX
                         } else {
