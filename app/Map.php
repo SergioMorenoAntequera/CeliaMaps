@@ -8,7 +8,7 @@ class Map extends Model
 {
 
     public function streets() {
-        return $this->belongsToMany('App\Street', 'maps_streets');
+        return $this->belongsToMany('App\Street', 'maps_streets','map_id', 'street_id');
     }
 
     //The attributes that are mass assignable.

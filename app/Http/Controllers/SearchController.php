@@ -48,21 +48,7 @@ class SearchController extends Controller
         $map = Map::all();
         return view('search/informeImprimir', array('street' => $street, 'street_type' => $street_type, 'map' => $map));       
     }
-    // PARA CREAR EL PDF , YA NO SE USA /////////////////////////////////////////////////////////////
-    public function download($id)
-    {
-        $street = Street::find($id);        
-        $street_type = StreetType::all(); 
-        $map_street = MapStreet::all();
-        $data['maps']=Map::all();      
-        $map = Map::all();
-        $pdf = PDF::loadView('search/informeImprimir', array('street' => $street, 'street_type' => $street_type, 'map' => $map));       
-
-        //return $pdf->download('Informe.pdf');
-        return $pdf->stream('Informe.pdf',$data);
-
-        
-    }
+   
     // MUESTRA LA VISTA DE LA CALLE SELECCIONADA //////////////////////////////////////
     public function inform($id)
     {
@@ -71,6 +57,6 @@ class SearchController extends Controller
         $map_street = MapStreet::all();      
         $map = Map::all();      
 
-        return view('search/informe', array('street' => $street, 'street_type' => $street_type, 'map' => $map));
+        return view('search/informe', array('street' => $street, 'street_type' => $street_type, 'map' => $map, 'map_street'=>$map_street));
     }
 }
