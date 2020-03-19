@@ -122,7 +122,7 @@ class UserController extends Controller
     }
 
     
-    // BORRADO DE USUARIOS INICIAL ////////////////////////////////////////////
+    // BORRADO DE USUARIOS INICIAL, YA NO SE USA ///////////////////////////////////////
     public function destroy($id)
     {
        $user = User::find($id);

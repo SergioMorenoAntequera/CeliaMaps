@@ -53,28 +53,78 @@
                         </h5>
                     </div> 
                     <div>
-                        <p>{{$map->description}}</p>
+                        Con el nombre 
+                        @foreach ($street->maps as $alternativa)
+                        <h6>
+                             {{$alternativa->pivot->alternative_name}}
+                             
+                        </h6>                        
+                        @endforeach
+                        
+                    </div>
+                    <!-- POR AHORA NO MOSTRAREMOS LA DESCRIPCIÓN DEL MAPA
+                    <div>
+                        
+                        {{--<p>{{$map->description}}</p> --}} 
                     </div> 
-                    
+                    -->
                 @endforeach
-            </div>
-            
-            {{-- Botón librería PDF
-        <!-- BOTONES //////////////////////////////////////////// -->
-            <div class="row col-2 float-left">
-                <!-- sólo de prueba, para visualizar el informe -->
-                <a href="{{route('search.show', $street->id)}}">
-                    <button type="button" class="btn btn-success">ver</button>
-                </a>
-            </div>
-            --}}
-
+            </div> 
             <br>
+            <!-- AQUÍ PONGO EL BOTÓN DE OBSERVACIONES -->
+            <div class="row col-2 float-left">
+            <button id="botonObservaciones" type="button" class="btn btn-success" data-toggle="modal" data-target="#cuadroObservaciones">
+                Observaciones
+              </button>
+            </div>                
+            <!-- FIN DE BOTÓN DE OBSERVACIONES -->
 
-            <div class="row col-2 float-right">
-                <!-- AQUÍ PONGO EL BOTÓN DE PDF -->
+            <!-- MODAL PARA INCLUIR OBSERVACIONES -->
+
+            <div class="modal fade" id="cuadroObservaciones" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="tituloModal">Escriba un breve informe</h5>
+                      <button type="button" class="close text-success" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        
+                      <input id="observaciones" class="col-12" style="border:0;" onkeyup="texto()">
+                   
+                      <script>
+                          function texto(){
+                              parrafo = document.getElementById('observaciones').value;
+                              document.getElementById('contenido').innerHTML = ' ' + parrafo;
+                          }
+                      </script>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-success" data-dismiss="modal">Aplicar</button>
+                      <!-- <button type="button" class="btn btn-primary">Aplicar</button> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            <!-- FIN DE MODAL PARA INCLUIR OBSERVACIONES -->
+
+             <!-- AQUÍ PONGO EL BOTÓN DE PDF -->
+            <div class="row col-2 float-right">               
                 <button id="btn-pdf" type="button" class="btn btn-success">PDF</button>
             </div>
+            <!-- FIN DE BOTÓN DE PDF -->
+
+             <!-- SE AÑADE EL BOTÓN "X" PARA SALIR DEL INFORME -->
+             <a href="{{route('search.index')}}">
+                <div class="cornerButton">
+                    <img class="center" src="{{url("img/icons/close.svg")}}" alt=""> 
+                </div>
+            </a>
+            <!-- FIN DE BOTÓN "X" PARA SALIR DEL INFORME -->
+
         <!-- FIN DE BOTONES  //////////////////////////////////////////// -->
             <br>
             <br>
@@ -82,13 +132,21 @@
     <!-- DIV QUE CONTIENE EL MAPA CON LA SITUACIÓN DE LA CALLE BUSCADA ///////////////////// -->            
         <div id="map" style="width:100%;height: 480px;"></div>
 
+        <!-- DIV QUE CONTIENE EL EDITOR DE TEXTO -->
+
+        <div id="contenido">
+
+        </div>
+       
+        
+
         <!--SCRIPT QUE NOS MUESTRA LA SITUACIÓN DE LA CALLE EN EL MAPA ////////////////////// -->
         <script>
             map = L.map('map', {
                 minZoom: 10,  //Dont touch, recommended
                 zoomControl: false,
             });
-            // LATITUD Y LONGITUD
+            /* LATITUD Y LONGITUD */
             map.setView([{{$street->points[0]->lat}}, {{$street->points[0]->lng}}], 17);
             let mapTile = L.tileLayer.wms('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19, //Dont touch, max zoom 
@@ -99,7 +157,7 @@
                 iconSize:     [40, 100],
                 iconAnchor:   [15,60],
             });
-            // LATITUD Y LONGITUD
+            /* LATITUD Y LONGITUD */
             let marker = L.marker([{{$street->points[0]->lat}},{{$street->points[0]->lng}}],{icon:markerIcon});
             marker.addTo(map);
             marker.on("click", function(){
@@ -108,10 +166,15 @@
 
             $("#btn-pdf").click(function(){
                 $(this).parent().hide();
+                $("#botonObservaciones").hide();
                 window.print();
                 $(this).parent().show();
+                $("#botonObservaciones").show();
             });
+           
         </script>
+        
+
     </div>
     
     
