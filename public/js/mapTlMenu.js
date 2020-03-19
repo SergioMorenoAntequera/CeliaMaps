@@ -49,7 +49,7 @@ $(document).ready(function(){
                             $("#hp-img").attr("src", hpData.images[0].file_path + "/" + hpData.images[0].file_name);
                             $("#hp-description").text(hpData.description);
                             // Aparece la ventana
-                            $("#hotspotModal").fadeIn(200);
+                            $("#hotspotMenu").fadeIn(200);
                         }
                     );
                     marker = $.extend(marker, {"hotspotInfo": hp});
