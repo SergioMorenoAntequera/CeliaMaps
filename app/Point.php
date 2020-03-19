@@ -15,6 +15,10 @@ class Point extends Model
         return $this->belongsToMany('App\Hotspot');
     }
 
+    public function alignassist(){
+        return $this->belongsToMany('App\Alignassist');
+    }
+
 
     //The attributes that are mass assignable.
     protected $fillable = [

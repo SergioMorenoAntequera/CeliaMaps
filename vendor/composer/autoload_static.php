@@ -489,6 +489,9 @@ class ComposerStaticInit3bc63085752e602f437e2a014d1e5b3a
     );
 
     public static $classMap = array (
+        'AlignassitsPointsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AlignassitsPointsTableSeeder.php',
+        'AlignassitsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AlignassitsTableSeeder.php',
+        'App\\Alignassist' => __DIR__ . '/../..' . '/app/Alignassist.php',
         'App\\Backup' => __DIR__ . '/../..' . '/app/Backup.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',

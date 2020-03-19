@@ -6,6 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AlignassitsPointsTableSeeder' => $baseDir . '/database/seeds/AlignassitsPointsTableSeeder.php',
+    'AlignassitsTableSeeder' => $baseDir . '/database/seeds/AlignassitsTableSeeder.php',
+    'App\\Alignassist' => $baseDir . '/app/Alignassist.php',
     'App\\Backup' => $baseDir . '/app/Backup.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
