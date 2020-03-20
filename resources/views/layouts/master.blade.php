@@ -50,6 +50,7 @@
                                 <div class="line"></div>
                                 <a href="{{route('map.index')}}"><li>Indice</li></a>
                                 <a href="{{route('map.create')}}"><li>Insertar</li></a>
+                                <a href="{{route('marker.admin')}}"><li>Marcadores</li></a>
                             </div>
                         </div>
                         
@@ -140,7 +141,7 @@
                     </ul>
                     <script>
                         $(document).ready(function(){
-                            if(window.location.href.includes("/map")){
+                            if(window.location.href.includes("/map") || window.location.href.includes("/marker")){
                                 var element = $(".lateralMenuLink[href|='{{route('map.index')}}']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/street")){
                                 var element = $(".lateralMenuLink[href|='{{route('street.index')}}']").parents(".lateralMenuElement");
