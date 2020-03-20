@@ -489,9 +489,6 @@ class ComposerStaticInit3bc63085752e602f437e2a014d1e5b3a
     );
 
     public static $classMap = array (
-        'AlignassitsPointsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AlignassitsPointsTableSeeder.php',
-        'AlignassitsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AlignassitsTableSeeder.php',
-        'App\\Alignassist' => __DIR__ . '/../..' . '/app/Alignassist.php',
         'App\\Backup' => __DIR__ . '/../..' . '/app/Backup.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
@@ -507,6 +504,7 @@ class ComposerStaticInit3bc63085752e602f437e2a014d1e5b3a
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Controllers\\HotspotController' => __DIR__ . '/../..' . '/app/Http/Controllers/HotspotController.php',
         'App\\Http\\Controllers\\MapController' => __DIR__ . '/../..' . '/app/Http/Controllers/MapController.php',
+        'App\\Http\\Controllers\\MarkerController' => __DIR__ . '/../..' . '/app/Http/Controllers/MarkerController.php',
         'App\\Http\\Controllers\\PdfController' => __DIR__ . '/../..' . '/app/Http/Controllers/PdfController.php',
         'App\\Http\\Controllers\\PointController' => __DIR__ . '/../..' . '/app/Http/Controllers/PointController.php',
         'App\\Http\\Controllers\\SearchController' => __DIR__ . '/../..' . '/app/Http/Controllers/SearchController.php',
@@ -524,6 +522,7 @@ class ComposerStaticInit3bc63085752e602f437e2a014d1e5b3a
         'App\\Image' => __DIR__ . '/../..' . '/app/Image.php',
         'App\\Map' => __DIR__ . '/../..' . '/app/Map.php',
         'App\\MapStreet' => __DIR__ . '/../..' . '/app/MapStreet.php',
+        'App\\Marker' => __DIR__ . '/../..' . '/app/Marker.php',
         'App\\Point' => __DIR__ . '/../..' . '/app/Point.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
@@ -3275,6 +3274,9 @@ class ComposerStaticInit3bc63085752e602f437e2a014d1e5b3a
         'League\\Flysystem\\Util\\StreamHasher' => __DIR__ . '/..' . '/league/flysystem/src/Util/StreamHasher.php',
         'MapsStreetsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/MapsStreetsTableSeeder.php',
         'MapsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/MapsTableSeeder.php',
+        'MarkerPointTableSeeder' => __DIR__ . '/../..' . '/database/seeds/MarkerPointTableSeeder.php',
+        'MarkersPointsTableSeeder2' => __DIR__ . '/../..' . '/database/seeds/MarkersPointsTableSeeder2.php',
+        'MarkersTableSeeder' => __DIR__ . '/../..' . '/database/seeds/MarkersTableSeeder.php',
         'Mockery' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery.php',
         'Mockery\\Adapter\\Phpunit\\Legacy\\TestListenerForV5' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/Legacy/TestListenerForV5.php',
         'Mockery\\Adapter\\Phpunit\\Legacy\\TestListenerForV6' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/Legacy/TestListenerForV6.php',

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAlignassistsTable extends Migration
+class CreateMarkersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateAlignassistsTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('alignassists');
-        Schema::create('alignassists', function (Blueprint $table) {
+        Schema::dropIfExists('markers');
+        Schema::create('markers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 100); 
             $table->string('type', 100); 
@@ -29,6 +29,6 @@ class CreateAlignassistsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('alignassists');
+        Schema::dropIfExists('markers');
     }
 }

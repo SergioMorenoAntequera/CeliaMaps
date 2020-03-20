@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class AlignassitsTableSeeder extends Seeder
+class MarkersTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,21 +12,21 @@ class AlignassitsTableSeeder extends Seeder
     public function run()
     {
         //
-        DB::table('alignassists')->insert([
+        DB::table('markers')->insert([
             'name' => 'Avenida Santa isabel',
             'type' => 'polygon',
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
 
-        DB::table('alignassists')->insert([
+        DB::table('markers')->insert([
             'name' => 'Plaza de toros',
             'type' => 'circle',
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
 
-        DB::table('alignassists')->insert([
+        DB::table('markers')->insert([
             'name' => 'Marcador de ejemplo',
             'type' => 'marker',
             'created_at' => date('Y-m-d H-m-s'),

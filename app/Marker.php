@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Alignassist extends Model
+class Marker extends Model
 {
     //
     public function points() {

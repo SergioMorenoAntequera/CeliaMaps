@@ -9,6 +9,7 @@ use App\Street;
 use App\Hotspot;
 use App\MapStreet;
 use App\Point;
+use App\Marker;
 use DB;
 
 

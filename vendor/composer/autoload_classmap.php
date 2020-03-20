@@ -6,9 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'AlignassitsPointsTableSeeder' => $baseDir . '/database/seeds/AlignassitsPointsTableSeeder.php',
-    'AlignassitsTableSeeder' => $baseDir . '/database/seeds/AlignassitsTableSeeder.php',
-    'App\\Alignassist' => $baseDir . '/app/Alignassist.php',
     'App\\Backup' => $baseDir . '/app/Backup.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
@@ -24,6 +21,7 @@ return array(
     'App\\Http\\Controllers\\HomeController' => $baseDir . '/app/Http/Controllers/HomeController.php',
     'App\\Http\\Controllers\\HotspotController' => $baseDir . '/app/Http/Controllers/HotspotController.php',
     'App\\Http\\Controllers\\MapController' => $baseDir . '/app/Http/Controllers/MapController.php',
+    'App\\Http\\Controllers\\MarkerController' => $baseDir . '/app/Http/Controllers/MarkerController.php',
     'App\\Http\\Controllers\\PdfController' => $baseDir . '/app/Http/Controllers/PdfController.php',
     'App\\Http\\Controllers\\PointController' => $baseDir . '/app/Http/Controllers/PointController.php',
     'App\\Http\\Controllers\\SearchController' => $baseDir . '/app/Http/Controllers/SearchController.php',
@@ -41,6 +39,7 @@ return array(
     'App\\Image' => $baseDir . '/app/Image.php',
     'App\\Map' => $baseDir . '/app/Map.php',
     'App\\MapStreet' => $baseDir . '/app/MapStreet.php',
+    'App\\Marker' => $baseDir . '/app/Marker.php',
     'App\\Point' => $baseDir . '/app/Point.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',
@@ -2792,6 +2791,9 @@ return array(
     'League\\Flysystem\\Util\\StreamHasher' => $vendorDir . '/league/flysystem/src/Util/StreamHasher.php',
     'MapsStreetsTableSeeder' => $baseDir . '/database/seeds/MapsStreetsTableSeeder.php',
     'MapsTableSeeder' => $baseDir . '/database/seeds/MapsTableSeeder.php',
+    'MarkerPointTableSeeder' => $baseDir . '/database/seeds/MarkerPointTableSeeder.php',
+    'MarkersPointsTableSeeder2' => $baseDir . '/database/seeds/MarkersPointsTableSeeder2.php',
+    'MarkersTableSeeder' => $baseDir . '/database/seeds/MarkersTableSeeder.php',
     'Mockery' => $vendorDir . '/mockery/mockery/library/Mockery.php',
     'Mockery\\Adapter\\Phpunit\\Legacy\\TestListenerForV5' => $vendorDir . '/mockery/mockery/library/Mockery/Adapter/Phpunit/Legacy/TestListenerForV5.php',
     'Mockery\\Adapter\\Phpunit\\Legacy\\TestListenerForV6' => $vendorDir . '/mockery/mockery/library/Mockery/Adapter/Phpunit/Legacy/TestListenerForV6.php',
