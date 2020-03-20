@@ -23,7 +23,7 @@ class MapController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except('map', 'getSteets', 'search');     
+        //$this->middleware('auth')->except('map', 'getSteets', 'search');     
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
