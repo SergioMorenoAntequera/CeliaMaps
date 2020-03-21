@@ -63,6 +63,7 @@
         <div class="cMenu noselect">
             {{-- Se muestra este si se clicka en el mapa --}}
             <div class="csMenu add">
+                <div class="option" action="Remove"> <span>Remove</span> </div>
                 <div class="option" action="Marker"> <img src="{{url('js/Leaflet/pluginMarkers/img/marker.svg')}}"> </div>
                 <div class="option" action="Circle"> <img src="{{url('js/Leaflet/pluginMarkers/img/circle.svg')}}"> </div>
                 <div class="option" action="Rectangle"> <img src="{{url('js/Leaflet/pluginMarkers/img/rectangle.svg')}}"> </div>
@@ -77,10 +78,10 @@
                 <div class="option"> pra </div>
             </div> --}}
             {{-- Se muestra este si se clicka en una layer simple --}}
-            <div class="csMenu edit3">
-                <div class="option"> pra </div>
-                <div class="option"> pra </div>
-                <div class="option"> pra </div>
+            <div class="csMenu edit">
+                <div class="option" action="Edit"> <span>Edit</span> </div>
+                <div class="option" action="Drag">  <span>Drag</span> </div>
+                <div class="option" action="Remove"> <span>Remove</span> </div>
             </div>
         </div>
     </div>
@@ -123,132 +124,170 @@
     {{-------- ALL THE PARTS RELATED WITH THE MARKERS PLUGIN --------}}
     {{---------------------------------------------------------------}}
     <script>
-        var userBusy = false;
-        var currentAction = "none";
-        map.whenReady(function() {
-            
-            // add leaflet-geoman controls with some options to the map
-            map.pm.addControls({
-                position: 'topleft',
-            });
+        $(document).ready(function(){
 
-            // SHOW MENU
-            map.on('click', function(e){
-                let localClicks = {top: e.originalEvent.clientY - 30, left: e.originalEvent.clientX - $("#leftNavBar").width() - 30};
-                showSMenu(localClicks.left, localClicks.top, "add");
-            });
+            var userBusy = false;
+            var userInLayer = false;
+            var currentAction = "none";
 
-            // HIDE MENU
-            map.on('move', function(e) { 
-                hideMenu();
-            });
-
-            // COMIEZA LA ACCION
-            $(".csMenu").on("click", function(e){
-                let option = jQuery(e.target).parent(".option");
-                enableAction(option.attr("action"));
-            });
-
-            // AÑADE CLICK LISTENER CUANDO ACABA CON LAS FORMAS
-            shapesListener();
-
-            
-        });
-        
-
-        function hideMenu(){
-            if($(".cMenu").css("display") == "block"){
-                $(".cMenu").fadeOut(150, function(e){
-                    // Por cada subMenu
-                    $(".cMenu").children().each(function(e){
-                        // Miramos si se está enseñando
-                        if($(this).css("display") == "block"){
-                            // Si lo está lo ocultamos
-                            $(this).hide();
-                            $(this).children().each(function(e) {
-                                $(this).css({top:5, left:5});
-                            });
-                        }
-                    });
-                });
-            }
-        };
-
-        function showSMenu(left, top, csMenu){
-            // // We place the menu in the middle
-            if(!userBusy){
-                if($(".cMenu").css("display") == "none"){
-                    $(".cMenu").css({"left":left, "top":top});
-                    $(".cMenu").show();
-
-                    $("."+csMenu).fadeIn(150, function(e){
-                        let options = $("."+csMenu).find(".option");
-                        for (let i = 0; i < options.length; i++) {
-                            jQuery(options[i]).animate({
-                                top: (Math.sin( i / options.length * 2 * Math.PI) * 50) + 5, 
-                                left: (Math.cos( i / options.length * 2 * Math.PI) * 50) + 5
-                            }, 150);
-                        }
-                    });
-
-                } else {
-                    $(".cMenu").animate({"left":left, "top":top}, 150);
-                }
-            }
-        };
-        
-        function hideSMenu(csMenu){
-            if($("."+csMenu).css("display") == "block") {
+            map.whenReady(function() {
                 
-                $("."+csMenu).hide();
-                $("."+csMenu).children().each(function(e) {
-                    $(this).css({top:5, left:5});
+                // add leaflet-geoman controls with some options to the map
+                map.pm.addControls({
+                    position: 'topleft',
                 });
-            } else {
-                console.log("ERROR: Submenú no visible");
-            }
-        };
 
-        function enableAction(action){
-            userBusy = true;
-            currentAction = action;
-            hideMenu();
-
-            if(action == "Cut"){
-                // enable cutting mode
-                map.pm.Draw.Cut.enable({
-                    allowSelfIntersection: false,
-                });
-            } else {
-                map.pm.enableDraw(action, {
-                    snappable: true,
-                    snapDistance: 20,
-                    tooltips: true,
-                });
-            }
-            
-        };
-
-        function shapesListener(){
-            var layer;
-            map.on('pm:create', e => {
-                // We let the user do other stuff
-                userBusy = false;
-                map.pm.disableDraw(currentAction);
-                currentAction = "none";
-
-                // We put a listener to the new layer
-                layer = e.layer;
-                layer.on('click', e => {
-                    if(layer._latlngs != undefined){
-                        console.log("Más de una ltnlng => layer._latlngs")
-                    } else {
-                        console.log("Una ltnlng => layer._latlng")
+                // SHOW MENU
+                map.on('click', function(e){
+                    let localClicks = {top: e.originalEvent.clientY - 30, left: e.originalEvent.clientX - $("#leftNavBar").width() - 30};
+                    if(!userInLayer){
+                        showSMenu(localClicks.left, localClicks.top, "add");
                     }
-                    
-                }); 
+                });
+
+                // COMIEZA LA ACCION
+                $(".option").on("click", function(e){
+                    enableAction($(this).attr("action"));
+                });
+
+                // ESCONDER MENU AL MOVER EL MAPA
+                map.on('move', function(e) {
+                    userInLayer = false;
+                    hideMenu();
+                });
+
+                
+
+                // AÑADE CLICK LISTENER CUANDO ACABA CON LAS FORMAS
+                shapesListener();
+
             });
-        }
+            
+
+            function hideMenu(){
+                if($(".cMenu").css("display") == "block"){
+                    $(".cMenu").fadeOut(150, function(e){
+                        // Por cada subMenu
+                        $(".cMenu").children().each(function(e){
+                            // Miramos si se está enseñando
+                            if($(this).css("display") == "block"){
+                                // Si lo está lo ocultamos
+                                $(this).hide();
+                                $(this).children().each(function(e) {
+                                    $(this).css({top:5, left:5});
+                                });
+                            }
+                        });
+                    });
+                }
+            };
+
+            function showSMenu(left, top, csMenu){
+                // // We place the menu in the middle
+                if(!userBusy){
+                    if($(".cMenu").css("display") == "none"){
+                        $(".cMenu").css({"left":left, "top":top});
+                        $(".cMenu").show();
+
+                        $("."+csMenu).fadeIn(150, function(e){
+                            let options = $("."+csMenu).find(".option");
+                            for (let i = 0; i < options.length; i++) {
+                                jQuery(options[i]).animate({
+                                    top: (Math.sin( i / options.length * 2 * Math.PI) * 60) + 5, 
+                                    left: (Math.cos( i / options.length * 2 * Math.PI) * 60) + 5
+                                }, 150);
+                            }
+                        });
+
+                    } else {
+                        $(".cMenu").animate({"left":left, "top":top}, 150);
+                    }
+                }
+            };
+            
+            function hideSMenu(csMenu){
+                if($("."+csMenu).css("display") == "block") {
+                    
+                    $("."+csMenu).hide();
+                    $("."+csMenu).children().each(function(e) {
+                        $(this).css({top:5, left:5});
+                    });
+                } else {
+                    console.log("ERROR: Submenú no visible");
+                }
+            };
+
+            function enableAction(action){
+                userBusy = true;
+                currentAction = action;
+                hideMenu();
+
+                if(action == "Drag"){
+                    map.pm.enableGlobalDragMode();
+                } else if(action == "Remove") {
+                    map.pm.enableGlobalRemovalMode();
+                } else if(action != undefined) {
+                    map.pm.enableDraw(action, {
+                        snappable: true,
+                        snapDistance: 20,
+                        tooltips: true,
+                    });
+                } else {
+                    userBusy = false;
+                    currentAction = "none";
+                }
+            };
+
+            function shapesListener(){
+                var layer;
+                map.on('pm:create', e => {
+                    // We let the user do other stuff
+                    userBusy = false;
+                    map.pm.disableDraw(currentAction);
+                    currentAction = "none";
+
+                    layer = e.layer;
+                    // We add our layer
+                    // We put a listener to the new layer
+                    layer.on('click', e => {
+                        userInLayer = true;
+                        let localClicks = {top: e.originalEvent.clientY - 30, left: e.originalEvent.clientX - $("#leftNavBar").width() - 30};
+                        showSMenu(localClicks.left, localClicks.top, "edit");
+                        
+                        // Para la petición ajax para guardarlo
+                        // if(layer._latlngs != undefined){
+                        //     console.log("Más de una ltnlng => layer._latlngs")
+                        // } else {
+                        //     console.log("Una ltnlng => layer._latlng")
+                        // }
+                    });
+
+                    layer.on('pm:dragend', e => {
+                        map.pm.disableGlobalDragMode();
+                        userInLayer = false;
+                        userBusy = false
+                    });
+                    
+                    
+                });
+
+                map.on('pm:remove', e => {
+                    if(map.pm.globalRemovalEnabled()){
+                        map.pm.toggleGlobalRemovalMode();
+                    }
+                    userInLayer = false;
+                    userBusy = false;
+                });
+
+                map.on('click', e => {
+                    if(map.pm.globalRemovalEnabled()){
+                        userInLayer = false;
+                        userBusy = false;
+                        map.pm.toggleGlobalRemovalMode();
+                    }
+                });
+            }
+        });
     </script>
 
     
