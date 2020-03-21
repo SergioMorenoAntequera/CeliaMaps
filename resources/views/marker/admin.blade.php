@@ -60,9 +60,9 @@
         {{-------------------------------------------------------------}}
         {{-------- MENU THAT APPEARS WHEN YOU CLICK IN THE MAP --------}}
         {{-------------------------------------------------------------}}
-        <div class="cMenu">
+        <div class="cMenu noselect">
             {{-- Se muestra este si se clicka en el mapa --}}
-            <div class="add hidden">
+            <div class="csMenu add">
                 <div class="option addMarker"> <img src="{{url('js/Leaflet/pluginMarkers/img/marker.svg')}}" alt=""> </div>
                 <div class="option addCircle"> <img src="{{url('js/Leaflet/pluginMarkers/img/circle.svg')}}" alt=""> </div>
                 <div class="option addRectangle"> <img src="{{url('js/Leaflet/pluginMarkers/img/rectangle.svg')}}" alt=""> </div>
@@ -70,14 +70,14 @@
                 <div class="option addLine"> <img src="{{url('js/Leaflet/pluginMarkers/img/line.svg')}}" alt=""> </div>
             </div>
             {{-- Se muestra este si se clicka en una layer compleja --}}
-            <div class="edit4 hidden">
+            <div class="csMenu edit4">
                 <div class="option"> pra </div>
                 <div class="option"> pra </div>
                 <div class="option"> pra </div>
                 <div class="option"> pra </div>
             </div>
             {{-- Se muestra este si se clicka en una layer simple --}}
-            <div class="edit3 hidden">
+            <div class="csMenu edit3">
                 <div class="option"> pra </div>
                 <div class="option"> pra </div>
                 <div class="option"> pra </div>
@@ -132,27 +132,14 @@
 
             // SHOW MENU
             map.on('click', function(e){
-                // We place the menu in the middle
                 let localClicks = {top: e.originalEvent.clientY - 30, left: e.originalEvent.clientX - $("#leftNavBar").width() - 30};
-                $(".cMenu").css({top:localClicks.top, left:localClicks.left});
-                
-                // Prepare the options
-                let options = $(".cMenu").find(".add").find(".option");
-                for (let i = 0; i < options.length; i++) {
-                    const option = jQuery(options[i]);
-                    let optionX = ( Math.sin( i / options.length * 2 * Math.PI) * 50) + 5;
-                    let optionY = ( Math.cos( i / options.length * 2 * Math.PI) * 50) + 5;
-                    option.css({top:optionY, left:optionX});
-                }
-
-                // Select the menu that we want to show (the add one in this case) and show it
-                $(".cMenu").children().hide();
-                $(".cMenu").find(".add").show();
-                $(".cMenu").fadeIn(200);
+                showSMenu(localClicks.left, localClicks.top, "add");
             });
 
             // HIDE MENU
-            map.on('move', function(e) { $(".cMenu").fadeOut(200); });
+            map.on('move', function(e) { 
+                hideMenu();
+            });  
 
             // // enable polygon drawing mode
             // map.pm.enableDraw('Polygon', {
@@ -161,23 +148,64 @@
             //     tooltips: true,
             // });
 
-            var layer;
-            map.on('pm:create', e => {
-                console.log("EN: pm:create");
-                console.log(e);
-                layer = e.layer;
-                layer.on('click', e => {
-                    console.log("CLICK")
-                    console.log(e);
-                }); 
-                console.log(layer);
-            });
+            // var layer;
+            // map.on('pm:create', e => {
+            //     console.log("EN: pm:create");
+            //     console.log(e);
+            //     layer = e.layer;
+            //     layer.on('click', e => {
+            //         console.log("CLICK")
+            //         console.log(e);
+            //     }); 
+            //     console.log(layer);
+            // });
 
-            
-
-            map.pm.Draw.getShapes();
+            // map.pm.Draw.getShapes();
         });
+        
+
+        function hideMenu(){
+            if($(".cMenu").css("display") == "block"){
+                $(".cMenu").fadeOut(150, function(e){
+                    // Por cada subMenu
+                    $(".cMenu").children().each(function(e){
+                        // Miramos si se está enseñando
+                        if($(this).css("display") == "block"){
+                            // Si lo está lo ocultamos
+                            $(this).hide();
+                            $(this).children().each(function(e) {
+                                $(this).css({top:5, left:5});
+                            });
+                        }
+                    });
+                });
+            }
+        };
+
+        function showSMenu(left, top, csMenu){
+            // // We place the menu in the middle
+            if($(".cMenu").css("display") == "none"){
+                $(".cMenu").css({"left":left, "top":top});
+                $(".cMenu").show();
+
+                $("."+csMenu).fadeIn(150, function(e){
+                    let options = $("."+csMenu).find(".option");
+                    for (let i = 0; i < options.length; i++) {
+                        jQuery(options[i]).animate({
+                            top: (Math.sin( i / options.length * 2 * Math.PI) * 50) + 5, 
+                            left: (Math.cos( i / options.length * 2 * Math.PI) * 50) + 5
+                        }, 150);
+                    }
+                });
+
+            } else {
+                $(".cMenu").animate({"left":left, "top":top}, 150);
+            }
+        }
+        
     </script>
+
+    
 
     <script src="{{url('js/mapBlMenu.js')}}"></script>
     <script src="{{url('js/mapFullScreenMenu.js')}}"></script>
