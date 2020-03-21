@@ -38,13 +38,13 @@
             </div>
             <div id="tileChooser">
                 <div class="tiles"> 
-                    <img src="{{url("img/maps/KindOfMap1.png")}}" alt="">
+                    <img src="{{url("img/maps/KindOfMap1.png")}}">
                 </div>
                 <div class="tiles"> 
-                    <img src="{{url("img/maps/KindOfMap2.png")}}" alt="">
+                    <img src="{{url("img/maps/KindOfMap2.png")}}">
                 </div>
                 <div class="tiles"> 
-                    <img src="{{url("img/maps/KindOfMap3.png")}}" alt="">
+                    <img src="{{url("img/maps/KindOfMap3.png")}}">
                 </div>
             </div>
         </div>
@@ -54,7 +54,7 @@
         {{-- BOTTOM RIGHT MENU SO WE CAN DISPLAY S WE CAN FULLSCREEN --}}
         {{-------------------------------------------------------------}}
         <div id="fullScreenMenu">
-            <img src="{{url('img/icons/fsMaximize.png')}}" alt="">
+            <img src="{{url('img/icons/fsMaximize.png')}}">
         </div>
 
         {{-------------------------------------------------------------}}
@@ -63,19 +63,19 @@
         <div class="cMenu noselect">
             {{-- Se muestra este si se clicka en el mapa --}}
             <div class="csMenu add">
-                <div class="option addMarker"> <img src="{{url('js/Leaflet/pluginMarkers/img/marker.svg')}}" alt=""> </div>
-                <div class="option addCircle"> <img src="{{url('js/Leaflet/pluginMarkers/img/circle.svg')}}" alt=""> </div>
-                <div class="option addRectangle"> <img src="{{url('js/Leaflet/pluginMarkers/img/rectangle.svg')}}" alt=""> </div>
-                <div class="option addPolygon"> <img src="{{url('js/Leaflet/pluginMarkers/img/polygon.svg')}}" alt=""> </div>
-                <div class="option addLine"> <img src="{{url('js/Leaflet/pluginMarkers/img/line.svg')}}" alt=""> </div>
+                <div class="option" action="Marker"> <img src="{{url('js/Leaflet/pluginMarkers/img/marker.svg')}}"> </div>
+                <div class="option" action="Circle"> <img src="{{url('js/Leaflet/pluginMarkers/img/circle.svg')}}"> </div>
+                <div class="option" action="Rectangle"> <img src="{{url('js/Leaflet/pluginMarkers/img/rectangle.svg')}}"> </div>
+                <div class="option" action="Polygon"> <img src="{{url('js/Leaflet/pluginMarkers/img/polygon.svg')}}"> </div>
+                <div class="option" action="Line"> <img src="{{url('js/Leaflet/pluginMarkers/img/line.svg')}}"> </div>
             </div>
             {{-- Se muestra este si se clicka en una layer compleja --}}
-            <div class="csMenu edit4">
+            {{-- <div class="csMenu edit4">
                 <div class="option"> pra </div>
                 <div class="option"> pra </div>
                 <div class="option"> pra </div>
                 <div class="option"> pra </div>
-            </div>
+            </div> --}}
             {{-- Se muestra este si se clicka en una layer simple --}}
             <div class="csMenu edit3">
                 <div class="option"> pra </div>
@@ -123,11 +123,13 @@
     {{-------- ALL THE PARTS RELATED WITH THE MARKERS PLUGIN --------}}
     {{---------------------------------------------------------------}}
     <script>
+        var userBusy = false;
+        var currentAction = "none";
         map.whenReady(function() {
+            
             // add leaflet-geoman controls with some options to the map
             map.pm.addControls({
                 position: 'topleft',
-                drawCircle: false,
             });
 
             // SHOW MENU
@@ -139,28 +141,18 @@
             // HIDE MENU
             map.on('move', function(e) { 
                 hideMenu();
-            });  
+            });
 
-            // // enable polygon drawing mode
-            // map.pm.enableDraw('Polygon', {
-            //     snappable: true,
-            //     snapDistance: 20,
-            //     tooltips: true,
-            // });
+            // COMIEZA LA ACCION
+            $(".csMenu").on("click", function(e){
+                let option = jQuery(e.target).parent(".option");
+                enableAction(option.attr("action"));
+            });
 
-            // var layer;
-            // map.on('pm:create', e => {
-            //     console.log("EN: pm:create");
-            //     console.log(e);
-            //     layer = e.layer;
-            //     layer.on('click', e => {
-            //         console.log("CLICK")
-            //         console.log(e);
-            //     }); 
-            //     console.log(layer);
-            // });
+            // AÑADE CLICK LISTENER CUANDO ACABA CON LAS FORMAS
+            shapesListener();
 
-            // map.pm.Draw.getShapes();
+            
         });
         
 
@@ -184,25 +176,79 @@
 
         function showSMenu(left, top, csMenu){
             // // We place the menu in the middle
-            if($(".cMenu").css("display") == "none"){
-                $(".cMenu").css({"left":left, "top":top});
-                $(".cMenu").show();
+            if(!userBusy){
+                if($(".cMenu").css("display") == "none"){
+                    $(".cMenu").css({"left":left, "top":top});
+                    $(".cMenu").show();
 
-                $("."+csMenu).fadeIn(150, function(e){
-                    let options = $("."+csMenu).find(".option");
-                    for (let i = 0; i < options.length; i++) {
-                        jQuery(options[i]).animate({
-                            top: (Math.sin( i / options.length * 2 * Math.PI) * 50) + 5, 
-                            left: (Math.cos( i / options.length * 2 * Math.PI) * 50) + 5
-                        }, 150);
-                    }
-                });
+                    $("."+csMenu).fadeIn(150, function(e){
+                        let options = $("."+csMenu).find(".option");
+                        for (let i = 0; i < options.length; i++) {
+                            jQuery(options[i]).animate({
+                                top: (Math.sin( i / options.length * 2 * Math.PI) * 50) + 5, 
+                                left: (Math.cos( i / options.length * 2 * Math.PI) * 50) + 5
+                            }, 150);
+                        }
+                    });
 
-            } else {
-                $(".cMenu").animate({"left":left, "top":top}, 150);
+                } else {
+                    $(".cMenu").animate({"left":left, "top":top}, 150);
+                }
             }
-        }
+        };
         
+        function hideSMenu(csMenu){
+            if($("."+csMenu).css("display") == "block") {
+                
+                $("."+csMenu).hide();
+                $("."+csMenu).children().each(function(e) {
+                    $(this).css({top:5, left:5});
+                });
+            } else {
+                console.log("ERROR: Submenú no visible");
+            }
+        };
+
+        function enableAction(action){
+            userBusy = true;
+            currentAction = action;
+            hideMenu();
+
+            if(action == "Cut"){
+                // enable cutting mode
+                map.pm.Draw.Cut.enable({
+                    allowSelfIntersection: false,
+                });
+            } else {
+                map.pm.enableDraw(action, {
+                    snappable: true,
+                    snapDistance: 20,
+                    tooltips: true,
+                });
+            }
+            
+        };
+
+        function shapesListener(){
+            var layer;
+            map.on('pm:create', e => {
+                // We let the user do other stuff
+                userBusy = false;
+                map.pm.disableDraw(currentAction);
+                currentAction = "none";
+
+                // We put a listener to the new layer
+                layer = e.layer;
+                layer.on('click', e => {
+                    if(layer._latlngs != undefined){
+                        console.log("Más de una ltnlng => layer._latlngs")
+                    } else {
+                        console.log("Una ltnlng => layer._latlng")
+                    }
+                    
+                }); 
+            });
+        }
     </script>
 
     
