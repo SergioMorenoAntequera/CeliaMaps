@@ -249,14 +249,21 @@ los formularios y seguramente algo más, pa quién lo quiera */
     -moz-box-shadow: 10px 10px 15px 0px rgba(0,0,0,0.75);
     box-shadow: 10px 10px 15px 0px rgba(0,0,0,0.75);
 }
-.cMenu > .option, .rename {
-    left: -70;
-    top: -40px;
-    height: 70px;
+.bubble {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    height: auto;
     width: 200px;
 
-    padding: v 20px 20px 17px 20px;
-    cursor: default;
+    padding: 10px 22px 10px 22px;
+    color: #c0c0c0;
+    border-radius: 50px;
+    cursor: pointer;
+    background-color:#FFFFFF;
+    border: solid 1px #E0E0E0;
+    -webkit-box-shadow: 0px 0px 50px -15px #000000; 
+    box-shadow: 0px 0px 50px -15px #000000;
 }
 
 .cMenu > .csMenu > .option > img{position: relative; width: 60%; height: 60%; top: 20%; left: 20%;}

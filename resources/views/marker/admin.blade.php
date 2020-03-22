@@ -75,11 +75,11 @@
                 <div class="option" action="Edit"> <img src="{{url('js/Leaflet/pluginMarkers/img/edit.svg')}}"> </div>
                 <div class="option" action="Drag">  <img src="{{url('js/Leaflet/pluginMarkers/img/drag.svg')}}"> </div>
                 <div class="option" action="Remove"> <img src="{{url('js/Leaflet/pluginMarkers/img/remove.svg')}}"> </div>
-                <div class="option" action="Rename"> Rename </div>
+                <div class="option" action="Rename"> <img src="{{url('js/Leaflet/pluginMarkers/img/name.svg')}}"> </div>
             </div>
-            <div class="bubble rename">
-                <input type="text" name="" id="">
-            </div>
+        </div>
+        <div class="bubble rename">
+            PRA
         </div>
         
     </div>
