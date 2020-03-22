@@ -244,7 +244,7 @@
 
         <!-- Preview Hotspots -->
         <div id="preview" class="card">
-            <img id="previewImage" src="" alt="Hotspot Preview" style="width:286px; max-heigth:180px !important;">
+            <img id="previewImage" src="" alt="Hotspot Preview" style="width:286px; height: 180px">
             <div class="card-body" style="color: black">
               <h4 id="previewTitle"><b></b></h4> 
             </div>

@@ -26,9 +26,6 @@
     <body class="bg-dark">
         <!-- Header -->
         <!-- Plantilla de la pagina principal -->
-        <div style="background-image: url(<?php echo e(url("img/resources/FallingMenuBackground.png")); ?>)" id="flotingMenu"> 
-            <span>Me llamaban feo, <br> ahora no pueden dejar de mirarme</span>
-        </div>
         <div class="container-fluid">
             <div style="height: 100%" class="row">
                 
@@ -53,6 +50,7 @@
                                 <div class="line"></div>
                                 <a href="<?php echo e(route('map.index')); ?>"><li>Indice</li></a>
                                 <a href="<?php echo e(route('map.create')); ?>"><li>Insertar</li></a>
+                                <a href="<?php echo e(route('marker.admin')); ?>"><li>Marcadores</li></a>
                             </div>
                         </div>
                         
@@ -126,7 +124,7 @@
                         </div>
 
                         <div class="lateralMenuElement">
-                            <a class="lateralMenuLink" href="">
+                            <a class="lateralMenuLink" href="<?php echo e(route('search.index')); ?>">
                             <li class="lateralMenuImg">
                                 <img src="<?php echo e(url('img/icons/report.svg')); ?>" class="img-fluid">
                             </li>
@@ -140,7 +138,7 @@
                     </ul>
                     <script>
                         $(document).ready(function(){
-                            if(window.location.href.includes("/map")){
+                            if(window.location.href.includes("/map") || window.location.href.includes("/marker")){
                                 var element = $(".lateralMenuLink[href|='<?php echo e(route('map.index')); ?>']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/street")){
                                 var element = $(".lateralMenuLink[href|='<?php echo e(route('street.index')); ?>']").parents(".lateralMenuElement");
@@ -152,6 +150,8 @@
                                 var element = $(".lateralMenuLink[href|='<?php echo e(route('user.index')); ?>']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/backup")){
                                 var element = $(".lateralMenuLink[href|='<?php echo e(route('backup.index')); ?>']").parents(".lateralMenuElement");
+                            } else if(window.location.href.includes("/search")){
+                                var element = $(".lateralMenuLink[href|='<?php echo e(route('search.index')); ?>']").parents(".lateralMenuElement");
                             }
                             element.css("background-color", "#6f7e96")
                             
@@ -168,7 +168,24 @@
                     </script>
 
                     
-                    
+                    <div id="notocar" style="position: absolute; bottom: 10%" class="lateralMenuImg">
+                        <img src="<?php echo e(url('img/icons/rip.svg')); ?>" class="img-fluid">
+                    </div>
+                    <script>
+                        $(document).ready(function(){
+                            $("#flotingMenu").css("top", -$("#flotingMenu").height());
+                            $("#notocar").on("click", function(){
+                                $("#flotingMenu").show()
+                                $("#flotingMenu").animate({
+                                    top: "20px",
+                                }, 200, function(e){
+                                    $("#flotingMenu").animate({
+                                        top: "0px",
+                                    }, 200);
+                                });
+                            });
+                        });
+                    </script>
                     <a href="<?php echo e(route('home')); ?>">
                         <div style="position: absolute; bottom: 0px" class="lateralMenuImg">
                             <img src="<?php echo e(url('img/icons/turnOff.svg')); ?>" class="img-fluid">
