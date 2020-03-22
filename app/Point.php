@@ -15,6 +15,10 @@ class Point extends Model
         return $this->belongsToMany('App\Hotspot');
     }
 
+    public function marker(){
+        return $this->belongsToMany('App\Marker');
+    }
+
 
     //The attributes that are mass assignable.
     protected $fillable = [

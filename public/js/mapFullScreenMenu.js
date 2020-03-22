@@ -21,10 +21,9 @@ $(document).ready(function(){
             }
             
             var url = window.location.href;
-            if(url.includes("map/align/")){
-                url = url.substr(0, url.indexOf("map/align/"));
-            }
-            img.attr("src", url+"img/icons/fsMinimize.png");
+            url = url.substr(0, url.indexOf("/", 8));
+            console.log(url);
+            img.attr("src", url+"/img/icons/fsMinimize.png");
             
         } else {
             if (document.exitFullscreen) {
@@ -38,10 +37,8 @@ $(document).ready(function(){
             }
             
             var url = window.location.href;
-            if(url.includes("map/align/")){
-                url = url.substr(0, url.indexOf("map/align/"));
-            }
-            img.attr("src", url+"img/icons/fsMaximize.png");
+            url = url.substr(0, url.indexOf("/", 8));
+            img.attr("src", url+"/img/icons/fsMaximize.png");
         }
     });
 });

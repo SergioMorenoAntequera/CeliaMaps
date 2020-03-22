@@ -24,7 +24,7 @@ class SearchController extends Controller
     public function index() {
         $streets = Street::all();
         $maps = Map::all();
-        $types = StreetType::all();
+        $types = StreetType::all()->sortBy('name');
         return view('search/searchStreet', ['streets' => $streets, 'maps' => $maps, 'types' => $types]);
     }
     // PARA QUE FUNCIONE EL BUSCADOR //////////////////////////////////////////////

@@ -8,6 +8,8 @@ use App\Map;
 use App\Street;
 use App\Hotspot;
 use App\MapStreet;
+use App\Point;
+use App\Marker;
 use DB;
 
 
@@ -23,10 +25,14 @@ class MapController extends Controller
     public function __construct()
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         $this->middleware('auth')->except('map', 'getStreets', 'search');     
 =======
         $this->middleware('auth')->except('map', 'getSteets', 'search');     
 >>>>>>> 4eee9de53c5eb221be4228e31bedc7162dadf02c
+=======
+        //$this->middleware('auth')->except('map', 'getSteets', 'search');     
+>>>>>>> 6e6e361f3a80aee3792a5b903f8c4a865d68b1d5
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////

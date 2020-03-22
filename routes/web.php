@@ -28,8 +28,10 @@ Route::get('map/streets', 'MapController@getStreets')->name('map.streets');
 Route::get('map/align/{id}', 'MapController@alignMap')->name('map.align');
 Route::get('map/saveAlign/{id}', 'MapController@saveAlign')->name('map.saveAlign');
 Route::resource('map', 'MapController');
+// MARKERS /////////////////////////////////////////////////////////////////////////////////////
+Route::get('marker', 'MarkerController@admin')->name('marker.admin');
 // USER /////////////////////////////////////////////////////////////////////////////////////
-Route::resource('user', 'UserController'); 
+Route::resource('user', 'UserController');
 Route::delete('user/deleteAjax/{id}', 'UserController@deleteAjax')->name('user.deleteAjax');
 // STREETS /////////////////////////////////////////////////////////////////////////////////////
 Route::resource('street', 'StreetController');
@@ -46,6 +48,7 @@ Auth::routes(['register' => false]);
 Route::get('backup', 'BackupController@index')->name('backup.index');
 Route::get('backup/create', 'BackupController@create')->name('backup.create');
 Route::get('backup/restore', 'BackupController@restore')->name('backup.restore');
+Route::get('backup/copymage', 'BackupController@copymage')->name('backup.copymage');
 // SEARCH /////////////////////////////////////////////////////////////////////////////////////
 Route::get('search/index', 'SearchController@index')->name('search.index');
 Route::post('search', 'SearchController@search')->name('search.search');

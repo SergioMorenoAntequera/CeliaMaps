@@ -240,13 +240,13 @@
         </div>
 
         {{-- Menú con la info de lps hotspots --}}
-        <div class="hotspotModal menu">
+        <div id="hotspotMenu" class="menu">
             {{-- Cruz para cerrar el menú --}}
-            <div class="closeMenuButton" style="z-index: 1">
+            <div class="closeMenuButton" style="z-index: 1; right: 10px">
                 <i class="fa fa-times"></i>
             </div>
             {{-- Iconito del pin para fijarla --}}
-            <div class="pinMenuButton" style="z-index: 1">
+            <div class="pinMenuButton" style="z-index: 1; right: 20px">
                 <img class="pinIcon" src="{{url('/img/icons/pin.svg')}}" style="margin-right: 10px">
             </div>
             <div class="content">
@@ -254,7 +254,7 @@
                     <img id="hp-img" class="noselect" src="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" alt="">
                 </div>
                 <div class="body">
-                    <h3 id="hp-title"> Pues yo que se, la alcazaba, por ejemplo </h3>
+                    <p id="hp-title"></p>
                     <p id="hp-description"></p>
                 </div>
             </div>
@@ -383,64 +383,60 @@
 
             $('#streetsFound').empty();
         
-            marker.bindPopup(selectedStreet.fullName).openPopup();  
-
+            marker.bindPopup(selectedStreet.fullName).openPopup();
         });
 
-        $(document).ready(function(){
+        // $(document).ready(function(){
             
-            hotspotsFull.forEach(hotspot => {
-                var marker = L.marker([hotspot.lat, hotspot.lng], {icon: tokenIcon, alt:hotspot.id});
-                marker.addTo(map);
-                activeMarkers.push(marker);
-            });
+        //     hotspotsFull.forEach(hotspot => {
+        //         var marker = L.marker([hotspot.lat, hotspot.lng], {icon: tokenIcon, alt:hotspot.id});
+        //         marker.addTo(map);
+        //         activeMarkers.push(marker);
+        //     });
 
-            // Hotspot Modal
-            $('.leaflet-marker-icon').on('click', function(e){
-                var altId = $(this).attr("alt");
-                var route = "{{route('hotspot.getAjax')}}";
+        //     // Hotspot Modal
+        //     $('.leaflet-marker-icon').on('click', function(e){
+        //         var altId = $(this).attr("alt");
+        //         var route = "{{route('hotspot.getAjax')}}";
                 
-                $.ajax({
-                    url: route,
-                    data: {id:altId},
+        //         $.ajax({
+        //             url: route,
+        //             data: {id:altId},
 
-                    success: function(response){
-                        console.log(response);
-                        let hotspotClicked = response.hotspot;
+        //             success: function(response){
+        //                 console.log(response);
+        //                 let hotspotClicked = response.hotspot;
                         
-                        console.log("Nombre: " +hotspotClicked.title);
-                        console.log(hotspotClicked.images);
-                        //console.log("Nombre: " +hotspotClicked.title);
-                        console.log(hotspotClicked.images[0]);
+        //                 console.log("Nombre: " +hotspotClicked.title);
+        //                 console.log(hotspotClicked.images);
+        //                 //console.log("Nombre: " +hotspotClicked.title);
+        //                 console.log(hotspotClicked.images[0]);
 
-                        let host = "{{url('')}}"
-                        $('#hotspotImageModal').attr("src", host+"/img/hotspots/"+hotspotClicked.images[0].file_name);
-                        $('#hotspotTitleModal').text(hotspotClicked.title);
-                        $('#hotspotDescriptionModal').text(hotspotClicked.description);
-                        $('#hotspotModal').css("display", "block");
+        //                 let host = "{{url('')}}"
+        //                 $('#hotspotImageModal').attr("src", host+"/img/hotspots/"+hotspotClicked.images[0].file_name);
+        //                 $('#hotspotTitleModal').text(hotspotClicked.title);
+        //                 $('#hotspotDescriptionModal').text(hotspotClicked.description);
+        //                 $('#hotspotModal').css("display", "block");
         
-                        //$("#previewImage").attr("src", host+"/"+hotspot.images[0].file_path+"/"+hotspot.images[0].file_name);
-                    },
-                });
-            });
+        //                 //$("#previewImage").attr("src", host+"/"+hotspot.images[0].file_path+"/"+hotspot.images[0].file_name);
+        //             },
+        //         });
+        //     });
 
-            $('#hotspotCloseModal').on('click', function(e){
-                $('#hotspotModal').css("display", "none");
-            });
+        //     $('#hotspotCloseModal').on('click', function(e){
+        //         $('#hotspotModal').css("display", "none");
+        //     });
 
-        });
-        
-        
+        // });
     </script>
 
     {{-- Algo que tiene que ver con los hotspots  --}}
     <script>
         // Preparamos lo que tiene que ver con los hotspots para enviarlo al script
-        var hpUrl = "{{url('img/hotspots/')}}";
         var jsHotspots = [
             @foreach ($hotspots as $hotspot)
                 { id:"{{$hotspot->id}}", title:"{{ $hotspot->title }}", 
-                description: "{{ nl2br(e($hotspot->description)) }}" ,
+                description: "{{ $hotspot->description }}" ,
                 images: [
                     @foreach ($hotspot->images as $image)
                         {
@@ -454,19 +450,6 @@
                 },
             @endforeach
         ];
-        var hpIcon = L.icon({
-            iconUrl: "{{url('img/icons/token.svg')}}",
-            iconSize:     [40, 100], // size of the icon
-            iconAnchor:   [15, 60], // point of the icon which will correspond to marker's location
-        });
-        
-        // Put all locations into array
-        // var activeMarkers = [];
-        // var hotspotsFull = [
-        //     @foreach ($hotspots as $hotspot)
-        //         {id:"{{$hotspot->id}}", title:"{{ $hotspot->title }}", image:"{{$hotspot->image}}", lat:"{{ $hotspot->lat }}", lng:"{{ $hotspot->lng }}" }, 
-        //     @endforeach
-        // ];
     </script>
     <script src="{{url('js/mapTlMenu.js')}}"></script>
     <script src="{{url('js/mapBlMenu.js')}}"></script>
