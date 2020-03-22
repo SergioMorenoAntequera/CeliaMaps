@@ -63,25 +63,18 @@
         <div class="cMenu noselect">
             {{-- Se muestra este si se clicka en el mapa --}}
             <div class="csMenu add">
-                <div class="option" action="Remove"> <span>Remove</span> </div>
+                <div class="option" action="Remove"> <img src="{{url('js/Leaflet/pluginMarkers/img/remove.svg')}}"> </div>
                 <div class="option" action="Marker"> <img src="{{url('js/Leaflet/pluginMarkers/img/marker.svg')}}"> </div>
                 <div class="option" action="Circle"> <img src="{{url('js/Leaflet/pluginMarkers/img/circle.svg')}}"> </div>
                 <div class="option" action="Rectangle"> <img src="{{url('js/Leaflet/pluginMarkers/img/rectangle.svg')}}"> </div>
                 <div class="option" action="Polygon"> <img src="{{url('js/Leaflet/pluginMarkers/img/polygon.svg')}}"> </div>
                 <div class="option" action="Line"> <img src="{{url('js/Leaflet/pluginMarkers/img/line.svg')}}"> </div>
             </div>
-            {{-- Se muestra este si se clicka en una layer compleja --}}
-            {{-- <div class="csMenu edit4">
-                <div class="option"> pra </div>
-                <div class="option"> pra </div>
-                <div class="option"> pra </div>
-                <div class="option"> pra </div>
-            </div> --}}
-            {{-- Se muestra este si se clicka en una layer simple --}}
+            {{-- Se muestra este si se clicka en una layer --}}
             <div class="csMenu edit">
-                <div class="option" action="Edit"> <span>Edit</span> </div>
-                <div class="option" action="Drag">  <span>Drag</span> </div>
-                <div class="option" action="Remove"> <span>Remove</span> </div>
+                <div class="option" action="Edit"> <img src="{{url('js/Leaflet/pluginMarkers/img/edit.svg')}}"> </div>
+                <div class="option" action="Drag">  <img src="{{url('js/Leaflet/pluginMarkers/img/drag.svg')}}"> </div>
+                <div class="option" action="Remove"> <img src="{{url('js/Leaflet/pluginMarkers/img/remove.svg')}}"> </div>
             </div>
         </div>
     </div>
@@ -125,7 +118,7 @@
     {{---------------------------------------------------------------}}
     <script>
         $(document).ready(function(){
-
+            var fromRemove = false;
             var userBusy = false;
             var userInLayer = false;
             var currentAction = "none";
@@ -141,7 +134,11 @@
                 map.on('click', function(e){
                     let localClicks = {top: e.originalEvent.clientY - 30, left: e.originalEvent.clientX - $("#leftNavBar").width() - 30};
                     if(!userInLayer){
-                        showSMenu(localClicks.left, localClicks.top, "add");
+                        if(fromRemove){
+                            fromRemove = false;
+                        } else {
+                            showSMenu(localClicks.left, localClicks.top, "add");
+                        }
                     }
                 });
 
@@ -267,8 +264,6 @@
                         userInLayer = false;
                         userBusy = false
                     });
-                    
-                    
                 });
 
                 map.on('pm:remove', e => {
@@ -277,6 +272,7 @@
                     }
                     userInLayer = false;
                     userBusy = false;
+                    fromRemove = true;
                 });
 
                 map.on('click', e => {
