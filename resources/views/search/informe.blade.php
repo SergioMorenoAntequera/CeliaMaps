@@ -199,9 +199,11 @@
 
             <!--SCRIPT QUE NOS MUESTRA LA SITUACIÓN DE LA CALLE EN EL MAPA ////////////////////// -->
             <script>
+
                 map = L.map('map', {
                 minZoom: 10,  //Dont touch, recommended
                 zoomControl: false,
+
             });
             /* LATITUD Y LONGITUD */
             map.setView([{{$street->points[0]->lat}}, {{$street->points[0]->lng}}], 17);
@@ -220,6 +222,7 @@
             marker.on("click", function(){
                 map.setView([{{$street->points[0]->lat}}, {{$street->points[0]->lng}}]);
             })
+            map.dragging.disable();
 
             </script>
 
