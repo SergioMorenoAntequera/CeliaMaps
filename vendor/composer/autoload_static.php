@@ -3275,7 +3275,6 @@ class ComposerStaticInit3bc63085752e602f437e2a014d1e5b3a
         'MapsStreetsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/MapsStreetsTableSeeder.php',
         'MapsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/MapsTableSeeder.php',
         'MarkerPointTableSeeder' => __DIR__ . '/../..' . '/database/seeds/MarkerPointTableSeeder.php',
-        'MarkersPointsTableSeeder2' => __DIR__ . '/../..' . '/database/seeds/MarkersPointsTableSeeder2.php',
         'MarkersTableSeeder' => __DIR__ . '/../..' . '/database/seeds/MarkersTableSeeder.php',
         'Mockery' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery.php',
         'Mockery\\Adapter\\Phpunit\\Legacy\\TestListenerForV5' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/Legacy/TestListenerForV5.php',

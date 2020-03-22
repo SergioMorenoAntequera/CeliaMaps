@@ -2792,7 +2792,6 @@ return array(
     'MapsStreetsTableSeeder' => $baseDir . '/database/seeds/MapsStreetsTableSeeder.php',
     'MapsTableSeeder' => $baseDir . '/database/seeds/MapsTableSeeder.php',
     'MarkerPointTableSeeder' => $baseDir . '/database/seeds/MarkerPointTableSeeder.php',
-    'MarkersPointsTableSeeder2' => $baseDir . '/database/seeds/MarkersPointsTableSeeder2.php',
     'MarkersTableSeeder' => $baseDir . '/database/seeds/MarkersTableSeeder.php',
     'Mockery' => $vendorDir . '/mockery/mockery/library/Mockery.php',
     'Mockery\\Adapter\\Phpunit\\Legacy\\TestListenerForV5' => $vendorDir . '/mockery/mockery/library/Mockery/Adapter/Phpunit/Legacy/TestListenerForV5.php',
