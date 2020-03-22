@@ -77,7 +77,11 @@
                 <div class="option" action="Remove"> <img src="{{url('js/Leaflet/pluginMarkers/img/remove.svg')}}"> </div>
                 <div class="option" action="Rename"> Rename </div>
             </div>
+            <div class="bubble rename">
+                <input type="text" name="" id="">
+            </div>
         </div>
+        
     </div>
 @endsection
 
@@ -120,45 +124,36 @@
     <script>
         $(document).ready(function(){
             var layer;
-            var fromRemove = false;
-            var inEditMode = false;
             var userBusy = false;
-            var userInLayer = false;
             var currentAction = "none";
+
 
             map.whenReady(function() {
                 
                 // add leaflet-geoman controls with some options to the map
-                map.pm.addControls({
-                    position: 'topleft',
-                });
+                // map.pm.addControls({
+                //     position: 'topleft',
+                // });
 
                 // SHOW MENU
                 map.on('click', function(e){
-                    let localClicks = {top: e.originalEvent.clientY - 30, left: e.originalEvent.clientX - $("#leftNavBar").width() - 30};
-                    if(!userInLayer){
-                        if(fromRemove){
-                            fromRemove = false;
-                        } else {
-                            showSMenu(localClicks.left, localClicks.top, "add");
-                        }
-                    }
+                    hideMenu();
+                    $(".cMenu").fadeOut(150, function(){
+                        let localClicks = {top: e.originalEvent.clientY - 30, left: e.originalEvent.clientX - $("#leftNavBar").width() - 30};
+                        showSMenu(localClicks.left, localClicks.top, "add");                    
+                    });
                 });
+
+                // AÑADE CLICK LISTENER AL MAPA Y A LAS LAYER
+                mapListeners();
 
                 // COMIEZA LA ACCION
                 $(".option").on("click", function(e){
+                    e.stopPropagation();
                     enableAction($(this).attr("action"));
                 });
 
-                // ESCONDER MENU AL MOVER EL MAPA
-                map.on('move', function(e) {
-                    userInLayer = false;
-                    hideMenu();
-                });
-
-                // AÑADE CLICK LISTENER CUANDO ACABA CON LAS FORMAS
-                shapesListener();
-
+                
             });
             
 
@@ -187,31 +182,17 @@
                         $(".cMenu").css({"left":left, "top":top});
                         $(".cMenu").show();
 
-                        $("."+csMenu).fadeIn(150, function(e){
-                            let options = $("."+csMenu).find(".option");
-                            for (let i = 0; i < options.length; i++) {
-                                jQuery(options[i]).animate({
-                                    top: (Math.sin( i / options.length * 2 * Math.PI) * 60) + 5, 
-                                    left: (Math.cos( i / options.length * 2 * Math.PI) * 60) + 5
-                                }, 150);
-                            }
-                        });
-
-                    } else {
-                        $(".cMenu").animate({"left":left, "top":top}, 150);
+                        $("."+csMenu).fadeIn(150);
+                        let options = $("."+csMenu).find(".option");
+                        for (let i = 0; i < options.length; i++) {
+                            jQuery(options[i]).animate({
+                                top: (Math.sin( i / options.length * 2 * Math.PI) * 60) + 5, 
+                                left: (Math.cos( i / options.length * 2 * Math.PI) * 60) + 5
+                            }, 150);
+                        }
+                    } else { 
+                        $(".cMenu").animate({"left":left, "top":top}, 150, );
                     }
-                }
-            };
-            
-            function hideSMenu(csMenu){
-                if($("."+csMenu).css("display") == "block") {
-                    
-                    $("."+csMenu).hide();
-                    $("."+csMenu).children().each(function(e) {
-                        $(this).css({top:5, left:5});
-                    });
-                } else {
-                    console.log("ERROR: Submenú no visible");
                 }
             };
 
@@ -229,7 +210,7 @@
                 } else if(action != undefined) {
                     map.pm.enableDraw(action, {
                         snappable: true,
-                        snapDistance: 20,
+                        snapDistance: 10,
                         tooltips: true,
                     });
                 } else {
@@ -238,20 +219,33 @@
                 }
             };
 
-            function shapesListener(){
+            function mapListeners(){
+                // ESCONDER MENU AL MOVER EL MAPA
+                map.on('move', function(e) {
+                    hideMenu();
+                });
+
                 map.on('pm:create', e => {
                     // We let the user do other stuff
                     userBusy = false;
                     map.pm.disableDraw(currentAction);
                     currentAction = "none";
-
-                    layer = e.layer;
+                    
                     // We add our layer
-                    // We put a listener to the new layer
-                    layer.on('click', e => {
-                        userInLayer = true;
-                        let localClicks = {top: e.originalEvent.clientY - 30, left: e.originalEvent.clientX - $("#leftNavBar").width() - 30};                        
-                        showSMenu(localClicks.left, localClicks.top, "edit");
+                    layer = e.layer;
+                    
+                    // Listener de clickar en la layer
+                    layer.on('click', function(e) {
+
+                        // Para no clickar el mapa
+                        L.DomEvent.stopPropagation(e);
+
+                        // Mostramos el menú de edición
+                        hideMenu();
+                        $(".cMenu").fadeOut(150, function(){
+                            let localClicks = {top: e.originalEvent.clientY - 30, left: e.originalEvent.clientX - $("#leftNavBar").width() - 30};                        
+                            showSMenu(localClicks.left, localClicks.top, "edit");
+                        })
                         
                         // Para la petición ajax para guardarlo
                         // if(layer._latlngs != undefined){
@@ -261,33 +255,29 @@
                         // }
                     });
 
+                    // Cunado acabe de mover nos vuelva al estado normal
                     layer.on('pm:dragend', e => {
                         map.pm.disableGlobalDragMode();
-                        userInLayer = false;
                         userBusy = false
                     });
-
+                    // Cunado acabe de editar nos vuelva al estado normal
                     layer.on('pm:markerdragend', e => {
                         map.pm.disableGlobalEditMode(); 
-                        userInLayer = false;
                         userBusy = false
                     });
                 });
-
+                // Cuando acabe de borrar nos vuelva al estado normal
                 map.on('pm:remove', e => {
                     if(map.pm.globalRemovalEnabled()){
-                        map.pm.toggleGlobalRemovalMode();
+                        map.pm.disableGlobalRemovalMode();
+                        userBusy = false;
                     }
-                    userInLayer = false;
-                    userBusy = false;
-                    fromRemove = true;
                 });
-
+                // Si se cancela el borrado nos vuelve al estado normal
                 map.on('click', e => {
                     if(map.pm.globalRemovalEnabled()){
-                        userInLayer = false;
+                        map.pm.disableGlobalRemovalMode();
                         userBusy = false;
-                        map.pm.toggleGlobalRemovalMode();
                     }
                 });
             };

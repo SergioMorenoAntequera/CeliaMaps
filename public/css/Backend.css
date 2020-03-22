@@ -233,7 +233,7 @@ los formularios y seguramente algo más, pa quién lo quiera */
     background-color: red;
     border-radius: 100%;  */
 }
-.cMenu > .csMenu { display: none }
+.cMenu > .csMenu { display: none; }
 .option {
     position: absolute;
     top: 5px;
@@ -249,8 +249,17 @@ los formularios y seguramente algo más, pa quién lo quiera */
     -moz-box-shadow: 10px 10px 15px 0px rgba(0,0,0,0.75);
     box-shadow: 10px 10px 15px 0px rgba(0,0,0,0.75);
 }
+.cMenu > .option, .rename {
+    left: -70;
+    top: -40px;
+    height: 70px;
+    width: 200px;
 
-.cMenu > .csMenu > .option > img{position: relative; width: 30px; height: 30px; top: 10px; left: 10px;}
+    padding: v 20px 20px 17px 20px;
+    cursor: default;
+}
+
+.cMenu > .csMenu > .option > img{position: relative; width: 60%; height: 60%; top: 20%; left: 20%;}
 
 
 /* .hidden { display: none; }
