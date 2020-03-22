@@ -75,6 +75,7 @@
                 <div class="option" action="Edit"> <img src="{{url('js/Leaflet/pluginMarkers/img/edit.svg')}}"> </div>
                 <div class="option" action="Drag">  <img src="{{url('js/Leaflet/pluginMarkers/img/drag.svg')}}"> </div>
                 <div class="option" action="Remove"> <img src="{{url('js/Leaflet/pluginMarkers/img/remove.svg')}}"> </div>
+                <div class="option" action="Rename"> Rename </div>
             </div>
         </div>
     </div>
@@ -118,7 +119,9 @@
     {{---------------------------------------------------------------}}
     <script>
         $(document).ready(function(){
+            var layer;
             var fromRemove = false;
+            var inEditMode = false;
             var userBusy = false;
             var userInLayer = false;
             var currentAction = "none";
@@ -152,8 +155,6 @@
                     userInLayer = false;
                     hideMenu();
                 });
-
-                
 
                 // AÑADE CLICK LISTENER CUANDO ACABA CON LAS FORMAS
                 shapesListener();
@@ -223,6 +224,8 @@
                     map.pm.enableGlobalDragMode();
                 } else if(action == "Remove") {
                     map.pm.enableGlobalRemovalMode();
+                } else if(action == "Edit") {
+                    map.pm.toggleGlobalEditMode(); 
                 } else if(action != undefined) {
                     map.pm.enableDraw(action, {
                         snappable: true,
@@ -236,7 +239,6 @@
             };
 
             function shapesListener(){
-                var layer;
                 map.on('pm:create', e => {
                     // We let the user do other stuff
                     userBusy = false;
@@ -248,7 +250,7 @@
                     // We put a listener to the new layer
                     layer.on('click', e => {
                         userInLayer = true;
-                        let localClicks = {top: e.originalEvent.clientY - 30, left: e.originalEvent.clientX - $("#leftNavBar").width() - 30};
+                        let localClicks = {top: e.originalEvent.clientY - 30, left: e.originalEvent.clientX - $("#leftNavBar").width() - 30};                        
                         showSMenu(localClicks.left, localClicks.top, "edit");
                         
                         // Para la petición ajax para guardarlo
@@ -261,6 +263,12 @@
 
                     layer.on('pm:dragend', e => {
                         map.pm.disableGlobalDragMode();
+                        userInLayer = false;
+                        userBusy = false
+                    });
+
+                    layer.on('pm:markerdragend', e => {
+                        map.pm.disableGlobalEditMode(); 
                         userInLayer = false;
                         userBusy = false
                     });
@@ -282,7 +290,7 @@
                         map.pm.toggleGlobalRemovalMode();
                     }
                 });
-            }
+            };
         });
     </script>
 

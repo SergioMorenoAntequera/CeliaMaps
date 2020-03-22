@@ -245,6 +245,9 @@ los formularios y seguramente algo más, pa quién lo quiera */
     cursor: pointer;
     background-color:#FFFFFF;
     border: solid 1px #E0E0E0;
+    -webkit-box-shadow: 10px 10px 15px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 15px 0px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 15px 0px rgba(0,0,0,0.75);
 }
 
 .cMenu > .csMenu > .option > img{position: relative; width: 30px; height: 30px; top: 10px; left: 10px;}
