@@ -16,145 +16,186 @@
 @endsection
 
 @section('content')
-<h3 style="text-align:center;" class="my-3">Informe de situación</h3>
-<div class="container">
 
-    @isset($street)
-    <div class="wholePanel">
-        <!-- PANEL IZQUIERDO, POR  AHORA NO INCLUIMOS IMAGEN, MÁS QUE NADA, PORQUE NO CABE //////////////////////////////////////////// 
-        <div class="leftPanel" style="width:60%;">            
-            
-        </div>
-         FIN DE PANEL IZQUIERDO //////////////////////////////////////////// -->
 
-        <!-- PANEL DERECHO //////////////////////////////////////////// -->
-        <div class="rightPanel" style="width:100%;">
-            <div>
-                <h2>
-                    {{$street->type->name }} {{$street->name}}
-                </h2>
+    <div class="container">
 
-            </div>
-            <div>
-                <h5>Se encuentra
-                    @if (count($street->maps) > 1)
-                    en los siguientes mapas
-                    @else
-                    en el mapa
-                    @endif
-                    : </h5>
-            </div>
-            <br>
-            <div>
-                @foreach($street->maps as $map)
-                <div>
-                    <h5>
-                        {{$map->title}}
 
-                    </h5>
+
+        @isset($street)
+            <div class="wholePanel">
+                <!-- PANEL IZQUIERDO, POR  AHORA NO INCLUIMOS IMAGEN, MÁS QUE NADA, PORQUE NO CABE ////////////////////////////////////////////
+                <div class="leftPanel" style="width:60%;">
+
                 </div>
+                FIN DE PANEL IZQUIERDO //////////////////////////////////////////// -->
 
-                @isset($map->pivot->alternative_name)
-
-
-                @if (count($street->maps) > 1)
-
-                <div class="row offset-md-1">
-                    <p>
-                        Con el nombre: &nbsp;
-                        <h6>
-
-                            {{$map->pivot->alternative_name}}
-
-                        </h6>
-                    </p>
-                </div>
-                @endif
-                @endisset
-
-
-                <!-- POR AHORA NO MOSTRAREMOS LA DESCRIPCIÓN DEL MAPA
+                <!-- PANEL DERECHO //////////////////////////////////////////// -->
+                <div class="rightPanel" style="width:100%;">
+                    <h2  class="text-center">Informe de situación</h2>
                     <div>
-                        
-                        {{--<p>{{$map->description}}</p> --}} 
-                    </div> 
-                    -->
-                @endforeach
+                        <h3>
+                            {{$street->type->name }} {{$street->name}}
+                        </h3>
+                    </div>
+                    <div>
+                        <h5>Se encuentra
+                            @if (count($street->maps) > 1)
+                                en los siguientes mapas
+                            @else
+                             en el mapa
+                            @endif
+                                : </h5>
+                    </div>
+                    <br>
+                    <div id="nombreMapas">
+                        @foreach($street->maps as $map)
+                            <div>
+                                <h5>
+                                    {{$map->title}}
+                                </h5>
+                            </div>
+                            @isset($map->pivot->alternative_name)
+                                @if (count($street->maps) > 1)
+                                    <div class="row offset-md-1">
+                                        <p>
+                                            Con el nombre: &nbsp;
+                                            <h6>
+                                                {{$map->pivot->alternative_name}}
+                                            </h6>
+                                        </p>
+                                    </div>
+                                @endif
+                            @endisset
 
-            </div>
-            <br>
-            <!-- AQUÍ PONGO EL BOTÓN DE OBSERVACIONES -->
-            <div class="row col-2 float-left">
-                <button id="botonObservaciones" type="button" class="btn btn-success" data-toggle="modal"
-                    data-target="#cuadroObservaciones" onclick="muestraTitulo()">
-                    Observaciones
-                </button>
-            </div>
-            <!-- FIN DE BOTÓN DE OBSERVACIONES -->
+                            <!-- POR AHORA NO MOSTRAREMOS LA DESCRIPCIÓN DEL MAPA
+                                <div>
 
-            <!-- MODAL PARA INCLUIR OBSERVACIONES -->
+                                    {{--<p>{{$map->description}}</p> --}}
+                                </div>
+                                -->
+                        @endforeach
 
-            <div class="modal fade" id="cuadroObservaciones" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="tituloModal">Escriba un breve informe</h5>
-                            <button type="button" class="close text-success" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
+                    </div>
+                    <br>
+                    <!-- AQUÍ PONGO EL BOTÓN DE OBSERVACIONES -->
+                    <div class="row col-2 float-left">
+                        <button id="botonObservaciones" type="button" class="btn btn-success" data-toggle="modal"
+                            data-target="#cuadroObservaciones">
+                            Observaciones
+                        </button>
+                    </div>
+                    <!-- FIN DE BOTÓN DE OBSERVACIONES -->
 
+                    <!-- MODAL PARA INCLUIR OBSERVACIONES -->
 
-                            <textarea id="observaciones" class="col-12" style="border:0" onkeyup="texto()"></textarea>
+                    <div class="modal fade" id="cuadroObservaciones" data-backdrop="static" tabindex="-1" role="dialog"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="tituloModal">Escriba un breve informe</h5>
 
-                            <script>
-                                function muestraTitulo(){
-                            
-                            document.getElementById('encabezado').innerHTML = 'Observaciones: ' ;
-                          }
-                          function texto(){                              
-                              parrafo = document.getElementById('observaciones').value;                              
-                              document.getElementById('contenido').innerHTML = ' ' + parrafo;
-                          }
-                            </script>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-success" data-dismiss="modal">Aplicar</button>
-                            <!-- <button type="button" class="btn btn-primary">Aplicar</button> -->
+                                        <button type="button" class="close text-success" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="font-weight-light">
+                                        El informe se imprimirá, por defecto, bajo la imagen, si desea cambiar el orden, <br>
+                                        haga click en el elemento y muévalo.
+                                    </p>
+                                    <div class="form-group">
+                                        <label for="funcionarioa">Nombre de el/la funcionario/a</label>
+                                        <input type="text" id="funcionarioa" class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="observaciones">Redacte aquí el contenido del informe</label>
+                                        <textarea id="observaciones" class="form-control col-12" style="border:0"></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" id="aplicar" class="btn btn-success" data-dismiss="modal">Aplicar</button>
+                                    <button type="button" id="descartar" class="btn btn-outline-success" data-dismiss="modal">descartar</button>
+                                    <!-- <button type="button" class="btn btn-primary">Aplicar</button> -->
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <!-- FIN DE MODAL PARA INCLUIR OBSERVACIONES -->
+
+                    <!-- AQUÍ PONGO EL BOTÓN DE PDF -->
+                    <div class="row col-2 float-right">
+                        <button id="btn-pdf" type="button" class="btn btn-success">PDF</button>
+                    </div>
+                    <!-- FIN DE BOTÓN DE PDF -->
+
+                    <!-- SE AÑADE EL BOTÓN "X" PARA SALIR DEL INFORME -->
+                    <a href="{{route('search.index')}}">
+                        <div class="cornerButton">
+                            <img class="center" src="{{url("img/icons/close.svg")}}" alt="">
+                        </div>
+                    </a>
+                    <!-- FIN DE BOTÓN "X" PARA SALIR DEL INFORME -->
+
+                    <!-- FIN DE BOTONES  //////////////////////////////////////////// -->
+                    <br>
+                    <br>
+
+                     <!-- DIV QUE PUEDE CONTENER EL INFORME DE OBSERVACIONES ///////////////////// -->
+                     <div id="ordenado">
+
+                        <div id="informeObservacionesDropable"></div>
+
+
+
+
+                    <!-- DIV QUE CONTIENE EL MAPA CON LA SITUACIÓN DE LA CALLE BUSCADA ///////////////////// -->
+                    <div id="map" style="width:100%;height: 480px;"></div>
+
+                    <!-- DIV QUE CONTIENE EL INFORME DE OBSERVACIONES -->
+
+                    <div id="informeObservacionesDraggable">
+                        <br>
+                            <div id="encabezadoDraggable">
+                                <div id="encabezado" class="font-weight-bold"></div>
+                            </div>
+                        <br>
+                            <div id="contenidoDraggable">
+                                <div id="contenido" class="text-justify"></div>
+                            </div>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                            <div id="fechaInformeDraggable">
+                                <div id="fechaInforme" class="col-md-4 offset-md-8"></div>
+                            </div>
+                        <br>
+                        <br>
+                        <br>
+                            <div id="nombreFuncionarioaDraggable">
+                                <div id="nombreFuncionarioa" class="col-md-4 offset-md-8"></div>
+                            </div>
+                        <br>
+                    </div>
+
+
+                     </div>
+
                 </div>
+                <!-- FIN DE PANEL DERECHO //////////////////////////////////////////// -->
+                <br>
             </div>
+        @endisset
+    </div>
 
-            <!-- FIN DE MODAL PARA INCLUIR OBSERVACIONES -->
+@endsection
 
-            <!-- AQUÍ PONGO EL BOTÓN DE PDF -->
-            <div class="row col-2 float-right">
-                <button id="btn-pdf" type="button" class="btn btn-success">PDF</button>
-            </div>
-            <!-- FIN DE BOTÓN DE PDF -->
-
-            <!-- SE AÑADE EL BOTÓN "X" PARA SALIR DEL INFORME -->
-            <a href="{{route('search.index')}}">
-                <div class="cornerButton">
-                    <img class="center" src="{{url("img/icons/close.svg")}}" alt="">
-                </div>
-            </a>
-            <!-- FIN DE BOTÓN "X" PARA SALIR DEL INFORME -->
-
-            <!-- FIN DE BOTONES  //////////////////////////////////////////// -->
-            <br>
-            <br>
-
-            <!-- DIV QUE CONTIENE EL MAPA CON LA SITUACIÓN DE LA CALLE BUSCADA ///////////////////// -->
-            <div id="map" style="width:100%;height: 480px;"></div>
-
-            <!-- DIV QUE CONTIENE EL EDITOR DE TEXTO -->
-            <br>
-            <div id="encabezado"></div>
-            <div id="contenido"></div>
+@section('scripts')
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="{{url('/js/informe.js')}}"></script>
 
             <!--SCRIPT QUE NOS MUESTRA LA SITUACIÓN DE LA CALLE EN EL MAPA ////////////////////// -->
             <script>
@@ -165,7 +206,7 @@
             /* LATITUD Y LONGITUD */
             map.setView([{{$street->points[0]->lat}}, {{$street->points[0]->lng}}], 17);
             let mapTile = L.tileLayer.wms('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19, //Dont touch, max zoom 
+                maxZoom: 19, //Dont touch, max zoom
             });
             map.addLayer(mapTile);
             let markerIcon = L.icon({
@@ -180,31 +221,6 @@
                 map.setView([{{$street->points[0]->lat}}, {{$street->points[0]->lng}}]);
             })
 
-            $("#btn-pdf").click(function(){
-                $(this).parent().hide();
-                $("#botonObservaciones").hide();
-                window.print();
-                $(this).parent().show();
-                $("#botonObservaciones").show();
-            });
-           
             </script>
-
-
-        </div>
-
-
-        <br>
-        <!-- FIN DE PANEL DERECHO //////////////////////////////////////////// -->
-        {{--    Imagenes mapas 
-    <div class="rightPanel" style="width:100%;">       
-        @foreach ($street->maps as $map)
-        <img src="/img/maps/{{$map->image}}" alt="..." style="width: 75%;">
-        @endforeach
-    </div>
-    --}}
-</div>
-@endisset
-</div>
 
 @endsection

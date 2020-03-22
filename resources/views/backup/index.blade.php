@@ -1,7 +1,7 @@
 @extends('layouts/master')
 
 @section('header')
-@endsection 
+@endsection
 
 @section('content')
 <div class="container">
@@ -12,7 +12,7 @@
         <div class=" col-12 offset-md-1 col-md-5">
             <div id="createCopy" class="backupBox p-5" data-toggle="modal" data-target="#saveModal">
                 <h1 class="mb-4">
-                    <b> GUARDAR </b>   
+                    <b> GUARDAR </b>
                 </h1>
                 <img src="{{url('img/icons/save.svg')}}">
             </div>
@@ -30,13 +30,19 @@
                 </div>
                 <div class="modal-body">
                     <p>
-                        Si continuas se creará una copia de seguridad de la base de datos en el estado actual,
-                        sobreescribiendo a las versiones anteriores, <b>¿Quieres continuar?</b>
+                        Si continua, se creará una copia de seguridad de la base de datos en el estado actual,
+                        sobreescribiendo a las versiones anteriores, <b>¿Quiere continuar?</b>
                     </p>
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-dismiss="modal"> Cancelar </button>
                 <button id="confirmCreate" type="button" class="btn btn-success" data-dismiss="modal">Crear copia</button>
+                <a href="{{route('backup.copymage')}}">
+
+                    <button id="copiaimagen" type="button" class="btn btn-alert" data-dismiss="modal">copiar imagen</button>
+
+            </a>
+
                 </div>
             </div>
             </div>
@@ -47,7 +53,7 @@
         <div class="col-12 col-md-5">
             <div id="restoreCopy" class="backupBox p-5" data-toggle="modal" data-target="#restoreModal">
                 <h1 class="mb-4">
-                    <b> RESTAURAR </b>   
+                    <b> RESTAURAR </b>
                 </h1>
                 <img src="{{url('img/icons/database.svg')}}">
             </div>
@@ -64,13 +70,14 @@
                 </div>
                 <div class="modal-body">
                     <p>
-                        Si continuas los datos de la aplicación se sobreescribirán con los datos 
-                        que se hayan guardado más recientemente. <b>¿Quieres continuar?</b>
+                        Si continua, la base de datos se restaurará con la última copia de seguridad guardada,
+                        perdiéndose así lo introducido desde entonces hasta ahora.
+                        <b>¿Quiere continuar?</b><br>
+                        Esta operación puede tardar unos minutos.
                     </p>
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-dismiss="modal"> Cancelar </button>
-                <button id="confirmRestore" type="button" class="btn btn-success" data-dismiss="modal">Restaurar copia</button>
                 </div>
             </div>
             </div>
