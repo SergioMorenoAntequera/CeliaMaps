@@ -10,14 +10,14 @@ $(document).ready(function(){
         });
     });
 
-    // Evento restaurar 
+    // Evento restaurar
     $("#confirmRestore").click(function(e) {
         e.preventDefault();
         $.ajax({
-            url: urlCreate,
+            url: urlRestore,
             success: function(){
                 alert("Base de datos restaurada con exito");
             }
         });
     });
-}); 
+});
