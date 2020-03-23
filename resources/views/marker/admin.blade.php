@@ -5,19 +5,27 @@
 @section('cdn')
     <!-- LEAFLET -->
     <script src="{{url('js/Leaflet/leaflet.js')}}"></script>
-    <link rel="stylesheet" href="{{'js/Leaflet/leaflet.css'}}">
+    <link rel="stylesheet" href="{{url('js/Leaflet/leaflet.css')}}">
     <!-- Plugin Marker -->
     <script src="{{url('js/Leaflet/pluginMarkers/leaflet-geoman.min.js')}}"></script>
     <link rel="stylesheet" href="{{url('js/Leaflet/pluginMarkers/leaflet-geoman.css')}}">
-    <!-- JQUERY -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    
+    {{-- FONT AWESOME --}}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    
+    {{-- BOOTSTRAP --}}
+    {{-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> --}}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <!-- PERSONAL CSS -->
     <link rel="stylesheet" href="{{url('/css/frontend.css')}}">
     <link rel="stylesheet" href="{{url('/css/Backend.css')}}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
 @endsection
 
 @section('content')
@@ -75,17 +83,46 @@
                 <div class="option" action="Edit"> <img src="{{url('js/Leaflet/pluginMarkers/img/edit.svg')}}"> </div>
                 <div class="option" action="Drag">  <img src="{{url('js/Leaflet/pluginMarkers/img/drag.svg')}}"> </div>
                 <div class="option" action="Remove"> <img src="{{url('js/Leaflet/pluginMarkers/img/remove.svg')}}"> </div>
-                <div class="option" action="Rename"> <img src="{{url('js/Leaflet/pluginMarkers/img/name.svg')}}"> </div>
+                <div class="option renameOption" action="Rename"> <img src="{{url('js/Leaflet/pluginMarkers/img/name.svg')}}"> </div>
             </div>
         </div>
         <div class="bubble rename">
-            PRA
+            <input type="text" class="form-control" name="Rename" placeholder="Introduce nombre">
+            <button type="submit" class="btn btn-success mt-2"> Confirmar </button>
+            
+            <div class="cornerButton" style="width: 40px; height: 40px"> 
+                <img class="center" src="{{url('img/icons/close.svg')}}"> 
+            </div>
         </div>
-        
     </div>
+
+    {{-- We prepare the php variables into JS --}}
+    <script> var markerJS = []; </script>
+    @foreach ($markers as $marker)
+        <script>
+            markerJS.push({
+                "id":{{$marker->id}}, 
+                "name":"{{$marker->name}}", 
+                "type":"{{$marker->type}}",
+                "points": [ 
+                @foreach ($marker->points as $point)
+                    {
+                        "id":{{$point->id}},
+                        "lat":{{$point->lat}},
+                        "lng":{{$point->lng}},
+                    },
+                @endforeach
+                ],
+            });
+        </script>
+    @endforeach
+    {{-- Now we can work with the markers in JS (markersJS) --}}
+    
 @endsection
 
 @section('scripts')
+    <!-- JQUERY -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     {{---------------------------------------------------------------}}
     {{-- ALL OF THE PARTS RELATED WITH SHOWING THE MAPS AND LAYERS --}}
     {{---------------------------------------------------------------}}
@@ -121,15 +158,18 @@
     {{---------------------------------------------------------------}}
     {{-------- ALL THE PARTS RELATED WITH THE MARKERS PLUGIN --------}}
     {{---------------------------------------------------------------}}
+    
+    
     <script>
         $(document).ready(function(){
             var layer;
             var userBusy = false;
             var currentAction = "none";
 
-
             map.whenReady(function() {
+
                 
+
                 // add leaflet-geoman controls with some options to the map
                 // map.pm.addControls({
                 //     position: 'topleft',
@@ -152,11 +192,8 @@
                     e.stopPropagation();
                     enableAction($(this).attr("action"));
                 });
-
-                
             });
             
-
             function hideMenu(){
                 if($(".cMenu").css("display") == "block"){
                     $(".cMenu").fadeOut(150, function(e){
@@ -207,6 +244,9 @@
                     map.pm.enableGlobalRemovalMode();
                 } else if(action == "Edit") {
                     map.pm.toggleGlobalEditMode(); 
+                } else if(action == "Rename") {
+                    userBusy = false;
+                    currentAction = "none";
                 } else if(action != undefined) {
                     map.pm.enableDraw(action, {
                         snappable: true,
@@ -225,6 +265,7 @@
                     hideMenu();
                 });
 
+                //When we are done creating a new marker
                 map.on('pm:create', e => {
                     // We let the user do other stuff
                     userBusy = false;
@@ -236,23 +277,14 @@
                     
                     // Listener de clickar en la layer
                     layer.on('click', function(e) {
-
                         // Para no clickar el mapa
                         L.DomEvent.stopPropagation(e);
-
                         // Mostramos el menú de edición
                         hideMenu();
                         $(".cMenu").fadeOut(150, function(){
                             let localClicks = {top: e.originalEvent.clientY - 30, left: e.originalEvent.clientX - $("#leftNavBar").width() - 30};                        
                             showSMenu(localClicks.left, localClicks.top, "edit");
                         })
-                        
-                        // Para la petición ajax para guardarlo
-                        // if(layer._latlngs != undefined){
-                        //     console.log("Más de una ltnlng => layer._latlngs")
-                        // } else {
-                        //     console.log("Una ltnlng => layer._latlng")
-                        // }
                     });
 
                     // Cunado acabe de mover nos vuelva al estado normal
@@ -265,6 +297,16 @@
                         map.pm.disableGlobalEditMode(); 
                         userBusy = false
                     });
+
+                    // Para la petición ajax para guardarlo
+                    let points;
+                    if(layer._latlngs != undefined){
+                        console.log("Más de una ltnlng => layer._latlngs")
+                        points = layer._latlngs[0];
+                        console.log(points);
+                    } else {
+                        console.log("Una ltnlng => layer._latlng")
+                    }
                 });
                 // Cuando acabe de borrar nos vuelva al estado normal
                 map.on('pm:remove', e => {
@@ -281,6 +323,15 @@
                     }
                 });
             };
+
+            $(".option[action='Rename']").click(function(e){
+                let localClicks = {top: e.originalEvent.clientY - 30, left: e.originalEvent.clientX - $("#leftNavBar").width() - 30};
+                $(".bubble.rename").css({top:localClicks.top - $(".bubble.rename").height(), left:localClicks.left - $(".bubble.rename").width() / 2});
+                $(".bubble.rename").fadeIn(150);
+            });
+            $(".cornerButton").click(function(e){
+                $(this).parent().fadeOut(150);
+            });
         });
     </script>
 

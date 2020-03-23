@@ -95,7 +95,7 @@ html body{
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#258f75', endColorstr='#3ab399', GradientType=1 );
 }
 .cornerButton > img {
-    width: 60%;
+    width: 50%;
 }
 
 /***************************************************************/
@@ -250,13 +250,14 @@ los formularios y seguramente algo más, pa quién lo quiera */
     box-shadow: 10px 10px 15px 0px rgba(0,0,0,0.75);
 }
 .bubble {
+    display: none;
     position: absolute;
     left: 10px;
     top: 10px;
     height: auto;
     width: 200px;
 
-    padding: 10px 22px 10px 22px;
+    padding: 20px 22px 20px 22px;
     color: #c0c0c0;
     border-radius: 50px;
     cursor: pointer;
