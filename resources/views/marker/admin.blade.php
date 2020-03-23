@@ -198,7 +198,12 @@
             function addMarkersJS(){
                 markersJS.forEach(marker => {
                     if(marker.type == "polygon"){
-
+                        var polygonPoints = [];
+                        marker.points.forEach(point => {
+                            polygonPoints.push([point.lat, point.lng]);
+                        });
+                        var polygon = L.polygon([polygonPoints]);
+                        polygon.addTo(map);
                     } else if(marker.type == "circle") {
                         var circle = L.circle([marker.points[0].lat, marker.points[0].lng], {
                             color: 'rgb(51, 136, 255)',
