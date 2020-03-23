@@ -97,13 +97,14 @@
     </div>
 
     {{-- We prepare the php variables into JS --}}
-    <script> var markerJS = []; </script>
+    <script> var markersJS = []; </script>
     @foreach ($markers as $marker)
         <script>
-            markerJS.push({
+            markersJS.push({
                 "id":{{$marker->id}}, 
                 "name":"{{$marker->name}}", 
                 "type":"{{$marker->type}}",
+                "radius":"{{$marker->radius}}",
                 "points": [ 
                 @foreach ($marker->points as $point)
                     {
@@ -168,7 +169,7 @@
 
             map.whenReady(function() {
 
-                
+                addMarkersJS();
 
                 // add leaflet-geoman controls with some options to the map
                 // map.pm.addControls({
@@ -194,6 +195,23 @@
                 });
             });
             
+            function addMarkersJS(){
+                markersJS.forEach(marker => {
+                    if(marker.type == "polygon"){
+
+                    } else if(marker.type == "circle") {
+                        var circle = L.circle([marker.points[0].lat, marker.points[0].lng], {
+                            color: 'rgb(51, 136, 255)',
+                            fillColor: 'rgb(51, 136, 255)',
+                            fillOpacity: 0.2,
+                            radius: marker.radius,
+                        }).addTo(map);
+                    }  else if(marker.type == "marker") {
+                        var markerCreated = L.marker([marker.points[0].lat, marker.points[0].lng]).addTo(map);
+                    } 
+                });
+            }
+
             function hideMenu(){
                 if($(".cMenu").css("display") == "block"){
                     $(".cMenu").fadeOut(150, function(e){

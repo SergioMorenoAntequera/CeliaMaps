@@ -15,6 +15,7 @@ class MarkersTableSeeder extends Seeder
         DB::table('markers')->insert([
             'name' => 'Avenida Santa isabel',
             'type' => 'polygon',
+            'radius' => null,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -22,6 +23,7 @@ class MarkersTableSeeder extends Seeder
         DB::table('markers')->insert([
             'name' => 'Plaza de toros',
             'type' => 'circle',
+            'radius' => 200,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -29,6 +31,7 @@ class MarkersTableSeeder extends Seeder
         DB::table('markers')->insert([
             'name' => 'Marcador de ejemplo',
             'type' => 'marker',
+            'radius' => null,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
