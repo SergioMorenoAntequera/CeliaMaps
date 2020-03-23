@@ -195,6 +195,7 @@
                                             if(mapStreet.pivot.alternative_name !== null){
                                                 alternativeStreet.name = mapStreet.pivot.alternative_name;
                                                 alternativeStreet.fullName = alternativeStreet.typeName + " " + alternativeStreet.name;
+                                                alternativeStreet.deprecated = true;
                                                 streets.push(alternativeStreet);
                                             }
                                         })
@@ -227,7 +228,11 @@
                         c = 0;
                         streets.forEach(street => {
                             if(street.fullName.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
-                                $('#streetsFound').append("<div class='street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ street.fullName + "</div>");
+                                // Deprecated street will appear in italic font
+                                if(street.deprecated == true)
+                                    $('#streetsFound').append("<div style='font-style:italic;opacity:0.8' class='street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ street.fullName + "</div>");
+                                else
+                                    $('#streetsFound').append("<div class='street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ street.fullName + "</div>");
                                 if(++c == 5){
                                     return;
                                 }                                
@@ -284,16 +289,18 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label class="text-dark">Tipo de vía</label>
-                            <select name="type_id" class="form-control">
+                            <select required name="type_id" class="form-control">
                                 @foreach ($streetsTypes as $streetType)
                                 <option value="{{$streetType->id}}">({{$streetType->abbreviation}}) {{$streetType->type}}</option>
                                 @endforeach
                             </select>
+                            <label class="text-danger">@error('type_id') {{$message}} @enderror</label>
                         </div>
                         <!-- Street name -->
                         <div class="form-group">
                             <label class="text-dark">Nombre de la vía</label>
-                            <input type="text" class="form-control" name="name">
+                            <input required type="text" class="form-control" name="name">
+                            <label class="text-danger">@error('name') {{$message}} @enderror</label>
                         </div>
                         <!-- Street maps -->
                         <div class="form-group">
@@ -306,6 +313,7 @@
                                 <input id="input_map{{$map->id}}" class="form-control" type="text" name="maps_name[]" placeholder="Sobreescribir el nombre de la vía en el mapa {{$map->title}}">
                                 <br>
                             @endforeach
+                            <label id="maps-error" class='text-danger mt-3'></label>
                         </div>
                         <!-- Street points -->
                         <div>
@@ -525,6 +533,7 @@
                 $("#btn-remove").css("display", "none");
                 $("#btn-position").prop("disabled", true);
                 $("#btn-position").css("display", "none");
+                $("#maps-error").html("");
                 $('#modal').modal('show');
                 /* Add marker to the map when we use ajax to insert
                 $("#btn-submit").click(function(){
@@ -536,6 +545,7 @@
                 // Edit form attributes
                 $("#modal-form").attr("action", "{{route('street.store')}}/"+street.id);
                 $("input[name='_method']").val("PUT");
+                $("#maps-error").html("");
                 // Fill inputs fields
                 $("select[name='type_id']").val(street.type_id);
                 $("input[name='name']").val(street.name);
@@ -646,6 +656,21 @@
                 });
             }
             
+            // Save street button
+            $("#modal-form").submit(function(e){
+                let belongsToMap = false;
+                $("#modal-form input[name='maps_id[]']").each(function(){
+                    if($(this).prop("checked"))
+                        belongsToMap = true;           
+                });
+                if(!belongsToMap)
+                    $("#maps-error").html("*La vía debe de pertenecer al menos a un mapa.");
+                return belongsToMap;
+            });/*
+            $("#btn-submit").on("click", function(e){
+                
+            });
+*/
             // Rename streets fields display
             $(".checkbox-text").on("click", function(){
                 // Map id getted from checkbox value

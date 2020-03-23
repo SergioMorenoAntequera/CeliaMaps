@@ -76,6 +76,13 @@ class StreetController extends Controller
      * @return View
      */
     public function store(Request $r){
+
+        // Server side validation
+        $r->validate([
+            'type_id'=>'required',
+            'name'=>'required'
+        ]);
+
         $street = new Street($r->all());
         $street->save();
         if(!is_null($r->maps_id) > 0){
@@ -118,6 +125,13 @@ class StreetController extends Controller
      * @return View
      */
     public function update(Request $r, $id){
+
+        // Server side validation
+        $r->validate([
+            'type_id'=>'required',
+            'name'=>'required'
+        ]);
+
         $street = Street::find($id);
         $street->fill($r->all());
         
