@@ -50,6 +50,7 @@
                                 <div class="line"></div>
                                 <a href="<?php echo e(route('map.index')); ?>"><li>Indice</li></a>
                                 <a href="<?php echo e(route('map.create')); ?>"><li>Insertar</li></a>
+                                <a href="<?php echo e(route('marker.admin')); ?>"><li>Marcadores</li></a>
                             </div>
                         </div>
                         
@@ -137,7 +138,7 @@
                     </ul>
                     <script>
                         $(document).ready(function(){
-                            if(window.location.href.includes("/map")){
+                            if(window.location.href.includes("/map") || window.location.href.includes("/marker")){
                                 var element = $(".lateralMenuLink[href|='<?php echo e(route('map.index')); ?>']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/street")){
                                 var element = $(".lateralMenuLink[href|='<?php echo e(route('street.index')); ?>']").parents(".lateralMenuElement");

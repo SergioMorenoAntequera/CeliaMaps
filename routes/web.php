@@ -30,6 +30,7 @@ Route::get('map/saveAlign/{id}', 'MapController@saveAlign')->name('map.saveAlign
 Route::resource('map', 'MapController');
 // MARKERS /////////////////////////////////////////////////////////////////////////////////////
 Route::get('marker', 'MarkerController@admin')->name('marker.admin');
+// Route::resource('marker', 'MarkerController');
 // USER /////////////////////////////////////////////////////////////////////////////////////
 Route::resource('user', 'UserController');
 Route::delete('user/deleteAjax/{id}', 'UserController@deleteAjax')->name('user.deleteAjax');

@@ -18,6 +18,7 @@ class CreateMarkersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 100); 
             $table->string('type', 100); 
+            $table->integer('radius')->nullable(); 
             $table->timestamps();
         });
     }

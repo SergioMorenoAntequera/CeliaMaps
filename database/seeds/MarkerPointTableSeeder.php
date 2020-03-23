@@ -24,5 +24,17 @@ class MarkerPointTableSeeder extends Seeder
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
+        DB::table('marker_point')->insert([
+            'marker_id' => 2,
+            'point_id' => 1,
+            'created_at' => date('Y-m-d H-m-s'),
+            'updated_at' => date('Y-m-d H-m-s'),
+        ]);
+        DB::table('marker_point')->insert([
+            'marker_id' => 3,
+            'point_id' => 3,
+            'created_at' => date('Y-m-d H-m-s'),
+            'updated_at' => date('Y-m-d H-m-s'),
+        ]);
     }
 }
