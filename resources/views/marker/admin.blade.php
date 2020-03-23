@@ -168,25 +168,11 @@
             var currentAction = "none";
 
             map.whenReady(function() {
-
+                // We add the markers that come from the database
                 addMarkersJS();
 
-                // add leaflet-geoman controls with some options to the map
-                // map.pm.addControls({
-                //     position: 'topleft',
-                // });
-
-                // SHOW MENU
-                map.on('click', function(e){
-                    hideMenu();
-                    $(".cMenu").fadeOut(150, function(){
-                        let localClicks = {top: e.originalEvent.clientY - 30, left: e.originalEvent.clientX - $("#leftNavBar").width() - 30};
-                        showSMenu(localClicks.left, localClicks.top, "add");                    
-                    });
-                });
-
-                // AÑADE CLICK LISTENER AL MAPA Y A LAS LAYER
-                mapListeners();
+                // AÑADE TODOS LOS LESTENERS AL MAPA
+                addMapListeners();
 
                 // COMIEZA LA ACCION
                 $(".option").on("click", function(e){
@@ -195,28 +181,62 @@
                 });
             });
             
+            // Fución que añade todos los narcadres que llegan de la base de datos al principio
             function addMarkersJS(){
-                markersJS.forEach(marker => {
-                    if(marker.type == "polygon"){
+                markersJS.forEach(markerJS => {
+                    //El resultado
+                    var layer;
+                    if(markerJS.type == "polygon"){
+                        // Si es un polígono
                         var polygonPoints = [];
-                        marker.points.forEach(point => {
+                        markerJS.points.forEach(point => {
                             polygonPoints.push([point.lat, point.lng]);
                         });
-                        var polygon = L.polygon([polygonPoints]);
-                        polygon.addTo(map);
-                    } else if(marker.type == "circle") {
-                        var circle = L.circle([marker.points[0].lat, marker.points[0].lng], {
+                        layer = L.polygon([polygonPoints]);
+
+                        // Si es un Circulo
+                    } else if(markerJS.type == "circle") {
+                        layer = L.circle([markerJS.points[0].lat, markerJS.points[0].lng], {
                             color: 'rgb(51, 136, 255)',
                             fillColor: 'rgb(51, 136, 255)',
                             fillOpacity: 0.2,
-                            radius: marker.radius,
-                        }).addTo(map);
-                    }  else if(marker.type == "marker") {
-                        var markerCreated = L.marker([marker.points[0].lat, marker.points[0].lng]).addTo(map);
-                    } 
-                });
-            }
+                            radius: markerJS.radius,
+                        });
 
+                    }  else if(markerJS.type == "marker") {
+                        // Si es un marcador
+                        layer = L.marker([markerJS.points[0].lat, markerJS.points[0].lng]).addTo(map);
+                    }
+
+                    layer.addTo(map);
+                    addLayerListeners(layer);
+                });
+            };
+            
+            // Enseña el menú indicado en csMenu
+            function showMenu(e, csMenu){
+                // // We place the menu in the middle
+                let localClicks = {top: e.originalEvent.clientY - 30, left: e.originalEvent.clientX - $("#leftNavBar").width() - 30};
+                if(!userBusy){
+                    if($(".cMenu").css("display") == "none"){
+                        $(".cMenu").css({"left":localClicks.left, "top":localClicks.top});
+                        $(".cMenu").show();
+
+                        $("."+csMenu).fadeIn(150);
+                        let options = $("."+csMenu).find(".option");
+                        for (let i = 0; i < options.length; i++) {
+                            jQuery(options[i]).animate({
+                                top: (Math.sin( i / options.length * 2 * Math.PI) * 60) + 5, 
+                                left: (Math.cos( i / options.length * 2 * Math.PI) * 60) + 5
+                            }, 150);
+                        }
+                    } else { 
+                        $(".cMenu").animate({"left":left, "top":top}, 150);
+                    }
+                }
+            };
+
+            // Oculta el menú que se esté mostrando
             function hideMenu(){
                 if($(".cMenu").css("display") == "block"){
                     $(".cMenu").fadeOut(150, function(e){
@@ -235,27 +255,7 @@
                 }
             };
 
-            function showSMenu(left, top, csMenu){
-                // // We place the menu in the middle
-                if(!userBusy){
-                    if($(".cMenu").css("display") == "none"){
-                        $(".cMenu").css({"left":left, "top":top});
-                        $(".cMenu").show();
-
-                        $("."+csMenu).fadeIn(150);
-                        let options = $("."+csMenu).find(".option");
-                        for (let i = 0; i < options.length; i++) {
-                            jQuery(options[i]).animate({
-                                top: (Math.sin( i / options.length * 2 * Math.PI) * 60) + 5, 
-                                left: (Math.cos( i / options.length * 2 * Math.PI) * 60) + 5
-                            }, 150);
-                        }
-                    } else { 
-                        $(".cMenu").animate({"left":left, "top":top}, 150, );
-                    }
-                }
-            };
-
+            // Ejecuta la acción que se le indique
             function enableAction(action){
                 userBusy = true;
                 currentAction = action;
@@ -282,7 +282,16 @@
                 }
             };
 
-            function mapListeners(){
+            // Acciones que tienen que ver con el mapa
+            function addMapListeners(){
+                // SHOW MENU
+                map.on('click', function(e){
+                    hideMenu();
+                    $(".cMenu").fadeOut(150, function(){
+                        showMenu(e, "add");                    
+                    });
+                });
+
                 // ESCONDER MENU AL MOVER EL MAPA
                 map.on('move', function(e) {
                     hideMenu();
@@ -297,29 +306,8 @@
                     
                     // We add our layer
                     layer = e.layer;
+                    addLayerListeners(layer);
                     
-                    // Listener de clickar en la layer
-                    layer.on('click', function(e) {
-                        // Para no clickar el mapa
-                        L.DomEvent.stopPropagation(e);
-                        // Mostramos el menú de edición
-                        hideMenu();
-                        $(".cMenu").fadeOut(150, function(){
-                            let localClicks = {top: e.originalEvent.clientY - 30, left: e.originalEvent.clientX - $("#leftNavBar").width() - 30};                        
-                            showSMenu(localClicks.left, localClicks.top, "edit");
-                        })
-                    });
-
-                    // Cunado acabe de mover nos vuelva al estado normal
-                    layer.on('pm:dragend', e => {
-                        map.pm.disableGlobalDragMode();
-                        userBusy = false
-                    });
-                    // Cunado acabe de editar nos vuelva al estado normal
-                    layer.on('pm:markerdragend', e => {
-                        map.pm.disableGlobalEditMode(); 
-                        userBusy = false
-                    });
 
                     // Para la petición ajax para guardarlo
                     let points;
@@ -346,7 +334,33 @@
                     }
                 });
             };
+            
+            // Acciones que tienen que ver con las capas
+            function addLayerListeners(layer) {
+                // Listener de clickar en la layer
+                layer.on('click', function(e) {
+                    // Para no clickar el mapa
+                    L.DomEvent.stopPropagation(e);
+                    // Mostramos el menú de edición
+                    hideMenu();
+                    $(".cMenu").fadeOut(150, function(){
+                        showMenu(e, "edit");
+                    })
+                });
 
+                // Cunado acabe de mover nos vuelva al estado normal
+                layer.on('pm:dragend', e => {
+                    map.pm.disableGlobalDragMode();
+                    userBusy = false
+                });
+                // Cunado acabe de editar nos vuelva al estado normal
+                layer.on('pm:markerdragend', e => {
+                    map.pm.disableGlobalEditMode(); 
+                    userBusy = false
+                });
+            };
+
+            // El rename ya que es más complicado
             $(".option[action='Rename']").click(function(e){
                 let localClicks = {top: e.originalEvent.clientY - 30, left: e.originalEvent.clientX - $("#leftNavBar").width() - 30};
                 $(".bubble.rename").css({top:localClicks.top - $(".bubble.rename").height(), left:localClicks.left - $(".bubble.rename").width() / 2});
@@ -357,9 +371,7 @@
             });
         });
     </script>
-
     
-
     <script src="{{url('js/mapBlMenu.js')}}"></script>
     <script src="{{url('js/mapFullScreenMenu.js')}}"></script>
 @endsection
