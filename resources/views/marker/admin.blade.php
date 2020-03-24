@@ -165,7 +165,7 @@
     <script>
         
         $(document).ready(function(){
-            var layer;
+            var activeLayer;
             var userBusy = false;
             var currentAction = "none";
 
@@ -367,6 +367,7 @@
             function addLayerListeners(layer) {
                 // Listener de clickar en la layer
                 layer.on('click', function(e) {
+                    activeLayer = layer;
                     // Para no clickar el mapa
                     L.DomEvent.stopPropagation(e);
                     // Mostramos el menú de edición
@@ -409,9 +410,16 @@
             $(".option[action='Rename']").click(function(e){
                 let localClicks = {top: e.originalEvent.clientY - 30, left: e.originalEvent.clientX - $("#leftNavBar").width() - 30};
                 $(".bubble.rename").css({top:localClicks.top - $(".bubble.rename").height(), left:localClicks.left - $(".bubble.rename").width() / 2});
+                $(".bubble.rename").find("input").val(activeLayer.db.name);
+                
                 $(".bubble.rename").fadeIn(150);
             });
-            $(".cornerButton").click(function(e){
+            $(".rename > button").click(function(e){
+                activeLayer.db.name = $(".bubble.rename").find("input").val();
+                updateAjax(activeLayer.db);
+                $(this).parent().fadeOut(150);
+            });
+            $(".rename > .cornerButton").click(function(e){
                 $(this).parent().fadeOut(150);
             });
         });

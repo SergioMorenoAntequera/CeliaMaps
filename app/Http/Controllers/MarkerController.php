@@ -126,6 +126,7 @@ class MarkerController extends Controller
         
         //Conseguimos el marcador
         $marker = Marker::find($data['id']);
+        $marker->name = $data['name'];
         $marker->points()->detach();
         
         // Conseguimos los puntos y los unimos uno a uno
