@@ -117,6 +117,7 @@
             });
         </script>
     @endforeach
+    <script> var lastID = markersJS[markersJS.length-1].id;</script>
     {{-- Now we can work with the markers in JS (markersJS) --}}
     
 @endsection
@@ -162,6 +163,7 @@
     
     
     <script>
+        
         $(document).ready(function(){
             var layer;
             var userBusy = false;
@@ -174,7 +176,7 @@
                 // AÑADE TODOS LOS LESTENERS AL MAPA
                 addMapListeners();
 
-                // COMIEZA LA ACCION
+                // Comenzar una acción de las que salen en el menú ciruclar
                 $(".option").on("click", function(e){
                     e.stopPropagation();
                     enableAction($(this).attr("action"));
@@ -207,7 +209,7 @@
                         // Si es un marcador
                         layer = L.marker([markerJS.points[0].lat, markerJS.points[0].lng]).addTo(map);
                     }
-
+                    layer.db = {"id":markerJS.id, "name":markerJS.name, "type":markerJS.type, "points":markerJS.points, "radius":markerJS.radius}
                     layer.addTo(map);
                     addLayerListeners(layer);
                 });
@@ -284,19 +286,17 @@
 
             // Acciones que tienen que ver con el mapa
             function addMapListeners(){
-                // SHOW MENU
+                // We show the menu when we click
                 map.on('click', function(e){
                     hideMenu();
                     $(".cMenu").fadeOut(150, function(){
                         showMenu(e, "add");                    
                     });
                 });
-
-                // ESCONDER MENU AL MOVER EL MAPA
+                // We hide the menu when we move
                 map.on('move', function(e) {
                     hideMenu();
                 });
-
                 //When we are done creating a new marker
                 map.on('pm:create', e => {
                     // We let the user do other stuff
@@ -308,16 +308,28 @@
                     layer = e.layer;
                     addLayerListeners(layer);
                     
-
-                    // Para la petición ajax para guardarlo
-                    let points;
+                    // Variable que mandamos al server para guardarla
+                    layer.db = {"id":++lastID, "name":null};
                     if(layer._latlngs != undefined){
-                        console.log("Más de una ltnlng => layer._latlngs")
-                        points = layer._latlngs[0];
-                        console.log(points);
+                        // Polygons
+                        layer.db.type = "polygon";
+                        layer.db.points = layer._latlngs[0];
+                        layer.db.radius = null;
                     } else {
-                        console.log("Una ltnlng => layer._latlng")
+                        // Circle and Marker
+                        if(layer.options.radius != undefined){
+                            // Circle
+                            layer.db.type = "circle";
+                            layer.db.radius = layer.options.radius;
+                        } else {
+                            // Marker
+                            layer.db.type = "marker";
+                            layer.db.radius = null;
+                        }
+                        layer.db.points = layer._latlng;  
                     }
+                    console.log("linea 331");
+                    console.log(layer);
                 });
                 // Cuando acabe de borrar nos vuelva al estado normal
                 map.on('pm:remove', e => {
@@ -346,6 +358,8 @@
                     $(".cMenu").fadeOut(150, function(){
                         showMenu(e, "edit");
                     })
+                    console.log("linea 361");
+                    console.log(layer);
                 });
 
                 // Cunado acabe de mover nos vuelva al estado normal
@@ -353,6 +367,7 @@
                     map.pm.disableGlobalDragMode();
                     userBusy = false
                 });
+                
                 // Cunado acabe de editar nos vuelva al estado normal
                 layer.on('pm:markerdragend', e => {
                     map.pm.disableGlobalEditMode(); 
@@ -371,7 +386,7 @@
             });
         });
     </script>
-    
+
     <script src="{{url('js/mapBlMenu.js')}}"></script>
     <script src="{{url('js/mapFullScreenMenu.js')}}"></script>
 @endsection
