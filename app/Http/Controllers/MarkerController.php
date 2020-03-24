@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Marker;
+use App\Point;
 
 class MarkerController extends Controller
 {
@@ -74,7 +75,31 @@ class MarkerController extends Controller
      * @return View
      */
     public function store(Request $r){
-        dd($r);
+        $data = (array) json_decode($r->layer);
+        //Conseguimos el marcador
+        $marker = new Marker();
+        $marker->fill($data);
+        
+        // Conseguimos los puntos y los unimos uno a uno
+        $points = (array) $data['points'];
+        
+        if($marker->type == "polygon" || $marker->type == "line"){
+            // Polygon and lines, have multiple points
+            foreach ($points as $point) {
+                $pointAux = new Point();
+                $pointAux->fill((array) $point);
+                //Juntamos todo
+                $marker->points()->save($pointAux);
+            }
+        } else {
+            // Circles and Markers, have one point
+            $pointAux = new Point();
+            $pointAux->fill($points);
+            //Juntamos todo
+            $marker->points()->save($pointAux);
+        }
+        
+        $marker->save();
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -85,7 +110,7 @@ class MarkerController extends Controller
      * @return View
      */
     public function edit($id){
-
+        
     }
 
     // UPDATE FUNCTION //////////////////////////////////////////////////////////////////////////////
@@ -97,7 +122,33 @@ class MarkerController extends Controller
      * @return View
      */
     public function update(Request $r){
-
+        $data = (array) json_decode($r->layer);
+        
+        //Conseguimos el marcador
+        $marker = Marker::find($data['id']);
+        $marker->name = $data['name'];
+        $marker->points()->detach();
+        
+        // Conseguimos los puntos y los unimos uno a uno
+        $points = (array) $data['points'];
+        
+        if($marker->type == "polygon" || $marker->type == "line"){
+            // Polygon and lines, have multiple points
+            foreach ($data['points'] as $point) {
+                $pointAux = new Point();
+                $pointAux->fill((array) $point);
+                //Juntamos todo
+                $marker->points()->save($pointAux);
+            }
+        } else {
+            // Circles and Markers, have one point
+            $pointAux = new Point();
+            $pointAux->fill($data['points']);
+            //Juntamos todo
+            $marker->points()->save($pointAux);
+        }
+        
+        $marker->update();
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -109,7 +160,13 @@ class MarkerController extends Controller
      * @param id
      * @return View
      */
-    public function destroy($id){
+    public function destroy(Request $r){
+        // dd("PRA");
+        $data = (array) json_decode($r->layer);
+        $marker = Marker::find($data['id']);
 
+        $marker->points()->detach();
+        
+        Marker::destroy($marker->id);  
     }
 }

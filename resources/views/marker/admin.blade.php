@@ -117,6 +117,7 @@
             });
         </script>
     @endforeach
+    <script> var lastID = markersJS[markersJS.length-1].id;</script>
     {{-- Now we can work with the markers in JS (markersJS) --}}
     
 @endsection
@@ -162,8 +163,9 @@
     
     
     <script>
+        
         $(document).ready(function(){
-            var layer;
+            var activeLayer;
             var userBusy = false;
             var currentAction = "none";
 
@@ -174,7 +176,7 @@
                 // AÑADE TODOS LOS LESTENERS AL MAPA
                 addMapListeners();
 
-                // COMIEZA LA ACCION
+                // Comenzar una acción de las que salen en el menú ciruclar
                 $(".option").on("click", function(e){
                     e.stopPropagation();
                     enableAction($(this).attr("action"));
@@ -194,8 +196,17 @@
                         });
                         layer = L.polygon([polygonPoints]);
 
-                        // Si es un Circulo
+                    } else if(markerJS.type == "line"){
+                        //Si es una linea
+                        var linePoints = [];
+                        markerJS.points.forEach(point => {
+                            linePoints.push([point.lat, point.lng]);
+                        });
+
+                        layer = L.polyline([linePoints]);
+                        
                     } else if(markerJS.type == "circle") {
+                        // Si es un Circulo
                         layer = L.circle([markerJS.points[0].lat, markerJS.points[0].lng], {
                             color: 'rgb(51, 136, 255)',
                             fillColor: 'rgb(51, 136, 255)',
@@ -207,7 +218,7 @@
                         // Si es un marcador
                         layer = L.marker([markerJS.points[0].lat, markerJS.points[0].lng]).addTo(map);
                     }
-
+                    layer.db = {"id":markerJS.id, "name":markerJS.name, "type":markerJS.type, "points":markerJS.points, "radius":markerJS.radius}
                     layer.addTo(map);
                     addLayerListeners(layer);
                 });
@@ -284,48 +295,65 @@
 
             // Acciones que tienen que ver con el mapa
             function addMapListeners(){
-                // SHOW MENU
+                // We show the menu when we click
                 map.on('click', function(e){
                     hideMenu();
                     $(".cMenu").fadeOut(150, function(){
                         showMenu(e, "add");                    
                     });
                 });
-
-                // ESCONDER MENU AL MOVER EL MAPA
+                // We hide the menu when we move
                 map.on('move', function(e) {
                     hideMenu();
                 });
-
                 //When we are done creating a new marker
                 map.on('pm:create', e => {
                     // We let the user do other stuff
                     userBusy = false;
                     map.pm.disableDraw(currentAction);
-                    currentAction = "none";
+                    
                     
                     // We add our layer
                     layer = e.layer;
                     addLayerListeners(layer);
                     
-
-                    // Para la petición ajax para guardarlo
-                    let points;
-                    if(layer._latlngs != undefined){
-                        console.log("Más de una ltnlng => layer._latlngs")
-                        points = layer._latlngs[0];
-                        console.log(points);
-                    } else {
-                        console.log("Una ltnlng => layer._latlng")
+                    // Variable que mandamos al server para guardarla
+                    layer.db = {"id":++lastID, "name":null};
+                    if(currentAction == "Polygon" || currentAction == "Rectangle") {
+                        // Polygon and Rectangle as Polygon
+                        layer.db.type = "polygon";
+                        layer.db.radius = null;
+                        layer.db.points = layer._latlngs[0];
+                    } else if (currentAction == "Line") {
+                        // Line as Polygon
+                        layer.db.type = "line";
+                        layer.db.radius = null;
+                        layer.db.points = layer._latlngs;
+                    } else if (currentAction == "Circle") {
+                        // Circle
+                        layer.db.type = "circle";
+                        layer.db.radius = layer.options.radius;
+                        layer.db.points = layer._latlng;  
+                    } else if (currentAction == "Marker") {
+                        // Marker
+                        layer.db.type = "marker";
+                        layer.db.radius = null;
+                        layer.db.points = layer._latlng;  
                     }
+
+                    currentAction = "none";
+
+                    storeAjax(layer.db);
                 });
-                // Cuando acabe de borrar nos vuelva al estado normal
+                // When we are done deleting a marker
                 map.on('pm:remove', e => {
                     if(map.pm.globalRemovalEnabled()){
                         map.pm.disableGlobalRemovalMode();
                         userBusy = false;
                     }
+                    destroyAjax(e.layer.db);
                 });
+
                 // Si se cancela el borrado nos vuelve al estado normal
                 map.on('click', e => {
                     if(map.pm.globalRemovalEnabled()){
@@ -339,6 +367,7 @@
             function addLayerListeners(layer) {
                 // Listener de clickar en la layer
                 layer.on('click', function(e) {
+                    activeLayer = layer;
                     // Para no clickar el mapa
                     L.DomEvent.stopPropagation(e);
                     // Mostramos el menú de edición
@@ -346,17 +375,34 @@
                     $(".cMenu").fadeOut(150, function(){
                         showMenu(e, "edit");
                     })
+                    console.log("linea 375");
+                    console.log(layer);
                 });
 
-                // Cunado acabe de mover nos vuelva al estado normal
+                // Cuando acabe de mover nos vuelva al estado normal
                 layer.on('pm:dragend', e => {
                     map.pm.disableGlobalDragMode();
                     userBusy = false
+                    
+                    if(layer.db.type == "polygon" || layer.db.type == "line"){
+                        layer.db.points = layer._latlngs[0];
+                    } else {
+                        layer.db.points = layer._latlng;
+                    }
+                    updateAjax(layer.db);
                 });
-                // Cunado acabe de editar nos vuelva al estado normal
+                
+                // Cuando acabe de editar nos vuelva al estado normal
                 layer.on('pm:markerdragend', e => {
                     map.pm.disableGlobalEditMode(); 
                     userBusy = false
+
+                    if(layer.db.type == "polygon" || layer.db.type == "line"){
+                        layer.db.points = layer._latlngs[0];
+                    } else {
+                        layer.db.points = layer._latlng;
+                    }
+                    updateAjax(layer.db);
                 });
             };
 
@@ -364,14 +410,59 @@
             $(".option[action='Rename']").click(function(e){
                 let localClicks = {top: e.originalEvent.clientY - 30, left: e.originalEvent.clientX - $("#leftNavBar").width() - 30};
                 $(".bubble.rename").css({top:localClicks.top - $(".bubble.rename").height(), left:localClicks.left - $(".bubble.rename").width() / 2});
+                $(".bubble.rename").find("input").val(activeLayer.db.name);
+                
                 $(".bubble.rename").fadeIn(150);
             });
-            $(".cornerButton").click(function(e){
+            $(".rename > button").click(function(e){
+                activeLayer.db.name = $(".bubble.rename").find("input").val();
+                updateAjax(activeLayer.db);
+                $(this).parent().fadeOut(150);
+            });
+            $(".rename > .cornerButton").click(function(e){
                 $(this).parent().fadeOut(150);
             });
         });
+
+        function storeAjax(layerDB){
+            var storeUrl = "{{route('marker.store')}}";
+            var layerDB = JSON.stringify(layerDB); 
+            
+            $.ajax({
+                url: storeUrl,
+                data: {"layer":layerDB},
+                success: function() {
+                    
+                },
+            });
+        };
+        function destroyAjax(layerDB){
+            var destroyUrl = "{{route('marker.destroy')}}";
+            var layerDB = JSON.stringify(layerDB); 
+            
+            $.ajax({
+                url: destroyUrl,
+                data: {"layer":layerDB},
+                success: function() {
+                    
+                },
+            });
+        };
+        function updateAjax(layerDB){
+            var storeUrl = "{{route('marker.update')}}";
+            var layerDB = JSON.stringify(layerDB); 
+            
+            $.ajax({
+                url: storeUrl,
+                data: {"layer":layerDB},
+                success: function() {
+                    
+                },
+            });
+        };
+
     </script>
-    
+
     <script src="{{url('js/mapBlMenu.js')}}"></script>
     <script src="{{url('js/mapFullScreenMenu.js')}}"></script>
 @endsection

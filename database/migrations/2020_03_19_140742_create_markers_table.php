@@ -16,7 +16,7 @@ class CreateMarkersTable extends Migration
         Schema::dropIfExists('markers');
         Schema::create('markers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name', 100); 
+            $table->string('name', 100)->nullable(); 
             $table->string('type', 100); 
             $table->integer('radius')->nullable(); 
             $table->timestamps();
