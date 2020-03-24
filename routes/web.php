@@ -30,6 +30,7 @@ Route::get('map/saveAlign/{id}', 'MapController@saveAlign')->name('map.saveAlign
 Route::resource('map', 'MapController');
 // MARKERS /////////////////////////////////////////////////////////////////////////////////////
 Route::get('marker', 'MarkerController@admin')->name('marker.admin');
+Route::get('marker/store', 'MarkerController@store')->name('marker.store');
 // Route::resource('marker', 'MarkerController');
 // USER /////////////////////////////////////////////////////////////////////////////////////
 Route::resource('user', 'UserController');

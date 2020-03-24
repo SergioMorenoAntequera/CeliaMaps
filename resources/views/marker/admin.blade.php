@@ -302,7 +302,7 @@
                     // We let the user do other stuff
                     userBusy = false;
                     map.pm.disableDraw(currentAction);
-                    currentAction = "none";
+                    
                     
                     // We add our layer
                     layer = e.layer;
@@ -310,26 +310,31 @@
                     
                     // Variable que mandamos al server para guardarla
                     layer.db = {"id":++lastID, "name":null};
-                    if(layer._latlngs != undefined){
-                        // Polygons
+                    if(currentAction == "Polygon" || currentAction == "Rectangle") {
+                        // Polygon and Rectangle as Polygon
                         layer.db.type = "polygon";
-                        layer.db.points = layer._latlngs[0];
                         layer.db.radius = null;
-                    } else {
-                        // Circle and Marker
-                        if(layer.options.radius != undefined){
-                            // Circle
-                            layer.db.type = "circle";
-                            layer.db.radius = layer.options.radius;
-                        } else {
-                            // Marker
-                            layer.db.type = "marker";
-                            layer.db.radius = null;
-                        }
+                        layer.db.points = layer._latlngs[0];
+                    } else if (currentAction == "Line") {
+                        // Line as Polygon
+                        layer.db.type = "polygon";
+                        layer.db.radius = null;
+                        layer.db.points = layer._latlngs;
+                    } else if (currentAction == "Circle") {
+                        // Circle
+                        layer.db.type = "circle";
+                        layer.db.radius = layer.options.radius;
+                        layer.db.points = layer._latlng;  
+                    } else if (currentAction == "Marker") {
+                        // Marker
+                        layer.db.type = "marker";
+                        layer.db.radius = null;
                         layer.db.points = layer._latlng;  
                     }
-                    console.log("linea 331");
-                    console.log(layer);
+
+                    currentAction = "none";
+
+                    storeAjax(layer.db);
                 });
                 // Cuando acabe de borrar nos vuelva al estado normal
                 map.on('pm:remove', e => {
@@ -358,7 +363,7 @@
                     $(".cMenu").fadeOut(150, function(){
                         showMenu(e, "edit");
                     })
-                    console.log("linea 361");
+                    console.log("linea 367");
                     console.log(layer);
                 });
 
@@ -385,6 +390,21 @@
                 $(this).parent().fadeOut(150);
             });
         });
+
+        function storeAjax(layerDB){
+            var storeUrl = "{{route('marker.store')}}";
+            console.log("linea 396");
+            console.log(layerDB);
+            var layerDB = JSON.stringify(layerDB); 
+            
+            $.ajax({
+                url: storeUrl,
+                data: {"layer":layerDB},
+                success: function() {
+                    
+                },
+            });
+        }
     </script>
 
     <script src="{{url('js/mapBlMenu.js')}}"></script>

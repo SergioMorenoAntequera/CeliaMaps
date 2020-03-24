@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Marker;
+use App\Point;
 
 class MarkerController extends Controller
 {
@@ -74,7 +75,23 @@ class MarkerController extends Controller
      * @return View
      */
     public function store(Request $r){
-        dd($r);
+        // dd($r->layer);
+        $data = (array) json_decode($r->layer);
+        dd($data);
+        //Conseguimos el marcador
+        $marker = new Marker();
+        $marker->fill($data);
+        
+        // Conseguimos los puntos y los unimos uno a uno
+        $points = (array) $data['points'];
+        foreach ($points as $point) {
+            dd($point);
+            $pointAux = new Point();
+            $pointAux->fill((array) $point);
+            //Juntamos todo
+            $marker->points()->save($pointAux);
+        }
+        
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
