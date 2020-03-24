@@ -19,6 +19,7 @@ class ImagesTableSeeder extends Seeder
             'file_name' => 'catedral-almeria-img-01.jpg',
             'file_path' => 'img/hotspots',
             'hotspot_id' => 1,
+            'map_id' => -1,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -30,6 +31,7 @@ class ImagesTableSeeder extends Seeder
             'file_name' => 'catedral-almeria-img-02.jpg',
             'file_path' => 'img/hotspots',
             'hotspot_id' => 1,
+            'map_id' => -1,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -41,6 +43,7 @@ class ImagesTableSeeder extends Seeder
             'file_name' => 'catedral-almeria-img-03.jpg',
             'file_path' => 'img/hotspots',
             'hotspot_id' => 1,
+            'map_id' => -1,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -52,6 +55,7 @@ class ImagesTableSeeder extends Seeder
             'file_name' => 'plaza-vieja-img-01.jpg',
             'file_path' => 'img/hotspots',
             'hotspot_id' => 5,
+            'map_id' => -1,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -63,6 +67,7 @@ class ImagesTableSeeder extends Seeder
             'file_name' => 'plaza-vieja-img-02.jpg',
             'file_path' => 'img/hotspots',
             'hotspot_id' => 5,
+            'map_id' => -1,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -74,6 +79,7 @@ class ImagesTableSeeder extends Seeder
             'file_name' => 'plaza-vieja-img-03.jpg',
             'file_path' => 'img/hotspots',
             'hotspot_id' => 5,
+            'map_id' => -1,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -85,6 +91,7 @@ class ImagesTableSeeder extends Seeder
             'file_name' => 'puerta-purchena-img-04-en-la-actualidad.jpg',
             'file_path' => 'img/hotspots',
             'hotspot_id' => 5,
+            'map_id' => -1,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -96,6 +103,7 @@ class ImagesTableSeeder extends Seeder
             'file_name' => 'puerta-purchena-img-02.jpg',
             'file_path' => 'img/hotspots',
             'hotspot_id' => 6,
+            'map_id' => -1,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -107,6 +115,7 @@ class ImagesTableSeeder extends Seeder
             'file_name' => 'puerta-purchena-img-03.jpg',
             'file_path' => 'img/hotspots',
             'hotspot_id' => 6,
+            'map_id' => -1,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -118,6 +127,7 @@ class ImagesTableSeeder extends Seeder
             'file_name' => 'puerta-purchena-img-03.jpg',
             'file_path' => 'img/hotspots',
             'hotspot_id' => 6,
+            'map_id' => -1,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -129,6 +139,7 @@ class ImagesTableSeeder extends Seeder
             'file_name' => 'estadio-juegos-mediterraneos-img-01.jpg',
             'file_path' => 'img/hotspots',
             'hotspot_id' => 7,
+            'map_id' => -1,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -140,6 +151,7 @@ class ImagesTableSeeder extends Seeder
             'file_name' => 'alcazaba-almeria-img-01.jpg',
             'file_path' => 'img/hotspots',
             'hotspot_id' => 2,
+            'map_id' => -1,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -151,6 +163,7 @@ class ImagesTableSeeder extends Seeder
             'file_name' => 'mercado-central-img-01.jpg',
             'file_path' => 'img/hotspots',
             'hotspot_id' => 3,
+            'map_id' => -1,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -162,6 +175,7 @@ class ImagesTableSeeder extends Seeder
             'file_name' => 'refugios-guerra-civil-img-01.jpg',
             'file_path' => 'img/hotspots',
             'hotspot_id' => 4,
+            'map_id' => -1,
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);

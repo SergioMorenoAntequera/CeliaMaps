@@ -202,9 +202,11 @@
                             <div class="dropzone dz-clickable">
                                 <div class="dz-message needsclick">
                                     <button class="dz-button" type="button">Arrastra las imagenes o haz click para subirlas.</button>
-                                    <div class="fallback">
-                                        <input type="file" name="file" multiple id="archivos" class="fileToUpload">
-                                    </div>
+                                    <!-- 
+                                        <div class="fallback">
+                                            <input type="file" name="file" multiple id="archivos" class="fileToUpload">
+                                        </div>
+                                    -->
                                 </div>
                             </div>
                         </div>
