@@ -100,7 +100,6 @@ class MarkerController extends Controller
         }
         
         $marker->save();
-        
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -111,7 +110,7 @@ class MarkerController extends Controller
      * @return View
      */
     public function edit($id){
-
+        
     }
 
     // UPDATE FUNCTION //////////////////////////////////////////////////////////////////////////////
@@ -123,7 +122,32 @@ class MarkerController extends Controller
      * @return View
      */
     public function update(Request $r){
-
+        $data = (array) json_decode($r->layer);
+        
+        //Conseguimos el marcador
+        $marker = Marker::find($data['id']);
+        $marker->points()->detach();
+        
+        // Conseguimos los puntos y los unimos uno a uno
+        $points = (array) $data['points'];
+        
+        if($marker->type == "polygon" || $marker->type == "line"){
+            // Polygon and lines, have multiple points
+            foreach ($data['points'] as $point) {
+                $pointAux = new Point();
+                $pointAux->fill((array) $point);
+                //Juntamos todo
+                $marker->points()->save($pointAux);
+            }
+        } else {
+            // Circles and Markers, have one point
+            $pointAux = new Point();
+            $pointAux->fill($data['points']);
+            //Juntamos todo
+            $marker->points()->save($pointAux);
+        }
+        
+        $marker->update();
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////

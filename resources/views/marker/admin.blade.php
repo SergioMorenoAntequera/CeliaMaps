@@ -378,16 +378,30 @@
                     console.log(layer);
                 });
 
-                // Cunado acabe de mover nos vuelva al estado normal
+                // Cuando acabe de mover nos vuelva al estado normal
                 layer.on('pm:dragend', e => {
                     map.pm.disableGlobalDragMode();
                     userBusy = false
+                    
+                    if(layer.db.type == "polygon" || layer.db.type == "line"){
+                        layer.db.points = layer._latlngs[0];
+                    } else {
+                        layer.db.points = layer._latlng;
+                    }
+                    updateAjax(layer.db);
                 });
                 
-                // Cunado acabe de editar nos vuelva al estado normal
+                // Cuando acabe de editar nos vuelva al estado normal
                 layer.on('pm:markerdragend', e => {
                     map.pm.disableGlobalEditMode(); 
                     userBusy = false
+
+                    if(layer.db.type == "polygon" || layer.db.type == "line"){
+                        layer.db.points = layer._latlngs[0];
+                    } else {
+                        layer.db.points = layer._latlng;
+                    }
+                    updateAjax(layer.db);
                 });
             };
 
@@ -427,7 +441,7 @@
             });
         };
         function updateAjax(layerDB){
-            var storeUrl = "{{route('marker.store')}}";
+            var storeUrl = "{{route('marker.update')}}";
             var layerDB = JSON.stringify(layerDB); 
             
             $.ajax({
