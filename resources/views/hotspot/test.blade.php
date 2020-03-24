@@ -13,13 +13,7 @@
     <!-- Plugin images -->
     <script src="{{url('/js/Leaflet/pluginImages/leaflet.distortableimage.js')}}"></script>
     <link rel="stylesheet" href="{{url('/js/Leaflet/pluginImages/leaflet.distortableimage.css')}}">
-    <!-- Libreria Dropzone -->
-    <script src="{{url('js/dropzone/dropzone.js')}}"></script>   
-    <script src="{{url('js/dropzone/dropzone-amd-module.js')}}"></script>   
-    <link rel="stylesheet" href="{{url('css/dropzone/basic.css')}}">
-    <link rel="stylesheet" href="{{url('css/dropzone/dropzone.css')}}">
-    <!-- Libreria Dropzone -->
-
+    
     <!-- JQUERY -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

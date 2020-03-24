@@ -15,7 +15,7 @@ class AddMapsToImagesTable extends Migration
     {
         Schema::table('images', function (Blueprint $table) {
             //
-            $table->integer('map_id')->after('hotspot_id');
+            $table->integer('map_id')->after('hotspot_id')->default('-1');
         });
     }
 
