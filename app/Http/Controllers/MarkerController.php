@@ -135,7 +135,13 @@ class MarkerController extends Controller
      * @param id
      * @return View
      */
-    public function destroy($id){
+    public function destroy(Request $r){
+        // dd("PRA");
+        $data = (array) json_decode($r->layer);
+        $marker = Marker::find($data['id']);
 
+        $marker->points()->detach();
+        
+        Marker::destroy($marker->id);  
     }
 }

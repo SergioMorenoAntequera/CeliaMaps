@@ -31,6 +31,7 @@ Route::resource('map', 'MapController');
 // MARKERS /////////////////////////////////////////////////////////////////////////////////////
 Route::get('marker', 'MarkerController@admin')->name('marker.admin');
 Route::get('marker/store', 'MarkerController@store')->name('marker.store');
+Route::get('marker/destroy', 'MarkerController@destroy')->name('marker.destroy');
 // Route::resource('marker', 'MarkerController');
 // USER /////////////////////////////////////////////////////////////////////////////////////
 Route::resource('user', 'UserController');

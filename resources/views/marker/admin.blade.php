@@ -345,13 +345,15 @@
 
                     storeAjax(layer.db);
                 });
-                // Cuando acabe de borrar nos vuelva al estado normal
+                // When we are done deleting a marker
                 map.on('pm:remove', e => {
                     if(map.pm.globalRemovalEnabled()){
                         map.pm.disableGlobalRemovalMode();
                         userBusy = false;
                     }
+                    destroyAjax(e.layer.db);
                 });
+
                 // Si se cancela el borrado nos vuelve al estado normal
                 map.on('click', e => {
                     if(map.pm.globalRemovalEnabled()){
@@ -372,7 +374,7 @@
                     $(".cMenu").fadeOut(150, function(){
                         showMenu(e, "edit");
                     })
-                    console.log("linea 367");
+                    console.log("linea 375");
                     console.log(layer);
                 });
 
@@ -402,8 +404,6 @@
 
         function storeAjax(layerDB){
             var storeUrl = "{{route('marker.store')}}";
-            console.log("linea 396");
-            console.log(layerDB);
             var layerDB = JSON.stringify(layerDB); 
             
             $.ajax({
@@ -413,7 +413,32 @@
                     
                 },
             });
-        }
+        };
+        function destroyAjax(layerDB){
+            var destroyUrl = "{{route('marker.destroy')}}";
+            var layerDB = JSON.stringify(layerDB); 
+            
+            $.ajax({
+                url: destroyUrl,
+                data: {"layer":layerDB},
+                success: function() {
+                    
+                },
+            });
+        };
+        function updateAjax(layerDB){
+            var storeUrl = "{{route('marker.store')}}";
+            var layerDB = JSON.stringify(layerDB); 
+            
+            $.ajax({
+                url: storeUrl,
+                data: {"layer":layerDB},
+                success: function() {
+                    
+                },
+            });
+        };
+
     </script>
 
     <script src="{{url('js/mapBlMenu.js')}}"></script>
