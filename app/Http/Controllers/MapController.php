@@ -377,6 +377,8 @@ class MapController extends Controller
      */
     public function alignMap($id){
         $data['map'] = Map::find($id);
+        $data['markers'] = Marker::all();
+        
         return view('map.align', $data);
     }
     

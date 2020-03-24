@@ -9,7 +9,6 @@
     <!-- Plugin Marker -->
     <script src="{{url('js/Leaflet/pluginMarkers/leaflet-geoman.min.js')}}"></script>
     <link rel="stylesheet" href="{{url('js/Leaflet/pluginMarkers/leaflet-geoman.css')}}">
-    
     {{-- FONT AWESOME --}}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -125,6 +124,8 @@
 @section('scripts')
     <!-- JQUERY -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+
     {{---------------------------------------------------------------}}
     {{-- ALL OF THE PARTS RELATED WITH SHOWING THE MAPS AND LAYERS --}}
     {{---------------------------------------------------------------}}
@@ -160,10 +161,7 @@
     {{---------------------------------------------------------------}}
     {{-------- ALL THE PARTS RELATED WITH THE MARKERS PLUGIN --------}}
     {{---------------------------------------------------------------}}
-    
-    
     <script>
-        
         $(document).ready(function(){
             var activeLayer;
             var userBusy = false;
@@ -216,7 +214,10 @@
 
                     }  else if(markerJS.type == "marker") {
                         // Si es un marcador
-                        layer = L.marker([markerJS.points[0].lat, markerJS.points[0].lng]).addTo(map);
+                        console.log(markerJS);
+                        layer = L.marker([markerJS.points[0].lat, markerJS.points[0].lng], {
+                            draggable: false,
+                        });
                     }
                     layer.db = {"id":markerJS.id, "name":markerJS.name, "type":markerJS.type, "points":markerJS.points, "radius":markerJS.radius}
                     layer.addTo(map);
@@ -374,13 +375,23 @@
                     hideMenu();
                     $(".cMenu").fadeOut(150, function(){
                         showMenu(e, "edit");
-                    })
-                    console.log("linea 375");
-                    console.log(layer);
+                    });
                 });
 
-                // Cuando acabe de mover nos vuelva al estado normal
+                // Cuando acabe de mover el resto
                 layer.on('pm:dragend', e => {
+                    map.pm.disableGlobalDragMode();
+                    userBusy = false
+
+                    if(layer.db.type == "polygon" || layer.db.type == "line"){
+                        layer.db.points = layer._latlngs[0];
+                    } else {
+                        layer.db.points = layer._latlng;
+                    }
+                    updateAjax(layer.db);
+                });
+                // Cuando acabe de mover puntos porque son muy especialicos
+                layer.on('dragend', e => {
                     map.pm.disableGlobalDragMode();
                     userBusy = false
                     
@@ -397,10 +408,15 @@
                     map.pm.disableGlobalEditMode(); 
                     userBusy = false
 
+                    console.log(layer);
+
                     if(layer.db.type == "polygon" || layer.db.type == "line"){
                         layer.db.points = layer._latlngs[0];
                     } else {
                         layer.db.points = layer._latlng;
+                        if(layer.db.type == "circle"){
+                            layer.db.radius = layer._mRadius;
+                        }
                     }
                     updateAjax(layer.db);
                 });
@@ -411,17 +427,20 @@
                 let localClicks = {top: e.originalEvent.clientY - 30, left: e.originalEvent.clientX - $("#leftNavBar").width() - 30};
                 $(".bubble.rename").css({top:localClicks.top - $(".bubble.rename").height(), left:localClicks.left - $(".bubble.rename").width() / 2});
                 $(".bubble.rename").find("input").val(activeLayer.db.name);
-                
+                $(".bubble.rename").find("input").focus();
                 $(".bubble.rename").fadeIn(150);
             });
+            $( ".rename" ).draggable();
             $(".rename > button").click(function(e){
                 activeLayer.db.name = $(".bubble.rename").find("input").val();
+
                 updateAjax(activeLayer.db);
                 $(this).parent().fadeOut(150);
             });
             $(".rename > .cornerButton").click(function(e){
                 $(this).parent().fadeOut(150);
             });
+            
         });
 
         function storeAjax(layerDB){
