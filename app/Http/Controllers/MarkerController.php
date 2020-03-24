@@ -126,7 +126,14 @@ class MarkerController extends Controller
         
         //Conseguimos el marcador
         $marker = Marker::find($data['id']);
-        $marker->name = $data['name'];
+        $marker->fill($data);
+
+        // Comprobamos el radius
+        if($marker->radius == ""){
+            $marker->radius = null;
+        }
+        
+        // $marker->name = $data['name'];
         $marker->points()->detach();
         
         // Conseguimos los puntos y los unimos uno a uno
@@ -143,11 +150,20 @@ class MarkerController extends Controller
         } else {
             // Circles and Markers, have one point
             $pointAux = new Point();
-            $pointAux->fill($data['points']);
-            //Juntamos todo
-            $marker->points()->save($pointAux);
+            
+            if(sizeof($points) == 2){
+                // Si viene un punto nuevo (drag) sin id
+                $pointAux->fill($points);
+                //Juntamos todo
+                $marker->points()->save($pointAux);
+                
+            } else {
+                // Si viene un punto existente (rename) con ID
+                $pointAux = Point::find($points[0]->id);
+                $marker->points()->save($pointAux);
+            }
         }
-        
+
         $marker->update();
     }
 
