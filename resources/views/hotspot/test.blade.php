@@ -13,6 +13,12 @@
     <!-- Plugin images -->
     <script src="{{url('/js/Leaflet/pluginImages/leaflet.distortableimage.js')}}"></script>
     <link rel="stylesheet" href="{{url('/js/Leaflet/pluginImages/leaflet.distortableimage.css')}}">
+    <!-- Libreria Dropzone -->
+    <script src="{{url('js/dropzone/dropzone.js')}}"></script>   
+    <script src="{{url('js/dropzone/dropzone-amd-module.js')}}"></script>   
+    <link rel="stylesheet" href="{{url('css/dropzone/basic.css')}}">
+    <link rel="stylesheet" href="{{url('css/dropzone/dropzone.css')}}">
+    <!-- Libreria Dropzone -->
 
     <!-- JQUERY -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -193,7 +199,14 @@
                         <!-- Hotspot images -->
                         <div class="form-group images-fields" id="imagesUpload">
                             <label class="text-dark">Imagenes del Hotspot</label><br>
-                            <input type="file" name="images[]" class="fileToUpload">
+                            <div class="dropzone dz-clickable">
+                                <div class="dz-message needsclick">
+                                    <button class="dz-button" type="button">Arrastra las imagenes o haz click para subirlas.</button>
+                                    <div class="fallback">
+                                        <input type="file" name="file" multiple id="archivos" class="fileToUpload">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group images-fields" id="filePathUpdate">
                             <input type="hidden" name="filePath" value="/img/hotspots/" disabled>
@@ -392,14 +405,8 @@
                     editHotspot(hotspot); 
                 }
             });
-            /*
-            // Images Hotspots
-            $images = $hotspot->images()->get();
-			$filesnasmes = null;
-			for($i = 0; $i < count($images); $i++){
-				$filesnasmes[] = $images[$i]->file_name;
-			}
-            */
+            
+
             function createHotspot(lat, lng) {
                 // Create form attributes
                 $("#modal-form").attr("action", "{{route('hotspot.store')}}");
@@ -504,7 +511,7 @@
                 $("#previewImage").attr("src", host+"/"+hotspot.images[0].file_path+"/"+hotspot.images[0].file_name);
 
                 // Coordinates mouse
-                /* Luis David manda puta
+                /* Luis David
                 $('.leaflet-marker-icon, #preview').mousemove(function(event){
                     var latPreview = event.pageY -250;
                     var lgnPreview = event.pageX -140;
@@ -525,9 +532,7 @@
             })
 
             // Hotspot images file 
-            $('.fileToUpload').on('click', function(){
-                $('#imagesUpload').append("<input name='images[]' type='file' class='fileToUpload'>");
-            });
+           
 
         });
     </script>
