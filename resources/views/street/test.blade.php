@@ -13,7 +13,10 @@
     <!-- Plugin images -->
     <script src="{{url('/js/Leaflet/pluginImages/leaflet.distortableimage.js')}}"></script>
     <link rel="stylesheet" href="{{url('/js/Leaflet/pluginImages/leaflet.distortableimage.css')}}">
-
+    <!-- Plugin clustering markers -->
+    <script src="{{url('/js/Leaflet/pluginClusteringMarkers/leaflet.markercluster.js')}}"></script>
+    <link rel="stylesheet" href="{{url('/js/Leaflet/pluginClusteringMarkers/MarkerCluster.css')}}">
+    <link rel="stylesheet" href="{{url('/js/Leaflet/pluginClusteringMarkers/MarkerCluster.Default.css')}}">
     <!-- JQUERY -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -230,9 +233,9 @@
                             if(street.fullName.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
                                 // Deprecated street will appear in italic font
                                 if(street.deprecated == true)
-                                    $('#streetsFound').append("<div style='font-style:italic;opacity:0.8' class='street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ street.fullName + "</div>");
+                                    $('#streetsFound').append("<div id='"+ street.id +"' style='font-style:italic;opacity:0.8' class='street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ street.fullName + "</div>");
                                 else
-                                    $('#streetsFound').append("<div class='street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ street.fullName + "</div>");
+                                    $('#streetsFound').append("<div id='"+ street.id +"' class='street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ street.fullName + "</div>");
                                 if(++c == 5){
                                     return;
                                 }                                
@@ -294,13 +297,13 @@
                                 <option value="{{$streetType->id}}">({{$streetType->abbreviation}}) {{$streetType->type}}</option>
                                 @endforeach
                             </select>
-                            <label class="text-danger">@error('type_id') {{$message}} @enderror</label>
+                            <label class="text-danger inputs-errors mt-3">@error('type_id') {{$message}} @enderror</label>
                         </div>
                         <!-- Street name -->
                         <div class="form-group">
                             <label class="text-dark">Nombre de la vía</label>
                             <input required type="text" class="form-control" name="name">
-                            <label class="text-danger">@error('name') {{$message}} @enderror</label>
+                            <label class="text-danger inputs-errors mt-3">@error('name') {{$message}} @enderror</label>
                         </div>
                         <!-- Street maps -->
                         <div class="form-group">
@@ -313,7 +316,7 @@
                                 <input id="input_map{{$map->id}}" class="form-control" type="text" name="maps_name[]" placeholder="Sobreescribir el nombre de la vía en el mapa {{$map->title}}">
                                 <br>
                             @endforeach
-                            <label id="maps-error" class='text-danger mt-3'></label>
+                            <label id="maps-error" class='text-danger mt-3 inputs-errors'></label>
                         </div>
                         <!-- Street points -->
                         <div>
@@ -448,6 +451,9 @@
                 @for ($i=0;$i<count($streets);$i++) 
                     streets[{{$i}}].points =  @json($streets[$i]->points[0]);
                 @endfor
+
+                let clusterMarkers = L.markerClusterGroup();
+
                 // Write saved streets
                 @foreach ($streets as $street)
                     // Creating a Marker
@@ -455,8 +461,10 @@
                     // Adding marker to the markers list
                     markersList.push(marker{{$street->id}});
                     // Adding marker to the map
-                    marker{{$street->id}}.addTo(map); 
+                    //marker{{$street->id}}.addTo(map);
+                    clusterMarkers.addLayer(marker{{$street->id}});
                 @endforeach
+                map.addLayer(clusterMarkers);
             @endisset
             
             /*  Old overlay imagles click handler based
@@ -485,7 +493,8 @@
             });
         
             // Leaflet mark click handler
-            $('.leaflet-marker-icon').on('click', function(e){
+            $(document).on('click','img.leaflet-marker-icon', function(e){
+                console.log("hola");
                 // Stop event bubbling to prevent map object clicks
                 e.stopPropagation();
                 // Check if clicks comes from dragging or not
@@ -533,7 +542,7 @@
                 $("#btn-remove").css("display", "none");
                 $("#btn-position").prop("disabled", true);
                 $("#btn-position").css("display", "none");
-                $("#maps-error").html("");
+                $(".inputs-errors").html("");
                 $('#modal').modal('show');
                 /* Add marker to the map when we use ajax to insert
                 $("#btn-submit").click(function(){
@@ -545,7 +554,7 @@
                 // Edit form attributes
                 $("#modal-form").attr("action", "{{route('street.store')}}/"+street.id);
                 $("input[name='_method']").val("PUT");
-                $("#maps-error").html("");
+                $(".inputs-errors").html("");
                 // Fill inputs fields
                 $("select[name='type_id']").val(street.type_id);
                 $("input[name='name']").val(street.name);
@@ -682,6 +691,22 @@
                         return !($(this).prop("disabled"));
                     });
                 });
+            });
+
+            // Found street click event handler
+            $(document).on("click","div.street",function(){
+                $('#streetsFound').empty();
+                $('#streetsInput').val("");
+                // Build of marker variable name
+                let markerVarName = "marker"+this.id;
+                // Get marker js object
+                let leafletMarker = eval(markerVarName);
+                // Set view over street
+                map.setView([leafletMarker.getLatLng().lat, leafletMarker.getLatLng().lng], 99);
+                // Display modal
+                setTimeout(() => {
+                    $("img[alt='" + this.id + "']").click()    
+                }, 250);
             });
         });
     </script>
