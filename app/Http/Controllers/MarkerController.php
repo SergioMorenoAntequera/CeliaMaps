@@ -75,22 +75,31 @@ class MarkerController extends Controller
      * @return View
      */
     public function store(Request $r){
-        // dd($r->layer);
         $data = (array) json_decode($r->layer);
-        dd($data);
         //Conseguimos el marcador
         $marker = new Marker();
         $marker->fill($data);
         
         // Conseguimos los puntos y los unimos uno a uno
         $points = (array) $data['points'];
-        foreach ($points as $point) {
-            dd($point);
+        
+        if($marker->type == "polygon" || $marker->type == "line"){
+            // Polygon and lines, have multiple points
+            foreach ($points as $point) {
+                $pointAux = new Point();
+                $pointAux->fill((array) $point);
+                //Juntamos todo
+                $marker->points()->save($pointAux);
+            }
+        } else {
+            // Circles and Markers, have one point
             $pointAux = new Point();
-            $pointAux->fill((array) $point);
+            $pointAux->fill($points);
             //Juntamos todo
             $marker->points()->save($pointAux);
         }
+        
+        $marker->save();
         
     }
 

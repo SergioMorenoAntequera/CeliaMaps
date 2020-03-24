@@ -196,8 +196,17 @@
                         });
                         layer = L.polygon([polygonPoints]);
 
-                        // Si es un Circulo
+                    } else if(markerJS.type == "line"){
+                        //Si es una linea
+                        var linePoints = [];
+                        markerJS.points.forEach(point => {
+                            linePoints.push([point.lat, point.lng]);
+                        });
+
+                        layer = L.polyline([linePoints]);
+                        
                     } else if(markerJS.type == "circle") {
+                        // Si es un Circulo
                         layer = L.circle([markerJS.points[0].lat, markerJS.points[0].lng], {
                             color: 'rgb(51, 136, 255)',
                             fillColor: 'rgb(51, 136, 255)',
@@ -317,7 +326,7 @@
                         layer.db.points = layer._latlngs[0];
                     } else if (currentAction == "Line") {
                         // Line as Polygon
-                        layer.db.type = "polygon";
+                        layer.db.type = "line";
                         layer.db.radius = null;
                         layer.db.points = layer._latlngs;
                     } else if (currentAction == "Circle") {
