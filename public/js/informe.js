@@ -63,9 +63,13 @@ $(document).ready(function() {
     $("#btn-pdf").on("click", function(){
         $(this).parent().hide();
         $("#botonObservaciones").hide();
+        $("#botonArrastre").hide();
+        $('#informeObservacionesDraggable').removeClass("border border-success rounded");
         window.print();
         $(this).parent().show();
         $("#botonObservaciones").show();
+        $("#botonArrastre").show();
+        $('#informeObservacionesDraggable').addClass("border border-success rounded");
     });
 
     $("#descartar").on("click", function(){
@@ -74,7 +78,7 @@ $(document).ready(function() {
         parrafo = "";
         al_idrisi = "";
     });
-/*
+    /*
     $("#informeObservacionesDraggable").draggable({
         cursor: 'move',
         containment: "#ordenado", scroll: false
@@ -94,6 +98,10 @@ $(document).ready(function() {
       });
 
       $("#nombreFuncionarioaDraggable").draggable({
+        cursor: 'move',
+        //containment: "#informeObservacionesDraggable", scroll: false
+      });
+      $("#botonArrastre").draggable({
         cursor: 'move',
         //containment: "#informeObservacionesDraggable", scroll: false
       });

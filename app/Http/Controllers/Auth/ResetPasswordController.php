@@ -26,4 +26,11 @@ class ResetPasswordController extends Controller
      * @var string
      */
     protected $redirectTo = '/home';
+
+    public function create()
+	{
+        return view('passwords.reset');
+
+
+	}
 }

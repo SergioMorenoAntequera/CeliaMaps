@@ -8,15 +8,16 @@
 @section('content')
 
 <div class="container">
-    
+
     <div class="wholePanel" style="height:50%">
         <div class="leftPanel widht:40%">
-            <div class="content">      
+            <div class="content">
                 <img src="{{url('/img/icons/lock.svg')}}" height="50%" alt="" class="img-fluid">
-            </div>            
+            </div>
         </div>
         <div class="rightPanel">
            <!-- <div class="mt-5">{{ __('Login') }}</div> -->
+             <div class="mt-5"></div>
             <form method="POST" action="{{ route('login') }}">
                 @csrf
 
@@ -33,6 +34,7 @@
                         @enderror
                     </div>
                 </div>
+                <br>
 
                 <div class="form-group row">
                     <label for="password" class="col-md-4 col-form-label text-md-right text-dark">{{ __('Contraseña') }}</label>
@@ -47,7 +49,8 @@
                         @enderror
                     </div>
                 </div>
-
+                <br>
+                <!--
                 <div class="form-group row">
                     <div class="col-md-6 offset-md-4">
                         <div class="form-check">
@@ -59,22 +62,25 @@
                         </div>
                     </div>
                 </div>
-
+                -->
                 <div class="form-group row mb-0" >
                     <div class="col-md-8 offset-md-4">
                         <button type="submit" class="btn btn-success">
                             {{ __('Login') }}
                         </button>
-
+                        <!--
+                            {{--
                         @if (Route::has('password.request'))
                             <a class="btn btn-link text-success" href="{{ route('password.request') }}">
                                 {{ __('olvidaste la contraseña?') }}
                             </a>
                         @endif
+                        --}}
+                        -->
                     </div>
                 </div>
             </form>
-               
+
             </div>
 </div>
 </div>
