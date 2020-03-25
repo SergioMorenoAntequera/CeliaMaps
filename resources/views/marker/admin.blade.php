@@ -96,11 +96,14 @@
     </div>
 
     {{-- We prepare the php variables into JS --}}
-    <script> var markersJS = []; </script>
+    <script> 
+        var markersJS = []; 
+    </script>
+    
     @foreach ($markers as $marker)
         <script>
-            markersJS.push({
-                "id":{{$marker->id}}, 
+            var markerJS = {
+                "id": {{$marker->id}}, 
                 "name":"{{$marker->name}}", 
                 "type":"{{$marker->type}}",
                 "radius":"{{$marker->radius}}",
@@ -113,17 +116,19 @@
                     },
                 @endforeach
                 ],
-            });
+            };
+            markersJS.push(markerJS);
+            console.log(markerJS);
         </script>
     @endforeach
+    
     <script>     
         var lastID;
         if(markersJS.length > 0) {
             lastID = markersJS[markersJS.length-1].id;
         } else {
-            lastID = 1;
+            lastID = 0;
         }
-        
     </script>
     {{-- Now we can work with the markers in JS (markersJS) --}}
     
@@ -222,7 +227,6 @@
 
                     }  else if(markerJS.type == "marker") {
                         // Si es un marcador
-                        console.log(markerJS);
                         layer = L.marker([markerJS.points[0].lat, markerJS.points[0].lng], {
                             draggable: false,
                         });
@@ -415,8 +419,6 @@
                 layer.on('pm:markerdragend', e => {
                     map.pm.disableGlobalEditMode(); 
                     userBusy = false
-
-                    console.log(layer);
 
                     if(layer.db.type == "polygon" || layer.db.type == "line"){
                         layer.db.points = layer._latlngs[0];
