@@ -116,7 +116,15 @@
             });
         </script>
     @endforeach
-    <script> var lastID = markersJS[markersJS.length-1].id;</script>
+    <script>     
+        var lastID;
+        if(markersJS.length > 0) {
+            lastID = markersJS[markersJS.length-1].id;
+        } else {
+            lastID = 1;
+        }
+        
+    </script>
     {{-- Now we can work with the markers in JS (markersJS) --}}
     
 @endsection
