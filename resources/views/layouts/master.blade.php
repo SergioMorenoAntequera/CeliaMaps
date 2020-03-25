@@ -117,7 +117,7 @@
                                 <b> Backup </b>
                                 <div class="line"></div>
                                 <a href="{{route('backup.index')}}"><li>Índice</li></a>
-                                {{--<a href="{{route('backup.copymage')}}"><li>imagen</li></a>--}}
+                                <a href="{{route('backup.copyDir')}}"><li>imagen</li></a>
                                 {{-- <a href="{{route('backup.index')}}"><li>Guardar</li></a>
                                 <a href="{{route('backup.index')}}"><li>Restaurar</li></a> --}}
                             </div>

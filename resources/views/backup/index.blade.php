@@ -31,7 +31,9 @@
                 <div class="modal-body">
                     <p>
                         Si continua, se creará una copia de seguridad de la base de datos en el estado actual,
-                        sobreescribiendo a las versiones anteriores, <b>¿Quiere continuar?</b>
+                        sobreescribiendo a las versiones anteriores, así como de las imágenes contenidas en la
+                        aplicación. <b>¿Quiere continuar?</b><br>
+                        Esta operación puede tardar unos minutos.
                     </p>
                 </div>
                 <div class="modal-footer">
@@ -71,7 +73,8 @@
                     </p>
                 </div>
                 <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal"> Cancelar </button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal"> Cancelar </button>
+                    <button id="confirmRestore" type="button" class="btn btn-success" data-dismiss="modal">Restaurar copia</button>
                 </div>
             </div>
             </div>
