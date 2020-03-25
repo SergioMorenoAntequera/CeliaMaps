@@ -101,25 +101,28 @@
     </script>
     
     @foreach ($markers as $marker)
-        <script>
-            var markerJS = {
-                "id": {{$marker->id}}, 
-                "name":"{{$marker->name}}", 
-                "type":"{{$marker->type}}",
-                "radius":"{{$marker->radius}}",
-                "points": [ 
-                @foreach ($marker->points as $point)
-                    {
-                        "id":{{$point->id}},
-                        "lat":{{$point->lat}},
-                        "lng":{{$point->lng}},
-                    },
-                @endforeach
-                ],
-            };
-            markersJS.push(markerJS);
-            console.log(markerJS);
-        </script>
+        @if (sizeof($marker->points) > 0)
+            <script>
+                var markerJS = {
+                    "id": {{$marker->id}}, 
+                    "name":"{{$marker->name}}", 
+                    "type":"{{$marker->type}}",
+                    "radius":"{{$marker->radius}}",
+                    "points": [ 
+                    @foreach ($marker->points as $point)
+                        {
+                            "id":{{$point->id}},
+                            "lat":{{$point->lat}},
+                            "lng":{{$point->lng}},
+                        },
+                    @endforeach
+                    ],
+                };
+                markersJS.push(markerJS);
+            </script>
+        @else
+            <script> alert("marker sin puntos encontrado, revise su base de datos") </script>
+        @endif
     @endforeach
     
     <script>     
