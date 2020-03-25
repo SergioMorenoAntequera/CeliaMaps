@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Celia Maps</title>
-
+    <link rel="icon" type="image/png" href="{{url('img/icons/icon.png')}}" sizes="64x64">
     <!-- LEAFLET -->
     <script src="{{url('js/Leaflet/leaflet.js')}}"></script>
     <link rel="stylesheet" href="{{'js/Leaflet/leaflet.css'}}">
@@ -15,7 +15,10 @@
     <!-- Plugin images -->
     <script src="{{url('js/Leaflet/pluginImages/leaflet.distortableimage.js')}}"></script>
     <link rel="stylesheet" href="{{url('js/Leaflet/pluginImages/leaflet.distortableimage.css')}}">
-
+    <!-- Plugin clustering markers -->
+    <script src="{{url('/js/Leaflet/pluginClusteringMarkers/leaflet.markercluster.js')}}"></script>
+    <link rel="stylesheet" href="{{url('/js/Leaflet/pluginClusteringMarkers/MarkerCluster.css')}}">
+    <link rel="stylesheet" href="{{url('/js/Leaflet/pluginClusteringMarkers/MarkerCluster.Default.css')}}">
     <!-- JQUERY -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -187,12 +190,22 @@
                                     hotspots = [];
                                     
                                     data.streets.forEach(street => {
+                                        // Save actual street
                                         street.fullName = street.typeName + " " + street.name;
                                         streets.push(street);
-                                        console.log(street);
+                                        // Duplicate object for older streets
+                                        let alternativeStreet = {...street};
+                                        alternativeStreet.maps.forEach(mapStreet => {
+                                            if(mapStreet.pivot.alternative_name !== null){
+                                                alternativeStreet.name = mapStreet.pivot.alternative_name;
+                                                alternativeStreet.fullName = alternativeStreet.typeName + " " + alternativeStreet.name;
+                                                alternativeStreet.deprecated = true;
+                                                streets.push(alternativeStreet);
+                                            }
+                                        });
                                     });
                                     hotspots = data.hotspots;
-                                },
+                                }
                             }); // FIN AJAX
                         } else {
                             if($('#streetsFound').children().length == 0){
@@ -228,8 +241,12 @@
                         c = 0;
                         streets.forEach(street => {
                             if(street.fullName.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
-                                $('#streetsFound').append("<div class='street'> <img style='width:5%;' src='{{url('img/icons/token-selected.svg')}}'>"+ street.fullName + "</div>");
-                                if(++c >= 5){
+                                // Deprecated street will appear in italic font
+                                if(street.deprecated == true)
+                                    $('#streetsFound').append("<div id='"+ street.id +"' style='font-style:italic;opacity:0.8' class='street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ street.fullName + "</div>");
+                                else
+                                    $('#streetsFound').append("<div id='"+ street.id +"' class='street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ street.fullName + "</div>");
+                                if(++c == 5){
                                     return;
                                 }                                
                             }

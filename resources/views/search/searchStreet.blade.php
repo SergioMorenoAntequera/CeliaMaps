@@ -16,33 +16,39 @@
       <div class="wholePanel" style="min-height: 570px">
           <div class="leftPanel" style="min-height: 570px">
               <div class="content" style="font-size: 18px; font-weight: normal">
-                  <p style="font-size: 30px"><b> Búsqueda de Calles </b></p>                  
+                  <p style="font-size: 30px"><b> Búsqueda de Calles </b></p>
                   </div>
 
-                 
+
                     <div id="buscadorVia" class="container align-center"  width="25%">
                       <form class="form-inline float-right">
                         <input type="text" id="cajaTexto" class="form-control" placeholder="Nombre Vía">
-                        <img src="{{url('/img/icons/lupa-blanca.png')}}" width="15%" alt="" class="img-fluid pt-1">
-                      </form>          
+                        <img  id="lupa" src="{{url('/img/icons/lupa-blanca.png')}}" width="15%" alt="" class="img-fluid pt-1">
+                      </form>
+                      <!--
+                      <div id="limpiar" class="row float-left pl-4">
+                        <button id="limpiando" type="button" class="btn btn-success btn-sm">Limpiar búsqueda</button>
                     </div>
-                  
+                    -->
+                    </div>
+
+
           </div>
-         
+
 
     <div class="rightPanel" >
       <!-- style="width:100%;" -->
 
       <!-- inicio cuadro de búsqueda -->
-      
+
       <br>
       <br>
       <br>
-      <!-- final cuadro de búsqueda 
+      <!-- final cuadro de búsqueda
        <h4>Panel de búsqueda de calles</h4>
       -->
 
-     
+
       <div id="container">
       <!-- Inicio listado calles -->
       <div id="resultado">
@@ -67,7 +73,7 @@
 @section('scripts')
 <script type="text/javascript">
   $(document).ready(function(){
-    
+
       $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -77,8 +83,8 @@
       $('#cajaTexto').keyup(function(){
 
         var elNombreDelaCalle = $(this).val();
-        var id; 
-       
+        var id;
+
         console.log(elNombreDelaCalle)
         // Capturamos en la variable la ruta generada por blade
         let url = "{{url("search/inform")}}";
@@ -88,10 +94,10 @@
             $.ajax({
               url: "{{route('search.search')}}",
               type: 'post',
-              dataType: 'json',      
-              data: {text:elNombreDelaCalle},              
-                success: function(response){ 
-                  $("#resultado").html(""); 
+              dataType: 'json',
+              data: {text:elNombreDelaCalle},
+                success: function(response){
+                  $("#resultado").html("");
                   $("#resultado").append('<a class="text-success" href='+url+"/"+response[0].id+'>' + response[0].name + ' ' + response[0].street_name + '</a></br>');
                   for(var i = 1; i< response.length; i++){
                     id = response[i].id;
@@ -103,18 +109,24 @@
                     se repite, entonces no aparece en la vista por segunda vez.
                     */
                     if(name != response[i-1].name){
-                      //cuando haga el enlace hay qu incluir el a href en el append, igual que he metido el br 
+                      //cuando haga el enlace hay qu incluir el a href en el append, igual que he metido el br
                       // Usamos la variable url generada al cargar la página para crear la dirección del enlace
                       $("#resultado").append('<a href='+url+"/"+response[i].id+'>' + response[i].name + ' ' + response[i].street_name + '</a></br>');
-                    }                    
-                    } 
+                    }
+
+                    }
                 },
                 error:function(){
                   //alert("no funciona");
-                }              
+                }
             });
-          } 
+          }
       });
+      $('#limpiando').on("click", function(){
+        $("#cajaTexto").val('');
+      });
+
+
   });
 </script>
 

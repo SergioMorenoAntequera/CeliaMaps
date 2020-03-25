@@ -96,35 +96,36 @@
     </div>
 
     {{-- We prepare the php variables into JS --}}
-    <script> var markersJS = []; </script>
-    @foreach ($markers as $marker)
-        <script>
-            markersJS.push({
-                "id":{{$marker->id}}, 
-                "name":"{{$marker->name}}", 
-                "type":"{{$marker->type}}",
-                "radius":"{{$marker->radius}}",
-                "points": [ 
-                @foreach ($marker->points as $point)
-                    {
-                        "id":{{$point->id}},
-                        "lat":{{$point->lat}},
-                        "lng":{{$point->lng}},
-                    },
-                @endforeach
-                ],
-            });
-        </script>
-    @endforeach
-    <script>     
-        var lastID;
-        if(markersJS.length > 0) {
-            lastID = markersJS[markersJS.length-1].id;
-        } else {
-            lastID = 1;
-        }
-        
+    <script> 
+        var lastID = {{$lastID}};
+        var markersJS = []; 
     </script>
+    
+    @foreach ($markers as $marker)
+        @if (sizeof($marker->points) > 0)
+            <script>
+                var markerJS = {
+                    "id": {{$marker->id}}, 
+                    "name":"{{$marker->name}}", 
+                    "type":"{{$marker->type}}",
+                    "radius":"{{$marker->radius}}",
+                    "points": [ 
+                    @foreach ($marker->points as $point)
+                        {
+                            "id":{{$point->id}},
+                            "lat":{{$point->lat}},
+                            "lng":{{$point->lng}},
+                        },
+                    @endforeach
+                    ],
+                };
+                markersJS.push(markerJS);
+            </script>
+        @else
+            <script> alert("marker sin puntos encontrado, revise su base de datos") </script>
+        @endif
+    @endforeach
+
     {{-- Now we can work with the markers in JS (markersJS) --}}
     
 @endsection
@@ -222,7 +223,6 @@
 
                     }  else if(markerJS.type == "marker") {
                         // Si es un marcador
-                        console.log(markerJS);
                         layer = L.marker([markerJS.points[0].lat, markerJS.points[0].lng], {
                             draggable: false,
                         });
@@ -416,8 +416,6 @@
                     map.pm.disableGlobalEditMode(); 
                     userBusy = false
 
-                    console.log(layer);
-
                     if(layer.db.type == "polygon" || layer.db.type == "line"){
                         layer.db.points = layer._latlngs[0];
                     } else {
@@ -438,7 +436,6 @@
                 $(".bubble.rename").find("input").focus();
                 $(".bubble.rename").fadeIn(150);
             });
-            $( ".rename" ).draggable();
             $(".rename > button").click(function(e){
                 activeLayer.db.name = $(".bubble.rename").find("input").val();
 
@@ -448,7 +445,7 @@
             $(".rename > .cornerButton").click(function(e){
                 $(this).parent().fadeOut(150);
             });
-            
+            $( ".rename" ).draggable();
         });
 
         function storeAjax(layerDB){

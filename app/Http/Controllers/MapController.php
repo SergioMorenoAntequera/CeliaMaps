@@ -159,6 +159,9 @@ class MapController extends Controller
     
 
         $map->save();
+
+        $data['markers'] = Marker::all();
+
         return redirect(route('map.align', $map->id));
     }
 
@@ -494,6 +497,7 @@ class MapController extends Controller
      * @return View
      */
     public function getStreets(Request $r){
+
         if($r->title == "Todos"){
             $streets = Street::all();
         } else {

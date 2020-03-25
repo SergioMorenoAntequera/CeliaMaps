@@ -255,7 +255,7 @@ los formularios y seguramente algo más, pa quién lo quiera */
     left: 10px;
     top: 10px;
     height: auto;
-    width: 200px;
+    min-width: 200px;
 
     padding: 20px 22px 20px 22px;
     color: #c0c0c0;
