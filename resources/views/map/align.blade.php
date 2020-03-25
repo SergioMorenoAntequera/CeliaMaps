@@ -140,8 +140,8 @@
             //Añadimos las formas de ayuda
             addMarkersJS();
             
-            addMapImg();
-            
+            var img = addMapImg();
+
             // Codigo del botón de guardar
             $('#saveMenu').click(function(e){
                 e.preventDefault();
@@ -205,9 +205,9 @@
         // Añade el mapa que hay que alinear
         function addMapImg(){
             //Añadimos las imágenes y sus propiedade
-            var cornerCheck = {{$map->tlCornerLatitude}};
+            var cornerCheck = "{{$map->tlCornerLatitude}}";
             var img = 0;
-            if (cornerCheck !== 0) {
+            if (cornerCheck !== "") {
                 img = L.distortableImageOverlay("{{url('img/maps/'.$map->image.'')}}", {
                     //Hacemos que se pueda editar
                     selected: true,
@@ -228,7 +228,10 @@
             }
             //Añadimos la imagen al mapa
             map.addLayer(img);
+            
+            return img;
         };
+        
     </script>
 @endsection
 

@@ -64,6 +64,7 @@
                         <p><i class="fa fa-caret-right"></i> Heredar calles de otro mapa </p>
                     </div>
                     <div class="more" style="display: none; max-height: 500px">
+                        
                         {{-- Campo invisible que vamos actualizando para enviar el mapa del que heredar --}}
                         <input id="inherateInput" type="hidden" name="inherit" value="Ninguno">
 
@@ -81,57 +82,10 @@
                                     <p> Selecciona el nombre de un mapa a la izquierda para ver sus calles y heredarlas </p>
                                 </div>
                             </div>
-                            <script>
-                                $(".mapToInherit").on("click", function(){
-                                    $("#mapsList .selected").removeClass("selected");
-                                    $(this).addClass("selected");
-                                    $("#inherateInput").val($(this).text().trim());
-                                    
-                                    if($(this).text().includes("Ninguno")){
-                                        $("#streetsList").empty();
-                                        $("#streetsList").append("<p> Selecciona el nombre de un mapa a la izquierda para ver sus calles y heredarlas </p>");
-                                        return;
-                                    }
-
-                                    var url = window.location.href.replace("create", "streets");
-                                    console.log(url);
-                                    //Petición ajax para recuperar las calles de los mapas
-                                    $.ajax({
-                                        type: 'GET',
-                                        url: url,
-                                        data: {title : $(this).text()},
-
-                                        success: function(data) {
-                                            $("#streetsList").empty();
-                                            if(data.streets.length == 0){
-                                                $("#streetsList").append("<p class='text-danger'> Este mapa no contiene ninguna calle que puedas heredar </p>");
-                                                return;
-                                            }
-                                            
-                                            data.streets.forEach(street => {
-                                                $("#streetsList").append("<p>"+ street.type.name + " " + street.name +"</p>");
-                                            });
-                                        },
-                                    });
-                                });
-                            </script>
                         </div>
                     </div>
-
-                    <script>
-                        $(document).ready(function(){
-                            $(".showMore").on("click", function(){
-                                if($(this).find(".fa").hasClass("fa-caret-right")){
-                                    $(this).find(".fa").removeClass("fa-caret-right");
-                                    $(this).find(".fa").addClass("fa-caret-down");
-                                } else {
-                                    $(this).find(".fa").removeClass("fa-caret-down");
-                                    $(this).find(".fa").addClass("fa-caret-right");
-                                }
-                                $(this).next(".more").slideToggle(200);
-                            });
-                        });
-                    </script>
+                   
+                    {{-- Botón para ir al alineado del mapa --}}
                     <button id="btnAlign" class="mt-3 btn btn-success"> Continuar </button>
                 </form>
             </div>
@@ -139,6 +93,104 @@
     </div>
 @endsection
 
-@section('footer')
-    footer
+@section('scripts')
+
+    
+    {{-- Para que aparezcan los ShowMore y todo el rollo --}}
+    <script>
+        $(document).ready(function(){
+            $(".showMore").on("click", function(){
+                if($(this).find(".fa").hasClass("fa-caret-right")){
+                    $(this).find(".fa").removeClass("fa-caret-right");
+                    $(this).find(".fa").addClass("fa-caret-down");
+                } else {
+                    $(this).find(".fa").removeClass("fa-caret-down");
+                    $(this).find(".fa").addClass("fa-caret-right");
+                }
+                $(this).next(".more").slideToggle(200);
+            });
+        });
+    </script>
+
+
+    {{-- El mapa en el que se pincha a la hora de heredar de un mapa
+    Petición ajax para pedir las calles dentro --}}
+    {{-- Preparo la url fuera por si esto lo quiero llevar a un cifhero externo --}}
+    <script> var getStreetsUrl = "{{route('map.streets')}}"; </script>
+    <script>
+        $(".mapToInherit").on("click", function(){
+            var mapTitle = $(this).text();
+            $("#mapsList .selected").removeClass("selected");
+            $(this).addClass("selected");
+            $("#inherateInput").val(mapTitle.trim());
+            
+            if(mapTitle.includes("Ninguno")){
+                $("#streetsList").empty();
+                $("#streetsList").append("<p> Selecciona el nombre de un mapa a la izquierda para ver sus calles y heredarlas </p>");
+                return;
+            }
+
+            // Petición ajax para recuperar las calles de los mapas
+            // También se encarga de colocarlo en la pantalla
+            var data = getStreetsAjax(mapTitle);
+            
+        });
+
+        function getStreetsAjax(mapTitle) {
+            $.ajax({
+                url: getStreetsUrl,
+                data: {title : mapTitle},
+                success: function(data) {
+                    //Limpiamos la lista
+                    $("#streetsList").empty();
+
+                    //Ponemos la lista de calles nueva si la hay
+                    if(data.streets.length != 0){
+                        data.streets.forEach(street => {
+                            $("#streetsList").append("<p>"+ street.type.name + " " + street.name +"</p>");
+                        });
+                    } else {
+                        $("#streetsList").append("<p class = 'text-danger'> Este mapa no contiene ninguna calle que puedas heredar </p>");
+                    }
+                },
+            });
+        }
+
+    </script>
+
+
+    {{-- Dentro del menú de herencia para seleccionar los cb 
+    y el filtrado de las calles --}}
+    <script>
+        // Checkbox que selecciona todos 
+        $(".selectAllCB").change(function(){
+            var cbs = $(this).siblings(".streetList").children(".streetInList").children();
+            if($(this).is(":checked")){
+                for (let i = 0; i < cbs.length; i++) {
+                    const checkboxInList = jQuery(cbs[i]);
+                    checkboxInList.prop("checked", true);
+                }
+            } else {
+                for (let i = 0; i < cbs.length; i++) {
+                    const checkboxInList = jQuery(cbs[i]);
+                    checkboxInList.prop("checked", false);
+                }
+            }
+        });
+
+        // Input que filtra las calles 
+        $(".streetFilter").keyup(function(){
+            var text = $(this).val();
+            var streetContainer = $(this).siblings("div").find(".streetInList");
+            streetContainer.each(function(e){
+                var streetName = $(this).find("span").text();
+                if(streetName.toLowerCase().includes(text.toLowerCase())){
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    </script>
+
 @endsection

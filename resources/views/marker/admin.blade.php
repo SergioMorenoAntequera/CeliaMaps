@@ -436,7 +436,6 @@
                 $(".bubble.rename").find("input").focus();
                 $(".bubble.rename").fadeIn(150);
             });
-            $( ".rename" ).draggable();
             $(".rename > button").click(function(e){
                 activeLayer.db.name = $(".bubble.rename").find("input").val();
 
@@ -446,7 +445,7 @@
             $(".rename > .cornerButton").click(function(e){
                 $(this).parent().fadeOut(150);
             });
-            
+            $( ".rename" ).draggable();
         });
 
         function storeAjax(layerDB){
