@@ -29,6 +29,7 @@ class MarkerController extends Controller
      */
     public function admin(){
         $data['markers'] = Marker::all();
+        $data['lastID'] = Marker::max('id');
         return view("marker.admin", $data);
     }
 

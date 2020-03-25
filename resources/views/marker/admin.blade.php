@@ -97,6 +97,7 @@
 
     {{-- We prepare the php variables into JS --}}
     <script> 
+        var lastID = {{$lastID}};
         var markersJS = []; 
     </script>
     
@@ -124,15 +125,7 @@
             <script> alert("marker sin puntos encontrado, revise su base de datos") </script>
         @endif
     @endforeach
-    
-    <script>     
-        var lastID;
-        if(markersJS.length > 0) {
-            lastID = markersJS[markersJS.length-1].id;
-        } else {
-            lastID = 0;
-        }
-    </script>
+
     {{-- Now we can work with the markers in JS (markersJS) --}}
     
 @endsection
