@@ -31,7 +31,7 @@
     
     <div style="display: flex; flex-wrap: wrap;">
         @foreach ($images as $image)    
-            <a class="col-md-4" style="margin: 15px 0; padding: 0 15px; flex: 0 0 33.333333%; max-width: 33%;" href="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" data-toggle="light-box" data-gallery="gallery">
+            <a class="col-md-4" name="{{$image->id}}" style="margin: 15px 0; padding: 0 15px; flex: 0 0 33.333333%; max-width: 33%;" href="#" data-toggle="light-box" data-gallery="gallery">
                 <img class="img-fluid rounded" src="{{url('img/hotspots/', $image->file_name)}}">
             </a>
         @endforeach
@@ -45,7 +45,7 @@
                     <div class="ekko-lightbox-container" style="height: 720px;">
                         <div class="ekko-lightbox-item fade"></div>
                         <div class="ekko-lightbox-item fade in show text-center">
-                            <img class="img-fluid center-block" src="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" style="height: 100%; display: inline-block;" alt="Imagen Hotspot">
+                            <img id="previewImage" class="img-fluid center-block" src="" style="height: 100%; display: inline-block;" alt="Imagen Hotspot">
                         </div>
                         <div class="ekko-lightbox-nav-overlay">
                             <a href="#">
@@ -67,9 +67,27 @@
 
 @section('scripts')
     <script>
-        $(".row").on("click", function(event) {
+        $(".col-md-4").on("click", function(event) {
             event.preventDefault();
             $('#ekkoLightbox-893').modal('show');
+
+            @isset($images)
+                // Images php array conversion to js
+                let images = @json($images);
+                console.log(images);
+            @endisset
+            
+            console.log(this.name);
+
+            let image;
+            for (let i = 0; i < images.length; i++) {
+                if(images[i].id == this.name)
+                    image = images[i];
+            }
+
+            let host = "{{url('')}}";
+            $("#previewImage").attr("src", host+"/img/hotspots/"+image.file_name);
+
         });
     </script>
     
