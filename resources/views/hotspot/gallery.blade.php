@@ -3,16 +3,17 @@
 @section('title', 'Celia Maps')
 
 @section('content')	
-
-    <div class="row" style="margin: 15px; display: flex; flex-wrap: wrap;">
-        <a class="col-md-4" style="flex: 0 0 33.333333%; max-width: 33.333333%;" href="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" data-toggle="light-box" data-gallery="gallery">
-            <img class="img-fluid rounded" src="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}">
-        </a>
-        <a class="col-md-4" style="flex: 0 0 33.333333%; max-width: 33.333333%;" href="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" data-toggle="light-box" data-gallery="gallery">
-            <img class="img-fluid rounded" src="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}">
-        </a>
-        <a class="col-md-4" style="flex: 0 0 33.333333%; max-width: 33.333333%;" href="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" data-toggle="light-box" data-gallery="gallery">
-            <img class="img-fluid rounded" src="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}">
+    {{-- 
+        
+        <div class="row" style="margin: 15px; display: flex; flex-wrap: wrap;">
+            <a class="col-md-4" style="flex: 0 0 33.333333%; max-width: 33.333333%;" href="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" data-toggle="light-box" data-gallery="gallery">
+                <img class="img-fluid rounded" src="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}">
+            </a>
+            <a class="col-md-4" style="flex: 0 0 33.333333%; max-width: 33.333333%;" href="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" data-toggle="light-box" data-gallery="gallery">
+                <img class="img-fluid rounded" src="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}">
+            </a>
+            <a class="col-md-4" style="flex: 0 0 33.333333%; max-width: 33.333333%;" href="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" data-toggle="light-box" data-gallery="gallery">
+                <img class="img-fluid rounded" src="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}">
         </a>
     </div>
     <div class="row" style="margin: 15px; display: flex; flex-wrap: wrap;">
@@ -25,20 +26,38 @@
         <a class="col-md-4" style="flex: 0 0 33.333333%; max-width: 33.333333%;" href="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" data-toggle="light-box" data-gallery="gallery">
             <img class="img-fluid rounded" src="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}">
         </a>
+    </div>
+    --}}
+    
+    <div style="display: flex; flex-wrap: wrap;">
+        @foreach ($images as $image)    
+            <a class="col-md-4" style="margin: 15px 0; padding: 0 15px; flex: 0 0 33.333333%; max-width: 33%;" href="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" data-toggle="light-box" data-gallery="gallery">
+                <img class="img-fluid rounded" src="{{url('img/hotspots/', $image->file_name)}}">
+            </a>
+        @endforeach
     </div>
 
     <div id="ekkoLightbox-893" class="ekko-lightbox modal fade text-dark" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="flex: 1 1 1px; max-width: 70%;">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h4 id="confirm-modal-title" class="modal-title">Eliminar hotspot</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
 
                 <div class="modal-body">
-                    <p>¿Está seguro de que desea eliminar el hotspot?</p>
-                    <button id="btn-confirm" type="button" class="btn btn-danger float-right deleteConfirm" data-dismiss="modal">Eliminar</button>
+                    <div class="ekko-lightbox-container" style="height: 720px;">
+                        <div class="ekko-lightbox-item fade"></div>
+                        <div class="ekko-lightbox-item fade in show text-center">
+                            <img class="img-fluid center-block" src="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" style="height: 100%; display: inline-block;" alt="Imagen Hotspot">
+                        </div>
+                        <div class="ekko-lightbox-nav-overlay">
+                            <a href="#">
+                                <span>❮</span>
+                            </a>
+                            <a href="#">
+                                <span>❯</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -48,10 +67,10 @@
 
 @section('scripts')
     <script>
-        $(document).on("click", '[data-toggle="light-box"]', function(event) {
+        $(".row").on("click", function(event) {
             event.preventDefault();
-            $(this).ekkoLightbox();
+            $('#ekkoLightbox-893').modal('show');
         });
     </script>
     
-@endsectionhref=""
+@endsection
