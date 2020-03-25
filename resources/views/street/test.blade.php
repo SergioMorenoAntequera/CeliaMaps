@@ -458,6 +458,7 @@
                 @foreach ($streets as $street)
                     // Creating a Marker
                     var marker{{$street->id}} = L.marker([{{$street->points[0]->lat}}, {{$street->points[0]->lng}}],{icon: markerImage, alt:"{{$street->id}}", draggable:false});
+                    marker{{$street->id}}.id = {{$street->id}};
                     // Adding marker to the markers list
                     markersList.push(marker{{$street->id}});
                     // Adding marker to the map
@@ -487,33 +488,30 @@
 
             // Leaflet map click handler
             map.on('click', function(e) {
-                console.log("mapa");
                 // Create modal trigger with lat/lng coordinates
-                createStreet(e.latlng.lat, e.latlng.lng);
+                if(!dragging)    
+                    createStreet(e.latlng.lat, e.latlng.lng);
             });
-        
+ 
             // Leaflet mark click handler
-            $(document).on('click','img.leaflet-marker-icon', function(e){
-                console.log("hola");
-                // Stop event bubbling to prevent map object clicks
-                e.stopPropagation();
-                // Check if clicks comes from dragging or not
-                if(dragging){
-                    // After drag turn off dragging mode on after click
-                    dragging = false;
-                }else{
+            clusterMarkers.eachLayer(function(marker) {
+                marker.on('click', function(){
+                    console.log("click");
+                    if(!dragging){
                     // Search for selected street
                     let street;
                     for (let i = 0; i < streets.length; i++) {
-                        if(streets[i].id == this.alt)
+                        if(streets[i].id == this.id)
                             street = streets[i]; // Streets of array with selected street comparison
                     }
                     // Edit modal trigger with selected street
-                    editStreet(street); 
-                }
+                    editStreet(street);
+                    }else{
+                        // After drag click will be fired and here break dragging mode
+                        dragging = false;
+                    }
+                });
             });
-
-
 
 
 
@@ -645,6 +643,12 @@
                     // Get marker js object
                     let leafletMarker = eval(markerVarName);
                     console.log("antes de mover "+leafletMarker.getLatLng());
+                    // Detach current marker from the group
+                    clusterMarkers.removeLayer(leafletMarker);
+                    // Disable markers group
+                    map.removeLayer(clusterMarkers);
+                    // Attach current marker directly to the map
+                    leafletMarker.addTo(map);
                     // Enable marker dragging mode
                     leafletMarker.dragging.enable();
                     // Hide edition modal
@@ -653,19 +657,20 @@
                     leafletMarker.on("moveend", function(){
                         // Disable dragging mode
                         leafletMarker.dragging.disable();
-                        console.log("después de mover "+leafletMarker.getLatLng().lat);
-                        console.log("replace position street latlng");
+                        // Attach current marker to the layer
+                        clusterMarkers.addLayer(leafletMarker);
+                        // Enable markers group again
+                        map.addLayer(clusterMarkers);
                         // Fill new position values
                         $("#modal-lat").val(leafletMarker.getLatLng().lat);
                         $("#modal-lng").val(leafletMarker.getLatLng().lng);
-                        // Show again edition modal
-                        $('#modal').modal('show');
-                        // Dragging will be set to false in click event triggered later
+                        // Save new position
+                        $('#modal-form').submit();
                     });
                 });
             }
             
-            // Save street button
+            // Save street button validation
             $("#modal-form").submit(function(e){
                 let belongsToMap = false;
                 $("#modal-form input[name='maps_id[]']").each(function(){
