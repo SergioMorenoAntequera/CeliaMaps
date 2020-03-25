@@ -4,7 +4,7 @@
         <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title><?php echo $__env->yieldContent('title'); ?></title>
-        
+
         <!-- General CDNs -->
         <link rel="icon" type="image/png" href="<?php echo e(url('/img/icons/icon.png')); ?>" sizes="64x64">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" integrity="sha384-SI27wrMjH3ZZ89r4o+fGIJtnzkAnFs3E4qz9DIYioCQ5l9Rd/7UAa8DHcaL8jkWt" crossorigin="anonymous">
@@ -18,7 +18,7 @@
         <!-- Views CDNs -->
         <?php echo $__env->yieldContent('cdn'); ?>
     </head>
-    
+
     <body class="bg-dark">
         <!-- Header -->
         <!-- Plantilla de la pagina principal -->
@@ -34,7 +34,7 @@
                             </li>
                             </a>
                         </div>
-                        
+
                         <div class="lateralMenuElement">
                             <a class="lateralMenuLink" href="<?php echo e(route('map.index')); ?>">
                             <li class="lateralMenuImg">
@@ -49,7 +49,7 @@
                                 <a href="<?php echo e(route('marker.admin')); ?>"><li>Marcadores</li></a>
                             </div>
                         </div>
-                        
+
                         <div class="lateralMenuElement">
                             <a class="lateralMenuLink" href="<?php echo e(route('street.index')); ?>">
                             <li class="lateralMenuImg">
@@ -88,21 +88,21 @@
                             </a>
                             <div class="lateralExpandMenu">
                                 <b> Users </b>
-                                <div class="line"></div> 
-                                <?php if(auth()->guard()->check()): ?>                               
+                                <div class="line"></div>
+                                <?php if(auth()->guard()->check()): ?>
                                      <!-- INCLUYO AQUÍ LA RUTA DEL LOGOUT DE LARAVEL PARA QUE NO PASE POR LA PÁGINA OFICIAL,
-                                    SINO QUE VAYA DIRECTAMENTE A LA PÁGINA PRINCIPAL --> 
+                                    SINO QUE VAYA DIRECTAMENTE A LA PÁGINA PRINCIPAL -->
                                     <a href=""
                                     onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();"><li>Logout</li></a>                               
+                                    document.getElementById('logout-form').submit();"><li>Logout</li></a>
                                 <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
                                     <?php echo csrf_field(); ?>
                                 </form>
-                                <?php else: ?>                                 
+                                <?php else: ?>
                                     
-                                <?php endif; ?>                                                               
+                                <?php endif; ?>
                                 <a href="<?php echo e(route('user.index')); ?>"><li>Indice</li></a>
-                                <a href="<?php echo e(route('user.create')); ?>"><li>Insertar</li></a> 
+                                <a href="<?php echo e(route('user.create')); ?>"><li>Insertar</li></a>
                             </div>
                         </div>
                         <div class="lateralMenuElement">
@@ -115,6 +115,7 @@
                                 <b> Backup </b>
                                 <div class="line"></div>
                                 <a href="<?php echo e(route('backup.index')); ?>"><li>Índice</li></a>
+                                
                                 
                             </div>
                         </div>
@@ -150,7 +151,7 @@
                                 var element = $(".lateralMenuLink[href|='<?php echo e(route('search.index')); ?>']").parents(".lateralMenuElement");
                             }
                             element.css("background-color", "#6f7e96")
-                            
+
                             $(".lateralMenuElement").hover(function(e){
                                 var top = $(this).position().top;
                                 var expandMenu = $(this).children(".lateralExpandMenu");
@@ -203,12 +204,12 @@
     </body>
 
     <!-- Scripts -->
-   
+
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!-- Optional views scripts -->
     <?php echo $__env->yieldContent('scripts'); ?>
-   
+
 </html>
 <?php /**PATH /home/vagrant/code/maps/resources/views/layouts/master.blade.php ENDPATH**/ ?>

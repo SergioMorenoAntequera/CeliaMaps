@@ -201,7 +201,7 @@
                                                 alternativeStreet.deprecated = true;
                                                 streets.push(alternativeStreet);
                                             }
-                                        })
+                                        });
                                     });
                                     console.log(streets)
                                 },
@@ -696,7 +696,6 @@
             // Found street click event handler
             $(document).on("click","div.street",function(){
                 $('#streetsFound').empty();
-                $('#streetsInput').val("");
                 // Build of marker variable name
                 let markerVarName = "marker"+this.id;
                 // Get marker js object
