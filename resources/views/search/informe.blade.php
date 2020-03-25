@@ -142,10 +142,12 @@
                     <br>
                     <br>
 
-                     <!-- DIV QUE PUEDE CONTENER EL INFORME DE OBSERVACIONES ///////////////////// -->
-                     <div id="ordenado">
+                    <!-- LO ORDENABLE ///////////////////// -->
 
-                        <div id="informeObservacionesDropable"></div>
+                     <div id="ordenado">
+                         <!-- DIV QUE PUEDE CONTENER EL INFORME DE OBSERVACIONES ///////////////////// -->
+
+                        <div id="informeObservacionesDropable" ></div>
 
 
 
@@ -154,8 +156,8 @@
                     <div id="map" style="width:100%;height: 480px;"></div>
 
                     <!-- DIV QUE CONTIENE EL INFORME DE OBSERVACIONES -->
-
-                    <div id="informeObservacionesDraggable">
+                    <br>
+                    <div id="informeObservacionesDraggable" class="border border-success rounded p-2 m-2">
                         <br>
                             <div id="encabezadoDraggable">
                                 <div id="encabezado" class="font-weight-bold"></div>
@@ -168,6 +170,7 @@
                         <br>
                         <br>
                         <br>
+                        <!-- <div><button id="botonArrastre" class="btn btn-outline-success btn-sm">Hacer click y arrastrar</button></div> -->
                             <div id="fechaInformeDraggable">
                                 <div id="fechaInforme" class="col-md-4 offset-md-8"></div>
                             </div>
@@ -182,6 +185,7 @@
 
 
                      </div>
+                     <!-- FIN DE LO ORDENABLE ///////////////////// -->
 
                 </div>
                 <!-- FIN DE PANEL DERECHO //////////////////////////////////////////// -->

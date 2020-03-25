@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log as FacadesLog;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
+use App\Image;
+use App\Hotspot;
+use DB;
 
 
 
@@ -37,6 +40,7 @@ class BackupController extends Controller
         $command = "$mysqldump > mysqldump -h $dbhost -u $dbuser $dbname > $backup";
 
         system($command);
+
     }
 
     //////////////////////////////// RESTAURAR COPIA DE SEGURIDAD /////////////////////////////
@@ -57,25 +61,13 @@ class BackupController extends Controller
     }
 
     public function copymage(){
-
-        //Storage::copy('img/hotspots/alcazaba-almeria-img-01.jpg', 'storage/alcazaba-almeria-img-01.jpg');
-
-        if(!is_dir('carpeta_copia')){
-            //Asignamos la carpeta que queremos copiar
-            $source ='copiar_esta/';
-            //El destino donde se guardara la copia
-            $destination = 'carpeta_copia';
-            full_copy($source, $destination);
-            }
-        $directory =
-        Storage::makeDirectory($directory);
-
-        $files = Storage::allFiles($directory);
-
-
-
+        $file = public_path('img\hotspot\alcazaba-almeria-img-01.jpg');
+        //dd($file);
+        $destino = public_path('storage\alcazaba-almeria-img-01.jpg');
+        //dd($destino);
+        Storage::copy($file, $destino);
     }
+
+
 }
-
-
 

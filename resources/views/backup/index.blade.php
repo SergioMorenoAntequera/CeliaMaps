@@ -37,12 +37,6 @@
                 <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-dismiss="modal"> Cancelar </button>
                 <button id="confirmCreate" type="button" class="btn btn-success" data-dismiss="modal">Crear copia</button>
-                <a href="{{route('backup.copymage')}}">
-
-                    <button id="copiaimagen" type="button" class="btn btn-alert" data-dismiss="modal">copiar imagen</button>
-
-            </a>
-
                 </div>
             </div>
             </div>

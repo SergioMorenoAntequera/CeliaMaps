@@ -12,12 +12,12 @@ class HotspotController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except('getAllAjax');     
+        $this->middleware('auth')->except('getAllAjax');
     }
 
     /**
      * Method that shows all the registers in the database
-     * 
+     *
      * @return View
      */
     public function index(){
@@ -29,7 +29,7 @@ class HotspotController extends Controller
     /**
      * Method that shows a specific register o our
      * database depending on it's ID
-     * 
+     *
      * @param id
      * @return View
      */
@@ -37,10 +37,10 @@ class HotspotController extends Controller
         $hotspot = Hotspot::find($id);
         return view('hotspot.show', ['hotspot'=>$hotspot]);
     }
-    
+
     /**
      * Method that shows the form to create a new register
-     * 
+     *
      * @return View
      */
     public function create(){
@@ -50,11 +50,11 @@ class HotspotController extends Controller
         //dd($hotspots[0]->images[1]->file_name);
         return view('hotspot.test', ['hotspots'=>$hotspots, 'maps'=>$map, 'images'=>$image]);
     }
-    
+
     /**
      * Method that recieves information in a Request object from the,
      * and then checks and include that information inside our database
-     * 
+     *
      * @param r
      * @return View
      */
@@ -66,7 +66,7 @@ class HotspotController extends Controller
         */
         $hotspot = new Hotspot($r->all());
         $hotspot->save();
-        
+
         if(count($r->images) > 0){
             foreach ($r->images as $requestImage) {
                 $requestImage->move('img/hotspots/', $requestImage->getClientOriginalName());
@@ -85,7 +85,7 @@ class HotspotController extends Controller
 
     /**
      * Method that shows the form to edit an already existing registry
-     * 
+     *
      * @return View
      */
     public function edit($id){
@@ -96,7 +96,7 @@ class HotspotController extends Controller
     /**
      * Method that recieves information in a Request object,
      * then checks and changes the information inside our database
-     * 
+     *
      * @param r
      * @return View
      */
@@ -110,7 +110,7 @@ class HotspotController extends Controller
     /**
      * Method that deleets an specific registry inside out database
      * depending on a id that we will introduce by url
-     * 
+     *
      * @param id
      * @return View
      */
@@ -122,9 +122,9 @@ class HotspotController extends Controller
 
     public function deleteAjax(Request $r, $id){
 
-        
+
         Hotspot::destroy($r->id);
-        
+
         return response()->json([
             'delete' => true,
         ]);
@@ -133,13 +133,13 @@ class HotspotController extends Controller
     public function getAllAjax(Request $r){
         $hotspotFound = Hotspot::find($r->id);
         $imagesFound = Array();
-        
+
         foreach ($hotspotFound->images as $image) {
            array_push($imagesFound, $image->file_name);
         }
-        
+
         $hotspotFound->images = $imagesFound;
-        
+
         return response()->json([
             'hotspot' => $hotspotFound,
         ]);
