@@ -154,4 +154,11 @@ class HotspotController extends Controller
             'hotspot' => $hotspotFound,
         ]);
     }
+
+    public function searchAjax(Request $r){
+        $imagesFound = Image::where('title', 'LIKE', '%'.$r->text.'%')->get();
+        return response()->json([
+            'imagesFound' => $imagesFound,
+        ]);
+    }
 }
