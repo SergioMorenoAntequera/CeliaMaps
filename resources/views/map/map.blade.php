@@ -176,9 +176,14 @@
                     //We will fill this in the ajax request
                     var streets = [];
                     var hotspots = [];
+
                     //When we first click in the search bar (AJAX)
                     $("#streetsInput").on("focusin", function(e){
+                    
+                        
                         if($(this).val().length == 0){
+                    
+                    /*START AJAX 
                             var url = window.location.href + "map/search";
                             $.ajax({
                                 type: 'GET',
@@ -207,6 +212,9 @@
                                     hotspots = data.hotspots;
                                 }
                             }); // FIN AJAX
+                           
+                    END AJAX*/ 
+
                         } else {
                             if($('#streetsFound').children().length == 0){
                                 lookByText();
@@ -467,6 +475,37 @@
                 },
             @endforeach
         ];
+        
+        // Luis David
+
+        @isset($streets)
+            // Streets php array conversion to js json
+            streetsJSON = @json($streets);
+            streetsJSON.forEach(street => {
+                // Save actual street
+                street.fullName = street.typeName + " " + street.name;
+                streets.push(street);
+                // Duplicate object for older streets
+                let alternativeStreet = {...street};
+                alternativeStreet.maps.forEach(mapStreet => {
+                    if(mapStreet.pivot.alternative_name !== null){
+                        alternativeStreet.name = mapStreet.pivot.alternative_name;
+                        alternativeStreet.fullName = alternativeStreet.typeName + " " + alternativeStreet.name;
+                        alternativeStreet.deprecated = true;
+                        streets.push(alternativeStreet);
+                    }
+                });
+            });
+            console.log(streets);
+            let clusterMarkers = L.markerClusterGroup();
+            streets.forEach(street => {
+                var marker = L.marker([street.lat, street.lng],{icon: markerStreet, alt: street.id, draggable:false});
+                marker.id = street.id;
+                clusterMarkers.addLayer(marker);
+            });
+            map.addLayer(clusterMarkers);
+        @endisset
+            
     </script>
     <script src="{{url('js/mapTlMenu.js')}}"></script>
     <script src="{{url('js/mapBlMenu.js')}}"></script>

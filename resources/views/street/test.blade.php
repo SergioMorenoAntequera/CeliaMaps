@@ -443,12 +443,9 @@
             @isset($streets)
                 // Streets php array conversion to js array
                 let streets = @json($streets);
-                // Complete array with map relationship data
+                // Complete array with relationship data
                 @for ($i=0;$i<count($streets);$i++) 
                     streets[{{$i}}].maps =  @json($streets[$i]->maps);
-                @endfor
-                // Complete array with points relationship data
-                @for ($i=0;$i<count($streets);$i++) 
                     streets[{{$i}}].points =  @json($streets[$i]->points[0]);
                 @endfor
 
@@ -496,7 +493,7 @@
             // Leaflet mark click handler
             clusterMarkers.eachLayer(function(marker) {
                 marker.on('click', function(){
-                    console.log("click");
+                    // When click does not come from dragg event
                     if(!dragging){
                     // Search for selected street
                     let street;
