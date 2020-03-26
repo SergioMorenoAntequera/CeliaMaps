@@ -88,14 +88,12 @@
             let host = "{{url('')}}";
             $("#previewImage").attr("src", host+"/img/hotspots/"+image.file_name);
 
-            let imageId = this.name;
 
-            $("#anterior").on("click", function(e){
-                console.log("ok");
-                console.log(image.position);
-                // SOCORRO ÁLFRED
-            });
+        });
 
+        $("#anterior").on("click", function(e){
+            console.log("ok");
+            console.log(image.position);
         });
     </script>
     
