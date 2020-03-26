@@ -71,7 +71,7 @@ class BackupController extends Controller
                     if(!$file->isDir()){
                         $filePath = $file->getRealPath();
 
-                        $relativePath = 'imgCopy/'.substr($filePath, strlen($path) + 1);
+                        $relativePath = 'img/'.substr($filePath, strlen($path) + 1);
 
                         $zip->addFile($filePath, $relativePath);
                     }
@@ -102,7 +102,46 @@ class BackupController extends Controller
 
         system($command);
 
+        try{
+
+            $zip = new ZipArchive;
+            //$open = $zip->open($zip_file, ZipArchive::CREATE);
+
+            if ($zip->open('copiaImagenes.zip') === TRUE) {
+                $path = public_path('/');
+                $zip->extractTo($path);
+                $zip->close();
+                return redirect(route('backup.index'));
+            } else {
+                echo 'failed';
+            }
+
+            }catch(Exception $e){
+
+            }
+
         //return redirect(route('backup.index'));
+    }
+    public function restoreDir(){
+          try{
+
+        $zip = new ZipArchive;
+        //$open = $zip->open($zip_file, ZipArchive::CREATE);
+
+        if ($zip->open('copiaImagenes.zip') === TRUE) {
+            $path = public_path('/');
+            $zip->extractTo($path);
+            $zip->close();
+            echo 'ok';
+        } else {
+            echo 'failed';
+        }
+
+        }catch(Exception $e){
+
+        }
+
+
     }
 }
 

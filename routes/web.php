@@ -53,7 +53,7 @@ Auth::routes(['register' => false]);
 Route::get('backup', 'BackupController@index')->name('backup.index');
 Route::get('backup/create', 'BackupController@create')->name('backup.create');
 Route::get('backup/restore', 'BackupController@restore')->name('backup.restore');
-Route::get('backup/copyDir', 'BackupController@copyDir')->name('backup.copyDir');
+Route::get('backup/restoreDir', 'BackupController@restoreDir')->name('backup.restoreDir');
 // SEARCH /////////////////////////////////////////////////////////////////////////////////////
 Route::get('search/index', 'SearchController@index')->name('search.index');
 Route::post('search', 'SearchController@search')->name('search.search');
