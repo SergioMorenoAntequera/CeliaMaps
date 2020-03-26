@@ -167,7 +167,7 @@
                                             <b> Calles que se heredarán </b>
                                         </p> 
                                         <input style="display: none" type="text" class="streetFilter2 form-control mb-2" placeholder="Filtrador de calles">
-                                        <div id="streetsList">
+                                        <div style="max-height: 290px" id="streetsList">
                                             <p> Selecciona el nombre de un mapa a la izquierda para ver sus calles y heredarlas </p>
                                         </div>
                                     </div>
