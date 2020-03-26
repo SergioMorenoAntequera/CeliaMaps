@@ -12,14 +12,14 @@
                 <img class="imgSearch" src="{{url('img/icons/lupa-blanca.png')}}">
             </span>
         </div>
-        <input class="form-control my-0 py-1" type="text" placeholder="Search" aria-label="Search">
+        <input id="searchBar" class="form-control my-0 py-1" type="text" placeholder="Search" aria-label="Search">
     </div>
 
     {{-- IMAGES --}}
     
-    <div style="display: flex; flex-wrap: wrap;">
+    <div id="allElements" style="display: flex; flex-wrap: wrap;">
         @foreach ($images as $image)    
-            <a class="col-md-4" name="{{$image->id}}" style="margin: 15px 0; padding: 0 15px; flex: 0 0 33.333333%; max-width: 455px; position: relative; overflow: hidden; height: 325px" href="#" data-toggle="light-box" data-gallery="gallery">
+            <a class="element col-md-4" name="{{$image->id}}" style="margin: 15px 0; padding: 0 15px; flex: 0 0 33.333333%; max-width: 455px; position: relative; overflow: hidden; height: 325px" href="#" data-toggle="light-box" data-gallery="gallery">
                 <img class="rounded" style="height: 100%" src="{{url('img/hotspots/', $image->file_name)}}">
             </a>
         @endforeach
@@ -99,4 +99,42 @@
         });
     </script>
     
+    {{-- CODIGO BARRA DE BUSQUEDA CON AJAX    --}}
+    <script>
+        $(document).ready(function(){
+            // Cogemos la ruta por si me lo levo a un archivo externo 
+            var searchAjax = "{{route('hotspot.search')}}"
+            
+            $("#searchBar").keyup(function(){
+                text = $(this).val();
+                
+                $.ajax({
+                    url: searchAjax,
+                    data: {"text":text},
+                    success: function(data){
+                        var imgsFound = data.imagesFound;
+
+                        var list = $("#allElements");
+                        list.children().each(function(e){
+                            var imgID = $(this).attr("name");
+                            var found = false;
+                            
+                            imgsFound.forEach( imgFound => {
+                                if(imgFound.id == imgID){
+                                    found = true;
+                                    return;
+                                }
+                            });
+
+                            if(found)
+                                $(this).show();
+                            else
+                                $(this).hide();
+                        });
+                    },
+                });
+            });
+        });
+    </script>
+
 @endsection
