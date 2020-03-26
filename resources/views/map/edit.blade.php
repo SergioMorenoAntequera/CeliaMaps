@@ -23,6 +23,7 @@
                 </div>
             </div>    
            <div class="rightPanel">
+                {{-- Errores de validación y todo eso --}}
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul style="margin: 0px">
@@ -32,6 +33,8 @@
                         </ul>
                     </div>
                 @endif
+
+                {{-- Formulario con todos los campos que rellenar --}}
                <form method="POST" action="{{route('map.update', $map->id)}}" enctype="multipart/form-data">
                     @csrf
                     @method("PATCH")
@@ -73,26 +76,24 @@
                         <p><i class="fa fa-caret-right"></i> Calles asociadas </p>
                     </div>
                     <div class="more" style="display: none; overflow-y: hidden">
-                        {{-- Input escondido paraver lo que queremos hacer con las callles--}}
+                        
+                        {{-- Input escondido paraver lo que queremos hacer con las callles --}}
                         <div class="form-group">
                             <input type="hidden" id="streetsToDo" class="form-control" name="streetsToDo" value="Calles actuales">
                         </div>
+                        
                         {{-- Barra de navegación para ver que queremos hacer --}}
                         <nav class="mt-2">
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                              <a class="nav-item nav-link active " id="nav-streets-tab" data-toggle="tab" href="#nav-streets" role="tab" aria-controls="nav-streets" aria-selected="true">Calles actuales</a>
-                              <a class="nav-item nav-link" id="nav-inherit-tab" data-toggle="tab" href="#nav-inherit" role="tab" aria-controls="nav-inherit" aria-selected="false">Heredar</a>
+                              <a style="color:#3ab398" class="nav-item nav-link active " id="nav-streets-tab" data-toggle="tab" href="#nav-streets" role="tab" aria-controls="nav-streets" aria-selected="true">Calles actuales</a>
+                              <a style="color:#3ab398" class="nav-item nav-link" id="nav-inherit-tab" data-toggle="tab" href="#nav-inherit" role="tab" aria-controls="nav-inherit" aria-selected="false">Heredar</a>
                             </div>
-                            {{-- Actualizar el input escondido --}}
-                            <script>
-                                $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                                    $("#streetsToDo").attr("value", $(this).text());
-                                });
-                            </script>
                         </nav>
+
                         {{-- Tabs con la info --}}
                         <div class="tab-content pt-4" id="nav-tabContent">
-                            {{-- Tab para poner y quitar calles manualmente --}}
+                            
+                            {{-- CALLES ACTUALES --}}
                             <div style="max-height: 400px; overflow-y: auto;" class="tab-pane fade show active ml-2" id="nav-streets" role="tabpanel" aria-labelledby="nav-streets-tab">
                                 <input type="text" class="streetFilter form-control mb-2" placeholder="Filtrador de calles">
                                 
@@ -141,131 +142,46 @@
                                     </div>
                                 </div>
                                 
-                                <script>
-                                    $(".selectAllCB").change(function(){
-                                        var cbs = $(this).siblings(".streetList").children(".streetInList").children();
-                                        if($(this).is(":checked")){
-                                            for (let i = 0; i < cbs.length; i++) {
-                                                const checkboxInList = jQuery(cbs[i]);
-                                                checkboxInList.prop("checked", true);
-                                            }
-                                        } else {
-                                            for (let i = 0; i < cbs.length; i++) {
-                                                const checkboxInList = jQuery(cbs[i]);
-                                                checkboxInList.prop("checked", false);
-                                            }
-                                        }
-                                    });
-
-                                    $(".streetFilter").keyup(function(){
-                                        var text = $(this).val();
-                                        var streetContainer = $(this).siblings("div").find(".streetInList");
-                                        streetContainer.each(function(e){
-                                            var streetName = $(this).find("span").text();
-                                            if(streetName.toLowerCase().includes(text.toLowerCase())){
-                                                $(this).show();
-                                            } else {
-                                                $(this).hide();
-                                            }
-                                            
-                                        });
-                                    });
-                                </script>
+                                
                             </div>
 
-                            {{-- Tab para heredar las calles de nuevo --}}
+                            {{-- HEREDAR --}}
                             <div style="max-height: 400px; overflow-y: none;" class="tab-pane fade ml-2" id="nav-inherit" role="tabpanel" aria-labelledby="nav-inherit-tab">
                                 {{-- Campo invisible que vamos actualizando para enviar el mapa del que heredar --}}
                                 <input id="inherateInput" type="hidden" name="inherit" value="Ninguno">
-
                                 <div class="row ml-1 mr-1">
+                                    {{-- Lista de mapas --}}
                                     <div style="height: 400px" id="mapsList" class="col-4 border-right border-success">
                                         <p><b> Listado de Mapas </b></p> 
-                                        {{-- <script>var mapsListed = [];</script> --}}
                                         <p class="mapToInherit selected"> Ninguno </p>
                                         @foreach ($maps as $mapInList)
                                             @if ($mapInList->title != $map->title)
                                                  <p class="mapToInherit"> {{$mapInList->title}} </p>
                                             @endif
-                                            
-                                            {{-- <script> mapsListed.push({id:"{{$map->id}}", title:"{{$map->title}}"}); </script> --}}
                                         @endforeach
                                     </div>
+                                    {{-- Lista de calles --}}
                                     <div class="col-8">
-                                        <p><b> Calles que se heredarán </b></p> 
-                                        <div style="height: 350px" id="streetsList">
+                                        <p>
+                                            <input type="checkbox" class="selectAllCB2" checked>
+                                            <b> Calles que se heredarán </b>
+                                        </p> 
+                                        <input style="display: none" type="text" class="streetFilter2 form-control mb-2" placeholder="Filtrador de calles">
+                                        <div id="streetsList">
                                             <p> Selecciona el nombre de un mapa a la izquierda para ver sus calles y heredarlas </p>
                                         </div>
                                     </div>
-                                    <script>
-                                        
-                                        // console.log(mapsListed);
-                                        $(".mapToInherit").on("click", function(){
-                                            $("#mapsList .selected").removeClass("selected");
-                                            $(this).addClass("selected");
-                                            $("#inherateInput").val($(this).text().trim());
-                                            
-                                            if($(this).text().includes("Ninguno")){
-                                                $("#streetsList").empty();
-                                                $("#streetsList").append("<p> Selecciona el nombre de un mapa a la izquierda para ver sus calles y heredarlas </p>");
-                                                return;
-                                            }
-                                            
-                                            var url = window.location.href.replace(currentMapId+"/edit", "streets");
-                                            //Petición ajax para recuperar las calles de los mapas
-                                            $.ajax({
-                                                type: 'GET',
-                                                url: url,
-                                                data: {title : $(this).text()},
-
-                                                success: function(data) {
-                                                    $("#streetsList").empty();
-                                                    if(data.streets.length == 0){
-                                                        $("#streetsList").append("<p class='text-danger'> Este mapa no contiene ninguna calle que puedas heredar </p>");
-                                                        return;
-                                                    }
-                                                    
-                                                    data.streets.forEach(street => {
-                                                        $("#streetsList").append("<p>"+ street.type.name + " " + street.name +"</p>");
-                                                    });
-                                                },
-                                            });
-                                        });
-                                    </script>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                     
-                    {{-- Para que secierren bien las cosas --}}
-                    <script>
-                        $(document).ready(function(){
-                            $(".showMore").on("click", function(){
-                                if($(this).find(".fa").hasClass("fa-caret-right")){
-                                    $(this).find(".fa").removeClass("fa-caret-right");
-                                    $(this).find(".fa").addClass("fa-caret-down");
-                                } else {
-                                    $(this).find(".fa").removeClass("fa-caret-down");
-                                    $(this).find(".fa").addClass("fa-caret-right");
-                                }
-                                $(this).next(".more").slideToggle(200);
-                            });
-                        });
-                    </script>
-                    
+                    {{-- SUBMIT --}}
                     <button type="submit" class="mt-5 btn btn-success"> Confirmar Cambios </button>
                     
-                    <a href="{{route('map.align', $map->id)}}"> 
-                        <button class="btn-align mt-5 btn text-white btn-warning"> Alinear Mapa </button>
-                    </a>
-                    <script>
-                        $(document).ready(function(){
-                            $(".btn-align").on("click", function(e){
-                                e.preventDefault();
-                                location.href = "{{route('map.align', $map->id)}}";
-                            })
-                        });
-                    </script>
+                    {{-- ALINEAR --}}
+                    <button class="btn-align mt-5 btn text-white btn-warning"> Alinear Mapa </button>
                 </form>
            </div>
         </div>    
@@ -274,6 +190,144 @@
 
 @section('scripts')
 
-    footer
+    {{-- Para que aparezcan los ShowMore y todo el rollo --}} 
+    <script>
+        $(document).ready(function(){
+            $(".showMore").on("click", function(){
+                if($(this).find(".fa").hasClass("fa-caret-right")){
+                    $(this).find(".fa").removeClass("fa-caret-right");
+                    $(this).find(".fa").addClass("fa-caret-down");
+                } else {
+                    $(this).find(".fa").removeClass("fa-caret-down");
+                    $(this).find(".fa").addClass("fa-caret-right");
+                }
+                $(this).next(".more").slideToggle(200);
+            });
+        });
+    </script>
     
+    {{-- --------------------------------------------------------------------- --}}
+    {{-- Lo relacionado con el menú de herencias --}}
+    {{-- Para ver si queremos modificar calles actuales o heredar desde 0--}}
+    <script>
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            $("#streetsToDo").attr("value", $(this).text());
+        });
+    </script>
+
+    {{-- Calles actuales --}}
+    <script>
+        // Seleccionar todas o no ninguna calle
+        $(".selectAllCB").change(function(){
+            var cbs = $(this).siblings(".streetList").children(".streetInList").children();
+            if($(this).is(":checked")){
+                for (let i = 0; i < cbs.length; i++) {
+                    const checkboxInList = jQuery(cbs[i]);
+                    checkboxInList.prop("checked", true);
+                }
+            } else {
+                for (let i = 0; i < cbs.length; i++) {
+                    const checkboxInList = jQuery(cbs[i]);
+                    checkboxInList.prop("checked", false);
+                }
+            }
+        });
+
+        // Filtramos los resultados
+        $(".streetFilter").keyup(function(){
+            var text = $(this).val();
+            var streetContainer = $(this).siblings("div").find(".streetInList");
+            streetContainer.each(function(e){
+                var streetName = $(this).find("span").text();
+                if(streetName.toLowerCase().includes(text.toLowerCase())){
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+                
+            });
+        });
+    </script>
+
+    {{-- Heredar desde cero --}}
+    <script>
+        //Seleccionar el mapa desde el que se va a heredar
+        $(".mapToInherit").on("click", function(){
+            $("#mapsList .selected").removeClass("selected");
+            $(this).addClass("selected");
+            $("#inherateInput").val($(this).text().trim());
+            
+            if($(this).text().includes("Ninguno")){
+                $("#streetsList").empty();
+                $(".streetFilter").hide();
+                $("#streetsList").append("<p> Selecciona el nombre de un mapa a la izquierda para ver sus calles y heredarlas </p>");
+                return;
+            }
+            
+            var url = window.location.href.replace(currentMapId+"/edit", "streets");
+            //Petición ajax para recuperar las calles de los mapas
+            $.ajax({
+                type: 'GET',
+                url: url,
+                data: {title : $(this).text()},
+
+                success: function(data) {
+                    $("#streetsList").empty();
+                    if(data.streets.length != 0){
+                        data.streets.forEach(street => {
+                            $(".streetFilter2").show();
+                            $(".streetFilter2").val("");
+                            $(".selectAllCB2").prop("checked", true);
+                            $("#streetsList").append("<p class='mb-0 streetFound'> <input class='cbStreet mr-1' type='checkbox' name='streetsInMap2[]' value='"+ street.id +"' checked><span>"+ street.type.name + " " + street.name +"</span></p>");
+                        });
+                    } else {
+                        $(".streetFilter2").hide();
+                        $(".selectAllCB2").prop("checked", false);
+                        $("#streetsList").append("<p class='text-danger'> Este mapa no contiene ninguna calle que puedas heredar </p>");
+                    }
+                },
+            });
+        });
+
+        // Checkbox que selecciona todos 
+        $(".selectAllCB2").change(function(){
+            var cbs = $(".cbStreet");
+            if($(this).is(":checked")){
+                for (let i = 0; i < cbs.length; i++) {
+                    const checkboxInList = jQuery(cbs[i]);
+                    checkboxInList.prop("checked", true);
+                }
+            } else {
+                for (let i = 0; i < cbs.length; i++) {
+                    const checkboxInList = jQuery(cbs[i]);
+                    checkboxInList.prop("checked", false);
+                }
+            }
+        });
+
+        $(".streetFilter2").keyup(function(){
+            var text = $(this).val();
+            var streetContainer = $("#streetsList");
+            streetContainer.children().each(function(e){
+                var streetName = $(this).find("span").text();
+                if(streetName.toLowerCase().includes(text.toLowerCase())){
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    </script>
+
+    {{-- --------------------------------------------------------------------- --}}
+    {{-- Codigo botón alinear --}}
+    <script>
+        $(document).ready(function(){
+            $(".btn-align").on("click", function(e){
+                e.preventDefault();
+                location.href = "{{route('map.align', $map->id)}}";
+            })
+        });
+    </script>
+
 @endsection

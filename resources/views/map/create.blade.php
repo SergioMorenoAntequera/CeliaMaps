@@ -72,6 +72,7 @@
                         <input id="inherateInput" type="hidden" name="inherit" value="Ninguno">
 
                         <div class="row ml-1 mr-1">
+                            {{-- Listado  de mapas --}}
                             <div id="mapsList" class="col-4 border-right border-success">
                                 <p><b> Listado de Mapas </b></p> 
                                 <p class="mapToInherit selected"> Ninguno </p>
@@ -79,6 +80,7 @@
                                     <p class="mapToInherit"> {{$map->title}} </p>
                                 @endforeach
                             </div>
+                            {{-- Listado de calles --}}
                             <div class="col-8">
                                 <p>
                                     <input type="checkbox" class="selectAllCB" checked>
@@ -133,6 +135,7 @@
             
             if(mapTitle.includes("Ninguno")){
                 $("#streetsList").empty();
+                $(".streetFilter").hide();
                 $("#streetsList").append("<p> Selecciona el nombre de un mapa a la izquierda para ver sus calles y heredarlas </p>");
                 
             } else {
@@ -154,11 +157,10 @@
                     //Ponemos la lista de calles nueva si la hay
                     if(data.streets.length != 0){
                         data.streets.forEach(street => {
-                            console.log($(".streetFilter"));
                             $(".streetFilter").show();
                             $(".streetFilter").val("");
                             $(".selectAllCB").prop("checked", true);
-                            $("#streetsList").append("<p class='mb-0 streetFound'> <input class='cbStreet' type='checkbox' name='streetsInMap[]' value='"+ street.id +"' checked><span>"+ street.type.name + " " + street.name +"</span></p>");
+                            $("#streetsList").append("<p class='mb-0 mr-1 streetFound'> <input class='cbStreet' type='checkbox' name='streetsInMap[]' value='"+ street.id +"' checked><span>"+ street.type.name + " " + street.name +"</span></p>");
                         });
                     } else {
                         $(".streetFilter").hide();
@@ -167,8 +169,7 @@
                     }
                 },
             });
-        }
-
+        };
     </script>
 
 
