@@ -116,7 +116,6 @@
                                 <b> Backup </b>
                                 <div class="line"></div>
                                 <a href="<?php echo e(route('backup.index')); ?>"><li>Índice</li></a>
-                                <a href="<?php echo e(route('backup.copyDir')); ?>"><li>imagen</li></a>
                                 
                             </div>
                         </div>

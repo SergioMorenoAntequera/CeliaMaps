@@ -54,7 +54,7 @@
 
     {{-- ADD IMAGES BUTTON --}}
     
-    <a href="{{route('hotspot.create')}}">
+    <a href="{{route('hotspot.gallery')}}">
         <div id="addButton">
             <img class="center" src="{{url("img/icons/plus.svg")}}">
         </div>
