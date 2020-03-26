@@ -3,15 +3,30 @@
 @section('title', 'Celia Maps')
 
 @section('content')	
-    <a href="https://www.github.com/luisdavidfer"></a>
+
+    {{-- SEARCH BAR --}}
+    
+    <div class="input-group md-form form-sm form-1 pl-0" style="margin: 15px; width: auto;">
+        <div class="input-group-prepend">
+            <span class="input-group-text purple lighten-3" id="basic-text1">
+                <img class="imgSearch" src="{{url('img/icons/lupa-blanca.png')}}">
+            </span>
+        </div>
+        <input class="form-control my-0 py-1" type="text" placeholder="Search" aria-label="Search">
+    </div>
+
+    {{-- IMAGES --}}
+    
     <div style="display: flex; flex-wrap: wrap;">
         @foreach ($images as $image)    
-            <a class="col-md-4" name="{{$image->id}}" style="margin: 15px 0; padding: 0 15px; flex: 0 0 33.333333%; max-width: 450px; position: relative; overflow: hidden; height: 325px" href="#" data-toggle="light-box" data-gallery="gallery">
+            <a class="col-md-4" name="{{$image->id}}" style="margin: 15px 0; padding: 0 15px; flex: 0 0 33.333333%; max-width: 455px; position: relative; overflow: hidden; height: 325px" href="#" data-toggle="light-box" data-gallery="gallery">
                 <img class="rounded" style="height: 100%" src="{{url('img/hotspots/', $image->file_name)}}">
             </a>
         @endforeach
     </div>
 
+    {{-- MODAL CARROUSEL --}}
+    
     <div id="ekkoLightbox-893" class="ekko-lightbox modal fade text-dark" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document" style="flex: 1 1 1px; max-width: 70%;">
             <div class="modal-content">
@@ -37,6 +52,13 @@
         </div>
     </div>
 
+    {{-- ADD IMAGES BUTTON --}}
+    
+    <a href="{{route('hotspot.create')}}">
+        <div id="addButton">
+            <img class="center" src="{{url("img/icons/plus.svg")}}">
+        </div>
+    </a>
 
 @endsection
 
