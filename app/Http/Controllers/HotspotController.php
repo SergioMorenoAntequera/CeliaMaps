@@ -94,6 +94,16 @@ class HotspotController extends Controller
     }
 
     /**
+     *  Method that shows the gallery, Hotspots Images
+     * 
+     *  @return View
+     */
+    public function gallery(){
+        $image = Image::all();
+        return view('hotspot.gallery', array('images'=>$image));
+    }
+
+    /**
      * Method that recieves information in a Request object,
      * then checks and changes the information inside our database
      *

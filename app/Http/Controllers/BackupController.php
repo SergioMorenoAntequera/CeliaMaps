@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Image;
 use App\Hotspot;
 use DB;
-
-
+use Exception;
+use ZipArchive;
 
 class BackupController extends Controller
 {
@@ -30,6 +30,8 @@ class BackupController extends Controller
    ///////////////////////////////// CREAR COPIA DE SEGURIDAD ///////////////////////////////////
     public function create(){
 
+        // PARA CREAR EL BACKUP DE LA BASE DE DATOS
+
         $dbhost = env('DB_HOST');
         $dbname = env('DB_DATABASE');
         $dbuser = env('DB_USERNAME');
@@ -41,6 +43,49 @@ class BackupController extends Controller
 
         system($command);
 
+        // AHORA LA COPIA DE LA CARPETA DE LAS IMÁGENES.
+
+        try{
+            //CREAR ARCHIVO ZIP ////////////////////////////////////
+            $zip_file = "copiaImagenes.zip";
+
+            //SE INSTANCIA LA CLASE ZipArchive, DE PHP PARA CREAR ARCHIVOS ZIP
+            $zip = new ZipArchive();
+
+            // ABRIMOS EL ARCHIVO $zip  Y CON ZipArchive::CREATE, SE CREA EL ARCHIVO SI NO EXISTE
+            $open = $zip->open($zip_file, ZipArchive::CREATE);
+
+            // ENTONCES, SI EXISTE Y ESTÁ ABIERTO....
+            if($open === TRUE){
+
+                // AÑADIMOS LA RUTA DE LAS IMÁGENES /////////////
+                $path = public_path('img');
+
+                // AHORA, RECORRE LA CARPETA DE ORIGEN ($path), Y SI HAY SUBDIRECTORIOS, TAMBIÉN LOS COPIA
+                $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
+
+                // EN UN BUCLE, SI ENCUENTRA UN SUBDIRECTORIO, GUARDA EN $filePath SU RUTA Y
+                // EN $relativePath GUARDA DENTRO DE LA CARPETA PRINCIPAL ('hotspotsCopy/'),
+                // EL SUBDIRECTORIO, AÑADIENDOSE TODO, AL FINAL AL ARCHIVO ZIP.
+                foreach($files as $name=>$file){
+                    if(!$file->isDir()){
+                        $filePath = $file->getRealPath();
+
+                        $relativePath = 'img/'.substr($filePath, strlen($path) + 1);
+
+                        $zip->addFile($filePath, $relativePath);
+                    }
+                }
+                // AL ACABAR, SE CIERRA EL ARCHIVO ZIP
+                $zip->close();
+                return redirect(route('backup.index'));
+            }else{
+                echo 'fallando';
+            }
+
+        }catch(Exception $e){
+
+        }
     }
 
     //////////////////////////////// RESTAURAR COPIA DE SEGURIDAD /////////////////////////////
@@ -57,17 +102,46 @@ class BackupController extends Controller
 
         system($command);
 
+        try{
+
+            $zip = new ZipArchive;
+            //$open = $zip->open($zip_file, ZipArchive::CREATE);
+
+            if ($zip->open('copiaImagenes.zip') === TRUE) {
+                $path = public_path('/');
+                $zip->extractTo($path);
+                $zip->close();
+                return redirect(route('backup.index'));
+            } else {
+                echo 'failed';
+            }
+
+            }catch(Exception $e){
+
+            }
+
         //return redirect(route('backup.index'));
     }
+    public function restoreDir(){
+          try{
 
-    public function copymage(){
-        $file = public_path('img\hotspot\alcazaba-almeria-img-01.jpg');
-        //dd($file);
-        $destino = public_path('storage\alcazaba-almeria-img-01.jpg');
-        //dd($destino);
-        Storage::copy($file, $destino);
+        $zip = new ZipArchive;
+        //$open = $zip->open($zip_file, ZipArchive::CREATE);
+
+        if ($zip->open('copiaImagenes.zip') === TRUE) {
+            $path = public_path('/');
+            $zip->extractTo($path);
+            $zip->close();
+            echo 'ok';
+        } else {
+            echo 'failed';
+        }
+
+        }catch(Exception $e){
+
+        }
+
+
     }
-
-
 }
 

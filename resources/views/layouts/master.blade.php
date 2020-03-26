@@ -77,6 +77,7 @@
                                 <div class="line"></div>
                                 <a href="{{route('hotspot.index')}}"><li>Índice</li></a>
                                 <a href="{{route('hotspot.create')}}"><li>Administrar</li></a>
+                                <a href="{{route('hotspot.gallery')}}"><li>Galeria de Imagenes</li></a>
                                 {{-- <a href="{{route('hotspot.index')}}"><li>Modificar</li></a>
                                 <a href="{{route('hotspot.index')}}"><li>Elminar</li></a> --}}
                             </div>
@@ -117,8 +118,8 @@
                                 <b> Backup </b>
                                 <div class="line"></div>
                                 <a href="{{route('backup.index')}}"><li>Índice</li></a>
-                                {{--<a href="{{route('backup.copymage')}}"><li>imagen</li></a>--}}
-                                {{-- <a href="{{route('backup.index')}}"><li>Guardar</li></a>
+                                {{--<a href="{{route('backup.restoreDir')}}"><li>imagen</li></a>
+                                 <a href="{{route('backup.index')}}"><li>Guardar</li></a>
                                 <a href="{{route('backup.index')}}"><li>Restaurar</li></a> --}}
                             </div>
                         </div>

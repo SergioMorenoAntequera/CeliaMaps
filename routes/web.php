@@ -44,6 +44,7 @@ Route::resource('point', 'PointController');
 // HOTSPOT /////////////////////////////////////////////////////////////////////////////////////
 Route::delete('hotspot/deleteAjax/{id}', 'HotspotController@deleteAjax')->name('hotspot.deleteAjax');
 Route::get('hotspot/getAllAjax', 'HotspotController@getAllAjax')->name('hotspot.getAjax');
+Route::get('hotspot/gallery', 'HotspotController@gallery')->name('hotspot.gallery');
 Route::resource('hotspot', 'HotspotController');
 // AUTH ///////////////////////////////////////////////////////////////////////////////////////
 Auth::routes();
@@ -52,7 +53,7 @@ Auth::routes(['register' => false]);
 Route::get('backup', 'BackupController@index')->name('backup.index');
 Route::get('backup/create', 'BackupController@create')->name('backup.create');
 Route::get('backup/restore', 'BackupController@restore')->name('backup.restore');
-Route::get('backup/copymage', 'BackupController@copymage')->name('backup.copymage');
+Route::get('backup/restoreDir', 'BackupController@restoreDir')->name('backup.restoreDir');
 // SEARCH /////////////////////////////////////////////////////////////////////////////////////
 Route::get('search/index', 'SearchController@index')->name('search.index');
 Route::post('search', 'SearchController@search')->name('search.search');

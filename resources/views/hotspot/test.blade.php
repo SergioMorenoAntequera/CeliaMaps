@@ -507,11 +507,6 @@
                 $("#previewImage").attr("src", host+"/"+hotspot.images[0].file_path+"/"+hotspot.images[0].file_name);
 
                 // Coordinates mouse
-                /* Luis David
-                $('.leaflet-marker-icon, #preview').mousemove(function(event){
-                    var latPreview = event.pageY -250;
-                    var lgnPreview = event.pageX -140;
-                    */
                 $('.leaflet-marker-icon').mousemove(function(event){
                     var latPreview = event.screenY -400;
                     var lgnPreview = event.screenX -140;

@@ -30,8 +30,10 @@
                 </div>
                 <div class="modal-body">
                     <p>
-                        Si continua, se creará una copia de seguridad de la base de datos en el estado actual,
-                        sobreescribiendo a las versiones anteriores, <b>¿Quiere continuar?</b>
+                        Si continua, se creará una copia de seguridad de las imágenes contenidas en la
+                        aplicación, así como  de la base de datos en el estado actual, sobreescribiendo
+                        a las versiones anteriores. <b>¿Quiere continuar?</b><br>
+                        Esta operación puede tardar unos minutos.
                     </p>
                 </div>
                 <div class="modal-footer">
@@ -64,14 +66,16 @@
                 </div>
                 <div class="modal-body">
                     <p>
-                        Si continua, la base de datos se restaurará con la última copia de seguridad guardada,
+                        Si continua, se restaurará una copia de seguridad de las imágenes contenidas en la aplicación,
+                        así como  dela base de datos, ambas con la última copia de seguridad guardada,
                         perdiéndose así lo introducido desde entonces hasta ahora.
                         <b>¿Quiere continuar?</b><br>
                         Esta operación puede tardar unos minutos.
                     </p>
                 </div>
                 <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal"> Cancelar </button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal"> Cancelar </button>
+                    <button id="confirmRestore" type="button" class="btn btn-success" data-dismiss="modal">Restaurar copia</button>
                 </div>
             </div>
             </div>

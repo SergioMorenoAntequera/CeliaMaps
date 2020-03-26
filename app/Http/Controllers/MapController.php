@@ -49,9 +49,17 @@ class MapController extends Controller
         foreach ($hotspots as $hp) {
             $hp->images = $hp->images->toArray();
         }
-        
+    
+        $streets = Street::all();
+        foreach ($streets as $street) {
+            $street->typeName = $street->type->name;
+            $street->maps;
+            $street->lat = $street->points[0]->lat; 
+            $street->lng = $street->points[0]->lng;
+        }
         $data['hotspots'] = $hotspots;
-        
+        $data['streets'] = $streets;
+
         return view("map.map", $data);
     }
     
