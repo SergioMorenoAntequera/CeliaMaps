@@ -38,6 +38,7 @@ Route::get('marker/update', 'MarkerController@update')->name('marker.update');
 Route::resource('user', 'UserController');
 Route::delete('user/deleteAjax/{id}', 'UserController@deleteAjax')->name('user.deleteAjax');
 // STREETS /////////////////////////////////////////////////////////////////////////////////////
+Route::get('street/admin', 'StreetController@admin')->name('street.admin');
 Route::resource('street', 'StreetController');
 // POINTS /////////////////////////////////////////////////////////////////////////////////////
 Route::resource('point', 'PointController');
