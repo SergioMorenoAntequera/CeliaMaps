@@ -3,36 +3,11 @@
 @section('title', 'Celia Maps')
 
 @section('content')	
-    {{-- 
-        
-        <div class="row" style="margin: 15px; display: flex; flex-wrap: wrap;">
-            <a class="col-md-4" style="flex: 0 0 33.333333%; max-width: 33.333333%;" href="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" data-toggle="light-box" data-gallery="gallery">
-                <img class="img-fluid rounded" src="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}">
-            </a>
-            <a class="col-md-4" style="flex: 0 0 33.333333%; max-width: 33.333333%;" href="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" data-toggle="light-box" data-gallery="gallery">
-                <img class="img-fluid rounded" src="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}">
-            </a>
-            <a class="col-md-4" style="flex: 0 0 33.333333%; max-width: 33.333333%;" href="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" data-toggle="light-box" data-gallery="gallery">
-                <img class="img-fluid rounded" src="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}">
-        </a>
-    </div>
-    <div class="row" style="margin: 15px; display: flex; flex-wrap: wrap;">
-        <a class="col-md-4" style="flex: 0 0 33.333333%; max-width: 33.333333%;" href="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" data-toggle="light-box" data-gallery="gallery">
-            <img class="img-fluid rounded" src="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}">
-        </a>
-        <a class="col-md-4" style="flex: 0 0 33.333333%; max-width: 33.333333%;" href="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" data-toggle="light-box" data-gallery="gallery">
-            <img class="img-fluid rounded" src="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}">
-        </a>
-        <a class="col-md-4" style="flex: 0 0 33.333333%; max-width: 33.333333%;" href="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" data-toggle="light-box" data-gallery="gallery">
-            <img class="img-fluid rounded" src="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}">
-        </a>
-    </div>
-    --}}
     
     <div style="display: flex; flex-wrap: wrap;">
         @foreach ($images as $image)    
-            <a class="col-md-4" name="{{$image->id}}" style="margin: 15px 0; padding: 0 15px; flex: 0 0 33.333333%; max-width: 33%;" href="#" data-toggle="light-box" data-gallery="gallery">
-                <img class="img-fluid rounded" src="{{url('img/hotspots/', $image->file_name)}}">
+            <a class="col-md-4" name="{{$image->id}}" style="margin: 15px 0; padding: 0 15px; flex: 0 0 33.333333%; max-width: 450px; position: relative; overflow: hidden; height: 325px" href="#" data-toggle="light-box" data-gallery="gallery">
+                <img class="rounded" style="height: 100%" src="{{url('img/hotspots/', $image->file_name)}}">
             </a>
         @endforeach
     </div>
