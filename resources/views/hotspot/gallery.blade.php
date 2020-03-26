@@ -3,7 +3,7 @@
 @section('title', 'Celia Maps')
 
 @section('content')	
-    
+    <a href="https://www.github.com/luisdavidfer"></a>
     <div style="display: flex; flex-wrap: wrap;">
         @foreach ($images as $image)    
             <a class="col-md-4" name="{{$image->id}}" style="margin: 15px 0; padding: 0 15px; flex: 0 0 33.333333%; max-width: 450px; position: relative; overflow: hidden; height: 325px" href="#" data-toggle="light-box" data-gallery="gallery">
@@ -23,10 +23,10 @@
                             <img id="previewImage" class="img-fluid center-block" src="" style="height: 100%; display: inline-block;" alt="Imagen Hotspot">
                         </div>
                         <div class="ekko-lightbox-nav-overlay">
-                            <a href="#">
+                            <a id="anterior" href="#">
                                 <span>❮</span>
                             </a>
-                            <a href="#">
+                            <a id="siguiente" href="#">
                                 <span>❯</span>
                             </a>
                         </div>
@@ -51,17 +51,28 @@
                 let images = @json($images);
                 console.log(images);
             @endisset
-            
-            console.log(this.name);
+
 
             let image;
             for (let i = 0; i < images.length; i++) {
-                if(images[i].id == this.name)
+                if(images[i].id == this.name){
                     image = images[i];
+                    image.position = i;
+                    
+                }
             }
+            
 
             let host = "{{url('')}}";
             $("#previewImage").attr("src", host+"/img/hotspots/"+image.file_name);
+
+            let imageId = this.name;
+
+            $("#anterior").on("click", function(e){
+                console.log("ok");
+                console.log(image.position);
+                // SOCORRO ÁLFRED
+            });
 
         });
     </script>
