@@ -16,6 +16,7 @@
                 </div>
             </div>    
             <div class="rightPanel">
+                {{-- Control de errores del Auth  --}}
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul style="margin: 0px">
@@ -25,6 +26,8 @@
                         </ul>
                     </div>
                 @endif
+
+                {{-- Formulario --}}
                 <form id="createForm" method="POST" class="text-left" action="{{route('map.store')}}" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
@@ -59,7 +62,7 @@
                         </div>
                     </div>
 
-                    {{-- Show more para pooder herdar calles --}}
+                    {{-- Show more para pooder heredar calles --}}
                     <div class="showMore noselect mt-3">
                         <p><i class="fa fa-caret-right"></i> Heredar calles de otro mapa </p>
                     </div>
@@ -77,7 +80,11 @@
                                 @endforeach
                             </div>
                             <div class="col-8">
-                                <p><b> Calles que se heredarán </b></p> 
+                                <p>
+                                    <input type="checkbox" class="selectAllCB" checked>
+                                    <b> Calles que se heredarán </b>
+                                </p>
+                                <input style="display: none" type="text" class="streetFilter form-control mb-2" placeholder="Filtrador de calles">
                                 <div id="streetsList">
                                     <p> Selecciona el nombre de un mapa a la izquierda para ver sus calles y heredarlas </p>
                                 </div>
@@ -91,11 +98,11 @@
             </div>
         </div>
     </div>
+
 @endsection
 
 @section('scripts')
 
-    
     {{-- Para que aparezcan los ShowMore y todo el rollo --}}
     <script>
         $(document).ready(function(){
@@ -127,13 +134,13 @@
             if(mapTitle.includes("Ninguno")){
                 $("#streetsList").empty();
                 $("#streetsList").append("<p> Selecciona el nombre de un mapa a la izquierda para ver sus calles y heredarlas </p>");
-                return;
+                
+            } else {
+                // Petición ajax para recuperar las calles de los mapas
+                // También se encarga de colocarlo en la pantalla
+                var data = getStreetsAjax(mapTitle);
             }
 
-            // Petición ajax para recuperar las calles de los mapas
-            // También se encarga de colocarlo en la pantalla
-            var data = getStreetsAjax(mapTitle);
-            
         });
 
         function getStreetsAjax(mapTitle) {
@@ -147,9 +154,15 @@
                     //Ponemos la lista de calles nueva si la hay
                     if(data.streets.length != 0){
                         data.streets.forEach(street => {
-                            $("#streetsList").append("<p>"+ street.type.name + " " + street.name +"</p>");
+                            console.log($(".streetFilter"));
+                            $(".streetFilter").show();
+                            $(".streetFilter").val("");
+                            $(".selectAllCB").prop("checked", true);
+                            $("#streetsList").append("<p class='mb-0 streetFound'> <input class='cbStreet' type='checkbox' name='streetsInMap[]' value='"+ street.id +"' checked><span>"+ street.type.name + " " + street.name +"</span></p>");
                         });
                     } else {
+                        $(".streetFilter").hide();
+                        $(".selectAllCB").prop("checked", false);
                         $("#streetsList").append("<p class = 'text-danger'> Este mapa no contiene ninguna calle que puedas heredar </p>");
                     }
                 },
@@ -164,7 +177,7 @@
     <script>
         // Checkbox que selecciona todos 
         $(".selectAllCB").change(function(){
-            var cbs = $(this).siblings(".streetList").children(".streetInList").children();
+            var cbs = $(".cbStreet");
             if($(this).is(":checked")){
                 for (let i = 0; i < cbs.length; i++) {
                     const checkboxInList = jQuery(cbs[i]);
@@ -181,8 +194,8 @@
         // Input que filtra las calles 
         $(".streetFilter").keyup(function(){
             var text = $(this).val();
-            var streetContainer = $(this).siblings("div").find(".streetInList");
-            streetContainer.each(function(e){
+            var streetContainer = $("#streetsList");
+            streetContainer.children().each(function(e){
                 var streetName = $(this).find("span").text();
                 if(streetName.toLowerCase().includes(text.toLowerCase())){
                     $(this).show();

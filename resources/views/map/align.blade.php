@@ -72,32 +72,10 @@
         <img src="{{url('/img/icons/fsMaximize.png')}}" alt="">
     </div>
 
-    {{-- We prepare the php variables into JS --}}
-    <script> var markersJS = []; </script>
-    @foreach ($markers as $marker)
-        <script>
-            markersJS.push({
-                "id":{{$marker->id}}, 
-                "name":"{{$marker->name}}", 
-                "type":"{{$marker->type}}",
-                "radius":"{{$marker->radius}}",
-                "points": [ 
-                @foreach ($marker->points as $point)
-                    {
-                        "id":{{$point->id}},
-                        "lat":{{$point->lat}},
-                        "lng":{{$point->lng}},
-                    },
-                @endforeach
-                ],
-            });
-        </script>
-    @endforeach
 @endsection
 
 @section('scripts')
 
-    
     {{---------------------------------------------------------------}}
     {{-- ALL OF THE PARTS RELATED WITH SHOWING THE MAPS AND LAYERS --}}
     {{---------------------------------------------------------------}}
@@ -126,6 +104,7 @@
                 attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
             })
         ];
+        
         //Adding rhe layers to the map
         map.addLayer(mapTile0);
     </script>
@@ -133,11 +112,33 @@
     {{---------------------------------------------------------------}}
     {{------ ALL THE PARTS OF THE MARKERS AND THE MAP TO ALIGN ------}}
     {{---------------------------------------------------------------}}
+    {{-- We prepare the php variables into JS --}}
+    <script> var markersJS = []; </script>
+    @foreach ($markers as $marker)
+        <script>
+            markersJS.push({
+                "id":{{$marker->id}}, 
+                "name":"{{$marker->name}}", 
+                "type":"{{$marker->type}}",
+                "radius":"{{$marker->radius}}",
+                "points": [ 
+                @foreach ($marker->points as $point)
+                    {
+                        "id":{{$point->id}},
+                        "lat":{{$point->lat}},
+                        "lng":{{$point->lng}},
+                    },
+                @endforeach
+                ],
+            });
+        </script>
+    @endforeach
+    
     <script>
         // When the map is ready
         map.whenReady(function() {
 
-            //Añadimos las formas de ayuda
+            //Añadimos las formas de ayuda que llegan de la base de datos
             addMarkersJS();
             
             var img = addMapImg();
@@ -231,17 +232,7 @@
             
             return img;
         };
-        
+
     </script>
+
 @endsection
-
-
-    
-
-    
-    
-    
-    
-    
-
-</html>

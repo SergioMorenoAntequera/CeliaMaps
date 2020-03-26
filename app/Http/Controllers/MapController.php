@@ -120,6 +120,7 @@ class MapController extends Controller
      */
     public function store(Request $r){
         
+        
         $r->validate([
             'title' => 'required|unique:maps',
             'date' => 'required|numeric|min:0|max:'.date("Y").'',
@@ -128,35 +129,20 @@ class MapController extends Controller
             'city' => 'nullable|string',
             'miniature' => 'nullable|image',
         ]);
-        
+
         $map = new Map($r->all());
         $map->id = Map::max('id') + 1;
         $map->level = Map::max('level') + 1;
 
         //Herencia de calles de otro mapa
         if($r->inherit != "Ninguno"){
-            $mapToInherit = DB::table('maps')->where('title', 'like',  $r->inherit)->first(); 
-            $mapToInherit = Map::find($mapToInherit->id);
-
-            $streets = $mapToInherit->streets->toArray();
-
-            foreach ($streets as $mapStreet) {
-                $mapStreet = DB::table('maps_streets')
-                        ->where('street_id', $mapStreet['id'])
-                        ->where('map_id', $mapToInherit->id)->first();
-                $info = MapStreet::find($mapStreet->id);
-
-                $newMapsStreet = new MapStreet();
-                $newMapsStreet->id = MapStreet::max('id') + 1;
-                $newMapsStreet->street_id = $info->street_id;
-                $newMapsStreet->map_id = $map->id;
-                
-                $newMapsStreet->save();
+            foreach($r->streetsInMap as $streetToInheritID){
+                $streetToInherit = Street::find($streetToInheritID);
+                $map->streets()->save($streetToInherit);
             }
         }
 
         $map = $this->createMiniature($r, $map);
-    
 
         $map->save();
 

@@ -14,7 +14,7 @@
         <div id="allElements">
             @foreach ($maps as $map)
                 <!-- Cada uno de los elementos de la página -->
-                <div class="wholePanel">
+                <div class="wholePanel" style="min-height: 225px">
                     <!-- Columna con el numero y las flechas -->
                     <div class="leftPanel" style="width:10%; position: relative">
                         {{-- Metemos el boton dentro de un enlace para cuando queramos usar una imagen --}}

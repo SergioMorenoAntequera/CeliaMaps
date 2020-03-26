@@ -272,6 +272,8 @@
     </div>
 @endsection
 
-@section('footer')
+@section('scripts')
+
     footer
+    
 @endsection
