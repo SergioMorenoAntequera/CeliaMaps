@@ -354,10 +354,6 @@
     
 @endsection
 
-@section('footer')
-    <!--  Footer html  -->
-@endsection
-
 @section('scripts')
     {{-- ALL OF THE PARTS RELATED WITH SHOWING THE MAPS AND LAYERS --}}
     <script>
@@ -476,14 +472,15 @@
                 marker.on('click', function(){
                     // When click does not come from dragg event
                     if(!dragging){
-                    // Search for selected street
-                    let street;
-                    for (let i = 0; i < streets.length; i++) {
-                        if(streets[i].id == this.id)
-                            street = streets[i]; // Streets of array with selected street comparison
-                    }
-                    // Edit modal trigger with selected street
-                    editStreet(street);
+                        // Search for selected street
+                        let street;
+                        for (let i = 0; i < streets.length; i++) {
+                            if(streets[i].id == this.id)
+                                street = streets[i]; // Streets of array with selected street comparison
+                        }
+                        // Edit modal trigger with selected street
+                        console.log(streets);
+                        editStreet(street);
                     }else{
                         // After drag click will be fired and here break dragging mode
                         dragging = false;
@@ -647,6 +644,7 @@
                 });
             }
             
+            
             // AJAX SUBMIT
             $("#btn-submit").on("click", function(e){
                 e.preventDefault();
@@ -680,7 +678,7 @@
                 }
             });
 
-            // To get the info from the form
+            // GET DATA FROM THE FORM
             function getFormData(){
                 var newStreet = {
                     type_id: $("select[name='type_id']").val(),
@@ -706,26 +704,40 @@
                 newStreet.id = $("input[name='id']").attr("value");
                 
                 return newStreet;
-            }
+            };
             // To format the data from the database as Luis has it 
             // and get an Street onject that we can work with
             function formatStreetObject(data){
                 //El formato que hay que copiar
-                //console.log(streets[0]);
+                // console.log(streets[0]);
 
                 // Objeto Street recuperado
                 let formatedStreet = data.street;
-                
+                console.log(formatedStreet);
                 // Comletamos la información como la tiene Luis
+                formatedStreet.type_id = parseInt(formatedStreet.type_id);
                 // Puntos
-                let auxPoints = {"lat": formatedStreet.lat, "lng": formatedStreet.lng};
-                formatedStreet.points = auxPoints;
+                formatedStreet.points = data.points;
                 // Mapas con los pivots
                 formatedStreet.maps = data.maps;
-
+                
                 return formatedStreet;
-            }
-            
+            };
+            function showValidationErrors(data){
+                if( data.status === 422 ) {
+                    let errors = data.responseJSON.errors;
+                    
+                    $('#maps-error').empty();
+                    if(errors["type_id"] !== undefined) {
+                        $('#maps-error').append("Tipo de vía requerido <br>")
+                    }
+                    if(errors["name"] !== undefined) {
+                        $('#maps-error').append("Nombre de la vía requerido ")
+                    }
+                }
+            };
+
+            // AJAX METHODS
             function storeAjax(street){
                 $.ajax({
                     url:"{{route('street.storeAjax')}}",
@@ -740,8 +752,8 @@
                             {
                                 icon: markerImage, 
                                 alt:ajaxStreet.id, 
-                                draggable:false,
                                 id: ajaxStreet.id,
+                                draggable:false,
                             }
                         );
                         ajaxStreetMarker.id = ajaxStreet.id;
@@ -767,22 +779,46 @@
                     },
                     error: function(data) {
                         // Se ha producido un error de validación
-                        if( data.status === 422 ) {
-                            let errors = data.responseJSON.errors;
-                            
-                            $('#maps-error').empty();
-                            if(errors["type_id"] !== undefined) {
-                                $('#maps-error').append("Tipo de vía requerido <br>")
-                            }
-                            if(errors["name"] !== undefined) {
-                                $('#maps-error').append("Nombre de la vía requerido ")
-                            }
-                        }
+                        showValidationErrors(data);
                     },
                 });
             };
             function updateAjax(street){
-                alert(":(");
+                $.ajax({
+                    url:"{{route('street.updateAjax')}}",
+                    data: street,
+                    success: function(data) {
+                        let ajaxStreetUpdated = formatStreetObject(data);
+                        // console.log(streets[9]);
+
+                        // Update the street objects
+                        for (let i = 0; i < streets.length; i++) {
+                            if(streets[i].id == ajaxStreetUpdated.id) {
+                                console.log("HM");
+                                console.log(streets[i]);
+                                console.log(ajaxStreetUpdated);
+                                
+                                streets[i] = ajaxStreetUpdated;
+                            }
+                        }
+
+                        //Update the street markers
+                        markersList.forEach(marker => {
+                            if(marker.id == ajaxStreetUpdated.id){
+                                marker._latlng = {lat:ajaxStreetUpdated.lat, lng:ajaxStreetUpdated.lng};
+                            }
+                        });
+
+                        console.log(streets);
+
+                        // HIDE THE FORM
+                        $("button[class='close']").click();
+                    },
+                    error: function(data) {
+                        // Se ha producido un error de validación
+                        showValidationErrors(data);
+                    },
+                });
             };
             
             

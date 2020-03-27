@@ -9,6 +9,7 @@ use App\Street;
 use App\StreetType;
 use App\Point;
 use App\MapStreet;
+use DB;
 
 class StreetController extends Controller
 {
@@ -83,15 +84,61 @@ class StreetController extends Controller
         $street->lat = $r->lat;
         $street->lng = $r->lng;
         $street->type()->associate($r->type_id);
-
+        
         return response()->json([
             'street' => $street,
+            'points' => $point,
             'maps' => $mapsAsigned,
         ]);
-        // return redirect(route('street.create'));
     }
     public function updateAjax(Request $r){
-        dd("Un lavado de cara");
+        // Server side validation
+        $r->validate([
+            'type_id'=>'required',
+            'name'=>'required'
+        ]);
+
+        $street = Street::find($r->id);
+        $street->fill($r->all());
+        
+        // Maps streets relationships update
+        $mapsRelationship = array();
+        $mapsAsigned = Array();
+        // Array to complete junction table
+        for ($i=0; $i < count($r->maps_id); $i++) { 
+            $mapsRelationship[$r->maps_id[$i]] = ['alternative_name' => $r->maps_name[$i]];
+
+            $mapFound = Map::find($r->maps_id[$i]);
+            array_push($mapsAsigned, $mapFound);
+        }
+        $street->maps()->sync($mapsRelationship);
+        
+        foreach ($mapsAsigned as $mapAsigned) {
+            $pivot = DB::table('maps_streets')
+                    ->where('map_id', $mapAsigned->id)
+                    ->where('street_id', $street->id)
+                    ->first();
+            $mapAsigned->pivot = $pivot;
+            // $pivot = MapStreet::where('map_id', $mapAsigned->id)->get();
+        }
+
+        // Point update
+        $point = Point::find($street->points[0]->id);
+        $point->id = $street->points[0]->id;
+        $point->lat = $r->lat;
+        $point->lng = $r->lng;
+        $point->save();
+
+        $street->save();
+
+        $street->lat = $point->lat;
+        $street->lng = $point->lng;
+        
+        return response()->json([
+            'street' => $street,
+            'points' => $point,
+            'maps' => $mapsAsigned,
+        ]);
     }
     public function destroyAjax(Request $r){
         dd("Fin del camino amigo");
