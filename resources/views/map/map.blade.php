@@ -434,7 +434,7 @@
                         content += " con el nombre <em>" + map.pivot.alternative_name + "</em>";
                     content += "<br><br>";
                 });
-                content += "<br>";
+                content += "<br><a style='color:black' href={{url('search/inform')}}/" + selection.id + ">Imprimir</a><br><br>";
                 $("#hp-description").html(content);
 
             }
@@ -551,9 +551,9 @@
                                 content += map.title;
                                 if(map.pivot.alternative_name !== null)
                                     content += " con el nombre <em>" + map.pivot.alternative_name + "</em>";
-                                content += "<br><br>";
+                                content += "<br>";
                             });
-                            content += "<br>";
+                            content += "<br><a style='color:black' href={{url('search/inform')}}/" + this.street.id + ">Imprimir</a><br><br>";
                             $("#hp-description").html(content);
                             // Display modal
                             $("#hotspotMenu").fadeIn(200);
