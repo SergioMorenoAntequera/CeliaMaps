@@ -78,6 +78,14 @@ class StreetController extends Controller
                 array_push($mapsAsigned, $mapAsigned);
             }
         }
+        foreach ($mapsAsigned as $mapAsigned) {
+            $pivot = DB::table('maps_streets')
+                    ->where('map_id', $mapAsigned->id)
+                    ->where('street_id', $street->id)
+                    ->first();
+            $mapAsigned->pivot = $pivot;
+            // $pivot = MapStreet::where('map_id', $mapAsigned->id)->get();
+        }
         
         $point = Point::Create(["lat" => $r->lat, "lng" => $r->lng]);
         $street->points()->attach($point->id);

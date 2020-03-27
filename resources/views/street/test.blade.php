@@ -479,7 +479,7 @@
                                 street = streets[i]; // Streets of array with selected street comparison
                         }
                         // Edit modal trigger with selected street
-                        console.log(streets);
+
                         editStreet(street);
                     }else{
                         // After drag click will be fired and here break dragging mode
@@ -713,14 +713,14 @@
 
                 // Objeto Street recuperado
                 let formatedStreet = data.street;
-                console.log(formatedStreet);
+
                 // Comletamos la información como la tiene Luis
                 formatedStreet.type_id = parseInt(formatedStreet.type_id);
                 // Puntos
                 formatedStreet.points = data.points;
                 // Mapas con los pivots
                 formatedStreet.maps = data.maps;
-                
+
                 return formatedStreet;
             };
             function showValidationErrors(data){
@@ -767,7 +767,12 @@
                             // When click does not come from dragg event
                             if(!dragging){
                                 // Edit modal trigger with selected street
-                                editStreet(ajaxStreet);
+                                for (let i = 0; i < streets.length; i++) {
+                                    if(ajaxStreetMarker.id == streets[i].id){
+                                        console.log(streets[i]);
+                                        editStreet(streets[i]);
+                                    }
+                                }
                             }else{
                                 // After drag click will be fired and here break dragging mode
                                 dragging = false;
@@ -783,21 +788,17 @@
                     },
                 });
             };
+
             function updateAjax(street){
                 $.ajax({
                     url:"{{route('street.updateAjax')}}",
                     data: street,
                     success: function(data) {
                         let ajaxStreetUpdated = formatStreetObject(data);
-                        // console.log(streets[9]);
 
                         // Update the street objects
                         for (let i = 0; i < streets.length; i++) {
                             if(streets[i].id == ajaxStreetUpdated.id) {
-                                console.log("HM");
-                                console.log(streets[i]);
-                                console.log(ajaxStreetUpdated);
-                                
                                 streets[i] = ajaxStreetUpdated;
                             }
                         }
@@ -808,9 +809,7 @@
                                 marker._latlng = {lat:ajaxStreetUpdated.lat, lng:ajaxStreetUpdated.lng};
                             }
                         });
-
-                        console.log(streets);
-
+                        
                         // HIDE THE FORM
                         $("button[class='close']").click();
                     },
