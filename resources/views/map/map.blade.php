@@ -434,7 +434,7 @@
                         content += " con el nombre <em>" + map.pivot.alternative_name + "</em>";
                     content += "<br><br>";
                 });
-                content += "<br>";
+                content += "<br><a style='color:black' href={{url('search/inform')}}/" + selection.id + ">Imprimir</a><br><br>";
                 $("#hp-description").html(content);
 
             }
@@ -489,24 +489,8 @@
     {{-- Algo que tiene que ver con los hotspots  --}}
     <script>
         @isset($hotspots)
-        // Preparamos lo que tiene que ver con los hotspots para enviarlo al script
-        var jsHotspots = [
-            @foreach ($hotspots as $hotspot)
-                { id:"{{$hotspot->id}}", title:"{{ $hotspot->title }}", 
-                description: "{{ $hotspot->description }}" ,
-                images: [
-                    @foreach ($hotspot->images as $image)
-                        {
-                            title: "{{ $image['title'] }}",
-                            description: "{{ $image['description'] }}",
-                            file_path: "{{ $image['file_path'] }}",
-                            file_name: "{{ $image['file_name'] }}",
-                        },
-                    @endforeach
-                ], lat:"{{ $hotspot->lat }}", lng:"{{ $hotspot->lng }}"
-                },
-            @endforeach
-        ];
+            // Hotspots php array conversion to js json
+            var jsHotspots = @json($hotspots)
         @endisset
 
         // Luis David
@@ -551,9 +535,9 @@
                                 content += map.title;
                                 if(map.pivot.alternative_name !== null)
                                     content += " con el nombre <em>" + map.pivot.alternative_name + "</em>";
-                                content += "<br><br>";
+                                content += "<br>";
                             });
-                            content += "<br>";
+                            content += "<br><a style='color:black' href={{url('search/inform')}}/" + this.street.id + ">Imprimir</a><br><br>";
                             $("#hp-description").html(content);
                             // Display modal
                             $("#hotspotMenu").fadeIn(200);
