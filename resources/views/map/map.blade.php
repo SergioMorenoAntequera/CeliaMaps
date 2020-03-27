@@ -238,7 +238,7 @@
                     // Auxiliar function
                     function lookByText(){
                         c = 0;
-                        hotspots.forEach(hotspot => {
+                        jsHotspots.forEach(hotspot => {
                             if(hotspot.title.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
                                 $('#streetsFound').append("<div class='hotspot street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ hotspot.title + "</div>");
                                 if(++c >= 5){
@@ -251,9 +251,9 @@
                             if(street.fullName.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
                                 // Deprecated street will appear in italic font
                                 if(street.deprecated == true)
-                                    $('#streetsFound').append("<div id='"+ street.id +"' style='font-style:italic;opacity:0.8' class='street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ street.fullName + "</div>");
+                                    $('#streetsFound').append("<div id='"+ street.id +"' style='font-style:italic;opacity:0.8' class='street'> <img style='width:5%;' src='{{url('img/icons/tokenSelected.svg')}}'>"+ street.fullName + "</div>");
                                 else
-                                    $('#streetsFound').append("<div id='"+ street.id +"' class='street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ street.fullName + "</div>");
+                                    $('#streetsFound').append("<div id='"+ street.id +"' class='street'> <img style='width:5%;' src='{{url('img/icons/tokenSelected.svg')}}'>"+ street.fullName + "</div>");
                                 if(++c == 5){
                                     return;
                                 }                                
@@ -365,33 +365,31 @@
             iconSize:     [40, 100],
             iconAnchor:   [15,60],
         });
+
+        /*
         // Creamos un marcador global
-        
         let marker = L.marker([0,0],{icon:markerStreet ,opacity:0});
         marker.addTo(map);
         let selectedStreet;
+        */
 
         // Barra de busqueda y como nos mueve al punto en el que se encuentre el 
         // hotspot o la calle en la que se pinche
         $('#streetsFound').on('click', '.street', function(){
-            var lat, lng;
-            
-            hotspots.forEach(hotspot => {
+            let selection;
+            jsHotspots.forEach(hotspot => {
                 if($(this).text().trim() == hotspot.title){
-                    lat = hotspot.lat;
-                    lng = hotspot.lng;
+                    selection = hotspot;
                     return;
                 }
             });
             streets.forEach(street => {
                 if($(this).text().trim() == street.fullName){
-                    selectedStreet = street;
-                    lat = street.lat;
-                    lng = street.lng;
+                    selection = street;
                     return;
                 }
             });
-
+            /*
             // Comprobamos el tipo de marcador a mostrar para elegir icono
             if($(this).hasClass("hotspot")){
                 marker.setIcon(markerHotspot);
@@ -405,10 +403,43 @@
 
             // Centramos la pantalla en el marcador de la calle
             map.setView([lat, lng], 18);
+            */
 
+            // Clear search field
             $('#streetsFound').empty();
-        
-            marker.bindPopup(selectedStreet.fullName).openPopup();
+            // Zoom to selection position
+            map.setView([selection.lat, parseFloat(selection.lng) + 0.00041], 18);
+            // Fill modal data
+            if($(this).hasClass("hotspot")){
+                // Enable hotspots
+                if($("#ballHotspots img").css("opacity") != 1)
+                    $("#ballHotspots").click();
+                // Hotspot
+                $("#hp-title").text(selection.title);
+                $("#hp-img").attr("src", selection.images[0].file_path + "/" + selection.images[0].file_name);
+                $("#hp-description").text(selection.description);
+
+            }else{ 
+                // Street
+                $("#hp-img").attr("src", "");
+                $("#hp-title").text(selection.fullName);
+                let content = "";
+                if(selection.maps.length > 1)
+                    content = "<br>Existe en los mapas:<br><br>";
+                else
+                    content = "<br>Existe en el mapa:<br><br>";
+                selection.maps.forEach(map => {
+                    content += map.title;
+                    if(map.pivot.alternative_name !== null)
+                        content += " con el nombre <em>" + map.pivot.alternative_name + "</em>";
+                    content += "<br><br>";
+                });
+                content += "<br>";
+                $("#hp-description").html(content);
+
+            }
+            // Show street modal
+            $("#hotspotMenu").fadeIn(200);
         });
 
         // $(document).ready(function(){
@@ -457,6 +488,7 @@
 
     {{-- Algo que tiene que ver con los hotspots  --}}
     <script>
+        @isset($hotspots)
         // Preparamos lo que tiene que ver con los hotspots para enviarlo al script
         var jsHotspots = [
             @foreach ($hotspots as $hotspot)
@@ -475,11 +507,13 @@
                 },
             @endforeach
         ];
-        
+        @endisset
+
         // Luis David
 
         @isset($streets)
             // Streets php array conversion to js json
+            //hotspots = @json($hotspots);
             streetsJSON = @json($streets);
             streetsJSON.forEach(street => {
                 // Save actual street
@@ -499,13 +533,40 @@
             console.log(streets);
             let clusterMarkers = L.markerClusterGroup();
             streets.forEach(street => {
-                var marker = L.marker([street.lat, street.lng],{icon: markerStreet, alt: street.id, draggable:false});
-                marker.id = street.id;
-                clusterMarkers.addLayer(marker);
+                if(street.deprecated != true){
+                    var marker = L.marker([street.lat, street.lng],{icon: markerStreet, alt: street.id, draggable:false});
+                    marker.street = street;
+                    marker.on('click', function(e){
+                            console.log(this);
+                            map.setView([this.street.lat, parseFloat(this.street.lng) + 0.00041], 18);
+                            // Modal data
+                            $("#hp-img").attr("src", "");
+                            $("#hp-title").text(this.street.fullName);
+                            let content = "";
+                            if(this.street.maps.length > 1)
+                                content = "<br>Existe en los mapas:<br><br>";
+                            else
+                                content = "<br>Existe en el mapa:<br><br>";
+                            this.street.maps.forEach(map => {
+                                content += map.title;
+                                if(map.pivot.alternative_name !== null)
+                                    content += " con el nombre <em>" + map.pivot.alternative_name + "</em>";
+                                content += "<br><br>";
+                            });
+                            content += "<br>";
+                            $("#hp-description").html(content);
+                            // Display modal
+                            $("#hotspotMenu").fadeIn(200);
+                        }
+                    );
+                    clusterMarkers.addLayer(marker);
+                }
             });
             map.addLayer(clusterMarkers);
         @endisset
-            
+        map.on("click", function(){
+            $('#streetsFound').empty();
+        });
     </script>
     <script src="{{url('js/mapTlMenu.js')}}"></script>
     <script src="{{url('js/mapBlMenu.js')}}"></script>
