@@ -39,6 +39,9 @@ Route::resource('user', 'UserController');
 Route::delete('user/deleteAjax/{id}', 'UserController@deleteAjax')->name('user.deleteAjax');
 // STREETS /////////////////////////////////////////////////////////////////////////////////////
 Route::get('street/admin', 'StreetController@admin')->name('street.admin');
+Route::get('street/storeAjax', 'StreetController@storeAjax')->name('street.storeAjax');
+Route::get('street/updateAjax', 'StreetController@updateAjax')->name('street.updateAjax');
+Route::get('street/destroyAjax', 'StreetController@destroyAjax')->name('street.destroyAjax');
 Route::resource('street', 'StreetController');
 // POINTS /////////////////////////////////////////////////////////////////////////////////////
 Route::resource('point', 'PointController');

@@ -53,20 +53,44 @@ class StreetController extends Controller
         return view("street.test", $data);
     }
 
-    public function createAjax(Request $r){
+    public function storeAjax(Request $r){
+
+        // Server side validation
+        $r->validate([
+            'type_id'=>'required',
+            'name'=>'required'
+        ]);
+
+        $street = new Street($r->all());
+        $street->save();
+        if(!is_null($r->maps_id) > 0){
+            for ($i=0; $i < count($r->maps_id); $i++) { 
+                $mapStreet = new MapStreet();
+                $mapStreet->street_id = $street->id;
+                $mapStreet->map_id = $r->maps_id[$i];
+                
+                $mapStreet->alternative_name = $r->maps_name[$i];
+                $mapStreet->save();
+            }
+        }
         
+        $point = Point::Create(["lat" => $r->lat, "lng" => $r->lng]);
+        $street->points()->attach($point->id);
+        $street->lat = $r->lat;
+        $street->lng = $r->lng;
+        $street->type()->associate($r->type_id);
+
+        return response()->json([
+            'street' => $street,
+        ]);
+        // return redirect(route('street.create'));
     }
 
     public function updateAjax(Request $r){
-        
+        dd("Un lavado de cara");
     }
-
-    // public function dragAjax(Request $r){
-        
-    // }
-
-    public function deleteAjax(Request $r){
-        
+    public function destroyAjax(Request $r){
+        dd("Fin del camino amigo");
     }
 
     // SHOW A SOMETHING ///////////////////////////////////////////////////////////////////////
@@ -106,7 +130,6 @@ class StreetController extends Controller
      * @return View
      */
     public function store(Request $r){
-
         // Server side validation
         $r->validate([
             'type_id'=>'required',

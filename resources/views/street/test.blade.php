@@ -288,8 +288,8 @@
                         <h5 id="modal-title" class="modal-title text-primary"></h5>
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
                     </div>
-                    <!-- Street type -->
                     <div class="modal-body">
+                        <!-- Street type -->
                         <div class="form-group">
                             <label class="text-dark">Tipo de vía</label>
                             <select required name="type_id" class="form-control">
@@ -309,12 +309,12 @@
                         <div class="form-group">
                             <label class="text-dark">Mapas que la contienen</label><br>
                             @foreach ($maps as $map)
-                            
-                                <input id="checkbox_map{{$map->id}}" type="checkbox" class="checkbox-text" name="maps_id[]" value="{{$map->id}}" checked>
-                                <span class="text-dark checkbox-text">{{$map->title}} ({{$map->city}} - {{$map->date}})</span>
-                            
-                                <input id="input_map{{$map->id}}" class="form-control" type="text" name="maps_name[]" placeholder="Sobreescribir el nombre de la vía en el mapa {{$map->title}}">
-                                <br>
+                                <p>
+                                    <input id="checkbox_map{{$map->id}}" class="checkbox-text" type="checkbox" name="maps_id[]" value="{{$map->id}}" checked>
+                                    <span class="text-dark checkbox-text">{{$map->title}} ({{$map->city}} - {{$map->date}})</span>
+                                
+                                    <input id="input_map{{$map->id}}" class="form-control" type="text" name="maps_name[]" value="{{$map->title}}" placeholder="Sobreescribir el nombre de la vía en el mapa {{$map->title}}">
+                                </p>
                             @endforeach
                             <label id="maps-error" class='text-danger mt-3 inputs-errors'></label>
                         </div>
@@ -512,8 +512,9 @@
                 });
             });
 
-
+            var action = "";
             function createStreet(lat, lng) {
+                action = "create";
                 // Create form attributes
                 $("#modal-form").attr("action", "{{route('street.store')}}");
                 $("input[name='_method']").val("POST");
@@ -546,6 +547,7 @@
                 });*/
             }
             function editStreet(street) {
+                action = "update";
                 // Edit form attributes
                 $("#modal-form").attr("action", "{{route('street.store')}}/"+street.id);
                 $("input[name='_method']").val("PUT");
@@ -670,19 +672,96 @@
             // AJAX SUBMIT
             $("#btn-submit").on("click", function(e){
                 e.preventDefault();
+
                 // We check at least ONE map
+                var inOneMap = false;
                 $("#modal-form input[name='maps_id[]']").each(function(){
                     if($(this).prop("checked"))
-                        return;
-                    else {
-                        $("#maps-error").html("*La vía debe de pertenecer al menos a un mapa.");
-                        return false;
-                    }
+                       inOneMap = true;
                 });
+                if(!inOneMap){
+                    $("#maps-error").html("*La vía debe de pertenecer al menos a un mapa.");
+                }
 
                 // AJAX CREATE AND UPDATE
-                alert("Linea 684: CreateAjax y UpdateAjax");
+                switch(action){
+                    case "create": {
+                        // We get the info from the form
+                        let newStreet = getFormData();
+                        storeAjax(newStreet);
+                    }
+                    break;
+                    case "update": {
+                        // We get the info from the form
+                        let updatedStreet = getFormData();
+                        updateAjax(updatedStreet);
+                    }
+                    break;
+                    default:{
+                        alert("Que?");
+                    }
+                }
             });
+
+            function getFormData(){
+                var newStreet = {
+                    type_id: $("select[name='type_id']").val(),
+                    name: $("input[name='name']").val(),
+                    maps_id: [],
+                    maps_name: [],
+                }
+                $("input[name='maps_id[]']").each(function(e){
+                    let cbMap = $(this);
+                    let textMap = $(this).siblings("input");
+
+                    if(cbMap.is(":checked")) {
+                        newStreet.maps_id.push($(this).val());
+                        if(textMap.val() != ""){
+                            newStreet.maps_name.push(textMap.val());
+                        } else {
+                            newStreet.maps_name.push(null);
+                        }
+                    }
+                });
+                newStreet.lat = $("input[name='lat']").attr("value");
+                newStreet.lng = $("input[name='lng']").attr("value");
+                newStreet.id = $("input[name='id']").attr("value");
+                
+                return newStreet;
+            }
+            function storeAjax(street){
+                $.ajax({
+                    url:"{{route('street.storeAjax')}}",
+                    data: street,
+                    success: function(data) {
+                        let ajaxStreet = data.street;
+                        // CREATE A MARKER
+                        var auxMarker = L.marker(
+                            [ajaxStreet.lat, ajaxStreet.lng], 
+                            {
+                                icon: markerImage, 
+                                alt:ajaxStreet.id, 
+                                draggable:false
+                            }
+                        );
+                        // ADD IT TO THE MAP
+                        auxMarker.id = ajaxStreet.id;
+                        markersList.push(auxMarker);
+                        clusterMarkers.addLayer(auxMarker);
+                        // HIDE THE FORM
+                        $("button[class='close']").click();
+                    },
+                    error: function(data) {
+                        if( data.status === 422 ) {
+                            alert("Error al validar");
+                        }
+                    },
+                });
+            };
+            function updateAjax(street){
+                alert(":(");
+            };
+            
             
             
             // HIDE INPUT WHEN UNSELECT CHECKBOX STREET NAME 
