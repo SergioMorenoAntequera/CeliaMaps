@@ -20,7 +20,7 @@
     <div id="allElements" style="display: flex; flex-wrap: wrap;">
         @foreach ($images as $image)    
             <a class="element col-md-4" name="{{$image->id}}" style="margin: 15px 0; padding: 0 15px; flex: 0 0 33.333333%; max-width: 455px; position: relative; overflow: hidden; height: 325px" href="#" data-toggle="light-box" data-gallery="gallery">
-                <img class="rounded" style="height: 100%" src="{{url('img/hotspots/', $image->file_name)}}">
+                <img class="rounded" style="height: 100%" src="{{url('img/hotspots/', $image->file_name)}}">  
             </a>
         @endforeach
     </div>
@@ -52,9 +52,34 @@
         </div>
     </div>
 
+    {{-- NEW IMAGE --}}
+
+    <div id="modalDropzone" class="modal fade text-dark" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="flex: 1 1 1px; max-width: 70%;">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    
+                    {{-- Dropzone --}}
+                    <div class="dropzoneContainer col100" id="dzone" style="display: none;">
+                        <form action="{{ url('/images-save') }}" method="post" enctype="multipart/form-data" class='dropzone sMarginBottom' >
+                            <input type="file" name="file"/>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {{-- EDIT AN IMAGE --}}
+    
+    
+
     {{-- ADD IMAGES BUTTON --}}
     
-    <a href="{{route('hotspot.gallery')}}">
+    <a href="" id="newImage">
         <div id="addButton">
             <img class="center" src="{{url("img/icons/plus.svg")}}">
         </div>
@@ -64,36 +89,38 @@
 
 @section('scripts')
     <script>
+        @isset($images)
+            // Images php array conversion to js
+            let images = @json($images);
+            console.log(images);
+        @endisset
+
+        let image;
+        for (let i = 0; i < images.length; i++) {
+            if(images[i].id == this.name){
+                image = images[i];
+                image.position = i;
+                
+            }
+        }
+
         $(".col-md-4").on("click", function(event) {
             event.preventDefault();
             $('#ekkoLightbox-893').modal('show');
 
-            @isset($images)
-                // Images php array conversion to js
-                let images = @json($images);
-                console.log(images);
-            @endisset
-
-
-            let image;
-            for (let i = 0; i < images.length; i++) {
-                if(images[i].id == this.name){
-                    image = images[i];
-                    image.position = i;
-                    
-                }
-            }
-            
-
             let host = "{{url('')}}";
             $("#previewImage").attr("src", host+"/img/hotspots/"+image.file_name);
 
+            $("#anterior").on("click", function(e){
+                console.log("ok");
+                console.log(image.position);
+            });
 
         });
 
-        $("#anterior").on("click", function(e){
-            console.log("ok");
-            console.log(image.position);
+
+        $("#newImage").on("click", function(e){
+            $('#modalDropzone').modal('show');
         });
     </script>
     

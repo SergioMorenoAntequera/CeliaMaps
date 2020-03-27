@@ -13,6 +13,10 @@
         <link rel="stylesheet" href="{{url('/css/BootstrapOverride.css')}}">
         <link rel="stylesheet" href="{{url('/css/streets.css')}}">
         <link rel="stylesheet" href="{{url('/css/Hotspots.css')}}">
+        <!-- LIBRERIA DROPZONE -->
+        <link rel="stylesheet" type="text/css" href="{{asset('/css/dropzone.css')}}"> <!-- CSS -->
+        <script src="{{asset('js/dropzone.js')}}" type="text/javascript"></script> <!-- JS -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <!--  <link href="https://fonts.googleapis.com/css?family=Dancing+Script:500&display=swap" rel="stylesheet">   -->
         <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"> </script>
         <!-- Views CDNs -->
