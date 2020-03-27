@@ -54,7 +54,6 @@ class StreetController extends Controller
     }
 
     public function storeAjax(Request $r){
-
         // Server side validation
         $r->validate([
             'type_id'=>'required',
@@ -63,14 +62,19 @@ class StreetController extends Controller
 
         $street = new Street($r->all());
         $street->save();
+
+        $mapsAsigned = Array();
         if(!is_null($r->maps_id) > 0){
             for ($i=0; $i < count($r->maps_id); $i++) { 
                 $mapStreet = new MapStreet();
                 $mapStreet->street_id = $street->id;
                 $mapStreet->map_id = $r->maps_id[$i];
-                
                 $mapStreet->alternative_name = $r->maps_name[$i];
                 $mapStreet->save();
+
+                $mapAsigned = Map::find($mapStreet->map_id);
+                $mapAsigned->pivot = $mapStreet;
+                array_push($mapsAsigned, $mapAsigned);
             }
         }
         
@@ -82,10 +86,10 @@ class StreetController extends Controller
 
         return response()->json([
             'street' => $street,
+            'maps' => $mapsAsigned,
         ]);
         // return redirect(route('street.create'));
     }
-
     public function updateAjax(Request $r){
         dd("Un lavado de cara");
     }

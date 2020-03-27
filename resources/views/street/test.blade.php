@@ -185,7 +185,6 @@
                                 // data: { text : text },
                                 success: function(data) {
                                     $('#streetsFound').empty();
-                                    console.log(data);
                                     streets = [];
                                     
                                     data.streets.forEach(street => {
@@ -203,7 +202,6 @@
                                             }
                                         });
                                     });
-                                    console.log(streets)
                                 },
                             }); // FIN AJAX
                         } else {
@@ -291,7 +289,7 @@
                     <div class="modal-body">
                         <!-- Street type -->
                         <div class="form-group">
-                            <label class="text-dark">Tipo de vía</label>
+                            <b> <label>Tipo de vía</label> <span class="text-danger">*</span> </b>
                             <select required name="type_id" class="form-control">
                                 @foreach ($streetsTypes as $streetType)
                                 <option value="{{$streetType->id}}">({{$streetType->abbreviation}}) {{$streetType->type}}</option>
@@ -301,22 +299,24 @@
                         </div>
                         <!-- Street name -->
                         <div class="form-group">
-                            <label class="text-dark">Nombre de la vía</label>
+                            <b> <label> Nombre de la vía </label> <span class="text-danger">*</span> </b>
                             <input required type="text" class="form-control" name="name">
                             <label class="text-danger inputs-errors mt-3">@error('name') {{$message}} @enderror</label>
                         </div>
                         <!-- Street maps -->
-                        <div class="form-group">
-                            <label class="text-dark">Mapas que la contienen</label><br>
+                        <div class="form-group mb-0">
+                            <b> <label> Mapas que la cantienen </label> <span class="text-danger">*</span> </b>
                             @foreach ($maps as $map)
                                 <p>
-                                    <input id="checkbox_map{{$map->id}}" class="checkbox-text" type="checkbox" name="maps_id[]" value="{{$map->id}}" checked>
-                                    <span class="text-dark checkbox-text">{{$map->title}} ({{$map->city}} - {{$map->date}})</span>
-                                
-                                    <input id="input_map{{$map->id}}" class="form-control" type="text" name="maps_name[]" value="{{$map->title}}" placeholder="Sobreescribir el nombre de la vía en el mapa {{$map->title}}">
+                                    @isset($map->tlCornerLatitude)
+                                        <input id="checkbox_map{{$map->id}}" class="checkbox-text" type="checkbox" name="maps_id[]" value="{{$map->id}}" checked>
+                                        <span class="text-dark checkbox-text">{{$map->title}} ({{$map->city}} - {{$map->date}})</span>
+                                    
+                                        <input id="input_map{{$map->id}}" class="form-control" type="text" name="maps_name[]" value="{{$map->title}}" placeholder="Sobreescribir el nombre de la vía en el mapa {{$map->title}}">
+                                    @endisset
                                 </p>
                             @endforeach
-                            <label id="maps-error" class='text-danger mt-3 inputs-errors'></label>
+                            <b><label id="maps-error" class='text-danger mt-3 inputs-errors'> </label></b>
                         </div>
                         <!-- Street points -->
                         <div>
@@ -328,9 +328,6 @@
                     <div class="modal-footer">
                         <button id="btn-remove" value="" type="button" class="btn btn-danger">Eliminar</button>
                         <button id="btn-position" value="" type="button" class="btn text-white btn-warning mr-auto">Cambiar posición</button>
-                        <!--
-                        <button id="btn-cancel" type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
-                        -->
                         <button id="btn-submit" type="submit" class="btn btn-success">Guardar</button>
                     </div>
                 </form>
@@ -466,24 +463,6 @@
                 @endforeach
                 map.addLayer(clusterMarkers);
             @endisset
-            
-            /*  Old overlay imagles click handler based
-             *  on click point over image to generate a 
-             *  leaflet point to be translated to latlng
-
-            // Map images click handler
-            $(".leaflet-image-layer").click(function(e){
-                console.log("imagen");
-                // Calculate backend menu width
-                let menuWidth = screen.width * 0.05;
-                // Create leaflet point with client x/y coordinates
-                let point = L.point(e.clientX-menuWidth, e.clientY);
-                // Conversion from point to leaflet latitude longitude object
-                let latlng = map.containerPointToLatLng(point);
-                // Create modal trigger
-                createStreet(latlng.lat, latlng.lng);
-            });
-            */
 
             // Leaflet map click handler
             map.on('click', function(e) {
@@ -556,7 +535,6 @@
                 $("select[name='type_id']").val(street.type_id);
                 $("input[name='name']").val(street.name);
                 // Fill hidden values
-                console.log("edit street latlng");
                 $("#modal-lat").val(street.points.lat);
                 $("#modal-lng").val(street.points.lng);
                 $(".modal-body #id").val(street.id);
@@ -680,7 +658,8 @@
                        inOneMap = true;
                 });
                 if(!inOneMap){
-                    $("#maps-error").html("*La vía debe de pertenecer al menos a un mapa.");
+                    $("#maps-error").html("La vía debe de pertenecer al menos a un mapa.");
+                    return false;
                 }
 
                 // AJAX CREATE AND UPDATE
@@ -689,20 +668,19 @@
                         // We get the info from the form
                         let newStreet = getFormData();
                         storeAjax(newStreet);
-                    }
-                    break;
+                    } break;
                     case "update": {
                         // We get the info from the form
                         let updatedStreet = getFormData();
                         updateAjax(updatedStreet);
-                    }
-                    break;
+                    } break;
                     default:{
                         alert("Que?");
                     }
                 }
             });
 
+            // To get the info from the form
             function getFormData(){
                 var newStreet = {
                     type_id: $("select[name='type_id']").val(),
@@ -729,31 +707,76 @@
                 
                 return newStreet;
             }
+            // To format the data from the database as Luis has it 
+            // and get an Street onject that we can work with
+            function formatStreetObject(data){
+                //El formato que hay que copiar
+                //console.log(streets[0]);
+
+                // Objeto Street recuperado
+                let formatedStreet = data.street;
+                
+                // Comletamos la información como la tiene Luis
+                // Puntos
+                let auxPoints = {"lat": formatedStreet.lat, "lng": formatedStreet.lng};
+                formatedStreet.points = auxPoints;
+                // Mapas con los pivots
+                formatedStreet.maps = data.maps;
+
+                return formatedStreet;
+            }
+            
             function storeAjax(street){
                 $.ajax({
                     url:"{{route('street.storeAjax')}}",
                     data: street,
                     success: function(data) {
-                        let ajaxStreet = data.street;
+                        let ajaxStreet = formatStreetObject(data);
+                        streets.push(ajaxStreet);
+
                         // CREATE A MARKER
-                        var auxMarker = L.marker(
+                        var ajaxStreetMarker = L.marker(
                             [ajaxStreet.lat, ajaxStreet.lng], 
                             {
                                 icon: markerImage, 
                                 alt:ajaxStreet.id, 
-                                draggable:false
+                                draggable:false,
+                                id: ajaxStreet.id,
                             }
                         );
+                        ajaxStreetMarker.id = ajaxStreet.id;
+                        
                         // ADD IT TO THE MAP
-                        auxMarker.id = ajaxStreet.id;
-                        markersList.push(auxMarker);
-                        clusterMarkers.addLayer(auxMarker);
+                        markersList.push(ajaxStreetMarker);
+                        clusterMarkers.addLayer(ajaxStreetMarker);
+                        
+                        // ADD THE ONCLICK EVENT
+                        ajaxStreetMarker.on('click', function(){
+                            // When click does not come from dragg event
+                            if(!dragging){
+                                // Edit modal trigger with selected street
+                                editStreet(ajaxStreet);
+                            }else{
+                                // After drag click will be fired and here break dragging mode
+                                dragging = false;
+                            }
+                        });
+
                         // HIDE THE FORM
                         $("button[class='close']").click();
                     },
                     error: function(data) {
+                        // Se ha producido un error de validación
                         if( data.status === 422 ) {
-                            alert("Error al validar");
+                            let errors = data.responseJSON.errors;
+                            
+                            $('#maps-error').empty();
+                            if(errors["type_id"] !== undefined) {
+                                $('#maps-error').append("Tipo de vía requerido <br>")
+                            }
+                            if(errors["name"] !== undefined) {
+                                $('#maps-error').append("Nombre de la vía requerido ")
+                            }
                         }
                     },
                 });
