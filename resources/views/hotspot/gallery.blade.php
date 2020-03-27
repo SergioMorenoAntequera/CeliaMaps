@@ -61,9 +61,9 @@
                 <div class="modal-body">
                     
                     {{-- Dropzone --}}
-                    <div class="dropzoneContainer col100" id="dzone" style="display: none;">
-                        <form action="{{ url('/images-save') }}" method="post" enctype="multipart/form-data" class='dropzone sMarginBottom' >
-                            <input type="file" name="file"/>
+                    <div class="dropzoneContainer col100" id="dzone">
+                        <form action="{{ url('') }}" method="post" enctype="multipart/form-data" class='dropzone' style="margin-bottom: 0px" >
+                            
                         </form>
                     </div>
 
@@ -79,7 +79,7 @@
 
     {{-- ADD IMAGES BUTTON --}}
     
-    <a href="" id="newImage">
+    <a href="#" id="newImage">
         <div id="addButton">
             <img class="center" src="{{url("img/icons/plus.svg")}}">
         </div>
@@ -89,33 +89,34 @@
 
 @section('scripts')
     <script>
-        @isset($images)
-            // Images php array conversion to js
-            let images = @json($images);
-            console.log(images);
-        @endisset
-
-        let image;
-        for (let i = 0; i < images.length; i++) {
-            if(images[i].id == this.name){
-                image = images[i];
-                image.position = i;
-                
-            }
-        }
 
         $(".col-md-4").on("click", function(event) {
+            @isset($images)
+                // Images php array conversion to js
+                let images = @json($images);
+                console.log(images);
+            @endisset
+
+            let image;
+            for (let i = 0; i < images.length; i++) {
+                if(images[i].id == this.name){
+                    image = images[i];
+                    image.position = i;
+                    
+                }
+            }
+            
             event.preventDefault();
             $('#ekkoLightbox-893').modal('show');
 
             let host = "{{url('')}}";
             $("#previewImage").attr("src", host+"/img/hotspots/"+image.file_name);
 
+
             $("#anterior").on("click", function(e){
                 console.log("ok");
                 console.log(image.position);
             });
-
         });
 
 
