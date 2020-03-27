@@ -426,6 +426,7 @@
             });
         });
     </script>
+    
     {{-- STREET MANAGEMENT --}}
     <script>
         $(function(){
@@ -435,6 +436,7 @@
                 iconSize:     [30, 90],
                 iconAnchor:   [15,60],
             });
+            
             // Marker collection
             var markersList = new Array();
             var dragging = false;
@@ -511,8 +513,6 @@
             });
 
 
-
-
             function createStreet(lat, lng) {
                 // Create form attributes
                 $("#modal-form").attr("action", "{{route('street.store')}}");
@@ -578,7 +578,7 @@
                     }
                 }
                 // Fill null names
-      /*          let mapsListElements = $("input[name='maps_name[]']");
+                    /* let mapsListElements = $("input[name='maps_name[]']");
 
                 let mapsListId = new Array();
                 for (let i = 0; i < mapsList.length; i++) {
@@ -600,7 +600,7 @@
                     $("#input_map"+street.maps[i].id).val(alternative_name);
                 });
                 console.log(belongsMaps);
-*/
+                */
                 $("#modal-title").text("Editar vía");
                 // Show and enable buttons and also fill value with street id
                 $("#btn-remove").prop("disabled", false);
@@ -667,21 +667,25 @@
                 });
             }
             
-            // Save street button validation
-            $("#modal-form").submit(function(e){
-                let belongsToMap = false;
+            // AJAX SUBMIT
+            $("#btn-submit").on("click", function(e){
+                e.preventDefault();
+                // We check at least ONE map
                 $("#modal-form input[name='maps_id[]']").each(function(){
                     if($(this).prop("checked"))
-                        belongsToMap = true;           
+                        return;
+                    else {
+                        $("#maps-error").html("*La vía debe de pertenecer al menos a un mapa.");
+                        return false;
+                    }
                 });
-                if(!belongsToMap)
-                    $("#maps-error").html("*La vía debe de pertenecer al menos a un mapa.");
-                return belongsToMap;
-            });/*
-            $("#btn-submit").on("click", function(e){
-                
+
+                // AJAX CREATE AND UPDATE
+                alert("Linea 684: CreateAjax y UpdateAjax");
             });
-*/
+            
+            
+            // HIDE INPUT WHEN UNSELECT CHECKBOX STREET NAME 
             // Rename streets fields display
             $(".checkbox-text").on("click", function(){
                 // Map id getted from checkbox value
@@ -695,6 +699,7 @@
                 });
             });
 
+            // STREET FOUND IN SEARCH BAR
             // Found street click event handler
             $(document).on("click","div.street",function(){
                 $('#streetsFound').empty();

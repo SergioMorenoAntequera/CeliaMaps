@@ -21,7 +21,7 @@ class StreetController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');     
+        // $this->middleware('auth');     
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -36,6 +36,37 @@ class StreetController extends Controller
         $data['streets'] = Street::all();
         
         return view("street.index", $data);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    // SHOW ALL SOMETHING  ////////////////////////////////////////////////////////////////////
+    /**
+     * Method that shows all the registers in the database
+     * 
+     * @return View
+     */
+    public function admin(){
+        $data['streetsTypes'] = StreetType::all();
+        $data['maps'] = Map::all();
+        $data['streets'] = Street::all();
+
+        return view("street.test", $data);
+    }
+
+    public function createAjax(Request $r){
+        
+    }
+
+    public function updateAjax(Request $r){
+        
+    }
+
+    // public function dragAjax(Request $r){
+        
+    // }
+
+    public function deleteAjax(Request $r){
+        
     }
 
     // SHOW A SOMETHING ///////////////////////////////////////////////////////////////////////
@@ -64,7 +95,6 @@ class StreetController extends Controller
         $data['streets'] = Street::all();
         //return view("street.create", $data);
         return view("street.test", $data);
-
     }
 
     // STORE FUNCTION ///////////////////////////////////////////////////////////////////////
