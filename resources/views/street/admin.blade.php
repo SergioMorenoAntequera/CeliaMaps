@@ -492,7 +492,7 @@
 
 
             //-------------------------------------------------------------}}
-            //----------------- MODAL COMPONENTS CONTROLLER ---------------}}
+            //------------------ MENU COMPONENTS CONTROLLER ---------------}}
             //-------------------------------------------------------------}}
             //EDIT BUTTON
             $(".option[action='Edit']").on("click", function(e){
@@ -500,10 +500,8 @@
                     if(street.id == activeMarker.id){
                         hideMenu();
                         showEditForm(street);
-                        return false;
                     }
                 });
-                
             });
 
             // SAVE BUTTON
@@ -640,8 +638,9 @@
                 $("select[name='type_id']").val(street.type_id);
                 $("input[name='name']").val(street.name);
                 // Fill hidden values
-                $("#modal-lat").val(street.points.lat);
-                $("#modal-lng").val(street.points.lng);
+                console.log(activeMarker);
+                $("#modal-lat").val(activeMarker._latlng.lat);
+                $("#modal-lng").val(activeMarker._latlng.lng);
                 $(".modal-body #id").val(street.id);
 
                 // Clear maps alternatives names fields
