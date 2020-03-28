@@ -64,7 +64,7 @@
                                 <b> Calles </b>
                                 <div class="line"></div>
                                 <a href="{{route('street.index')}}"><li>Índice</li></a>
-                                <a href="{{route('street.create')}}"><li>Administrar</li></a>
+                                <a href="{{route('street.admin')}}"><li>Administrar</li></a>
                                 {{-- <a href="{{route('street.index')}}"><li>Modificar</li></a>
                                 <a href="{{route('street.index')}}"><li>Elminar</li></a> --}}
                             </div>

@@ -51,9 +51,8 @@ class StreetController extends Controller
         $data['maps'] = Map::all();
         $data['streets'] = Street::all();
 
-        return view("street.test", $data);
+        return view("street.admin", $data);
     }
-
     public function storeAjax(Request $r){
         // Server side validation
         $r->validate([

@@ -21,6 +21,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!-- PERSONAL CSS -->
+    <link rel="stylesheet" href="{{url('/css/Backend.css')}}">
     <link rel="stylesheet" href="{{url('/css/frontend.css')}}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="{{url('js/mapTlMenu.js')}}"></script>
@@ -239,36 +240,46 @@
                 </script>
             </div>
         </div>
-    </div>
 
-    {{-----------------------------------------------------------}}
-    {{-- BOTTOM LEFT MENU TO CHANGE THE KIND OF MAP TO DISPLAY --}}
-    {{-----------------------------------------------------------}}
-    <div id="tilesMenu">
-        <div id="tilesShow" style="margin-left: 62px">
-            <i class="fa fa-chevron-down"></i>
+        {{-----------------------------------------------------------}}
+        {{-- BOTTOM LEFT MENU TO CHANGE THE KIND OF MAP TO DISPLAY --}}
+        {{-----------------------------------------------------------}}
+        <div id="tilesMenu">
+            <div id="tilesShow">
+                <i class="fa fa-chevron-down"></i>
+            </div>
+            <div id="tileChooser">
+                <div class="tiles"> 
+                    <img src="{{url("img/maps/KindOfMap1.png")}}" alt="">
+                </div>
+                <div class="tiles"> 
+                    <img src="{{url("img/maps/KindOfMap2.png")}}" alt="">
+                </div>
+                <div class="tiles"> 
+                    <img src="{{url("img/maps/KindOfMap3.png")}}" alt="">
+                </div>
+            </div>
         </div>
-        <div id="tileChooser" style="margin-left: 72px">
-            <div class="tiles"> 
-                <img src="{{url("img/maps/KindOfMap1.png")}}" alt="">
-            </div>
-            <div class="tiles"> 
-                <img src="{{url("img/maps/KindOfMap2.png")}}" alt="">
-            </div>
-            <div class="tiles"> 
-                <img src="{{url("img/maps/KindOfMap3.png")}}" alt="">
+
+        {{-------------------------------------------------------------}}
+        {{-- BOTTOM RIGHT MENU SO WE CAN DISPLAY S WE CAN FULLSCREEN --}}
+        {{-------------------------------------------------------------}}
+        <div id="fullScreenMenu">
+            <img src="{{url('/img/icons/fsMaximize.png')}}" alt="">
+        </div>
+
+        {{-------------------------------------------------------------}}
+        {{-------- MENU THAT APPEARS WHEN YOU CLICK IN A MARKER -------}}
+        {{-------------------------------------------------------------}}
+        <div class="cMenu noselect">
+            {{-- Se muestra este si se clicka en una layer --}}
+            <div class="csMenu edit">
+                <div class="option" action="Edit"> <img src="{{url('js/Leaflet/pluginMarkers/img/name.svg')}}"> </div>
+                <div class="option" action="Drag">  <img src="{{url('js/Leaflet/pluginMarkers/img/drag.svg')}}"> </div>
+                <div class="option" action="Remove"> <img src="{{url('js/Leaflet/pluginMarkers/img/remove.svg')}}"> </div>
             </div>
         </div>
     </div>
-
-
-    {{-------------------------------------------------------------}}
-    {{-- BOTTOM RIGHT MENU SO WE CAN DISPLAY S WE CAN FULLSCREEN --}}
-    {{-------------------------------------------------------------}}
-    <div id="fullScreenMenu">
-        <img src="{{url('/img/icons/fsMaximize.png')}}" alt="">
-    </div>
-    
 
     <!-- Create/edit street modal -->
     <div class="modal fade" id="modal" tabindex="-1">
@@ -321,8 +332,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button id="btn-remove" value="" type="button" class="btn btn-danger">Eliminar</button>
-                        <button id="btn-position" value="" type="button" class="btn text-white btn-warning mr-auto">Cambiar posición</button>
+                        {{-- <button id="btn-remove" value="" type="button" class="btn btn-danger">Eliminar</button>
+                        <button id="btn-position" value="" type="button" class="btn text-white btn-warning mr-auto">Cambiar posición</button> --}}
                         <button id="btn-submit" type="submit" class="btn btn-success">Guardar</button>
                     </div>
                 </form>
@@ -417,6 +428,9 @@
     
     {{-- STREET MANAGEMENT --}}
     <script>
+        var activeLayer;
+        var userBusy = false;
+        var currentAction = "none";
         $(function(){
             //-------------------------------------------------------------}}
             //--------------------- SETTING UP THE MAP --------------------}}
@@ -459,10 +473,16 @@
             // Leaflet map click handler
             map.on('click', function(e) {
                 // Create modal trigger with lat/lng coordinates
-                if(!dragging) 
+                if(!dragging) {
+                    hideMenu();    
                     showCreateForm(e.latlng.lat, e.latlng.lng);
-                else
+                } else
                     dragging = false;
+            });
+            // Leaflet map click handler
+            map.on('move', function(e) {
+                // Create modal trigger with lat/lng coordinates
+                hideMenu();
             });
  
             // ADD MARKER EVENTS TO A ALL MARKERS
@@ -474,6 +494,18 @@
             //-------------------------------------------------------------}}
             //----------------- MODAL COMPONENTS CONTROLLER ---------------}}
             //-------------------------------------------------------------}}
+            //EDIT BUTTON
+            $(".option[action='Edit']").on("click", function(e){
+                streets.forEach(street => {
+                    if(street.id == activeMarker.id){
+                        hideMenu();
+                        showEditForm(street);
+                        return false;
+                    }
+                });
+                
+            });
+
             // SAVE BUTTON
             $("#btn-submit").on("click", function(e){
                 e.preventDefault();
@@ -507,9 +539,10 @@
                 }
             });
 
-            // REPLACE BUTTON
-            $("#btn-position").on("click", function(){
+            // DRAG BUTTON
+            $(".option[action='Drag']").on("click", function(){
                 // Turn dragging variable to true to disable marker click handle
+                hideMenu();
                 dragging = true;
                 
                 console.log(activeMarker);
@@ -531,7 +564,8 @@
             });
 
             // REMOVE BUTTON
-            $("#btn-remove").on("click", function(){
+            $(".option[action='Remove']").on("click", function(){
+                hideMenu();
                 // $("#modal-form").attr("action", "{{route('street.store')}}/"+this.value);
                 // $("input[name='_method']").val("DELETE");
                 $('#modal').modal('hide');
@@ -540,7 +574,7 @@
             });
             // REMOVE BUTTON CANCEL
             $("#btn-cancel").click(function(){
-                $('#modal').modal('show');
+                // $('#modal').modal('show');
                 $('#confirmModal').modal('hide');
             });
             // REMOVE BUTTON CONFIRM
@@ -691,7 +725,6 @@
                 // CLICK
                 marker.on('click', function(e){
                     activeMarker = e.target;
-                    console.log(activeMarker);
                     // When click does not come from dragg event
                     if(!dragging){
                         // Search for selected street
@@ -702,7 +735,8 @@
                         }
                         // Edit modal trigger with selected street
 
-                        showEditForm(street);
+                        // showEditForm(street);
+                        showMenu(e, "edit");
                     }else{
                         // After drag click will be fired and here break dragging mode
                         dragging = false;
@@ -864,4 +898,5 @@
             });
         });
     </script>
+    <script src="{{url('js/cMenu.js')}}"></script>
 @endsection

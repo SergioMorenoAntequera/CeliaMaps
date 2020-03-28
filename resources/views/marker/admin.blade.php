@@ -170,11 +170,13 @@
     {{---------------------------------------------------------------}}
     {{-------- ALL THE PARTS RELATED WITH THE MARKERS PLUGIN --------}}
     {{---------------------------------------------------------------}}
+    
     <script>
+        var activeLayer;
+        var userBusy = false;
+        var currentAction = "none";
+        
         $(document).ready(function(){
-            var activeLayer;
-            var userBusy = false;
-            var currentAction = "none";
 
             map.whenReady(function() {
                 // We add the markers that come from the database
@@ -231,75 +233,6 @@
                     layer.addTo(map);
                     addLayerListeners(layer);
                 });
-            };
-            
-            // Enseña el menú indicado en csMenu
-            function showMenu(e, csMenu){
-                // // We place the menu in the middle
-                let localClicks = {top: e.originalEvent.clientY - 30, left: e.originalEvent.clientX - $("#leftNavBar").width() - 30};
-                if(!userBusy){
-                    if($(".cMenu").css("display") == "none"){
-                        $(".cMenu").css({"left":localClicks.left, "top":localClicks.top});
-                        $(".cMenu").show();
-
-                        $("."+csMenu).fadeIn(150);
-                        let options = $("."+csMenu).find(".option");
-                        for (let i = 0; i < options.length; i++) {
-                            jQuery(options[i]).animate({
-                                top: (Math.sin( i / options.length * 2 * Math.PI) * 60) + 5, 
-                                left: (Math.cos( i / options.length * 2 * Math.PI) * 60) + 5
-                            }, 150);
-                        }
-                    } else { 
-                        $(".cMenu").animate({"left":left, "top":top}, 150);
-                    }
-                }
-            };
-
-            // Oculta el menú que se esté mostrando
-            function hideMenu(){
-                if($(".cMenu").css("display") == "block"){
-                    $(".cMenu").fadeOut(150, function(e){
-                        // Por cada subMenu
-                        $(".cMenu").children().each(function(e){
-                            // Miramos si se está enseñando
-                            if($(this).css("display") == "block"){
-                                // Si lo está lo ocultamos
-                                $(this).hide();
-                                $(this).children().each(function(e) {
-                                    $(this).css({top:5, left:5});
-                                });
-                            }
-                        });
-                    });
-                }
-            };
-
-            // Ejecuta la acción que se le indique
-            function enableAction(action){
-                userBusy = true;
-                currentAction = action;
-                hideMenu();
-
-                if(action == "Drag"){
-                    map.pm.enableGlobalDragMode();
-                } else if(action == "Remove") {
-                    map.pm.enableGlobalRemovalMode();
-                } else if(action == "Edit") {
-                    map.pm.toggleGlobalEditMode(); 
-                } else if(action == "Rename") {
-                    userBusy = false;
-                    currentAction = "none";
-                } else if(action != undefined) {
-                    map.pm.enableDraw(action, {
-                        snappable: true,
-                        snapDistance: 10,
-                        tooltips: true,
-                    });
-                } else {
-                    userBusy = false;
-                    currentAction = "none";
-                }
             };
 
             // Acciones que tienen que ver con el mapa
@@ -428,6 +361,34 @@
                 });
             };
 
+            // Ejecuta la acción que se le indique
+            function enableAction(action){
+                userBusy = true;
+                currentAction = action;
+                hideMenu();
+
+                if(action == "Drag"){
+                    map.pm.enableGlobalDragMode();
+                } else if(action == "Remove") {
+                    map.pm.enableGlobalRemovalMode();
+                } else if(action == "Edit") {
+                    map.pm.toggleGlobalEditMode(); 
+                } else if(action == "Rename") {
+                    userBusy = false;
+                    currentAction = "none";
+                } else if(action != undefined) {
+                    map.pm.enableDraw(action, {
+                        snappable: true,
+                        snapDistance: 10,
+                        tooltips: true,
+                    });
+                } else {
+                    userBusy = false;
+                    currentAction = "none";
+                }
+            };
+
+
             // El rename ya que es más complicado
             $(".option[action='Rename']").click(function(e){
                 let localClicks = {top: e.originalEvent.clientY - 30, left: e.originalEvent.clientX - $("#leftNavBar").width() - 30};
@@ -484,9 +445,8 @@
                 },
             });
         };
-
     </script>
-
+    <script src="{{url('js/cMenu.js')}}"></script>
     <script src="{{url('js/mapBlMenu.js')}}"></script>
     <script src="{{url('js/mapFullScreenMenu.js')}}"></script>
 @endsection

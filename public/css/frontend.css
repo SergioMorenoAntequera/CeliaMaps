@@ -65,7 +65,8 @@ html, body {
     position: absolute;
     z-index: 98;
     left: 100;
-    top: 0;
+    top: 0px;
+    left: 0px;
 
     width: 40px;
     height: 40px;
