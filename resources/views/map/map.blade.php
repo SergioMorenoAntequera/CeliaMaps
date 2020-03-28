@@ -532,7 +532,7 @@
                             else
                                 content = "<br>Existe en el mapa:<br><br>";
                             this.street.maps.forEach(map => {
-                                content += map.title;
+                                content += "<b>" + map.title + "</b>";
                                 if(map.pivot.alternative_name !== null)
                                     content += " con el nombre <em>" + map.pivot.alternative_name + "</em>";
                                 content += "<br>";
