@@ -418,6 +418,7 @@
     {{-- STREET MANAGEMENT --}}
     <script>
         $(function(){
+            var activeMarker;
             // Mark icon design
             var markerImage = L.icon({
                 iconUrl: "{{url('img/icons/token.svg')}}",
@@ -426,10 +427,10 @@
             });
             
             // Marker collection
+            var clusterMarkers = L.markerClusterGroup();
             var markersList = new Array();
             var dragging = false;
             // Check saved streets
-            
             @isset($streets)
                 // Streets php array conversion to js array
                 let streets = @json($streets);
@@ -438,8 +439,6 @@
                     streets[{{$i}}].maps =  @json($streets[$i]->maps);
                     streets[{{$i}}].points =  @json($streets[$i]->points[0]);
                 @endfor
-
-                let clusterMarkers = L.markerClusterGroup();
 
                 // Write saved streets
                 @foreach ($streets as $street)
@@ -466,6 +465,7 @@
             function addMarkerEvents(marker){
                 // CLICK
                 marker.on('click', function(e){
+                    activeMarker = marker;
                     // When click does not come from dragg event
                     if(!dragging){
                         // Search for selected street
@@ -483,7 +483,7 @@
                     }
                 });
 
-                // FINISH DRAG
+                // FINISH DRAG (MARKER MOVED)
                 marker.on('dragend', function(e){
                     // Disable dragging mode
                     marker.dragging.disable();
@@ -496,10 +496,10 @@
                     $("#modal-lng").val(marker.getLatLng().lng);
                     let auxStreet = getFormData();
                     updateAjax(auxStreet);
-                })
+                });
             }
 
-            // Leaflet mark click handler
+            // ADD MARKER EVENTS TO A ALL MARKERS
             clusterMarkers.eachLayer(function(marker) {
                 addMarkerEvents(marker);
             });
@@ -532,11 +532,6 @@
                 $("#btn-position").css("display", "none");
                 $(".inputs-errors").html("");
                 $('#modal').modal('show');
-                /* Add marker to the map when we use ajax to insert
-                $("#btn-submit").click(function(){
-                    let newMark = L.marker([lat, lng],{icon: markerImage});    // Creating a Marker
-                    newMark.addTo(map); // Adding marker to the map
-                });*/
             }
             function editStreet(street) {
                 action = "update";
@@ -570,30 +565,7 @@
                         $("#input_map"+street.maps[i].id).val(street.maps[i].pivot.alternative_name);
                     }
                 }
-                // Fill null names
-                    /* let mapsListElements = $("input[name='maps_name[]']");
 
-                let mapsListId = new Array();
-                for (let i = 0; i < mapsList.length; i++) {
-                    mapsListId.push(mapsListElements[i].id.substring(9));
-                }
-                let belongsMaps = new Array();
-                street.maps.forEach(map => {
-                    belongsMaps.push(mapsListElements[i].id.substring(9));
-                });
-                for (let i = 0; i < street.maps.length; i++) {
-                    belongsMaps.push(mapsListElements[i].id.substring(9));
-                }
-                for (let i = 0; i < mapsListElements.length; i++) {
-                    
-                }
-
-                belongsMaps.forEach(mapId => {
-                    let alternative_name = street.maps[i].pivot.alternative_name;
-                    $("#input_map"+street.maps[i].id).val(alternative_name);
-                });
-                console.log(belongsMaps);
-                */
                 $("#modal-title").text("Editar vía");
                 // Show and enable buttons and also fill value with street id
                 $("#btn-remove").prop("disabled", false);
@@ -604,64 +576,9 @@
                 $("#btn-position").css("display", "initial");
                 // Modal display
                 $('#modal').modal('show');
-
-                // Delete street button
-                $("#btn-remove").on("click", function(){
-                    $("#modal-form").attr("action", "{{route('street.store')}}/"+this.value);
-                    $("input[name='_method']").val("DELETE");
-                    $('#modal').modal('hide');
-                    $('#confirmModal').modal('show');
-                    $("#btn-confirm").click(function(){
-                        $("#modal-form").submit();
-                    });
-                    $("#btn-cancel").click(function(){
-                        //$("#modal-form").attr("action", "{{route('street.store')}}/"+street.id);
-                        //$("input[name='_method']").val("PUT");
-                        $('#confirmModal').modal('hide');
-                        //$('#modal').modal('show');
-                    });
-                });
-                
-                // Replace street position
-                $("#btn-position").on("click", function(){
-                    // Turn dragging variable to true to disable marker click handle
-                    dragging = true;
-                    // Search for right marker
-                    let markerId = $(".leaflet-marker-pane img[alt='"+this.value+"']")[0].alt;
-                    // Build of marker variable name
-                    let markerVarName = "marker"+markerId;
-                    // Get marker js object
-                    let leafletMarker = eval(markerVarName);
-                    console.log("antes de mover "+leafletMarker.getLatLng());
-                    // Detach current marker from the group
-                    clusterMarkers.removeLayer(leafletMarker);
-                    // Disable markers group
-                    map.removeLayer(clusterMarkers);
-                    // Attach current marker directly to the map
-                    leafletMarker.addTo(map);
-                    // Enable marker dragging mode
-                    leafletMarker.dragging.enable();
-                    // Hide edition modal
-                    $('#modal').modal('hide');
-                    // Dragging event handle
-                    leafletMarker.on("dragend", function(){
-                        // // Disable dragging mode
-                        // leafletMarker.dragging.disable();
-                        // // Attach current marker to the layer
-                        // clusterMarkers.addLayer(leafletMarker);
-                        // // Enable markers group again
-                        // map.addLayer(clusterMarkers);
-                        // // Fill new position values
-                        // $("#modal-lat").val(leafletMarker.getLatLng().lat);
-                        // $("#modal-lng").val(leafletMarker.getLatLng().lng);
-                        // // Save new position
-                        // $('#modal-form').submit();
-                    });
-                });
             }
             
-            
-            // AJAX SUBMIT
+            // SAVE BUTTON
             $("#btn-submit").on("click", function(e){
                 e.preventDefault();
 
@@ -693,6 +610,71 @@
                     }
                 }
             });
+
+            // REPLACE BUTTON
+            $("#btn-position").on("click", function(){
+                // Turn dragging variable to true to disable marker click handle
+                dragging = true;
+                // Search for right marker
+                let markerId = $(".leaflet-marker-pane img[alt='"+this.value+"']")[0].alt;
+                
+                let marker;
+                clusterMarkers.eachLayer(function(clusterMarker) {
+                    if(clusterMarker.id == markerId){
+                        marker = clusterMarker;
+                    }
+                });
+                // // Build of marker variable name
+                // let markerVarName = "marker"+markerId;
+                // // Get marker js object
+                // let leafletMarker = eval(markerVarName);
+                console.log("antes de mover "+marker.getLatLng());
+                // Detach current marker from the group
+                clusterMarkers.removeLayer(marker);
+                // Disable markers group
+                map.removeLayer(clusterMarkers);
+                // Attach current marker directly to the map
+                marker.addTo(map);
+                // Enable marker dragging mode
+                marker.dragging.enable();
+                // Hide edition modal
+                $('#modal').modal('hide');
+                // Dragging event handle
+                marker.on("dragend", function(){
+                    // // Disable dragging mode
+                    // leafletMarker.dragging.disable();
+                    // // Attach current marker to the layer
+                    // clusterMarkers.addLayer(leafletMarker);
+                    // // Enable markers group again
+                    // map.addLayer(clusterMarkers);
+                    // // Fill new position values
+                    // $("#modal-lat").val(leafletMarker.getLatLng().lat);
+                    // $("#modal-lng").val(leafletMarker.getLatLng().lng);
+                    // // Save new position
+                    // $('#modal-form').submit();
+                });
+            });
+
+            // REMOVE BUTTON
+            $("#btn-remove").on("click", function(){
+                // $("#modal-form").attr("action", "{{route('street.store')}}/"+this.value);
+                // $("input[name='_method']").val("DELETE");
+                $('#modal').modal('hide');
+                $('#confirmModal').modal('show');
+
+            });
+            // REMOVE BUTTON CANCEL
+            $("#btn-cancel").click(function(){
+                $('#modal').modal('show');
+                $('#confirmModal').modal('hide');
+            });
+            // REMOVE BUTTON CONFIRM
+            $("#btn-confirm").click(function(){
+                // $("#modal-form").submit();
+                deleteAjax(activeMarker.id);
+            });
+            
+            
 
             // GET DATA FROM THE FORM
             function getFormData(){
@@ -819,6 +801,29 @@
                         showValidationErrors(data);
                     },
                 });
+            };
+            function deleteAjax(streetID){
+              $.ajax({
+                url:"{{route('street.destroyAjax')}}",
+                data: {"id": streetID},
+                success: function(data){
+                    // Find the deleted street here
+                    let deletedStreet;
+
+                    streets.forEach(street => {
+                        if(street.id == streetID){
+                            deletedStreet = street;
+                            let index = streets.indexOf(deletedStreet);
+                            streets.splice(index, 1);
+                            markersList.splice(index, 1);
+                            
+                            map.removeLayer(activeMarker);
+                        }
+                    });
+
+
+                },
+              })  
             };
             
             

@@ -149,7 +149,13 @@ class StreetController extends Controller
         ]);
     }
     public function destroyAjax(Request $r){
-        dd("Fin del camino amigo");
+        $street = Street::find($r->id);
+        $street->maps()->detach();
+        $street->points()->detach();
+        $street->delete();
+
+        $street->destroy($street->id);
+        // Street::destroy($id);
     }
 
     // SHOW A SOMETHING ///////////////////////////////////////////////////////////////////////
