@@ -50,13 +50,14 @@ class SearchController extends Controller
     }
    
     // MUESTRA LA VISTA DE LA CALLE SELECCIONADA //////////////////////////////////////
-    public function inform($id)
+    public function inform($id, Request $request)
     {
         $street = Street::find($id);        
         $street_type = StreetType::all(); 
         $map_street = MapStreet::all();      
         $map = Map::all();      
-
+        // Mantenemos la variable flash para guardar el último sitio visitado (frontend)
+        $request->session()->reflash();
         return view('search/informe', array('street' => $street, 'street_type' => $street_type, 'map' => $map, 'map_street'=>$map_street));
     }
 }
