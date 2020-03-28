@@ -122,34 +122,3 @@ $(document).ready(function() {
 
 
 
-
- /*
-$(document).ready(function() {
-    $(".draggable").draggable({
-      cursor: 'move',
-    });
-
-    $(".droppable").droppable({
-      drop: function(event, ui) {
-        var str1 = ui.draggable.text(); //returns draggable value
-        $(this).text(str1); //trying to set droppable target with draggable value
-        return false
-      }
-
-       $( function() {
-        $( "#map" ).sortable({
-          revert: true
-        });
-        $( "#informeObservacionesDraggable" ).draggable({
-          connectToSortable: "#map",
-          helper: "clone",
-          revert: "invalid"
-        });
-        //$( "ul, li" ).disableSelection();
-      } );
-    });
-  });
-*/
-
-
-
