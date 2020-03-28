@@ -32,10 +32,6 @@
     </style>
 @endsection
 
-@section('header')
-    <!--  Header html  -->
-@endsection
-
 @section('content')
     <!-- Div where the map and all the menus will
     go so we are able to drag booth the menues and go 
@@ -275,7 +271,6 @@
     
 
     <!-- Create/edit street modal -->
-
     <div class="modal fade" id="modal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -467,9 +462,10 @@
                     createStreet(e.latlng.lat, e.latlng.lng);
             });
  
-            // Leaflet mark click handler
-            clusterMarkers.eachLayer(function(marker) {
-                marker.on('click', function(){
+            // ADD MARKER EVENTS TO A GIVEN MARKER
+            function addMarkerEvents(marker){
+                // CLICK
+                marker.on('click', function(e){
                     // When click does not come from dragg event
                     if(!dragging){
                         // Search for selected street
@@ -486,6 +482,26 @@
                         dragging = false;
                     }
                 });
+
+                // FINISH DRAG
+                marker.on('dragend', function(e){
+                    // Disable dragging mode
+                    marker.dragging.disable();
+                    // Attach current marker to the layer
+                    clusterMarkers.addLayer(marker);
+                    // Enable markers group again
+                    map.addLayer(clusterMarkers);
+                    // Fill new position values
+                    $("#modal-lat").val(marker.getLatLng().lat);
+                    $("#modal-lng").val(marker.getLatLng().lng);
+                    let auxStreet = getFormData();
+                    updateAjax(auxStreet);
+                })
+            }
+
+            // Leaflet mark click handler
+            clusterMarkers.eachLayer(function(marker) {
+                addMarkerEvents(marker);
             });
 
             var action = "";
@@ -628,18 +644,18 @@
                     // Hide edition modal
                     $('#modal').modal('hide');
                     // Dragging event handle
-                    leafletMarker.on("moveend", function(){
-                        // Disable dragging mode
-                        leafletMarker.dragging.disable();
-                        // Attach current marker to the layer
-                        clusterMarkers.addLayer(leafletMarker);
-                        // Enable markers group again
-                        map.addLayer(clusterMarkers);
-                        // Fill new position values
-                        $("#modal-lat").val(leafletMarker.getLatLng().lat);
-                        $("#modal-lng").val(leafletMarker.getLatLng().lng);
-                        // Save new position
-                        $('#modal-form').submit();
+                    leafletMarker.on("dragend", function(){
+                        // // Disable dragging mode
+                        // leafletMarker.dragging.disable();
+                        // // Attach current marker to the layer
+                        // clusterMarkers.addLayer(leafletMarker);
+                        // // Enable markers group again
+                        // map.addLayer(clusterMarkers);
+                        // // Fill new position values
+                        // $("#modal-lat").val(leafletMarker.getLatLng().lat);
+                        // $("#modal-lng").val(leafletMarker.getLatLng().lng);
+                        // // Save new position
+                        // $('#modal-form').submit();
                     });
                 });
             }
@@ -762,22 +778,8 @@
                         markersList.push(ajaxStreetMarker);
                         clusterMarkers.addLayer(ajaxStreetMarker);
                         
-                        // ADD THE ONCLICK EVENT
-                        ajaxStreetMarker.on('click', function(){
-                            // When click does not come from dragg event
-                            if(!dragging){
-                                // Edit modal trigger with selected street
-                                for (let i = 0; i < streets.length; i++) {
-                                    if(ajaxStreetMarker.id == streets[i].id){
-                                        console.log(streets[i]);
-                                        editStreet(streets[i]);
-                                    }
-                                }
-                            }else{
-                                // After drag click will be fired and here break dragging mode
-                                dragging = false;
-                            }
-                        });
+                        // ADD THE EVENTS
+                        addMarkerEvents(ajaxStreetMarker);
 
                         // HIDE THE FORM
                         $("button[class='close']").click();
@@ -788,7 +790,6 @@
                     },
                 });
             };
-
             function updateAjax(street){
                 $.ajax({
                     url:"{{route('street.updateAjax')}}",
