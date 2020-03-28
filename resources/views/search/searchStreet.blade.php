@@ -102,7 +102,7 @@
                   $("#resultado").html("");
                   $("#resultado").append('<a class="font-weight-bold text-success" href='+url+"/"+response[0].id+'>' + response[0].name + ' ' + response[0].street_name + '</a></br>');
                   $("#resultadoAlternativo").html("");
-                    if(response[0].alternative_name != null || response > 0){
+                    if(response[0].alternative_name != null){
                         $('#resultadoAlternativo').append('Se corresponde con ' + response[0].alternative_name + '</br>');
                     }
                     for(var i = 1; i < response.length; i++){
@@ -122,7 +122,7 @@
                                     $("#resultado").append('<a class="font-weight-bold text-success" href=' + url + "/" + response[i].id + '>' + response[i].name + ' ' + response[i].street_name + '</a></br>');
                                 }
                                 // se aplica lo mismo que el if anterior, no se incluye en él porque alternative_name puede dar más de una respuesta
-                                if(response != response[i-1].alternative_name){
+                                if( alternativo != null && alternativo != response[i-1].alternative_name){
                                     $('#resultadoAlternativo').append('Se corresponde con  ' + response[i].alternative_name + '</br>');
                                 }
 
