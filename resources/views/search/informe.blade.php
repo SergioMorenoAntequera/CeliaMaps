@@ -126,7 +126,7 @@
 
                     <!-- AQUÍ PONGO EL BOTÓN DE PDF -->
                     <div class="row col-2 float-right">
-                        <button id="btn-pdf" type="button" class="btn btn-success">PDF</button>
+                        <button id="btn-pdf" type="button" class="btn btn-success">Generar Informe</button>
                     </div>
                     <!-- FIN DE BOTÓN DE PDF -->
 
