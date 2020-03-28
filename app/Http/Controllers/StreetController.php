@@ -148,6 +148,16 @@ class StreetController extends Controller
             'maps' => $mapsAsigned,
         ]);
     }
+    public function updatePositionAjax(Request $r){
+        $street = Street::find($r->id);
+        
+        // Point update
+        $point = Point::find($street->points[0]->id);
+        $point->lat = $r->lat;
+        $point->lng = $r->lng;
+
+        $point->save();
+    }
     public function destroyAjax(Request $r){
         $street = Street::find($r->id);
         $street->maps()->detach();

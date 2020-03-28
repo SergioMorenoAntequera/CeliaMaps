@@ -459,8 +459,10 @@
             // Leaflet map click handler
             map.on('click', function(e) {
                 // Create modal trigger with lat/lng coordinates
-                if(!dragging)    
-                    createStreet(e.latlng.lat, e.latlng.lng);
+                if(!dragging) 
+                    showCreateForm(e.latlng.lat, e.latlng.lng);
+                else
+                    dragging = false;
             });
  
             // ADD MARKER EVENTS TO A ALL MARKERS
@@ -509,7 +511,8 @@
             $("#btn-position").on("click", function(){
                 // Turn dragging variable to true to disable marker click handle
                 dragging = true;
-
+                
+                console.log(activeMarker);
                 console.log("antes de mover "+activeMarker.getLatLng());
 
                 // Detach current marker from the group
@@ -519,11 +522,12 @@
                 // Attach current marker directly to the map
                 activeMarker.addTo(map);
                 // Enable marker dragging mode
+
                 activeMarker.dragging.enable();
                 // Hide edition modal
                 $('#modal').modal('hide');
 
-                // From here we jump to addMarkerEvents()
+                // From here we jump to addMarkerEvents().dragend
             });
 
             // REMOVE BUTTON
@@ -564,7 +568,7 @@
             //------------------------ AUXILIAR METHODS -------------------}}
             //-------------------------------------------------------------}}
             //PREPARES AND SHOWS THE FORM
-            function createStreet(lat, lng) {
+            function showCreateForm(lat, lng) {
                 action = "create";
                 // Create form attributes
                 $("#modal-form").attr("action", "{{route('street.store')}}");
@@ -592,7 +596,7 @@
                 $(".inputs-errors").html("");
                 $('#modal').modal('show');
             };
-            function editStreet(street) {
+            function showEditForm(street) {
                 action = "update";
                 // Edit form attributes
                 $("#modal-form").attr("action", "{{route('street.store')}}/"+street.id);
@@ -686,7 +690,8 @@
             function addMarkerEvents(marker){
                 // CLICK
                 marker.on('click', function(e){
-                    activeMarker = marker;
+                    activeMarker = e.target;
+                    console.log(activeMarker);
                     // When click does not come from dragg event
                     if(!dragging){
                         // Search for selected street
@@ -697,7 +702,7 @@
                         }
                         // Edit modal trigger with selected street
 
-                        editStreet(street);
+                        showEditForm(street);
                     }else{
                         // After drag click will be fired and here break dragging mode
                         dragging = false;
@@ -707,18 +712,23 @@
                 // FINISH DRAG (MARKER MOVED)
                 marker.on('dragend', function(e){
                     // Disable dragging mode
-                    marker.dragging.disable();
+                    console.log(e.target);
+                    e.target.dragging.disable();
+
                     // Attach current marker to the layer
-                    clusterMarkers.addLayer(marker);
+                    map.removeLayer(e.target);
+                    clusterMarkers.addLayer(e.target);
                     // Enable markers group again
                     map.addLayer(clusterMarkers);
+
                     // Fill new position values
-                    $("#modal-lat").val(marker.getLatLng().lat);
-                    $("#modal-lng").val(marker.getLatLng().lng);
-                    
-                    let auxStreet = getFormData();
-                    console.log(auxStreet);
-                    updateAjax(auxStreet);
+                    $("#modal-lat").val(e.target._latlng.lat);
+                    $("#modal-lng").val(e.target._latlng.lng);
+
+                    // let auxStreet = getFormData();
+
+                    updatePositionAjax(e.target.id, e.target._latlng.lat, e.target._latlng.lng);
+                    dragging = false;
                 });
             }
             // DETECS AND SHOWS AJAX ERRORS
@@ -804,6 +814,16 @@
                     },
                 });
             };
+            function updatePositionAjax(id, lat, lng){
+                $.ajax({
+                    url:"{{route('street.updatePositionAjax')}}",
+                    data: {"id":id, "lat":lat, "lng":lng},
+                    success: function(data) {
+                        console.log("PRA" + id + " // " + lat + " // " + lng);
+                    },
+                });
+                
+            }
             function deleteAjax(streetID){
               $.ajax({
                 url:"{{route('street.destroyAjax')}}",
@@ -818,12 +838,11 @@
                             let index = streets.indexOf(deletedStreet);
                             streets.splice(index, 1);
                             markersList.splice(index, 1);
-
+                            
+                            clusterMarkers.removeLayer(activeMarker);
                             map.removeLayer(activeMarker);
                         }
                     });
-
-
                 },
               })  
             };
