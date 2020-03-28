@@ -99,37 +99,34 @@
               dataType: 'json',
               data: {text:elNombreDelaCalle},
                 success: function(response){
-
                   $("#resultado").html("");
                   $("#resultado").append('<a class="font-weight-bold text-success" href='+url+"/"+response[0].id+'>' + response[0].name + ' ' + response[0].street_name + '</a></br>');
                   $("#resultadoAlternativo").html("");
-                  if(response[0].alternative_name != null){
-                  $('#resultadoAlternativo').append('Se corresponde con ' + response[0].alternative_name + '</p></br>');
-                  }
-                    let posicion = response.length;
-                    console.log('esta es la posicion');
-                    console.log(posicion);
-
-                  for(var i = 1; i < response.length; i++){
-                    id = response[i].id;
-                    // damos a la variable name el valor del nombre de la calle
-                    let name = response[i].name;
-                    let alternativo = response [i].alternative_name;
-
-                    /*si el nombre contenido en la variable es diferente al nombre de esa misma variable
-                    name en la vuelta anterior, entonces ese nombre de calle aparece en la vista, si el nombre anterior
-                    se repite, entonces no aparece en la vista por segunda vez.
-                    */
-                    if(name != response[i-1].name){
-                      //cuando haga el enlace hay qu incluir el a href en el append, igual que he metido el br
-                      // Usamos la variable url generada al cargar la página para crear la dirección del enlace
-                      $("#resultado").append('<a class="font-weight-bold text-success" href=' + url + "/" + response[i].id + '>' + response[i].name + ' ' + response[i].street_name + '</a></br>');
+                    if(response[0].alternative_name != null || response > 0){
+                        $('#resultadoAlternativo').append('Se corresponde con ' + response[0].alternative_name + '</br>');
                     }
-                    if(response != response[i].alternative_name){
-                      $('#resultadoAlternativo').append('Se corresponde con ' + response[i].alternative_name + '</br>');
-                    }
+                    for(var i = 1; i < response.length; i++){
+                            id = response[i].id;
+                            // damos a la variable name el valor del nombre de la calle
+                            let name = response[i].name;
+                            // damos a la variable el nombre alternativo al nombre de la calle
+                            let alternativo = response [i].alternative_name;
 
-                    }
+                            /*si el nombre contenido en la variable es diferente al nombre de esa misma variable
+                            name en la vuelta anterior, entonces ese nombre de calle aparece en la vista, si el nombre anterior
+                            se repite, entonces no aparece en la vista por segunda vez.
+                            */
+                                if(name != response[i-1].name){
+                                    //cuando haga el enlace hay qu incluir el a href en el append, igual que he metido el br
+                                    // Usamos la variable url generada al cargar la página para crear la dirección del enlace
+                                    $("#resultado").append('<a class="font-weight-bold text-success" href=' + url + "/" + response[i].id + '>' + response[i].name + ' ' + response[i].street_name + '</a></br>');
+                                }
+                                // se aplica lo mismo que el if anterior, no se incluye en él porque alternative_name puede dar más de una respuesta
+                                if(response != response[i-1].alternative_name){
+                                    $('#resultadoAlternativo').append('Se corresponde con  ' + response[i].alternative_name + '</br>');
+                                }
+
+                        }
                 },
                 error:function(){
                   //alert("no funciona");

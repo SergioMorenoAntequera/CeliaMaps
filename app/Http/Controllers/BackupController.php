@@ -78,7 +78,7 @@ class BackupController extends Controller
                 }
                 // AL ACABAR, SE CIERRA EL ARCHIVO ZIP
                 $zip->close();
-                return redirect(route('backup.index'));
+                //return redirect(route('backup.index'));
             }else{
                 echo 'fallando';
             }
@@ -111,7 +111,7 @@ class BackupController extends Controller
                 $path = public_path('/');
                 $zip->extractTo($path);
                 $zip->close();
-                return redirect(route('backup.index'));
+                //return redirect(route('backup.index'));
             } else {
                 echo 'failed';
             }
