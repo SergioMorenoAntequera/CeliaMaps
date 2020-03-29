@@ -34,7 +34,7 @@ class MapController extends Controller
      * 
      * @return View
      */
-    public function map(){
+    public function map(Request $request){
         // Preparamos los mapas ordenados
         $maps = Map::all();
         $mapsSorted = Array();
@@ -59,6 +59,9 @@ class MapController extends Controller
         }
         $data['hotspots'] = $hotspots;
         $data['streets'] = $streets;
+
+        // Variable de entorno flash para controlar el acceso a informes
+        $request->session()->flash('frontend', true);
 
         return view("map.map", $data);
     }

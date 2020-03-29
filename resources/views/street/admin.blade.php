@@ -174,37 +174,10 @@
                     var streets = [];
                     //When we first click in the search bar (AJAX)
                     $("#streetsInput").on("focusin", function(e){
-                        if($(this).val().length == 0){
-                            var url = "{{url("map/search")}}";
-                            $.ajax({
-                                type: 'GET',
-                                url: url,
-                                // data: { text : text },
-                                success: function(data) {
-                                    $('#streetsFound').empty();
-                                    streets = [];
-                                    
-                                    data.streets.forEach(street => {
-                                        // Save actual street
-                                        street.fullName = street.typeName + " " + street.name;
-                                        streets.push(street);
-                                        // Duplicate object for older streets
-                                        let alternativeStreet = {...street};
-                                        alternativeStreet.maps.forEach(mapStreet => {
-                                            if(mapStreet.pivot.alternative_name !== null){
-                                                alternativeStreet.name = mapStreet.pivot.alternative_name;
-                                                alternativeStreet.fullName = alternativeStreet.typeName + " " + alternativeStreet.name;
-                                                alternativeStreet.deprecated = true;
-                                                streets.push(alternativeStreet);
-                                            }
-                                        });
-                                    });
-                                },
-                            }); // FIN AJAX
-                        } else {
+                        if($(this).val().length != 0){
                             if($('#streetsFound').children().length == 0){
                                 lookByText();
-                            }
+                            }  
                         }
                     });
 
@@ -224,13 +197,14 @@
                     // Auxiliar function
                     function lookByText(){
                         c = 0;
+                        console.log(streets);
                         streets.forEach(street => {
                             if(street.fullName.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
                                 // Deprecated street will appear in italic font
                                 if(street.deprecated == true)
-                                    $('#streetsFound').append("<div id='"+ street.id +"' style='font-style:italic;opacity:0.8' class='street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ street.fullName + "</div>");
+                                    $('#streetsFound').append("<div id='"+ street.id +"' style='font-style:italic;opacity:0.8' class='street'> <img style='width:5%;' src='{{url('img/icons/tokenSelected.svg')}}'>"+ street.fullName + "</div>");
                                 else
-                                    $('#streetsFound').append("<div id='"+ street.id +"' class='street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ street.fullName + "</div>");
+                                    $('#streetsFound').append("<div id='"+ street.id +"' class='street'> <img style='width:5%;' src='{{url('img/icons/tokenSelected.svg')}}'>"+ street.fullName + "</div>");
                                 if(++c == 5){
                                     return;
                                 }                                
@@ -441,7 +415,7 @@
             var dragging = false;
             var action = "";
             var markerImage = L.icon({
-                iconUrl: "{{url('img/icons/token.svg')}}",
+                iconUrl: "{{url('img/icons/token-selected.svg')}}",
                 iconSize:     [30, 90],
                 iconAnchor:   [15,60],
             });
@@ -449,13 +423,23 @@
             // CHECK SAVED STREETS
             @isset($streets)
                 // Streets php array conversion to js array
-                let streets = @json($streets);
-                // Complete array with relationship data
-                @for ($i=0;$i<count($streets);$i++) 
-                    streets[{{$i}}].maps =  @json($streets[$i]->maps);
-                    streets[{{$i}}].points =  @json($streets[$i]->points[0]);
-                @endfor
-
+                let streetsJSON = @json($streets);
+                streetsJSON.forEach(street => {
+                    // Save actual street
+                    street.fullName = street.typeName + " " + street.name;
+                    streets.push(street);
+                    // Duplicate object for older streets
+                    let alternativeStreet = {...street};
+                    alternativeStreet.maps.forEach(mapStreet => {
+                        if(mapStreet.pivot.alternative_name !== null){
+                            alternativeStreet.name = mapStreet.pivot.alternative_name;
+                            alternativeStreet.fullName = alternativeStreet.typeName + " " + alternativeStreet.name;
+                            alternativeStreet.deprecated = true;
+                            streets.push(alternativeStreet);
+                        }
+                    });
+                });
+                console.log(streets);
                 // Write saved streets
                 @foreach ($streets as $street)
                     // Creating a Marker
@@ -595,6 +579,10 @@
                 });
             });
             
+            // CLEAN SEARCH FIELD ON MAP CLICK
+            map.on("click", function(){
+                $('#streetsFound').empty();
+            });
 
             //-------------------------------------------------------------}}
             //------------------------ AUXILIAR METHODS -------------------}}
@@ -890,10 +878,6 @@
                 let leafletMarker = eval(markerVarName);
                 // Set view over street
                 map.setView([leafletMarker.getLatLng().lat, leafletMarker.getLatLng().lng], 99);
-                // Display modal
-                setTimeout(() => {
-                    $("img[alt='" + this.id + "']").click()    
-                }, 250);
             });
         });
     </script>

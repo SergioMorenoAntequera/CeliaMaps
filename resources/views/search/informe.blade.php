@@ -131,7 +131,8 @@
                     <!-- FIN DE BOTÓN DE PDF -->
 
                     <!-- SE AÑADE EL BOTÓN "X" PARA SALIR DEL INFORME -->
-                    <a href="{{route('search.index')}}">
+                    <!-- CONTROLAMOS CON LA VARIABLE FLASH 'frontend' SI EL USUARIO VIENE DE FRONT O BACK PARA EL ENLACE -->
+                    <a href="@if(session('frontend')){{route('map.map')}}@else{{route('search.index')}}@endif">
                         <div class="cornerButton">
                             <img class="center" src="{{url("img/icons/close.svg")}}" alt="">
                         </div>

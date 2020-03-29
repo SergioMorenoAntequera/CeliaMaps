@@ -195,7 +195,7 @@ html, body {
 #hotspotMenu > .content > .header { position: relative; }
 #hotspotMenu > .content > .header > #hp-img {width: 100%; }
 #hotspotMenu > .content > .body { padding: 0px 20px 0px 20px; }
-#hotspotMenu > .content > .body > #hp-title { margin: 10px 0px 7px 0px; font-size: 20px; }
+#hotspotMenu > .content > .body > #hp-title { font-weight: bold; margin: 10px 0px 7px 0px; font-size: 20px; }
 #hotspotMenu > .content > .body > #hp-description { margin: 0px 0px 10px 0px;}
 
 
