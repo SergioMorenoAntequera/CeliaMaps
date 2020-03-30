@@ -445,7 +445,7 @@ function (_Emitter) {
         /**
          * The text that replaces the default message text it the browser is not supported.
          */
-        dictFallbackMessage: "Your browser does not support drag'n'drop file uploads.",
+        dictFallbackMessage: "Tu navegador no soporta archivos de drag'n'drop.",
 
         /**
          * The text that will be added before the fallback form.
@@ -458,12 +458,12 @@ function (_Emitter) {
          * If the filesize is too big.
          * `{{filesize}}` and `{{maxFilesize}}` will be replaced with the respective configuration values.
          */
-        dictFileTooBig: "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.",
+        dictFileTooBig: "El archivo es mas grade de ({{filesize}}MiB). Maximo permitido: {{maxFilesize}}MiB.",
 
         /**
          * If the file doesn't match the file type.
          */
-        dictInvalidFileType: "You can't upload files of this type.",
+        dictInvalidFileType: "No puedes subir imagenes de este tipo.",
 
         /**
          * If the server response was invalid.
@@ -474,12 +474,12 @@ function (_Emitter) {
         /**
          * If `addRemoveLinks` is true, the text to be used for the cancel upload link.
          */
-        dictCancelUpload: "Cancel upload",
+        dictCancelUpload: "Cancelar la subida",
 
         /**
          * The text that is displayed if an upload was manually canceled
          */
-        dictUploadCanceled: "Upload canceled.",
+        dictUploadCanceled: "Subida cancelada.",
 
         /**
          * If `addRemoveLinks` is true, the text to be used for confirmation when cancelling upload.
@@ -489,7 +489,7 @@ function (_Emitter) {
         /**
          * If `addRemoveLinks` is true, the text to be used to remove a file.
          */
-        dictRemoveFile: "Remove file",
+        dictRemoveFile: "Borrar archivo",
 
         /**
          * If this is not null, then the user will be prompted before removing a file.

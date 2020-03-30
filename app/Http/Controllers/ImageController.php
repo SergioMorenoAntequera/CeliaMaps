@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Hotspot;
 use Illuminate\Http\Request;
 use App\Image;
 use App\Map;
+use App\Hotspot;
+use Intervention\Image\ImageManagerStatic;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Str;
 
-class HotspotController extends Controller
+class ImageController extends Controller
 {
     public function __construct()
     {
@@ -21,9 +23,8 @@ class HotspotController extends Controller
      * @return View
      */
     public function index(){
-        $hotspot = Hotspot::all();
-        //d($hotspot[0]->images[0]);
-        return view('hotspot.index', ['hotspots'=>$hotspot]);
+        $image = Image::all();
+        return view('image.index', ['images'=>$image]);
     }
 
     /**
@@ -34,8 +35,8 @@ class HotspotController extends Controller
      * @return View
      */
     public function show($id){
-        $hotspot = Hotspot::find($id);
-        return view('hotspot.show', ['hotspot'=>$hotspot]);
+        $image = Image::find($id);
+        return view('image.show', ['image'=>$image]);
     }
 
     /**
@@ -44,11 +45,8 @@ class HotspotController extends Controller
      * @return View
      */
     public function create(){
-        $hotspots = Hotspot::all();
-        $map = Map::all();
         $image = Image::all();
-        //dd($hotspots[0]->images[1]->file_name);
-        return view('hotspot.test', ['hotspots'=>$hotspots, 'maps'=>$map, 'images'=>$image]);
+        return view('image.index', ['images'=>$image]);
     }
 
     /**
@@ -59,12 +57,11 @@ class HotspotController extends Controller
      * @return View
      */
     public function store(Request $r){
+        /*
         $r->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'images' => 'required'
+            'titulo' => 'required|max:50',
         ]);
-        
+        */
         $hotspot = new Hotspot($r->all());
         $hotspot->save();
 
@@ -112,12 +109,6 @@ class HotspotController extends Controller
      * @return View
      */
     public function update(Request $r, $id){
-        $r->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'images' => 'required'
-        ]);
-        
         $hotspot = Hotspot::find($id);
         $hotspot->fill($r->all());
         $hotspot->save();
