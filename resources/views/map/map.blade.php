@@ -51,19 +51,25 @@
         </div>
         <div id="ballMaps" class="ball noselect">
             <div class="ballContent">
-                <img class="noselect" src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
+                <img style="width: 90%;position: absolute; top: 5%; left: 5%" class="noselect" src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
             </div>
         </div>
         <div id="ballStreets" class="ball noselect">
             <div class="ballContent">   
-                 <img style="width: 70%;position: absolute; top: 15%; left: 15%" class="noselect" src="{{url('img/icons/search.svg')}}" title="Buscador">
-             </div>
-         </div>
+                <img style="width: 70%;position: absolute; top: 15%; left: 15%" class="noselect" src="{{url('img/icons/search.svg')}}" title="Buscador">
+            </div>
+        </div>
         <div id="ballHotspots" class="ball noselect">
             <div class="ballContent">
                 <img style="opacity: 0.2" class="noselect" src="{{url('img/icons/tlMenuToken.png')}}" title="Puntos de interés">
             </div>
         </div>
+        <div id="ballShowStreets" class="ball noselect">
+            <div class="ballContent">
+                <img style="width: 80%; position: absolute; top: 10%; left: 10%; opacity: 0.2;" class="noselect" src="{{url('img/icons/tlMenuStreet.png')}}" title="Calles">
+            </div>
+        </div>
+
 
         {{-- CONTENIDO DE MENÚ --}}
         {{-- Todos los menús que podemos poner --}}
@@ -517,8 +523,9 @@
                     }
                 });
             });
-            console.log(streets);
+            
             let clusterMarkers = L.markerClusterGroup();
+            
             streets.forEach(street => {
                 if(street.deprecated != true){
                     var marker = L.marker([street.lat, street.lng],{icon: markerStreet, alt: street.id, draggable:false});
@@ -554,7 +561,9 @@
         map.on("click", function(){
             $('#streetsFound').empty();
         });
+        map.removeLayer(clusterMarkers);
     </script>
+    
     <script src="{{url('js/mapTlMenu.js')}}"></script>
     <script src="{{url('js/mapBlMenu.js')}}"></script>
     <script src="{{url('js/mapFullScreenMenu.js')}}"></script>
