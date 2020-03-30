@@ -25,7 +25,7 @@ html body{
     min-height: 45px;
     
     padding: 20% 0; 
-    background-color: #253238;
+    /* background-color: #253238; */
 }
 .lateralMenuImg:hover {
     background-color: #6f7e96;
@@ -36,11 +36,11 @@ html body{
     width: 75%;
 }
 .lateralExpandMenu {
-    /* display: none; */
+    display: none;
     z-index: -100;
     position: absolute;
-    left: -200px;
-    /* left: 100%; */
+    /* left: -200px; */
+    left: 100%;
     min-width: 122px;
 
     /* border-radius: 0px 10px 10px 0px; */

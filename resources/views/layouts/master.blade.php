@@ -159,7 +159,7 @@
                             <div class="lateralExpandMenu">
                                 <b> Ajustes </b>
                                 <div class="line"></div>
-                                <a href="{{route('map.setView')}}"><li> Vista principal </li></a>
+                                <a href="{{route('setting.setMainView')}}"><li> Vista principal </li></a>
                                 <a href="{{route('marker.admin')}}"><li>Marcadores</li></a>
                             </div>
                         </div>
@@ -181,8 +181,9 @@
                                 element = $(".lateralMenuLink[href|='{{route('backup.index')}}']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/search")){
                                 element = $(".lateralMenuLink[href|='{{route('search.index')}}']").parents(".lateralMenuElement");
-                            } if(window.location.href.includes("/marker") || window.location.href.includes("/setView")){
+                            } else if(window.location.href.includes("/setting") || window.location.href.includes("/marker")){
                                 element = $(".lateralMenuLink[selector|=settings]").parents(".lateralMenuElement");
+                                console.log(element);
                             }
                             element.css("background-color", "#6f7e96")
 
@@ -194,12 +195,11 @@
                                 expandMenu.css("top", top - expandMenu.height()/2 + $(this).height()/2);
                                 expandMenu.show();
                                 //Animaction
-                                expandMenu.animate({"left": "100%"}, 150);
+                                // expandMenu.animate({"left": "100%"}, 150);
                                 
                             }, function(e){
                                 var expandMenu = $(this).children(".lateralExpandMenu");
-
-                                expandMenu.animate({"left": "-200px"}, 150);
+                                // expandMenu.animate({"left": "-200px"}, 150);
                                 expandMenu.hide();
                             });
                         });
