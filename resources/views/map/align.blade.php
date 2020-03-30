@@ -29,6 +29,8 @@
 
 @section('content')
 
+    {{-- To get the main point from the settings database --}}
+    <script> var mainPoint = @json($mainPoint); </script>
     <div id="map"></div>
 
     <!-- Bottom left menu for the maps -->
@@ -72,6 +74,7 @@
         <img src="{{url('/img/icons/fsMaximize.png')}}" alt="">
     </div>
 
+    
 @endsection
 
 @section('scripts')
@@ -86,7 +89,7 @@
             minZoom: 6,  //Dont touch, recommended
         });
 
-        map.setView([36.844092, -2.457840], 14);
+        map.setView([mainPoint.lat, mainPoint.lng], mainPoint.zoom);
 
         //Global maps from the one we will be able to pick one
         var mapTiles = [

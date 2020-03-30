@@ -39,6 +39,9 @@
     trought the map -->
     <div id="draggableArea">
 
+        {{-- To get the main point from the settings database --}}
+        <script> var mainPoint = @json($mainPoint); </script>
+    
         {{-- Mapa --}}
         <div id="map"></div>
         
@@ -276,7 +279,7 @@
             // maxZoom: 2, //Dont touch, max zoom 
             zoomControl: false,
         });
-        map.setView([36.844092, -2.457840], 14);
+        map.setView([mainPoint.lat, mainPoint.lng], mainPoint.zoom);
 
         //Global maps from the one we will be able to pick one
         var mapTiles = [

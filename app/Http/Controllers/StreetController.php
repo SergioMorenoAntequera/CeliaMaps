@@ -50,6 +50,7 @@ class StreetController extends Controller
         $data['streetsTypes'] = StreetType::all();
         $data['maps'] = Map::all();
         $data['streets'] = Street::all();
+        $data['mainPoint'] = Point::getMainPoint();
         foreach ($data['streets'] as $street) {
             $street->typeName = $street->type->name;
             $street->maps;

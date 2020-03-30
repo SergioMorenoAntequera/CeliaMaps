@@ -59,6 +59,7 @@ class MapController extends Controller
         }
         $data['hotspots'] = $hotspots;
         $data['streets'] = $streets;
+        $data['mainPoint'] = Map::getMainPoint();
 
         // Variable de entorno flash para controlar el acceso a informes
         $request->session()->flash('frontend', true);
@@ -362,6 +363,7 @@ class MapController extends Controller
     public function alignMap($id){
         $data['map'] = Map::find($id);
         $data['markers'] = Marker::all();
+        $data['mainPoint'] = Map::getMainPoint();
         
         return view('map.align', $data);
     }

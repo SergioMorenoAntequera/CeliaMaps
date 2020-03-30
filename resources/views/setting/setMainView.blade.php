@@ -33,6 +33,8 @@
     trought the map -->
     <div id="draggableArea">
 
+        {{-- To get the main point from the settings database --}}
+        <script> var mainPoint = @json($mainPoint); </script>
         {{-- Mapa --}}
         <div id="map"></div>
 
@@ -78,8 +80,24 @@
             #saveButton > img {
                 width: 80%;
                 height: 80%;
+                transition: 0.3s;
+            }
+            #saveButton > img:hover {
+                width: 85%;
+                height: 85%;
             }
         </style>
+        {{-- <script>
+            Animación con delay
+            $(document).ready(function(e){
+                $("#saveButton").hover(function(e){
+                    console.log($(this).children("img"));
+                    $(this).children("img").animate({width:"85%", height:"85%"}, 300);
+                }, function(e){
+                    $(this).children("img").animate({width:"80%", height:"80%"});
+                })
+            });
+        </script> --}}
         <a href="">
         <button id="saveButton" class="menu">
             <img src="{{url('img/icons/save.png')}}" alt="">
@@ -87,8 +105,7 @@
         </a>
     </div>
 
-    {{-- Now we can work with the markers in JS (markersJS) --}}
-    <script> var mainPoint = @json($mainPoint); </script>
+    
 @endsection
 
 @section('scripts')
