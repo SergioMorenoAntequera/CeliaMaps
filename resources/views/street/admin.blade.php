@@ -871,6 +871,14 @@
             
             // STREET FOUND IN SEARCH BAR
             $(document).on("click","div.street",function(){
+                console.log(this);
+                $('#streetsFound').empty();
+                let id = this.id;
+                clusterMarkers.eachLayer(function(layer){
+                    if(id == layer.id)
+                        map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 18);
+                });
+                /*
                 $('#streetsFound').empty();
                 // Build of marker variable name
                 let markerVarName = "marker"+this.id;
@@ -878,6 +886,7 @@
                 let leafletMarker = eval(markerVarName);
                 // Set view over street
                 map.setView([leafletMarker.getLatLng().lat, leafletMarker.getLatLng().lng], 99);
+                */
             });
         });
     </script>
