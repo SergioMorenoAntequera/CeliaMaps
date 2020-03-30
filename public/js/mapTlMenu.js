@@ -88,9 +88,7 @@ $(document).ready(function(){
             } else {
                 map.removeLayer(clusterMarkers);
             }
-            
         }
-        
     });
     
     $(".menu").draggable();
@@ -166,8 +164,8 @@ $(document).ready(function(){
             balls.each(function(index){
                 var ball = jQuery(balls[index]);
                 if(ball.css('top') == "0px"){
-                    var lefts = new Array("120px", "97px", "58px", "5px");
-                    var tops = new Array("5px", "58px", "97px", "120px");
+                    var lefts = new Array("120px", "98px", "57px", "5px");
+                    var tops = new Array("5px", "57px", "98px", "120px");
                 } else {
                     var lefts = new Array("0px", "0px", "0px", "0px");
                     var tops = new Array("0px", "0px", "0px", "0px");
@@ -178,7 +176,6 @@ $(document).ready(function(){
                 }, 200);
             });
         }
-        
     }
 
     // SWAP BETWEEN EYES MODES //////////////////////////////////////////////////////////////

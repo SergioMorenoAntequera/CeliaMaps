@@ -49,14 +49,14 @@
                 <img class="noselect" src="{{url('img/icons/menu.png')}}" alt="">
             </div>
         </div>
-        <div id="ballMaps" class="ball noselect">
-            <div class="ballContent">
-                <img style="width: 90%;position: absolute; top: 5%; left: 5%" class="noselect" src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
-            </div>
-        </div>
         <div id="ballStreets" class="ball noselect">
             <div class="ballContent">   
                 <img style="width: 70%;position: absolute; top: 15%; left: 15%" class="noselect" src="{{url('img/icons/search.svg')}}" title="Buscador">
+            </div>
+        </div>
+        <div id="ballMaps" class="ball noselect">
+            <div class="ballContent">
+                <img style="width: 90%;position: absolute; top: 5%; left: 5%" class="noselect" src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
             </div>
         </div>
         <div id="ballHotspots" class="ball noselect">
@@ -187,42 +187,8 @@
 
                     //When we first click in the search bar (AJAX)
                     $("#streetsInput").on("focusin", function(e){
-                    
-                        
                         if($(this).val().length == 0){
-                    
-                    /*START AJAX 
-                            var url = window.location.href + "map/search";
-                            $.ajax({
-                                type: 'GET',
-                                url: url,
-                                // data: { text : text },
-                                success: function(data) {
-                                    $('#streetsFound').empty();
-                                    streets = [];
-                                    hotspots = [];
-                                    
-                                    data.streets.forEach(street => {
-                                        // Save actual street
-                                        street.fullName = street.typeName + " " + street.name;
-                                        streets.push(street);
-                                        // Duplicate object for older streets
-                                        let alternativeStreet = {...street};
-                                        alternativeStreet.maps.forEach(mapStreet => {
-                                            if(mapStreet.pivot.alternative_name !== null){
-                                                alternativeStreet.name = mapStreet.pivot.alternative_name;
-                                                alternativeStreet.fullName = alternativeStreet.typeName + " " + alternativeStreet.name;
-                                                alternativeStreet.deprecated = true;
-                                                streets.push(alternativeStreet);
-                                            }
-                                        });
-                                    });
-                                    hotspots = data.hotspots;
-                                }
-                            }); // FIN AJAX
-                           
-                    END AJAX*/ 
-
+                            
                         } else {
                             if($('#streetsFound').children().length == 0){
                                 lookByText();
@@ -245,16 +211,11 @@
 
                     // Auxiliar function
                     function lookByText(){
-                        c = 0;
                         jsHotspots.forEach(hotspot => {
                             if(hotspot.title.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
-                                $('#streetsFound').append("<div class='hotspot street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ hotspot.title + "</div>");
-                                if(++c >= 5){
-                                    return;
-                                }  
+                                $('#streetsFound').append("<div class='hotspot street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ hotspot.title + "</div>"); 
                             }
                         });
-                        c = 0;
                         streets.forEach(street => {
                             if(street.fullName.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
                                 // Deprecated street will appear in italic font
@@ -262,9 +223,6 @@
                                     $('#streetsFound').append("<div id='"+ street.id +"' style='font-style:italic;opacity:0.8' class='street'> <img style='width:5%;' src='{{url('img/icons/tokenSelected.svg')}}'>"+ street.fullName + "</div>");
                                 else
                                     $('#streetsFound').append("<div id='"+ street.id +"' class='street'> <img style='width:5%;' src='{{url('img/icons/tokenSelected.svg')}}'>"+ street.fullName + "</div>");
-                                if(++c == 5){
-                                    return;
-                                }                                
                             }
                         });
                     }
@@ -430,6 +388,9 @@
 
             }else{ 
                 // Street
+                if($("#ballShowStreets img").css("opacity") != 1)
+                    $("#ballShowStreets").click();
+                    
                 $("#hp-img").attr("src", "");
                 $("#hp-title").text(selection.fullName);
                 let content = "";
