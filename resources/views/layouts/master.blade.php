@@ -31,6 +31,7 @@
                 {{-- Columna de la izquierda --}}
                 <div id="leftNavBar">
                     <ul id=lateralMenu class="list-unstyled">
+                        {{-- Icono Celia  --}}
                         <div class="lateralMenuElement mb-4">
                             <a class="lateralMenuLink" href="{{route('map.map')}}">
                             <li id="celiaMapsIcon" class="lateralMenuImg my-3">
@@ -39,6 +40,7 @@
                             </a>
                         </div>
 
+                        {{-- Maps --}}
                         <div class="lateralMenuElement">
                             <a class="lateralMenuLink" href="{{route('map.index')}}">
                             <li class="lateralMenuImg">
@@ -54,6 +56,7 @@
                             </div>
                         </div>
 
+                        {{-- Streets --}}
                         <div class="lateralMenuElement">
                             <a class="lateralMenuLink" href="{{route('street.index')}}">
                             <li class="lateralMenuImg">
@@ -70,6 +73,7 @@
                             </div>
                         </div>
 
+                        {{-- Hotspots --}}
                         <div class="lateralMenuElement">
                             <a class="lateralMenuLink" href="{{route('hotspot.index')}}">
                             <li class="lateralMenuImg">
@@ -87,6 +91,7 @@
                             </div>
                         </div>
 
+                        {{-- Users --}}
                         <div class="lateralMenuElement">
                             <a class="lateralMenuLink" href="{{route('user.index')}}">
                             <li class="lateralMenuImg">
@@ -112,6 +117,8 @@
                                 <a href="{{route('user.create')}}"><li>Insertar</li></a>
                             </div>
                         </div>
+
+                        {{-- Database --}}
                         <div class="lateralMenuElement">
                             <a class="lateralMenuLink" href="{{route('backup.index')}}">
                             <li class="lateralMenuImg">
@@ -128,6 +135,7 @@
                             </div>
                         </div>
 
+                        {{-- PDF --}}
                         <div class="lateralMenuElement">
                             <a class="lateralMenuLink" href="{{route('search.index')}}">
                             <li class="lateralMenuImg">
@@ -140,34 +148,57 @@
                                 <a href="{{route('search.index')}}"><li>Generar informe</li></a>
                             </div>
                         </div>
+
+                        {{-- Settings --}}
+                        <div class="lateralMenuElement">
+                            <a class="lateralMenuLink" href="">
+                            <li class="lateralMenuImg">
+                                <img src="{{url('img/icons/settings.svg')}}" alt="CeliaMaps" class="img-fluid">
+                            </li>
+                            </a>
+                            <div class="lateralExpandMenu">
+                                <b> Ajustes </b>
+                                <div class="line"></div>
+                                <a href=""><li> Vista principal </li></a>
+                                <a href=""><li> Marcadores </li></a>
+                            </div>
+                        </div>
                     </ul>
                     <script>
                         $(document).ready(function(){
+                            var element;
                             if(window.location.href.includes("/map") || window.location.href.includes("/marker")){
-                                var element = $(".lateralMenuLink[href|='{{route('map.index')}}']").parents(".lateralMenuElement");
+                                element = $(".lateralMenuLink[href|='{{route('map.index')}}']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/street")){
-                                var element = $(".lateralMenuLink[href|='{{route('street.index')}}']").parents(".lateralMenuElement");
+                                element = $(".lateralMenuLink[href|='{{route('street.index')}}']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/hotspot")){
-                                var element = $(".lateralMenuLink[href|='{{route('hotspot.index')}}']").parents(".lateralMenuElement");
+                                element = $(".lateralMenuLink[href|='{{route('hotspot.index')}}']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/user")){
-                                var element = $(".lateralMenuLink[href|='{{route('user.index')}}']").parents(".lateralMenuElement");
+                                element = $(".lateralMenuLink[href|='{{route('user.index')}}']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/login")){
-                                var element = $(".lateralMenuLink[href|='{{route('user.index')}}']").parents(".lateralMenuElement");
+                                element = $(".lateralMenuLink[href|='{{route('user.index')}}']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/backup")){
-                                var element = $(".lateralMenuLink[href|='{{route('backup.index')}}']").parents(".lateralMenuElement");
+                                element = $(".lateralMenuLink[href|='{{route('backup.index')}}']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/search")){
-                                var element = $(".lateralMenuLink[href|='{{route('search.index')}}']").parents(".lateralMenuElement");
+                                element = $(".lateralMenuLink[href|='{{route('search.index')}}']").parents(".lateralMenuElement");
                             }
                             element.css("background-color", "#6f7e96")
 
                             $(".lateralMenuElement").hover(function(e){
                                 var top = $(this).position().top;
                                 var expandMenu = $(this).children(".lateralExpandMenu");
+                                
                                 //La parida esta es para que salga centrada
                                 expandMenu.css("top", top - expandMenu.height()/2 + $(this).height()/2);
                                 expandMenu.show();
+                                //Animaction
+                                expandMenu.animate({"left": "100%"}, 150);
+                                
                             }, function(e){
-                                $(this).children(".lateralExpandMenu").hide();
+                                var expandMenu = $(this).children(".lateralExpandMenu");
+
+                                expandMenu.animate({"left": "-200px"}, 150);
+                                expandMenu.hide();
                             });
                         });
                     </script>
