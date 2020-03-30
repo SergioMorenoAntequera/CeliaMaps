@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Setting;
 
 class Point extends Model
 {
@@ -19,6 +20,10 @@ class Point extends Model
         return $this->belongsToMany('App\Marker');
     }
 
+    // Para tener el punto este en esta clase también
+    public static function getMainPoint() {
+        return Setting::getMainPoint();
+    }
 
     //The attributes that are mass assignable.
     protected $fillable = [
