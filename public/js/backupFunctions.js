@@ -1,27 +1,35 @@
 $(document).ready(function(){
 
-    function mostrarCreando(){
-        $('#loaderCreando').removeClass("collapse");
+    function mostrarLoaderCreando(){
+        $('#loaderCreando').show();
     };
-    function ocultarCreando(){
-        $('#loaderCreando').removeClass("collapse.show");
-        $('#loaderCreando').addClass("collapse");
+    function ocultarLoaderCreando(){
+        $('#loaderCreando').hide();
     };
-    function mostrarRestaurando(){
-        $('#loaderRestaurando').removeClass("collapse");
+    function mostrarLoaderRestaurando(){
+        $('#loaderRestaurando').open();
     };
-    function ocultarRestaurando(){
-        $('#loaderRestaurando').removeClass("collapse.show");
-        $('#loaderRestaurando').addClass("collapse");
+    function ocultarLoaderRestaurando(){
+        $('#loaderRestaurando').close();
     };
 
     function mostrarModalCreada(){
-        $('#mensajeGenerarModal').show();
+        $('#mensajeGenerarModal').open();
     }
     function mostrarModalRestaurada(){
-        $('#mensajeRestaurarModal').show();
-
+        $('#mensajeRestaurarModal').open();
     }
+    function cerrarModalCreada(){
+        $('#cerrarCrear').on('click', function(){
+            $('#mensajeGenerarModal').close();
+        });
+    }
+    function cerrarModalRestaurada(){
+        $('#cerrarRestaurar').on('click', function(){
+            $('#mensajeRestaurarModal').close();
+        });
+    }
+
 
 
     // Evento Guardar
@@ -30,16 +38,14 @@ $(document).ready(function(){
         $.ajax({
             url: urlCreate,
             beforeSend: function(){
-                mostrarCreando();
+                mostrarLoaderCreando();
             },
             success: function(){
-                ocultarCreando();
+                ocultarLoaderCreando();
             },
             complete: function(){
                 mostrarModalCreada();
-                $('#cerrarCrear').on('click', function(){
-                    $('#mensajeGenerarModal').hide();
-                });
+                cerrarModalCreada();
             }
         });
     });
@@ -50,16 +56,14 @@ $(document).ready(function(){
         $.ajax({
             url: urlRestore,
             beforeSend: function(){
-                mostrarRestaurando();
+                mostrarLoaderRestaurando();
             },
             success: function(){
-                ocultarRestaurando();
+                ocultarLoaderRestaurando();
             },
             complete: function(){
                 mostrarModalRestaurada();
-                $('#cerrarRestaurar').on('click', function(){
-                    $('#mensajeRestaurarModal').hide();
-                });
+                cerrarModalRestaurada();
             }
         });
     });
