@@ -7,11 +7,11 @@ El propósito de esta aplicación es
 
 Toda la información sobre la licencia se encuentra en el archivo license\.md \. Por favor, lea cuidadosamente ese archivo si pretende explotar este software\.
 
-#INSTALACIÓN
+# INSTALACIÓN
 
 Las notas de instalación están disponibles en el archivo install\.md\.
 
-#GUIA DEL USUARIO
+# GUIA DEL USUARIO
 
 La documentación del usuario está disponible en el directorio docs\.
 
