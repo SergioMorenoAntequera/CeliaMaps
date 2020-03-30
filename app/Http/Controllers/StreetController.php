@@ -98,7 +98,8 @@ class StreetController extends Controller
         $street->lat = $r->lat;
         $street->lng = $r->lng;
         $street->type()->associate($r->type_id);
-        
+        $street->typeName = $street->type->name;
+        $street->fullName = $street->typeName . " " . $street->name;
         return response()->json([
             'street' => $street,
             'points' => $point,
@@ -147,7 +148,9 @@ class StreetController extends Controller
 
         $street->lat = $point->lat;
         $street->lng = $point->lng;
-        
+        $street->typeName = $street->type->name;
+        $street->fullName = $street->typeName . " " . $street->name;
+
         return response()->json([
             'street' => $street,
             'points' => $point,
