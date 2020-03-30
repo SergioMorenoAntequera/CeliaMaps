@@ -49,8 +49,7 @@ $(document).ready(function() {
     fechactual = ("Almería, " + dia + " de " + mes + " de " + anio);
     firma = "Fdo.: ";
 
-
-    $('#aplicar').on("click", function(){
+    $('#aplicar').on("click", function (){
         parrafo = document.getElementById('observaciones').value;
         al_idrisi = document.getElementById('funcionarioa').value;
         document.getElementById('fechaInforme').innerHTML = ' ' + fechactual;
@@ -73,10 +72,10 @@ $(document).ready(function() {
     });
 
     $("#descartar").on("click", function(){
-        fechactual = "";
-        firma = "";
-        parrafo = "";
-        al_idrisi = "";
+       $('#encabezado').empty();
+       $('#contenido').empty();
+       $('#fechaInforme').empty();
+       $('#nombreFuncionarioa').empty();
     });
     /*
     $("#informeObservacionesDraggable").draggable({
