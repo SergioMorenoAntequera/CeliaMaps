@@ -52,7 +52,7 @@
                                 <div class="line"></div>
                                 <a href="{{route('map.index')}}"><li>Indice</li></a>
                                 <a href="{{route('map.create')}}"><li>Insertar</li></a>
-                                <a href="{{route('marker.admin')}}"><li>Marcadores</li></a>
+                                {{-- <a href="{{route('marker.admin')}}"><li>Marcadores</li></a> --}}
                             </div>
                         </div>
 
@@ -151,7 +151,7 @@
 
                         {{-- Settings --}}
                         <div class="lateralMenuElement">
-                            <a class="lateralMenuLink" href="">
+                            <a class="lateralMenuLink" selector="settings" href="">
                             <li class="lateralMenuImg">
                                 <img src="{{url('img/icons/settings.svg')}}" alt="CeliaMaps" class="img-fluid">
                             </li>
@@ -159,15 +159,15 @@
                             <div class="lateralExpandMenu">
                                 <b> Ajustes </b>
                                 <div class="line"></div>
-                                <a href=""><li> Vista principal </li></a>
-                                <a href=""><li> Marcadores </li></a>
+                                <a href="{{route('map.setView')}}"><li> Vista principal </li></a>
+                                <a href="{{route('marker.admin')}}"><li>Marcadores</li></a>
                             </div>
                         </div>
                     </ul>
                     <script>
                         $(document).ready(function(){
                             var element;
-                            if(window.location.href.includes("/map") || window.location.href.includes("/marker")){
+                            if(window.location.href.includes("/map")){
                                 element = $(".lateralMenuLink[href|='{{route('map.index')}}']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/street")){
                                 element = $(".lateralMenuLink[href|='{{route('street.index')}}']").parents(".lateralMenuElement");
@@ -181,6 +181,8 @@
                                 element = $(".lateralMenuLink[href|='{{route('backup.index')}}']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/search")){
                                 element = $(".lateralMenuLink[href|='{{route('search.index')}}']").parents(".lateralMenuElement");
+                            } if(window.location.href.includes("/marker") || window.location.href.includes("/setView")){
+                                element = $(".lateralMenuLink[selector|=settings]").parents(".lateralMenuElement");
                             }
                             element.css("background-color", "#6f7e96")
 

@@ -497,6 +497,19 @@ class MapController extends Controller
         ]);
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    // LOOK FOR THINGS IN THE MAP /////////////////////////////////////////////////////////////
+    /**
+     * Method that gets the info from the database
+     * 
+     * @param id
+     * @return View
+     */
+    public function setView() {
+        $data['mainPoint'] = $mainPoint = Point::find(1);
+        return view('map.setView');
+    }
+
     // Metodo auxiliar que me saca las miniaturas de los mapas ///////////////////////////////
     private function createMiniature(Request $r, Map $map){
         //Now that we have to have a image we want it or not

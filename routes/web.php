@@ -27,6 +27,10 @@ Route::get('map/search', 'MapController@search')->name('map.search');
 Route::get('map/streets', 'MapController@getStreets')->name('map.streets');
 Route::get('map/align/{id}', 'MapController@alignMap')->name('map.align');
 Route::get('map/saveAlign/{id}', 'MapController@saveAlign')->name('map.saveAlign');
+// SETTINGS ////////////////////////////////////////////////////////////////////////////////////////
+// Lo de map es opcional
+Route::get('map/setView', 'MapController@setView')->name('map.setView');
+
 Route::resource('map', 'MapController');
 // MARKERS /////////////////////////////////////////////////////////////////////////////////////
 Route::get('marker', 'MarkerController@admin')->name('marker.admin');
@@ -69,6 +73,4 @@ Route::get('search/show/{id}', 'SearchController@show')->name('search.show');
 // PDF /////////////////////////////////////////////////////////////////////////////////////////////
 //Route::get('pdf/ver', 'PdfController@ver')->name('pdf.ver');
 //Route::get('pdf/download', 'PdfController@download')->name('pdf.download');
-
-
 
