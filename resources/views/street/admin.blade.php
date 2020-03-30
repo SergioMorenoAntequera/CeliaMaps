@@ -494,16 +494,16 @@
             $("#btn-submit").on("click", function(e){
                 e.preventDefault();
 
-                // We check at least ONE map
-                var inOneMap = false;
-                $("#modal-form input[name='maps_id[]']").each(function(){
-                    if($(this).prop("checked"))
-                       inOneMap = true;
-                });
-                if(!inOneMap){
-                    $("#maps-error").html("La vía debe de pertenecer al menos a un mapa.");
-                    return false;
-                }
+                // // We check at least ONE map
+                // var inOneMap = false;
+                // $("#modal-form input[name='maps_id[]']").each(function(){
+                //     if($(this).prop("checked"))
+                //        inOneMap = true;
+                // });
+                // if(!inOneMap){
+                //     $("#maps-error").html("La vía debe de pertenecer al menos a un mapa.");
+                //     return false;
+                // }
 
                 // AJAX CREATE AND UPDATE
                 switch(action){

@@ -22,7 +22,7 @@ class StreetController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('auth');     
+        // $this->middleware('auth' );     
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -120,11 +120,13 @@ class StreetController extends Controller
         $mapsRelationship = array();
         $mapsAsigned = Array();
         // Array to complete junction table
-        for ($i=0; $i < count($r->maps_id); $i++) { 
-            $mapsRelationship[$r->maps_id[$i]] = ['alternative_name' => $r->maps_name[$i]];
-
-            $mapFound = Map::find($r->maps_id[$i]);
-            array_push($mapsAsigned, $mapFound);
+        if(isset($r->maps_id)){
+            for ($i=0; $i < count($r->maps_id); $i++) { 
+                $mapsRelationship[$r->maps_id[$i]] = ['alternative_name' => $r->maps_name[$i]];
+    
+                $mapFound = Map::find($r->maps_id[$i]);
+                array_push($mapsAsigned, $mapFound);
+            }
         }
         $street->maps()->sync($mapsRelationship);
         
@@ -150,7 +152,8 @@ class StreetController extends Controller
         $street->lng = $point->lng;
         $street->typeName = $street->type->name;
         $street->fullName = $street->typeName . " " . $street->name;
-
+        
+        
         return response()->json([
             'street' => $street,
             'points' => $point,
