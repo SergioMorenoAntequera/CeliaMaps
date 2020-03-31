@@ -324,7 +324,6 @@
                     // Mostramos el menú de edición
                     hideMenu();
                     $(".cMenu").fadeOut(150, function(){
-                        cpuShowText("Selecciona una forma de modificar la figura");
                         showMenu(e, "edit");
                     });
                 });
