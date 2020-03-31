@@ -38,6 +38,10 @@
         {{-- Mapa --}}
         <div id="map"></div>
 
+        <div id="guide">
+            <span>Sitúa la vista sobre el mapa en la ubicación deseada para fijarla como la ubicación predeterminada de la aplicación</span>
+        </div>
+
         {{-----------------------------------------------------------}}
         {{-- BOTTOM LEFT MENU TO CHANGE THE KIND OF MAP TO DISPLAY --}}
         {{-----------------------------------------------------------}}
@@ -62,7 +66,7 @@
         {{-------------------------------------------------------------}}
         {{-- BOTTOM RIGHT MENU SO WE CAN DISPLAY S WE CAN FULLSCREEN --}}
         {{-------------------------------------------------------------}}
-        <div id="fullScreenMenu" style="right: 180px">
+        <div id="fullScreenMenu" style="right: 180px;width:44px;height:44px">
             <img src="{{url('img/icons/fsMaximize.png')}}">
         </div>
 

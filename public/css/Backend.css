@@ -313,3 +313,20 @@ los formularios y seguramente algo más, pa quién lo quiera */
         margin-left: 0!important;
     } 
 }
+
+#guide{
+    position: absolute;
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+    margin: 3rem 0;
+}
+#guide span{
+    font-weight: bold;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 2px 2px 2px 2px;
+    border-color: #E0E0E0;
+    padding: 5px 10px;
+}
