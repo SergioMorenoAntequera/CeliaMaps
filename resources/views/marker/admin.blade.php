@@ -38,6 +38,11 @@
         {{-- Mapa --}}
         <div id="map"></div>
 
+        <div id="cPopUp">
+            <div class="cornerButton"> X </div>
+            <span class="text"> Haz click en el mapa para añadir formas geométricas ó click en ina figura para modificarla. <br> Esto te ayudarán con el proceso de alinear un mapa  </span>
+        </div>
+
         {{-----------------------------------------------------------}}
         {{-- BOTTOM LEFT MENU TO CHANGE THE KIND OF MAP TO DISPLAY --}}
         {{-----------------------------------------------------------}}
@@ -242,6 +247,7 @@
                 // We show the menu when we click
                 map.on('click', function(e){
                     hideMenu();
+                    cpuHide();
                     $(".cMenu").fadeOut(150, function(){
                         showMenu(e, "add");                    
                     });
@@ -295,6 +301,7 @@
                         map.pm.disableGlobalRemovalMode();
                         userBusy = false;
                     }
+                    cpuHide();
                     destroyAjax(e.layer.db);
                 });
 
@@ -317,6 +324,7 @@
                     // Mostramos el menú de edición
                     hideMenu();
                     $(".cMenu").fadeOut(150, function(){
+                        cpuShowText("Selecciona una forma de modificar la figura");
                         showMenu(e, "edit");
                     });
                 });
@@ -324,7 +332,8 @@
                 // Cuando acabe de mover el resto
                 layer.on('pm:dragend', e => {
                     map.pm.disableGlobalDragMode();
-                    userBusy = false
+                    userBusy = false;
+                    cpuHide();
 
                     if(layer.db.type == "polygon" || layer.db.type == "line"){
                         layer.db.points = layer._latlngs[0];
@@ -337,6 +346,7 @@
                 layer.on('dragend', e => {
                     map.pm.disableGlobalDragMode();
                     userBusy = false
+                    cpuHide();
                     
                     if(layer.db.type == "polygon" || layer.db.type == "line"){
                         layer.db.points = layer._latlngs[0];
@@ -349,7 +359,8 @@
                 // Cuando acabe de editar nos vuelva al estado normal
                 layer.on('pm:markerdragend', e => {
                     map.pm.disableGlobalEditMode(); 
-                    userBusy = false
+                    userBusy = false;
+                    cpuHide();
 
                     if(layer.db.type == "polygon" || layer.db.type == "line"){
                         layer.db.points = layer._latlngs[0];
@@ -371,14 +382,19 @@
 
                 if(action == "Drag"){
                     map.pm.enableGlobalDragMode();
+                    cpuShowText("Arrastra las figuras a su nueva localización");
                 } else if(action == "Remove") {
                     map.pm.enableGlobalRemovalMode();
+                    cpuShowText("Selecciona la figura que quieras eliminar");
                 } else if(action == "Edit") {
                     map.pm.toggleGlobalEditMode(); 
+                    cpuShowText("Arrastra los puntos para deformar las figuras");
                 } else if(action == "Rename") {
+                    cpuShowText("Escribe el nombre que quieras darle a la figura");
                     userBusy = false;
                     currentAction = "none";
                 } else if(action != undefined) {
+                    cpuHide();
                     map.pm.enableDraw(action, {
                         snappable: true,
                         snapDistance: 10,
@@ -390,7 +406,6 @@
                 }
             };
 
-
             // El rename ya que es más complicado
             $(".option[action='Rename']").click(function(e){
                 let localClicks = {top: e.originalEvent.clientY - 30, left: e.originalEvent.clientX - $("#leftNavBar").width() - 30};
@@ -401,7 +416,8 @@
             });
             $(".rename > button").click(function(e){
                 activeLayer.db.name = $(".bubble.rename").find("input").val();
-
+                hideMenu();
+                cpuHide();
                 updateAjax(activeLayer.db);
                 $(this).parent().fadeOut(150);
             });
@@ -449,6 +465,7 @@
         };
     </script>
     <script src="{{url('js/cMenu.js')}}"></script>
+    <script src="{{url('js/cPopUp.js')}}"></script>
     <script src="{{url('js/mapBlMenu.js')}}"></script>
     <script src="{{url('js/mapFullScreenMenu.js')}}"></script>
 @endsection

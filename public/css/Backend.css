@@ -314,19 +314,27 @@ los formularios y seguramente algo más, pa quién lo quiera */
     } 
 }
 
-#guide{
-    position: absolute;
-    width: 100%;
-    max-width: 100%;
+#cPopUp{
+    position: relative;
+    top: 30px;
+    display: inline; 
+
+    left: 50%;
+    transform: translate(-50%);
+    display: inline-block;
+
     text-align: center;
-    margin: 3rem 0;
-}
-#guide span{
     font-weight: bold;
     background-color: #FFFFFF;
-    border-radius: 10px;
-    border-style: solid;
-    border-width: 2px 2px 2px 2px;
-    border-color: #E0E0E0;
+    border-radius: 20px;
+    border-style: solid 2px #E0E0E0;
     padding: 5px 10px;
+    box-shadow: 0px 10px 13px -7px #000000;
+} 
+#cPopUp .cornerButton {
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    top: -15px;
+    color:white;
 }

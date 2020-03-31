@@ -1,0 +1,40 @@
+var cpu = $("#cPopUp");
+var cpuX = $("#cPopUp .cornerButton");
+var text = $("#cPopUp .text");
+
+
+cpuX.click(function(e){
+    cpuHide();
+});
+
+///////////////////////////////////////////////////////////////////////////
+// ENSEÑAR EL MENÚ Y OCULTARLO ////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+function cpuShow(){
+    cpu.show(150);
+}
+function cpuHide(){
+    cpu.fadeOut(150);
+}
+function cpuToggle(){
+    if(cpu.css("opacity") < 1){
+        cpuShow();
+    } else {
+        cpuHide();
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////
+// MODIFICAR TEXTO ////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+function cpuShowText(message){
+    text.text(message);
+    cpuShow();
+}
+function cpuSetText(message){
+    text.text(message);
+}
+function cpuGetText(){
+    return text.text();
+}
+

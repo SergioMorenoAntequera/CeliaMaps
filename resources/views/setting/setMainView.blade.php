@@ -39,7 +39,7 @@
         <div id="map"></div>
 
         <div id="guide">
-            <span>Sitúa la vista sobre el mapa en la ubicación deseada para fijarla como la ubicación predeterminada de la aplicación</span>
+            Sitúa la vista sobre el mapa en la ubicación deseada para fijarla como la ubicación predeterminada de la aplicación
         </div>
 
         {{-----------------------------------------------------------}}
@@ -91,17 +91,6 @@
                 height: 85%;
             }
         </style>
-        {{-- <script>
-            Animación con delay
-            $(document).ready(function(e){
-                $("#saveButton").hover(function(e){
-                    console.log($(this).children("img"));
-                    $(this).children("img").animate({width:"85%", height:"85%"}, 300);
-                }, function(e){
-                    $(this).children("img").animate({width:"80%", height:"80%"});
-                })
-            });
-        </script> --}}
         <a href="">
         <button id="saveButton" class="menu">
             <img src="{{url('img/icons/save.png')}}" alt="">
@@ -109,7 +98,6 @@
         </a>
     </div>
 
-    
 @endsection
 
 @section('scripts')
