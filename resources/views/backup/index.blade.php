@@ -161,7 +161,7 @@
 @section('scripts')
 <script>
     var urlCreate = "{{route('backup.create')}}";
-        var urlRestore = "{{route('backup.restore')}}";
+    var urlRestore = "{{route('backup.restore')}}";
 
 </script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.js"></script>

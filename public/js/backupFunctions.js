@@ -7,26 +7,26 @@ $(document).ready(function(){
         $('#loaderCreando').hide();
     };
     function mostrarLoaderRestaurando(){
-        $('#loaderRestaurando').open();
+        $('#loaderRestaurando').show();
     };
     function ocultarLoaderRestaurando(){
-        $('#loaderRestaurando').close();
+        $('#loaderRestaurando').hide();
     };
 
     function mostrarModalCreada(){
-        $('#mensajeGenerarModal').open();
+        $('#mensajeGenerarModal').show();
     }
     function mostrarModalRestaurada(){
-        $('#mensajeRestaurarModal').open();
+        $('#mensajeRestaurarModal').show();
     }
     function cerrarModalCreada(){
         $('#cerrarCrear').on('click', function(){
-            $('#mensajeGenerarModal').close();
+            $('#mensajeGenerarModal').hide();
         });
     }
     function cerrarModalRestaurada(){
         $('#cerrarRestaurar').on('click', function(){
-            $('#mensajeRestaurarModal').close();
+            $('#mensajeRestaurarModal').hide();
         });
     }
 
