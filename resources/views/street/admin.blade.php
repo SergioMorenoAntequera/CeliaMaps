@@ -240,7 +240,7 @@
         {{-------------------------------------------------------------}}
         {{-- BOTTOM RIGHT MENU SO WE CAN DISPLAY S WE CAN FULLSCREEN --}}
         {{-------------------------------------------------------------}}
-        <div id="fullScreenMenu">
+        <div id="fullScreenMenu" style="width:44px;height:44px">
             <img src="{{url('/img/icons/fsMaximize.png')}}" alt="">
         </div>
 

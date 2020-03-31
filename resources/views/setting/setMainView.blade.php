@@ -66,7 +66,7 @@
         {{-------------------------------------------------------------}}
         {{-- BOTTOM RIGHT MENU SO WE CAN DISPLAY S WE CAN FULLSCREEN --}}
         {{-------------------------------------------------------------}}
-        <div id="fullScreenMenu" style="right: 180px">
+        <div id="fullScreenMenu" style="right: 180px;width:44px;height:44px">
             <img src="{{url('img/icons/fsMaximize.png')}}">
         </div>
 
