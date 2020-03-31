@@ -43,6 +43,13 @@
         <script> var mainPoint = @json($mainPoint); </script>
         {{-- Mapa --}}
         <div id="map"></div>
+
+        <div id="cPopUp" style=" z-index: 6">
+            <div class="cornerButton"> X </div>
+            <span class="text"> 
+                Haz click en el mapa para añadir calles <br> o click en una de ellas para modificarla.
+            </span>
+        </div>
         
         {{-----------------------------------------------------------}}
         {{-- MENU DE ARRIBA A LA IZQUIERDA Y LAS VENTANAS FLOTANTE --}}
@@ -460,7 +467,8 @@
             map.on('click', function(e) {
                 // Create modal trigger with lat/lng coordinates
                 if(!dragging) {
-                    hideMenu();    
+                    hideMenu();  
+                    cpuHide();  
                     showCreateForm(e.latlng.lat, e.latlng.lng);
                 } else
                     dragging = false;
@@ -469,6 +477,7 @@
             map.on('move', function(e) {
                 // Create modal trigger with lat/lng coordinates
                 hideMenu();
+                cpuHide();
             });
  
             // ADD MARKER EVENTS TO A ALL MARKERS
@@ -478,13 +487,14 @@
 
 
             //-------------------------------------------------------------}}
-            //------------------ MENU COMPONENTS CONTROLLER ---------------}}
+            //----------------- CMENU COMPONENTS CONTROLLER ---------------}}
             //-------------------------------------------------------------}}
             //EDIT BUTTON
             $(".option[action='Edit']").on("click", function(e){
                 streets.forEach(street => {
                     if(street.id == activeMarker.id){
                         hideMenu();
+                        cpuHide();
                         showEditForm(street);
                     }
                 });
@@ -517,9 +527,6 @@
                 // Turn dragging variable to true to disable marker click handle
                 hideMenu();
                 dragging = true;
-                
-                console.log(activeMarker);
-                console.log("antes de mover "+activeMarker.getLatLng());
 
                 // Detach current marker from the group
                 clusterMarkers.removeLayer(activeMarker);
@@ -532,6 +539,7 @@
                 activeMarker.dragging.enable();
                 // Hide edition modal
                 $('#modal').modal('hide');
+                cpuShowText("Arrastra el punto a su nueva posición");
 
                 // From here we jump to addMarkerEvents().dragend
             });
@@ -543,12 +551,13 @@
                 // $("input[name='_method']").val("DELETE");
                 $('#modal').modal('hide');
                 $('#confirmModal').modal('show');
-
+                cpuHide();
             });
             // REMOVE BUTTON CANCEL
             $("#btn-cancel").click(function(){
                 // $('#modal').modal('show');
                 $('#confirmModal').modal('hide');
+                cpuShowText("Borrado de calle cancelado");
             });
             // REMOVE BUTTON CONFIRM
             $("#btn-confirm").click(function(){
@@ -715,6 +724,7 @@
 
                         // showEditForm(street);
                         showMenu(e, "edit");
+                        cpuShowText("Selecciona una opción");
                     }else{
                         // After drag click will be fired and here break dragging mode
                         dragging = false;
@@ -789,6 +799,7 @@
 
                         // HIDE THE FORM
                         $("button[class='close']").click();
+                        cpuShowText("Calle creada con exito");
                     },
                     error: function(data) {
                         // Se ha producido un error de validación
@@ -819,6 +830,7 @@
                         
                         // HIDE THE FORM
                         $("button[class='close']").click();
+                        cpuShowText("Calle actualizada con exito");
                     },
                     error: function(data) {
                         // Se ha producido un error de validación
@@ -831,7 +843,7 @@
                     url:"{{route('street.updatePositionAjax')}}",
                     data: {"id":id, "lat":lat, "lng":lng},
                     success: function(data) {
-                        console.log("PRA" + id + " // " + lat + " // " + lng);
+                        cpuShowText("Posición actualizada con exito");
                     },
                 });
                 
@@ -853,6 +865,7 @@
                             
                             clusterMarkers.removeLayer(activeMarker);
                             map.removeLayer(activeMarker);
+                            cpuShowText("Calle borrada con exito");
                         }
                     });
                 },
@@ -881,5 +894,6 @@
             });
         });
     </script>
+    <script src="{{url('js/cPopUp.js')}}"></script>
     <script src="{{url('js/cMenu.js')}}"></script>
 @endsection

@@ -38,8 +38,9 @@
         {{-- Mapa --}}
         <div id="map"></div>
 
-        <div id="guide">
-            Sitúa la vista sobre el mapa en la ubicación deseada para fijarla como la ubicación predeterminada de la aplicación
+        <div id="cPopUp">
+            <div class="cornerButton"> X </div>
+            <span class="text"> Sitúa la vista sobre el mapa en la ubicación deseada para fijarla como la ubicación predeterminada de la aplicación </span>
         </div>
 
         {{-----------------------------------------------------------}}
@@ -154,12 +155,13 @@
                 url: "{{route('setting.saveMainView')}}",
                 data: newMainPoint,
                 success: function(e){
-                    alert("Vista actual guardada como principal");
+                    cpuShowText("Vista actual guardada como principal");
                 },
             });
         }); 
     </script>
 
+    <script src="{{url('js/cPopUp.js')}}"></script>
     <script src="{{url('js/mapBlMenu.js')}}"></script>
     <script src="{{url('js/mapFullScreenMenu.js')}}"></script>
 @endsection
