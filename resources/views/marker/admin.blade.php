@@ -257,6 +257,7 @@
                 // We hide the menu when we move
                 map.on('move', function(e) {
                     hideMenu();
+                    cpuHide();
                 });
                 //When we are done creating a new marker
                 map.on('pm:create', e => {
@@ -436,7 +437,7 @@
                 url: storeUrl,
                 data: {"layer":layerDB},
                 success: function() {
-                    
+                    cpuShowText("Marcador añadido con exito");
                 },
             });
         };
@@ -448,7 +449,7 @@
                 url: destroyUrl,
                 data: {"layer":layerDB},
                 success: function() {
-                    
+                    cpuShowText("Marcador eliminado con exito");
                 },
             });
         };
@@ -460,7 +461,7 @@
                 url: storeUrl,
                 data: {"layer":layerDB},
                 success: function() {
-                    
+                    cpuShowText("Marcador actualizado con exito");
                 },
             });
         };

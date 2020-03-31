@@ -10,6 +10,13 @@
     
     <!-- One div to get all the maps -->
     <div class="container text-center">
+        
+        <div id="cPopUp" style="z-index: 2; display: none">
+            <div class="cornerButton"> X </div>
+            <span class="text">
+            </span>
+        </div>
+    
         <!-- Todos los elementos de la página -->
         <div id="allElements">
             @foreach ($maps as $map)
@@ -108,11 +115,10 @@
 @endsection
 
 @section('scripts')
+    <script src="{{url('js/cPopUp.js')}}"></script>
     <!------------------------------------ FUNCTIONS WITH AJAX ---------------------------------->
     <!--------------------------------- DELETE, MOVE UP AND DOWN -------------------------------->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
-    <script> var token = '{{csrf_token()}}'</script>
-    <script type="text/javascript" src="{{url('/js/moveAndDeleteMaps.js')}}">
-    </script>
-    
+    <script> var token = '{{csrf_token()}}';</script>
+    <script type="text/javascript" src="{{url('/js/moveAndDeleteMaps.js')}}"></script>
 @endsection

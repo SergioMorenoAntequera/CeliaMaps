@@ -19,8 +19,7 @@
     <!-- JQUERY -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-    <script src="{{url('js/mapBlMenu.js')}}"></script>
-    <script src="{{url('js/mapFullScreenMenu.js')}}"></script>
+    
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- PERSONAL CSS -->
@@ -32,6 +31,15 @@
     {{-- To get the main point from the settings database --}}
     <script> var mainPoint = @json($mainPoint); </script>
     <div id="map"></div>
+
+    <div id="cPopUp">
+        <div class="cornerButton"> X </div>
+        <span class="text"> 
+            Coloca el mapa encima de la parte en la que quieres que coincida <br> 
+            utilizando la barra de herramientas y los marcadores. <br>
+            La paciencia es una virtud.
+        </span>
+    </div>
 
     <!-- Bottom left menu for the maps -->
     <div id="tilesMenu" style="margin-left: 45px">
@@ -238,4 +246,7 @@
 
     </script>
 
+    <script src="{{url('js/cPopUp.js')}}"></script>
+    <script src="{{url('js/mapBlMenu.js')}}"></script>
+    <script src="{{url('js/mapFullScreenMenu.js')}}"></script>
 @endsection

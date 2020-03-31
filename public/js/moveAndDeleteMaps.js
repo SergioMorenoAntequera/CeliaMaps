@@ -37,6 +37,7 @@ $(document).ready(function(){
                         }, 450, function(){
                             panel.slideToggle(function(){
                                 panel.remove();
+                                cpuShowText("Registro eliminado con exito");
                                 //Reordenarlo todo
                                 var index = 1;
                                 $(".mapLevel").each(function(){
@@ -46,7 +47,7 @@ $(document).ready(function(){
                         });
                     });
                 } else {
-                    alert("No puede eliminar un mapa con calles asociadas");
+                    cpuShowText("No puede eliminar un mapa con calles asociadas");
                 }
                 
             }

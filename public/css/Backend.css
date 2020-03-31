@@ -315,9 +315,8 @@ los formularios y seguramente algo más, pa quién lo quiera */
 }
 
 #cPopUp{
-    position: relative;
+    position: fixed;
     top: 30px;
-    display: inline; 
 
     left: 50%;
     transform: translate(-50%);
