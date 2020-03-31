@@ -1,6 +1,6 @@
 # CELIAMAPS README
 
-Celiamaps es una aplicación de software libre realizada por alumnos de 2º curso del Ciclo Formativo de Grado Superior de Desarrollo de Aplicaciones Web del [IES Celia Viñas](https://iescelia.org/web/) de Almería \(España\) bajo la supervisión de los profesores D. Félix Expósito, D. Alfredo Moreno y D. Manuel Piñero.  
+Celiamaps es una aplicación de software libre realizada por alumnos de 2º curso del Ciclo Formativo de Grado Superior de Desarrollo de Aplicaciones Web del [IES Celia Viñas](https://iescelia.org/web/) de Almería \(España\), bajo la supervisión de los profesores D. Félix Expósito, D. Alfredo Moreno y D. Manuel Piñero.  
 El propósito de esta aplicación es 
 
 # LICENCIA DE USO
