@@ -48,7 +48,10 @@ class HotspotController extends Controller
         $map = Map::all();
         $image = Image::all();
         //dd($hotspots[0]->images[1]->file_name);
-        return view('hotspot.test', ['hotspots'=>$hotspots, 'maps'=>$map, 'images'=>$image]);
+        return view('hotspot.test', ['hotspots'=>$hotspots, 
+                    'maps'=>$map, 
+                    'images'=>$image, 
+                    'mainPoint'=>Map::getMainPoint()]);
     }
 
     /**

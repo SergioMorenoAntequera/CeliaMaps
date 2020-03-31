@@ -39,6 +39,8 @@
     trought the map -->
     <div id="draggableArea">
 
+        {{-- To get the main point from the settings database --}}
+        <script> var mainPoint = @json($mainPoint); </script>
         {{-- Mapa --}}
         <div id="map"></div>
         
@@ -344,7 +346,7 @@
             // maxZoom: 2, //Dont touch, max zoom 
             zoomControl: false,
         });
-        map.setView([36.844092, -2.457840], 14);
+        map.setView([mainPoint.lat, mainPoint.lng], mainPoint.zoom);
 
         //Global maps from the one we will be able to pick one
         var mapTiles = [
@@ -491,18 +493,7 @@
             // SAVE BUTTON
             $("#btn-submit").on("click", function(e){
                 e.preventDefault();
-
-                // We check at least ONE map
-                var inOneMap = false;
-                $("#modal-form input[name='maps_id[]']").each(function(){
-                    if($(this).prop("checked"))
-                       inOneMap = true;
-                });
-                if(!inOneMap){
-                    $("#maps-error").html("La vía debe de pertenecer al menos a un mapa.");
-                    return false;
-                }
-
+                
                 // AJAX CREATE AND UPDATE
                 switch(action){
                     case "create": {
@@ -871,6 +862,14 @@
             
             // STREET FOUND IN SEARCH BAR
             $(document).on("click","div.street",function(){
+                console.log(this);
+                $('#streetsFound').empty();
+                let id = this.id;
+                clusterMarkers.eachLayer(function(layer){
+                    if(id == layer.id)
+                        map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 18);
+                });
+                /*
                 $('#streetsFound').empty();
                 // Build of marker variable name
                 let markerVarName = "marker"+this.id;
@@ -878,6 +877,7 @@
                 let leafletMarker = eval(markerVarName);
                 // Set view over street
                 map.setView([leafletMarker.getLatLng().lat, leafletMarker.getLatLng().lng], 99);
+                */
             });
         });
     </script>

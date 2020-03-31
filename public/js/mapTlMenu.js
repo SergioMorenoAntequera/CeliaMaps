@@ -25,13 +25,12 @@ $(document).ready(function(){
     // Variable para controlar los marcadores cuando están activos
     var hpMarkers = [];
     $('.ball').on("click", function(){
-        if($(this).attr("id").includes("Maps")) {
-            swapOpacity($(this).find("img"));
+        swapOpacity($(this).find("img"));
+
+        if($(this).attr("id").includes("ballMaps")) {
             $("#mapsMenu").fadeToggle(100);
         }
-        if($(this).attr("id").includes("Hotspots")) {
-            // Ponerle o quitarle transparencia al icono
-            swapOpacity($(this).find("img"));
+        if($(this).attr("id").includes("ballHotspots")) {
             
             // We check if the opacity is 1 is that we have to show the hotspots
             if($(this).find("img").css("opacity") == 1){
@@ -80,10 +79,15 @@ $(document).ready(function(){
             //     activeMarkers = [];
             // }
         }
-
-        if($(this).attr("id").includes("Streets")) {
-            swapOpacity($(this).find("img"));
+        if($(this).attr("id").includes("ballStreets")) {
             $("#streetsMenu").fadeToggle(100);
+        }
+        if($(this).attr("id").includes("ballShowStreets")) {
+            if($(this).find("img").css("opacity") != "0.2" ){
+                map.addLayer(clusterMarkers);
+            } else {
+                map.removeLayer(clusterMarkers);
+            }
         }
     });
     
@@ -141,20 +145,37 @@ $(document).ready(function(){
     function toggleBalls(){
         var BallMenu = $(".ballMenu");
         var balls = BallMenu.siblings(".ball");
-        balls.each(function(index){
-            var ball = jQuery(balls[index]);
-            if(ball.css('top') == "0px"){
-                var lefts = new Array("110px", "75px", "10px");
-                var tops = new Array("10px", "75px", "110px");
-            } else {
-                var lefts = new Array("0px", "0px", "0px");
-                var tops = new Array("0px", "0px", "0px");
-            }
-            ball.animate({
-                left: lefts[index],
-                top: tops[index],
-            }, 200);
-        });
+        if(balls.length == 3){
+            balls.each(function(index){
+                var ball = jQuery(balls[index]);
+                if(ball.css('top') == "0px"){
+                    var lefts = new Array("110px", "75px", "10px");
+                    var tops = new Array("10px", "75px", "110px");
+                } else {
+                    var lefts = new Array("0px", "0px", "0px");
+                    var tops = new Array("0px", "0px", "0px");
+                }
+                ball.animate({
+                    left: lefts[index],
+                    top: tops[index],
+                }, 200);
+            });
+        } else if(balls.length == 4){
+            balls.each(function(index){
+                var ball = jQuery(balls[index]);
+                if(ball.css('top') == "0px"){
+                    var lefts = new Array("120px", "98px", "57px", "5px");
+                    var tops = new Array("5px", "57px", "98px", "120px");
+                } else {
+                    var lefts = new Array("0px", "0px", "0px", "0px");
+                    var tops = new Array("0px", "0px", "0px", "0px");
+                }
+                ball.animate({
+                    left: lefts[index],
+                    top: tops[index],
+                }, 200);
+            });
+        }
     }
 
     // SWAP BETWEEN EYES MODES //////////////////////////////////////////////////////////////

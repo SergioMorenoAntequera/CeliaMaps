@@ -30,41 +30,9 @@ class MarkerController extends Controller
     public function admin(){
         $data['markers'] = Marker::all();
         $data['lastID'] = Marker::max('id');
+        $data['mainPoint'] = Point::getMainPoint();
+        
         return view("marker.admin", $data);
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////
-    // SHOW ALL SOMETHING  ////////////////////////////////////////////////////////////////////
-    /**
-     * Method that shows all the registers in the database
-     * 
-     * @return View
-     */
-    // public function index(){
-    //     return view("marker.admin");
-    // }
-
-    // SHOW A SOMETHING ///////////////////////////////////////////////////////////////////////
-    /**
-     * Method that shows a specific register o our
-     * database depending on it's ID
-     * 
-     * @param id
-     * @return View
-     */
-    public function show($id){
-
-    }
-    
-    ///////////////////////////////////////////////////////////////////////////////////////////
-    // CREATE FORM /////////////////////////////////////////////////////////////////////////
-    /**
-     * Method that shows the form to create a new register
-     * 
-     * @return View
-     */
-    public function create(){
-
     }
     
     // STORE FUNCTION ///////////////////////////////////////////////////////////////////////
@@ -101,17 +69,6 @@ class MarkerController extends Controller
         }
         
         $marker->save();
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////
-    // EDIT FORM //////////////////////////////////////////////////////////////////////////////
-    /**
-     * Method that shows the form to edit an already existing registry
-     * 
-     * @return View
-     */
-    public function edit($id){
-        
     }
 
     // UPDATE FUNCTION //////////////////////////////////////////////////////////////////////////////

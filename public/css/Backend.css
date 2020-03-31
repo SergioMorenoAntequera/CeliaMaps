@@ -150,7 +150,6 @@ los formularios y seguramente algo más, pa quién lo quiera */
 .wholePanel > .leftPanel > .content > img{
     width: 60%;
 }
-
 .wholePanel .rightPanel {
     width: 60%;
     height: auto;
@@ -173,7 +172,7 @@ los formularios y seguramente algo más, pa quién lo quiera */
 /* Div donde se enseñan la info adicional por si la queremos añadir */
 .showMore { color: #3ab398; cursor: pointer;}
 .showMore > p {margin-bottom: 1px;}
-.more {border: solid 0.5px #3ab398; padding: 2%; border-radius: 10px; max-height: 500px; overflow-y: auto;}
+.more {border: solid 1px #3ab398; padding: 2%; border-radius: 10px; max-height: 500px; overflow-y: auto;}
 .clearInput { border: none; padding-left: 0px; padding-top: 1px;}
 .wholePanel .rightPanel label { font-weight: bold; }
 .wholePanel > .rightPanel .title { font-weight: bold; margin-bottom: 0px;}
@@ -274,12 +273,8 @@ los formularios y seguramente algo más, pa quién lo quiera */
     -webkit-box-shadow: 0px 0px 50px -15px #000000; 
     box-shadow: 0px 0px 50px -15px #000000;
 }
-
 .cMenu > .csMenu > .option > img{position: relative; width: 60%; height: 60%; top: 20%; left: 20%;}
 
-
-/* .hidden { display: none; }
-.showed { display: block; } */
 
 
 #notocar{
