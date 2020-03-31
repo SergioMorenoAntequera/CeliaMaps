@@ -34,7 +34,7 @@
     <div id="map"></div>
 
     <!-- Bottom left menu for the maps -->
-    <div id="tilesMenu">
+    <div id="tilesMenu" style="margin-left: 45px">
         <div id="tilesShow">
             <i class="fa fa-chevron-down"></i>
         </div>
@@ -63,14 +63,14 @@
             <input name="blLon" type="hidden" value="{{$map->blCornerLongitude}}">
             <input name="brLat" type="hidden" value="{{$map->brCornerLatitude}}">
             <input name="brLon" type="hidden" value="{{$map->brCornerLongitude}}">
-            <button type="submit">
+            <button type="submit" id="saveButton" class="menu">
                 <img src="{{url('img/icons/save.png')}}" alt="">
             </button>
         </form>
     </div>
 
     <!-- Button to put it on full screen -->
-    <div id="fullScreenMenu" style="right: 125px">
+    <div id="fullScreenMenu" style="right: 180px">
         <img src="{{url('/img/icons/fsMaximize.png')}}" alt="">
     </div>
 
