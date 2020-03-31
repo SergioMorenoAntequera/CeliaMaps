@@ -28,12 +28,6 @@ Route::get('map/streets', 'MapController@getStreets')->name('map.streets');
 Route::get('map/align/{id}', 'MapController@alignMap')->name('map.align');
 Route::get('map/saveAlign/{id}', 'MapController@saveAlign')->name('map.saveAlign');
 Route::resource('map', 'MapController');
-// MARKERS /////////////////////////////////////////////////////////////////////////////////////
-Route::get('marker', 'MarkerController@admin')->name('marker.admin');
-Route::get('marker/store', 'MarkerController@store')->name('marker.store');
-Route::get('marker/destroy', 'MarkerController@destroy')->name('marker.destroy');
-Route::get('marker/update', 'MarkerController@update')->name('marker.update');
-// Route::resource('marker', 'MarkerController');
 // USER /////////////////////////////////////////////////////////////////////////////////////
 Route::resource('user', 'UserController');
 Route::delete('user/deleteAjax/{id}', 'UserController@deleteAjax')->name('user.deleteAjax');
@@ -69,6 +63,12 @@ Route::get('search/show/{id}', 'SearchController@show')->name('search.show');
 // PDF /////////////////////////////////////////////////////////////////////////////////////////////
 //Route::get('pdf/ver', 'PdfController@ver')->name('pdf.ver');
 //Route::get('pdf/download', 'PdfController@download')->name('pdf.download');
-
-
-
+// MARKERS /////////////////////////////////////////////////////////////////////////////////////
+Route::get('marker', 'MarkerController@admin')->name('marker.admin');
+Route::get('marker/store', 'MarkerController@store')->name('marker.store');
+Route::get('marker/destroy', 'MarkerController@destroy')->name('marker.destroy');
+Route::get('marker/update', 'MarkerController@update')->name('marker.update');
+// Route::resource('marker', 'MarkerController');
+// SETTINGS ////////////////////////////////////////////////////////////////////////////////////////
+// Lo de map es opcional
+Route::get('setting/setMainView', 'SettingsController@setMainView')->name('setting.setMainView');

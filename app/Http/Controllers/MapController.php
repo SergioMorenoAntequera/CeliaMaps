@@ -497,6 +497,8 @@ class MapController extends Controller
         ]);
     }
 
+    
+
     // Metodo auxiliar que me saca las miniaturas de los mapas ///////////////////////////////
     private function createMiniature(Request $r, Map $map){
         //Now that we have to have a image we want it or not

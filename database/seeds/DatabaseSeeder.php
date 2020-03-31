@@ -11,7 +11,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        
         $this->call(MapsTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(StreetsTableSeeder::class);
@@ -23,5 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ImagesTableSeeder::class);
         $this->call(MarkersTableSeeder::class);
         $this->call(MarkerPointTableSeeder::class);
+        $this->call(SettingsTableSeeder::class);
     }
 }

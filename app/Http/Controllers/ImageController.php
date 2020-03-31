@@ -57,28 +57,49 @@ class ImageController extends Controller
      * @return View
      */
     public function store(Request $r){
-        /*
-        $r->validate([
-            'titulo' => 'required|max:50',
-        ]);
-        */
-        $hotspot = new Hotspot($r->all());
-        $hotspot->save();
+       $images = $r->file('file');
 
-        if(count($r->images) > 0){
-            foreach ($r->images as $requestImage) {
-                $requestImage->move('img/hotspots/', $requestImage->getClientOriginalName());
-                $image = new Image();
-                $image->title = $r->titleImage;
-                $image->description = $r->descriptionImage;
-                $image->file_name = $requestImage->getClientOriginalName();
-                $image->file_path = 'img/hotspots/';
-                $image->hotspot_id = $hotspot->id;
-                $image->save();
-            }
+        if (!is_array($images)) {
+            $images = [$imeges];
         }
 
-        return redirect()->route('hotspot.index');
+        if (!is_dir($this->images_path)) {
+            mkdir($this->images_path, 0777);
+        }
+
+        for ($i = 0; $i < count($photos); $i++) {
+            $photo = $photos[$i];
+            $name = $photo->getClientOriginalName();
+            $save_name = $name;
+            $buscar = ".";
+            $posicion = strpos($save_name, $buscar);
+            $extension = substr($save_name, $posicion);
+            if($extension == ".png" || $extension == ".jpg" ){
+                $ruta = public_path('img/resources/miniatures/'.$save_name);
+                ImageManagerStatic::make($photo->getRealPath())->resize(300, 300, function($const){
+                    $const->aspectRatio();
+                })->save($ruta);
+                $ext="image";
+            }elseif($extension == ".pdf"){
+                $ext="document";
+            }elseif($extension == ".mp3" || $extension == ".wav" ){
+                $ext="audio";
+            }
+            $photo->move($this->photos_path, $save_name);
+            $resource = new Resource();
+            $resource->title = $save_name;
+            $resource->route = $save_name;
+            $resource->type= $ext;
+            $resource->save();
+        }
+        return Response::json([
+            'message' => 'Image saved Successfully',
+            'id' => $resource->id,
+            'type' => $resource->type,
+            'route' => $resource->route,
+            'title' => $resource->title
+        ], 200);
+    }
     }
 
     /**
