@@ -177,6 +177,12 @@
             <div class="modal-content">
                 <form id="modal-form" method="POST" action="" enctype="multipart/form-data">
                     @csrf
+                    <!-- validation -->
+                    @if ($errors->any())
+                        @foreach ($errors->all() as $error)
+                            {{ $error }} <br>
+                        @endforeach
+                    @endif
                     <input type="hidden" name="_method">
                     <div class="modal-header border-bottom-0">
                         <h5 id="modal-title" class="modal-title text-primary"></h5>
@@ -196,16 +202,7 @@
                         <!-- Hotspot images -->
                         <div class="form-group images-fields" id="imagesUpload">
                             <label class="text-dark">Imagenes del Hotspot</label><br>
-                            <div class="dropzone dz-clickable">
-                                <div class="dz-message needsclick">
-                                    <button class="dz-button" type="button">Arrastra las imagenes o haz click para subirlas.</button>
-                                    <!-- 
-                                        <div class="fallback">
-                                            <input type="file" name="file" multiple id="archivos" class="fileToUpload">
-                                        </div>
-                                    -->
-                                </div>
-                            </div>
+                            <input type="file" name="images[]" class="fileToUpload" multiple>
                         </div>
                         <div class="form-group images-fields" id="filePathUpdate">
                             <input type="hidden" name="filePath" value="/img/hotspots/" disabled>

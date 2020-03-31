@@ -31,6 +31,7 @@
                 
                 <div id="leftNavBar">
                     <ul id=lateralMenu class="list-unstyled">
+                        
                         <div class="lateralMenuElement mb-4">
                             <a class="lateralMenuLink" href="<?php echo e(route('map.map')); ?>">
                             <li id="celiaMapsIcon" class="lateralMenuImg my-3">
@@ -39,6 +40,7 @@
                             </a>
                         </div>
 
+                        
                         <div class="lateralMenuElement">
                             <a class="lateralMenuLink" href="<?php echo e(route('map.index')); ?>">
                             <li class="lateralMenuImg">
@@ -50,10 +52,11 @@
                                 <div class="line"></div>
                                 <a href="<?php echo e(route('map.index')); ?>"><li>Indice</li></a>
                                 <a href="<?php echo e(route('map.create')); ?>"><li>Insertar</li></a>
-                                <a href="<?php echo e(route('marker.admin')); ?>"><li>Marcadores</li></a>
+                                
                             </div>
                         </div>
 
+                        
                         <div class="lateralMenuElement">
                             <a class="lateralMenuLink" href="<?php echo e(route('street.index')); ?>">
                             <li class="lateralMenuImg">
@@ -64,11 +67,12 @@
                                 <b> Calles </b>
                                 <div class="line"></div>
                                 <a href="<?php echo e(route('street.index')); ?>"><li>Índice</li></a>
-                                <a href="<?php echo e(route('street.create')); ?>"><li>Administrar</li></a>
+                                <a href="<?php echo e(route('street.admin')); ?>"><li>Administrar</li></a>
                                 
                             </div>
                         </div>
 
+                        
                         <div class="lateralMenuElement">
                             <a class="lateralMenuLink" href="<?php echo e(route('hotspot.index')); ?>">
                             <li class="lateralMenuImg">
@@ -85,6 +89,7 @@
                             </div>
                         </div>
 
+                        
                         <div class="lateralMenuElement">
                             <a class="lateralMenuLink" href="<?php echo e(route('user.index')); ?>">
                             <li class="lateralMenuImg">
@@ -110,6 +115,8 @@
                                 <a href="<?php echo e(route('user.create')); ?>"><li>Insertar</li></a>
                             </div>
                         </div>
+
+                        
                         <div class="lateralMenuElement">
                             <a class="lateralMenuLink" href="<?php echo e(route('backup.index')); ?>">
                             <li class="lateralMenuImg">
@@ -124,6 +131,7 @@
                             </div>
                         </div>
 
+                        
                         <div class="lateralMenuElement">
                             <a class="lateralMenuLink" href="<?php echo e(route('search.index')); ?>">
                             <li class="lateralMenuImg">
@@ -136,34 +144,59 @@
                                 <a href="<?php echo e(route('search.index')); ?>"><li>Generar informe</li></a>
                             </div>
                         </div>
+
+                        
+                        <div class="lateralMenuElement">
+                            <a class="lateralMenuLink" selector="settings" href="">
+                            <li class="lateralMenuImg">
+                                <img src="<?php echo e(url('img/icons/settings.svg')); ?>" alt="CeliaMaps" class="img-fluid">
+                            </li>
+                            </a>
+                            <div class="lateralExpandMenu">
+                                <b> Ajustes </b>
+                                <div class="line"></div>
+                                <a href="<?php echo e(route('setting.setMainView')); ?>"><li> Vista principal </li></a>
+                                <a href="<?php echo e(route('marker.admin')); ?>"><li>Marcadores</li></a>
+                            </div>
+                        </div>
                     </ul>
                     <script>
                         $(document).ready(function(){
-                            if(window.location.href.includes("/map") || window.location.href.includes("/marker")){
-                                var element = $(".lateralMenuLink[href|='<?php echo e(route('map.index')); ?>']").parents(".lateralMenuElement");
+                            var element;
+                            if(window.location.href.includes("/map")){
+                                element = $(".lateralMenuLink[href|='<?php echo e(route('map.index')); ?>']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/street")){
-                                var element = $(".lateralMenuLink[href|='<?php echo e(route('street.index')); ?>']").parents(".lateralMenuElement");
+                                element = $(".lateralMenuLink[href|='<?php echo e(route('street.index')); ?>']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/hotspot")){
-                                var element = $(".lateralMenuLink[href|='<?php echo e(route('hotspot.index')); ?>']").parents(".lateralMenuElement");
+                                element = $(".lateralMenuLink[href|='<?php echo e(route('hotspot.index')); ?>']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/user")){
-                                var element = $(".lateralMenuLink[href|='<?php echo e(route('user.index')); ?>']").parents(".lateralMenuElement");
+                                element = $(".lateralMenuLink[href|='<?php echo e(route('user.index')); ?>']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/login")){
-                                var element = $(".lateralMenuLink[href|='<?php echo e(route('user.index')); ?>']").parents(".lateralMenuElement");
+                                element = $(".lateralMenuLink[href|='<?php echo e(route('user.index')); ?>']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/backup")){
-                                var element = $(".lateralMenuLink[href|='<?php echo e(route('backup.index')); ?>']").parents(".lateralMenuElement");
+                                element = $(".lateralMenuLink[href|='<?php echo e(route('backup.index')); ?>']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/search")){
-                                var element = $(".lateralMenuLink[href|='<?php echo e(route('search.index')); ?>']").parents(".lateralMenuElement");
+                                element = $(".lateralMenuLink[href|='<?php echo e(route('search.index')); ?>']").parents(".lateralMenuElement");
+                            } else if(window.location.href.includes("/setting") || window.location.href.includes("/marker")){
+                                element = $(".lateralMenuLink[selector|=settings]").parents(".lateralMenuElement");
+                                console.log(element);
                             }
                             element.css("background-color", "#6f7e96")
 
                             $(".lateralMenuElement").hover(function(e){
                                 var top = $(this).position().top;
                                 var expandMenu = $(this).children(".lateralExpandMenu");
+                                
                                 //La parida esta es para que salga centrada
                                 expandMenu.css("top", top - expandMenu.height()/2 + $(this).height()/2);
                                 expandMenu.show();
+                                //Animaction
+                                // expandMenu.animate({"left": "100%"}, 150);
+                                
                             }, function(e){
-                                $(this).children(".lateralExpandMenu").hide();
+                                var expandMenu = $(this).children(".lateralExpandMenu");
+                                // expandMenu.animate({"left": "-200px"}, 150);
+                                expandMenu.hide();
                             });
                         });
                     </script>
