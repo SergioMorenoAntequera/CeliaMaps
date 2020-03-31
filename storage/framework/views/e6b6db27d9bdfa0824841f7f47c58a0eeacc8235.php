@@ -155,7 +155,7 @@
                             <div class="lateralExpandMenu">
                                 <b> Ajustes </b>
                                 <div class="line"></div>
-                                <a href="<?php echo e(route('setting.setMainView')); ?>"><li> Vista principal </li></a>
+                                <a href="<?php echo e(route('setting.mainView')); ?>"><li> Vista principal </li></a>
                                 <a href="<?php echo e(route('marker.admin')); ?>"><li>Marcadores</li></a>
                             </div>
                         </div>
@@ -179,7 +179,6 @@
                                 element = $(".lateralMenuLink[href|='<?php echo e(route('search.index')); ?>']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/setting") || window.location.href.includes("/marker")){
                                 element = $(".lateralMenuLink[selector|=settings]").parents(".lateralMenuElement");
-                                console.log(element);
                             }
                             element.css("background-color", "#6f7e96")
 

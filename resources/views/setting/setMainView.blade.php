@@ -38,6 +38,10 @@
         {{-- Mapa --}}
         <div id="map"></div>
 
+        <div id="guide">
+            <span>Sitúa la vista sobre el mapa en la ubicación deseada para fijarla como la ubicación predeterminada de la aplicación</span>
+        </div>
+
         {{-----------------------------------------------------------}}
         {{-- BOTTOM LEFT MENU TO CHANGE THE KIND OF MAP TO DISPLAY --}}
         {{-----------------------------------------------------------}}
