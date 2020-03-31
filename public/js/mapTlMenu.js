@@ -145,7 +145,7 @@ $(document).ready(function(){
     function toggleBalls(){
         var BallMenu = $(".ballMenu");
         var balls = BallMenu.siblings(".ball");
-        if(balls.length == 3){
+        if(balls.length < 4){
             balls.each(function(index){
                 var ball = jQuery(balls[index]);
                 if(ball.css('top') == "0px"){

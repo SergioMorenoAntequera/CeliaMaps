@@ -34,7 +34,7 @@
     <div id="map"></div>
 
     <!-- Bottom left menu for the maps -->
-    <div id="tilesMenu">
+    <div id="tilesMenu" style="margin-left: 45px">
         <div id="tilesShow">
             <i class="fa fa-chevron-down"></i>
         </div>
