@@ -174,25 +174,42 @@
                 console.log(images);
             @endisset
             
+            let image;
+            let host = "{{url('')}}";
+            let index = 0;
             $(".col-md-4").on("click", function(e){
-                let image;
                 for (let i = 0; i < images.length; i++) {
                     if(images[i].id == this.name){
                         image = images[i];
-                        image.position = i;       
+                        index = i;       
                     }
                 }
-
-                event.preventDefault();
-                $('#ekkoLightbox-893').modal('show');
-            
-                let host = "{{url('')}}";
+                
                 $("#previewImage").attr("src", host+"/img/hotspots/"+image.file_name);
-            
-                $("#anterior").on("click", function(e){
-                    console.log("ok");
-                    console.log(image.position);
-                });
+                
+                $('#ekkoLightbox-893').modal('show');
+            });
+            $("#anterior").on("click", function(e){
+                if(index <= 0)
+                    index = images.length - 1;
+                else{
+                    index--;
+                }
+
+                image = images[index];
+                
+                $("#previewImage").attr("src", host+"/img/hotspots/"+image.file_name);
+            });
+            $("#siguiente").on("click", function(e){
+                if(index >= (images.length - 1))
+                    index = 0;
+                else{
+                    index++;
+                }
+                
+                image = images[index];
+                
+                $("#previewImage").attr("src", host+"/img/hotspots/"+image.file_name);
             });
 
                 // Upload a new image

@@ -37,7 +37,6 @@ html body{
 }
 .lateralExpandMenu {
     display: none;
-    z-index: -100;
     position: absolute;
     /* left: -200px; */
     left: 100%;
