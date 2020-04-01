@@ -21,7 +21,7 @@ Esta aplicación ha sido diseñada, codificada, probada y puesta en produccíon 
 * [Luis David Fernández Marín](https://github.com/luisdavidfer)\.
 * [Sergio Moreno Antequera](https://github.com/SergioMorenoAntequera)\.
 
-## CONCTACTO
+## CONTACTO
 
 Pueden contactar con el [IES Celia Viñas](https://iescelia.org/web/), a través del correo electrónico admin@iescelia\.org
 
