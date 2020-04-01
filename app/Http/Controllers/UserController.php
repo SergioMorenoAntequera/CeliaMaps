@@ -139,9 +139,4 @@ class UserController extends Controller
         ]);
     }
 
-    public function install(){
-        return view('install');
-    }
-
-
 }
