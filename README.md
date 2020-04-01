@@ -9,7 +9,7 @@ Toda la información sobre la licencia se encuentra en el archivo [License.md](h
 
 # INSTALACIÓN
 
-Las notas de instalación están disponibles en el directorio [doc](), y el archivo de instalación es [install.md]()\.
+Las notas de instalación están disponibles en el directorio [doc](), y el archivo de instalación es [install.md](https://github.com/SergioMorenoAntequera/CeliaMaps/blob/develop/install.php)\.
 
 # GUIA DEL USUARIO
 

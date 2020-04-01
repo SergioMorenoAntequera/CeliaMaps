@@ -31,6 +31,7 @@ Route::resource('map', 'MapController');
 // USER /////////////////////////////////////////////////////////////////////////////////////
 Route::resource('user', 'UserController');
 Route::delete('user/deleteAjax/{id}', 'UserController@deleteAjax')->name('user.deleteAjax');
+Route::get('install', 'UserController@install')->name('install');
 // STREETS /////////////////////////////////////////////////////////////////////////////////////
 Route::get('street/admin', 'StreetController@admin')->name('street.admin');
 Route::get('street/storeAjax', 'StreetController@storeAjax')->name('street.storeAjax');

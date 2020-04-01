@@ -11,12 +11,12 @@ use Illuminate\Support\Facades\Hash;
 use App\User;
 
 class UserController extends Controller
-{  
+{
     // CON EL CONSTRUCTOR IMPEDIMOS QUE ENTRE QUIEN NO ESTÉ LOGUEADO /////////////
     public function __construct(){
         $this->middleware("auth");
     }
-    
+
 
     /**
      * Display a listing of the resource.
@@ -28,7 +28,7 @@ class UserController extends Controller
     {
         $userList = User::all()->sortBy('name');
         return view('user/index',['userList'=>$userList]);
-        
+
     }
 
     /**
@@ -59,12 +59,12 @@ class UserController extends Controller
         ]);
         //|same:password:confirm_password
 
-        $user = new User();         
+        $user = new User();
 
         $user->name = $r->name;
-        $user->email = $r->email;        
-        $user->password = Hash::make($r->password);                 
-        $user->level = $r->level;        
+        $user->email = $r->email;
+        $user->password = Hash::make($r->password);
+        $user->level = $r->level;
 
         $user->save();
 
@@ -73,13 +73,13 @@ class UserController extends Controller
         //return redirect()->route("user.index");
     }
 
-   
+
     public function show($id)
     {
         //
     }
 
-   
+
     // VISTA DEL FORMULARIO DE USUARIOS PERSONALIZADO PARA LA EDICIÓN ///////////////////////
     public function edit($id)
     {
@@ -96,15 +96,15 @@ class UserController extends Controller
 
     // PARA MODIFICAR USUARIOS ///////////////////////////////////////////////////////////////
     public function update(Request $r,$id)
-    {    
-       
+    {
+
         $user = User::find($id);
 
-        $clave = $user->password;        
-       
+        $clave = $user->password;
+
         if($r->password != null){
-            $r->validate([ 
-                'password'=>'confirmed', 
+            $r->validate([
+                'password'=>'confirmed',
             ]);
         }
 
@@ -113,15 +113,15 @@ class UserController extends Controller
        if($r->password == null){
             $user->password = $clave;
         }else{
-            $user->password = Hash::make($r->password);              
+            $user->password = Hash::make($r->password);
         }
         $user->level = $r->level;
-        $user->save();       
-        
+        $user->save();
+
         return redirect()->route('user.index');
     }
 
-    
+
     // BORRADO DE USUARIOS INICIAL, YA NO SE USA ///////////////////////////////////////
     public function destroy($id)
     {
@@ -132,12 +132,16 @@ class UserController extends Controller
     }
 
     // BORRADO DE USUARIOS NUEVO, SE USA ESTE PARA IGUALAR CON  EL RESTO ////////////
-    public function deleteAjax(Request $r, $id){        
-        User::destroy($r->id);        
+    public function deleteAjax(Request $r, $id){
+        User::destroy($r->id);
         return response()->json([
             'delete' => true,
         ]);
     }
-  
-    
+
+    public function install(){
+        return view('install');
+    }
+
+
 }
