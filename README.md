@@ -1,19 +1,19 @@
 # CELIAMAPS README
 
 Celiamaps es una aplicación de software libre realizada por alumnos de 2º curso del Ciclo Formativo de Grado Superior de Desarrollo de Aplicaciones Web del [IES Celia Viñas](https://iescelia.org/web/) de Almería \(España\), bajo la supervisión de los profesores D. Félix Expósito, D. Alfredo Moreno y D. Manuel Piñero.  
-El propósito de esta aplicación es 
+El propósito de esta aplicación es la superposición de mapas
 
 # LICENCIA DE USO
 
-Toda la información sobre la licencia se encuentra en el archivo License\.md \. Por favor, lea cuidadosamente ese archivo si pretende explotar este software\.
+Toda la información sobre la licencia se encuentra en el archivo [License.md](https://github.com/SergioMorenoAntequera/CeliaMaps/blob/develop/License.md) \. Por favor, lea cuidadosamente ese archivo si pretende explotar este software\.
 
 # INSTALACIÓN
 
-Las notas de instalación están disponibles en el archivo install\.md\.
+Las notas de instalación están disponibles en el directorio [doc](), y el archivo de instalación es [install.md]()\.
 
 # GUIA DEL USUARIO
 
-La documentación del usuario está disponible en el directorio docs\.
+La documentación del usuario está disponible en el directorio [doc]()\.
 
 # CRÉDITOS
 
