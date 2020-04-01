@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Artisan;
+use App\console\Commands;
+use App\User;
 
 class InstallController extends Controller
 {
@@ -100,12 +103,12 @@ class InstallController extends Controller
 
         return redirect()->route('install.createUser');
     }
-    public function createUser(Request $r){
+    public function createUser(){
 
         return view('install/formUserInstall');
     }
 
-    public function storeUser(){
+    public function storeUser(Request $r){
 
         $user = new User();
 
