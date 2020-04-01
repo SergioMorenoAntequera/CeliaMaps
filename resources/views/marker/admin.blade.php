@@ -41,7 +41,7 @@
         <div id="cPopUp">
             <div class="cornerButton"> X </div>
             <span class="text"> 
-                Haz click en el mapa para añadir formas geométricas o click en una de ellas para modificarla. <br> Esto te ayudarán con el proceso de alineamiento de mapas 
+                Haz click en el mapa para añadir marcadores o click en una de ellos para modificarlo. <br> Estos te ayudarán con el proceso de alineamiento de mapas 
             </span>
         </div>
 

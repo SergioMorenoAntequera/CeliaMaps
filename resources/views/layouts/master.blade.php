@@ -147,7 +147,7 @@
 
                         {{-- Settings --}}
                         <div class="lateralMenuElement">
-                            <a class="lateralMenuLink" selector="settings" href="">
+                            <a class="lateralMenuLink" selector="settings" href="{{route('setting.index')}}">
                             <li class="lateralMenuImg">
                                 <img src="{{url('img/icons/settings.svg')}}" alt="CeliaMaps" class="img-fluid">
                             </li>

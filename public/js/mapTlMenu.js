@@ -41,6 +41,7 @@ $(document).ready(function(){
                         {icon: markerHotspot})
                         .on('click', function(e){
                             var hpData = e.target.hotspotInfo;
+                            selection = hpData;
                             // Centramos la vista en el hotspot
                             map.setView([hpData.lat, parseFloat(hpData.lng) + 0.00041], 18);
                             // Se completa la información de la ventana

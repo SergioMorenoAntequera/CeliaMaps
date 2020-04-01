@@ -17,7 +17,7 @@ class SettingsController extends Controller
      * @return View
      */
     public function index() {
-        dd("indice de settings - jeje no sé");
+        return view('setting.index');
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////

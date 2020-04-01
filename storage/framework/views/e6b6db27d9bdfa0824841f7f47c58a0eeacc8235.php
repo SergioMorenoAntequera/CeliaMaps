@@ -147,7 +147,7 @@
 
                         
                         <div class="lateralMenuElement">
-                            <a class="lateralMenuLink" selector="settings" href="">
+                            <a class="lateralMenuLink" selector="settings" href="<?php echo e(route('setting.index')); ?>">
                             <li class="lateralMenuImg">
                                 <img src="<?php echo e(url('img/icons/settings.svg')); ?>" alt="CeliaMaps" class="img-fluid">
                             </li>

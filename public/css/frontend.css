@@ -14,7 +14,6 @@ html, body {
     overflow: hidden;
     width: 100%;
     height: 100%;
-    justify-content:center;
 }
 
 #map {
@@ -129,7 +128,7 @@ html, body {
 }
 .pinMenuButton {
     position: absolute;
-    top: 2px;
+    top: 0px;
     right: 12px;
     float: right;
     width: 17px;
@@ -194,9 +193,10 @@ html, body {
     border-radius: 10px;
 }
 #hotspotMenu > .content > .header { position: relative; }
-#hotspotMenu > .content > .header > #hp-img {width: 100%; }
+#hotspotMenu > .content > .header > #hp-img {width: 100%; cursor: pointer; }
 #hotspotMenu > .content > .body { padding: 0px 20px 0px 20px; }
-#hotspotMenu > .content > .body > #hp-title { font-weight: bold; margin: 10px 0px 7px 0px; font-size: 20px; }
+#hotspotMenu > .content > .body > #hp-gallery { margin-right: 7px; margin-top: 10px; height: 30px; float: left; cursor: pointer;}
+#hotspotMenu > .content > .body > #hp-title { font-weight: bold; margin: 10px 0px 7px 0px; font-size: 20px; float: left; }
 #hotspotMenu > .content > .body > #hp-description { margin: 0px 0px 10px 0px;}
 
 
@@ -371,7 +371,88 @@ html, body {
 }
 
 
+#carousel {
+    z-index: 100;
+    display: none;
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 
+    border-radius: 20px;
+    background-color: rgb(0, 0, 0, 0.6);
+}
+#carousel .content {
+    width: 100%;
+    height: 100%;
+
+    color: white;
+}
+#carousel .content .upperPart {
+    height: 80%;
+    padding: 30px;
+    
+}
+#carousel .content .upperPart .X {
+    position: absolute;
+    height: 3%;
+    right: 2%;
+    top: 2%;
+    cursor: pointer;
+}
+#carousel .content .upperPart .arrow {
+    position: absolute;
+    height: 5%;
+    top: 45%;
+    cursor: pointer;
+}
+#carousel .content .upperPart .arrow.left {
+    left: 3%;
+    transform: rotate(-90deg);
+}
+#carousel .content .upperPart .arrow.right {
+    right: 3%;
+    transform: rotate(90deg);
+}
+#carousel .content .upperPart .bigImg {
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    max-height: 100%;
+
+    opacity: 1;
+}
+
+#carousel .content .lowerPart {
+    height: 20%;
+    background-color: rgb(0, 0, 0, 0.7);
+    padding: 10px 30px;
+    border-radius: 0px 0px 20px 20px;
+}
+#carousel .content .lowerPart .images {
+    position: relative;
+    display: inline-block;
+    height: 100%;
+    max-height: 100%;
+    left: 50%;
+    transform: translate(-50%);
+    overflow: auto;
+}
+#carousel .content .lowerPart .images img {
+    height: 100%;
+    opacity: 0.5;
+    cursor: pointer;
+    margin: 0px 5px;
+}
+#carousel .content .lowerPart .images img:hover {
+    opacity: 1;
+}
+#carousel .content .lowerPart .images img.selected {
+    opacity: 1;
+}
 
 /*/////////////////////////////////////////////////////////////////////*/
 /*////////////////////////////// OTROS  ///////////////////////////////*/
