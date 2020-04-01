@@ -72,8 +72,8 @@ class InstallController extends Controller
         PUSHER_APP_SECRET= \n
         PUSHER_APP_CLUSTER=mt1 \n";
 
-        //MIX_PUSHER_APP_KEY= '".$.{PUSHER_APP_KEY}."' \n
-        //MIX_PUSHER_APP_CLUSTER='".$."{".PUSHER_APP_CLUSTER."}' \n";
+        //MIX_PUSHER_APP_KEY= '${PUSHER_APP_KEY}' \n
+        //MIX_PUSHER_APP_CLUSTER='${PUSHER_APP_CLUSTER}' \n
 
 
         if($archivo = fopen($env,"w")){
@@ -91,21 +91,34 @@ class InstallController extends Controller
         rename(".env3", "../.env3");
         //unlink('.env3'); NO ES NECESARIO PORQUE CON rename LO MUEVE
         //unlink("views/install/formInstall.blade.php"); PARA BORRAR LOS ARCHIVOS DE INSTALACIÓN
+        return redirect()->route('install.migration');
     }
 
     public function migration(){
 
-        Artisan::call('migrate --fresh');
+        Artisan::call('migrate');
 
-
+        return redirect()->route('install.createUser');
     }
     public function createUser(Request $r){
-        // sin terminar
-        $username = $r->name;
-        $password = Hash::make($r->password);
-        $email = $r->email;
 
+        return view('install/formUserInstall');
     }
+
+    public function storeUser(){
+
+        $user = new User();
+
+        $user->name = $r->name;
+        $user->email = $r->email;
+        $user->password = Hash::make($r->password);
+        $user->level = '1';
+
+        $user->save();
+
+        return redirect()->route('user.index');
+    }
+
 
 }
 
