@@ -55,17 +55,17 @@
         {{-- MENU DE ARRIBA A LA IZQUIERDA Y LAS VENTANAS FLOTANTE --}}
         {{-----------------------------------------------------------}}
         {{-- CONTROLADOR DEL MENÚ --}}
-        <div class="ballMenu">
+        <div class="ballMenu" style="z-index:1">
             <div class="ballMenuContent">
                 <img class="noselect" src="{{url('img/icons/menu.png')}}" alt="">
             </div>
         </div>
-        <div id="ballMaps" class="ball noselect">
+        <div id="ballMaps" class="ball noselect" style="z-index:0">
             <div class="ballContent">
                 <img class="noselect" src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
             </div>
         </div>
-        <div id="ballStreets" class="ball noselect">
+        <div id="ballStreets" class="ball noselect" style="z-index:0">
             <div class="ballContent">   
                  <img style="width: 70%;position: absolute; top: 15%; left: 15%" class="noselect" src="{{url('img/icons/search.svg')}}" title="Buscador">
              </div>
