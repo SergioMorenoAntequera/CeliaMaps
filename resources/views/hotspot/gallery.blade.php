@@ -112,9 +112,9 @@
                             <input type="text" class="form-control" name="description" required>
                         </div>
                         <!-- Array images -->
-                        <div class="form-group images-fields" id="imagesUpload">
-                            <b> <label> Imagenes </label> <span class="text-danger">*</span> </b><br>
-                            <input type="file" name="images[]" class="fileToUpload" multiple required>
+                        <div class="form-group" id="imagesUpload">
+                            <b> <label> Imagen </label> <span class="text-danger">*</span> </b><br>
+                            <input type="file" name="image" class="fileToUpload" required>
                         </div>
                         <!-- Hotspots -->
                         <div class="form-group mb-0">
@@ -203,7 +203,7 @@
                 // Clear fields
                 $("input[name='title']").val("");
                 $("input[name='description']").val("");
-                $("input[name='images[]']").val("");
+                $("input[name='image']").val("");
                 $("input[name='hotspot_id']").val("");
                 // Modal display
                 $("#modal-title").text("Nueva imagen");
