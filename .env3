@@ -1,80 +1,80 @@
-APP_URL=
+APP_URL=dd
 
-        DB_CONNECTION=
+        DB_CONNECTION=dd
 
-        DB_HOST=
+        DB_HOST=dd
 
-        DB_PORT=
+        DB_PORT=ddd
 
-        DB_DATABASE=
+        DB_DATABASE=dd
 
-        DB_USERNAME=
+        DB_USERNAME=dd
 
-        DB_PASSWORD=$2y$10$DpXwYGTCA3iugESI8kzZrOi.ZAMZTtp.2R7xevCc.J5VJfr8K9cyK
+        DB_PASSWORD=$2y$10$cM1B5NdVc2Ei5b5hdQNnH..7VRzumz5JQKH3PyqKcd.oMRw3wZs1C
 
 
         APP_NAME=CeliaMaps 
 
-APP_ENV=local 
+        APP_ENV=local 
 
-APP_KEY=base64:PS7qybVslICRb5b0KcM2Voeq4ywtHb8JjKQQxcLWup8= 
+        APP_KEY=base64:PS7qybVslICRb5b0KcM2Voeq4ywtHb8JjKQQxcLWup8= 
 
-APP_DEBUG=true 
+        APP_DEBUG=true 
 
-LOG_CHANNEL=stack 
-
-
-MYSQLDUMP_PATH=D:/laragon/bin/mysql/mysql-5.7.24-winx64/bin/mysqldump.exe 
-
-MYSQL_PATH=D:/laragon/bin/mysql/mysql-5.7.24-winx64/bin/mysql.exe 
-
-BACKUP_PATH=D:/laragon/www/CeliaMaps/storage/celiamaps.sql 
+        LOG_CHANNEL=stack 
 
 
-BROADCAST_DRIVER=log 
+        MYSQLDUMP_PATH=D:/laragon/bin/mysql/mysql-5.7.24-winx64/bin/mysqldump.exe 
 
-CACHE_DRIVER=file 
+        MYSQL_PATH=D:/laragon/bin/mysql/mysql-5.7.24-winx64/bin/mysql.exe 
 
-QUEUE_CONNECTION=sync 
-
-SESSION_DRIVER=file 
-
-SESSION_LIFETIME=120 
+        BACKUP_PATH=D:/laragon/www/CeliaMaps/storage/celiamaps.sql 
 
 
-REDIS_HOST=127.0.0.1 
+        BROADCAST_DRIVER=log 
 
-REDIS_PASSWORD=null 
+        CACHE_DRIVER=file 
 
-REDIS_PORT=6379 
+        QUEUE_CONNECTION=sync 
 
+        SESSION_DRIVER=file 
 
-MAIL_DRIVER=smtp 
-
-MAIL_HOST=smtp.mailtrap.io 
-
-MAIL_PORT=2525 
-
-MAIL_USERNAME=null 
-
-MAIL_PASSWORD=null 
-
-MAIL_ENCRYPTION=null 
+        SESSION_LIFETIME=120 
 
 
-AWS_ACCESS_KEY_ID= 
+        REDIS_HOST=127.0.0.1 
 
-AWS_SECRET_ACCESS_KEY= 
+        REDIS_PASSWORD=null 
 
-AWS_DEFAULT_REGION=us-east-1 
-
-AWS_BUCKET= 
+        REDIS_PORT=6379 
 
 
-PUSHER_APP_ID= 
+        MAIL_DRIVER=smtp 
 
-PUSHER_APP_KEY= 
+        MAIL_HOST=smtp.mailtrap.io 
 
-PUSHER_APP_SECRET= 
+        MAIL_PORT=2525 
 
-PUSHER_APP_CLUSTER=mt1 
+        MAIL_USERNAME=null 
+
+        MAIL_PASSWORD=null 
+
+        MAIL_ENCRYPTION=null 
+
+
+        AWS_ACCESS_KEY_ID= 
+
+        AWS_SECRET_ACCESS_KEY= 
+
+        AWS_DEFAULT_REGION=us-east-1 
+
+        AWS_BUCKET= 
+
+
+        PUSHER_APP_ID= 
+
+        PUSHER_APP_KEY= 
+
+        PUSHER_APP_SECRET= 
+
+        PUSHER_APP_CLUSTER=mt1 
