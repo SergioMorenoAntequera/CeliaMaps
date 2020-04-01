@@ -98,20 +98,6 @@ class HotspotController extends Controller
     }
 
     /**
-     *  Method that shows the gallery, Hotspots Images
-     * 
-     *  @return View
-     */
-    public function gallery(){
-        $image = Image::all();
-        $hotspot = Hotspot::all();
-        $map = Map::all();
-        return view('hotspot.gallery', ['images'=>$image, 
-                                        'hotspots'=>$hotspot,
-                                        'maps'=>$map]);
-    }
-
-    /**
      * Method that recieves information in a Request object,
      * then checks and changes the information inside our database
      *
@@ -168,6 +154,20 @@ class HotspotController extends Controller
             'hotspot' => $hotspotFound,
         ]);
     }
+
+    /**
+     *  Method that shows the gallery, Hotspots Images
+     * 
+     *  @return View
+     */
+    public function gallery(){
+        $image = Image::all();
+        $hotspot = Hotspot::all();
+        $map = Map::all();
+        return view('hotspot.gallery', ['images'=>$image, 
+                                        'hotspots'=>$hotspot,
+                                        'maps'=>$map]);
+    }   
 
     public function searchAjax(Request $r){
         $imagesFound = Image::where('title', 'LIKE', '%'.$r->text.'%')->get();

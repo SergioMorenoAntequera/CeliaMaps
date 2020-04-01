@@ -40,10 +40,12 @@ Route::get('street/destroyAjax', 'StreetController@destroyAjax')->name('street.d
 Route::resource('street', 'StreetController');
 // POINTS /////////////////////////////////////////////////////////////////////////////////////
 Route::resource('point', 'PointController');
+// IMAGES /////////////////////////////////////////////////////////////////////////////////////
+Route::resource('image', 'ImageController');
 // HOTSPOT /////////////////////////////////////////////////////////////////////////////////////
+Route::get('hotspot/gallery', 'HotspotController@gallery')->name('hotspot.gallery');
 Route::delete('hotspot/deleteAjax/{id}', 'HotspotController@deleteAjax')->name('hotspot.deleteAjax');
 Route::get('hotspot/getAllAjax', 'HotspotController@getAllAjax')->name('hotspot.getAjax');
-Route::get('hotspot/gallery', 'HotspotController@gallery')->name('hotspot.gallery');
 Route::get('hotspot/searchAjax', 'HotspotController@searchAjax')->name('hotspot.search');
 Route::resource('hotspot', 'HotspotController');
 // AUTH ///////////////////////////////////////////////////////////////////////////////////////

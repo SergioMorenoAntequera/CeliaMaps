@@ -18,9 +18,9 @@
     {{-- IMAGES --}}
     
     <div id="allElements" style="display: flex; flex-wrap: wrap;">
-        @foreach ($images as $image)    
+        @foreach ($images as $image)
             <a class="element col-md-4" name="{{$image->id}}" style="margin: 15px 0; padding: 0 15px; flex: 0 0 33.333333%; max-width: 455px; position: relative; overflow: hidden; height: 325px" href="#" data-toggle="light-box" data-gallery="gallery">
-                <img class="rounded" style="height: 100%" src="{{url('img/hotspots/', $image->file_name)}}">  
+                <img class="rounded" style="height: 100%" src="{{url('img/hotspots/', $image->file_name)}}"> <br>
             </a>
         @endforeach
     </div>
@@ -47,6 +47,42 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- Boton para Borrar  -->
+                <form method="POST" action="{{route('hotspot.deleteAjax', $image->id)}}">
+                    @csrf
+                    @method("DELETE")
+
+                    <div data-toggle="modal" data-target="#ModalCenter{{$image->id}}" class="deleteCornerButton cornerButton">
+                        <img class="center" src="{{url("img/icons/delete.svg")}}" alt=""> 
+                    </div>
+                </form>
+                <div id="ModalCenter{{$image->id}}" class="modal fade text-dark" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">¿En serio?</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <div class="modal-body">
+                                <p>¿Seguro que quieres borrar el hotspot {{$image->title}}?</p>
+                                <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+                                <button iddb="{{$image->id}}" type="button" class="btn btn-danger deleteConfirm" data-dismiss="modal">
+                                    Eliminar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- FINAL modal para borrar -->
+
+                <!-- Boton para modificar -->
+                <a href="{{route('hotspot.edit', $image->id)}}">
+                    <div class="cornerButton" style="right: 50px">
+                        <img class="center" src="{{url("img/icons/edit.svg")}}" alt=""> 
+                    </div>
+                </a>
 
             </div>
         </div>

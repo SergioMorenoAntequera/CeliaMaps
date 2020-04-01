@@ -294,7 +294,7 @@
                         </div>
                         <!-- Street maps -->
                         <div class="form-group mb-0">
-                            <b> <label> Mapas que la cantienen </label> <span class="text-danger">*</span> </b>
+                            <b> <label> Mapas que la contienen </label> <span class="text-danger">*</span> </b>
                             @foreach ($maps as $map)
                                 <p>
                                     @isset($map->tlCornerLatitude)
