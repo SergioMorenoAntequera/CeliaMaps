@@ -198,7 +198,9 @@
                     <img id="hp-img" class="noselect" src="{{url('img/hotspots/alcazaba-almeria-img-01.jpg')}}" alt="">
                 </div>
                 <div class="body">
+                    <img id="hp-gallery" src="{{url('img/icons/gallery.svg')}}" alt="">
                     <p id="hp-title"></p>
+                    <div style="clear: both;"></div>
                     <p id="hp-description"></p>
                 </div>
             </div>
@@ -323,7 +325,6 @@
                     return;
                 }
             });
-            console.log(selection);
 
             // Clear search field
             $('#streetsFound').empty();
@@ -489,7 +490,12 @@
     {{-----------------------------------------------------------}}
     <script>
         // Mostrarlo 
-        $("#hp-img").click(function(e){
+        $("#hp-img, #hp-gallery").click(function(e){
+            showGallery();
+        });
+        
+
+        function showGallery(){
             $("#carousel .images").empty();
             let mainImgUrl = selection.images[0].file_path +"/"+ selection.images[0].file_name;
             $("#carousel .bigImg").attr("src", window.location.href + mainImgUrl);
@@ -504,13 +510,14 @@
             }
             
             $("#carousel").fadeIn(150);
-        });
+        }
 
         // Ocultarlo
         $("#carousel .X").click(function(e){
             $("#carousel").fadeOut(150);
         });
         
+        //Cambiar de foto 
         $("#carousel .images").on("click", 'img', function(e){
             let imgSelected = $(this);
             if(!imgSelected.hasClass("selected")){
