@@ -70,6 +70,6 @@ Route::get('marker/destroy', 'MarkerController@destroy')->name('marker.destroy')
 Route::get('marker/update', 'MarkerController@update')->name('marker.update');
 // Route::resource('marker', 'MarkerController');
 // SETTINGS ////////////////////////////////////////////////////////////////////////////////////////
-// Lo de map es opcional
 Route::get('setting/mainView', 'SettingsController@mainView')->name('setting.mainView');
 Route::get('setting/saveMainView', 'SettingsController@saveMainView')->name('setting.saveMainView');
+Route::get('setting', 'SettingsController@index')->name('setting.index');
