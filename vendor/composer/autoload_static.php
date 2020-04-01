@@ -508,6 +508,7 @@ class ComposerStaticInit3bc63085752e602f437e2a014d1e5b3a
         'App\\Http\\Controllers\\PdfController' => __DIR__ . '/../..' . '/app/Http/Controllers/PdfController.php',
         'App\\Http\\Controllers\\PointController' => __DIR__ . '/../..' . '/app/Http/Controllers/PointController.php',
         'App\\Http\\Controllers\\SearchController' => __DIR__ . '/../..' . '/app/Http/Controllers/SearchController.php',
+        'App\\Http\\Controllers\\SettingsController' => __DIR__ . '/../..' . '/app/Http/Controllers/SettingsController.php',
         'App\\Http\\Controllers\\StreetController' => __DIR__ . '/../..' . '/app/Http/Controllers/StreetController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
@@ -529,6 +530,7 @@ class ComposerStaticInit3bc63085752e602f437e2a014d1e5b3a
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'App\\Setting' => __DIR__ . '/../..' . '/app/Setting.php',
         'App\\Street' => __DIR__ . '/../..' . '/app/Street.php',
         'App\\StreetType' => __DIR__ . '/../..' . '/app/StreetType.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
@@ -4633,6 +4635,7 @@ class ComposerStaticInit3bc63085752e602f437e2a014d1e5b3a
         'SebastianBergmann\\Type\\UnknownType' => __DIR__ . '/..' . '/sebastian/type/src/UnknownType.php',
         'SebastianBergmann\\Type\\VoidType' => __DIR__ . '/..' . '/sebastian/type/src/VoidType.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
+        'SettingsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/SettingsTableSeeder.php',
         'StreetTypeTableSeeder' => __DIR__ . '/../..' . '/database/seeds/StreetTypeTableSeeder.php',
         'StreetsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/StreetsTableSeeder.php',
         'Svg\\DefaultStyle' => __DIR__ . '/..' . '/phenx/php-svg-lib/src/Svg/DefaultStyle.php',
@@ -5496,7 +5499,6 @@ class ComposerStaticInit3bc63085752e602f437e2a014d1e5b3a
         'phpDocumentor\\Reflection\\Types\\String_' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/String_.php',
         'phpDocumentor\\Reflection\\Types\\This' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/This.php',
         'phpDocumentor\\Reflection\\Types\\Void_' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/Void_.php',
-        'SettingsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/SettingsTableSeeder.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

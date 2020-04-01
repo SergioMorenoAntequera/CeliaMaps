@@ -177,12 +177,6 @@
             <div class="modal-content">
                 <form id="modal-form" method="POST" action="" enctype="multipart/form-data">
                     @csrf
-                    <!-- validation -->
-                    @if ($errors->any())
-                        @foreach ($errors->all() as $error)
-                            {{ $error }} <br>
-                        @endforeach
-                    @endif
                     <input type="hidden" name="_method">
                     <div class="modal-header border-bottom-0">
                         <h5 id="modal-title" class="modal-title text-primary"></h5>

@@ -54,32 +54,74 @@
 
     {{-- NEW IMAGE --}}
 
-    <div id="modalDropzone" class="modal fade text-dark" role="dialog" aria-hidden="true">
+    <div id="modalImage" class="modal fade text-dark" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document" style="flex: 1 1 1px; max-width: 70%;">
             <div class="modal-content">
-
-                <div class="modal-body">
-                    
-                    {{-- Dropzone --}}
-                    <div class="dropzoneContainer col100" id="dzone">
-                        <form action="{{ url('') }}" method="post" enctype="multipart/form-data" class='dropzone' style="margin-bottom: 0px" >
-                            
-                        </form>
+                <form id="modal-form" method="POST" action="" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="_method">
+                    <div class="modal-header border-bottom-0">
+                        <h5 id="modal-title" class="modal-title text-primary"></h5>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
                     </div>
-
-                </div>
-
+                    <!-- Imagen title -->
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <b> <label> Titulo de la imagen </label> <span class="text-danger">*</span> </b>
+                            <input type="text" class="form-control" name="title" required>
+                        </div>
+                        <!-- Imagen description -->
+                        <div class="form-group">
+                            <b> <label> Descripcion de la imagen </label> <span class="text-danger">*</span> </b>
+                            <input type="text" class="form-control" name="description" required>
+                        </div>
+                        <!-- Array images -->
+                        <div class="form-group images-fields" id="imagesUpload">
+                            <b> <label> Imagenes </label> <span class="text-danger">*</span> </b><br>
+                            <input type="file" name="images[]" class="fileToUpload" multiple required>
+                        </div>
+                        <!-- Hotspots -->
+                        <div class="form-group mb-0">
+                            <b> <label> Hotspot al que asociar la imagen </label> <span class="text-danger">*</span> </b>
+                            @foreach ($hotspots as $hotspot)
+                                <p>
+                                    @isset($hotspot)
+                                        <input id="radiobutton_hotspot{{$hotspot->id}}" class="radio-text" type="radio" name="hotspot_id" value="{{$hotspot->id}}">
+                                        <span class="text-dark radio-text">{{$hotspot->title}}</span>
+                                    @endisset
+                                </p>
+                            @endforeach
+                        </div>
+                        <!-- Maps -->
+                        <div class="form-group mb-0">
+                            <b> <label> Mapa que la contienen </label> <span class="text-danger">*</span> </b>
+                            @foreach ($maps as $map)
+                                <p>
+                                    @isset($map)
+                                        <input id="radiobutton_map{{$map->id}}" class="radio-text" type="radio" name="map_id" value="{{$map->id}}">
+                                        <span class="text-dark radiobutton-text">{{$map->title}} ({{$map->city}} - {{$map->date}})</span>
+                                    @endisset
+                                </p>
+                            @endforeach
+                        </div>
+                        <!-- Hidden -->
+                        <div class="form-group images-fields" id="filePathUpdate">
+                            <input type="hidden" name="filePath" value="/img/hotspots/" disabled>
+                        </div>
+                        <div>
+                            <input type="hidden" id="id" name="id">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btn-remove" value="" type="button" class="btn btn-danger">Eliminar</button>
+                        <button id="btn-submit" type="submit" class="btn btn-success">Guardar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 
-    {{-- EDIT AN IMAGE --}}
-    
-    
-
-    {{-- ADD IMAGES BUTTON --}}
-    
-    <a href="#" id="newImage">
+    <a href="#" id="addImage">
         <div id="addButton">
             <img class="center" src="{{url("img/icons/plus.svg")}}">
         </div>
@@ -89,39 +131,52 @@
 
 @section('scripts')
     <script>
-
-        $(".col-md-4").on("click", function(event) {
+        $(function(){
             @isset($images)
                 // Images php array conversion to js
                 let images = @json($images);
                 console.log(images);
             @endisset
-
-            let image;
-            for (let i = 0; i < images.length; i++) {
-                if(images[i].id == this.name){
-                    image = images[i];
-                    image.position = i;
-                    
-                }
-            }
             
-            event.preventDefault();
-            $('#ekkoLightbox-893').modal('show');
+            $(".col-md-4").on("click", function(e){
+                let image;
+                for (let i = 0; i < images.length; i++) {
+                    if(images[i].id == this.name){
+                        image = images[i];
+                        image.position = i;       
+                    }
+                }
 
-            let host = "{{url('')}}";
-            $("#previewImage").attr("src", host+"/img/hotspots/"+image.file_name);
-
-
-            $("#anterior").on("click", function(e){
-                console.log("ok");
-                console.log(image.position);
+                event.preventDefault();
+                $('#ekkoLightbox-893').modal('show');
+            
+                let host = "{{url('')}}";
+                $("#previewImage").attr("src", host+"/img/hotspots/"+image.file_name);
+            
+                $("#anterior").on("click", function(e){
+                    console.log("ok");
+                    console.log(image.position);
+                });
             });
-        });
 
+                // Upload a new image
+            $("#addImage").on("click", function(){
+                // Create form attrubutes
+                $("#modal-form").attr("action", "{{route('hotspot.store')}}");
+                $("input[name='_method']").val("POST");
+                // Clear fields
+                $("input[name='title']").val("");
+                $("input[name='description']").val("");
+                $("input[name='images[]']").val("");
+                $("input[name='hotspot_id']").val("");
+                // Modal display
+                $("#modal-title").text("Nueva imagen");
+                $("#btn-remove").prop("disabled", true);
+                $("#btn-remove").css("display", "none");
+                $('#modalImage').modal('show');
+            });
 
-        $("#newImage").on("click", function(e){
-            $('#modalDropzone').modal('show');
+            
         });
     </script>
     

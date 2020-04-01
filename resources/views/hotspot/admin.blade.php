@@ -383,7 +383,7 @@
                     //We take the opacity to 0 so they are hidding now
                     img.setOpacity(0);
                 }
-            });
+            }); 
 
             // Small arrow to allow us to hide the menu at the bottom left
             $('#mapsShow').click(function(){

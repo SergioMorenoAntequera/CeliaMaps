@@ -13,10 +13,6 @@
         <link rel="stylesheet" href="<?php echo e(url('/css/BootstrapOverride.css')); ?>">
         <link rel="stylesheet" href="<?php echo e(url('/css/streets.css')); ?>">
         <link rel="stylesheet" href="<?php echo e(url('/css/Hotspots.css')); ?>">
-        <!-- LIBRERIA DROPZONE -->
-        <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/css/dropzone.css')); ?>"> <!-- CSS -->
-        <script src="<?php echo e(asset('js/dropzone.js')); ?>" type="text/javascript"></script> <!-- JS -->
-        <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
         <!--  <link href="https://fonts.googleapis.com/css?family=Dancing+Script:500&display=swap" rel="stylesheet">   -->
         <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"> </script>
         <!-- Views CDNs -->
@@ -155,7 +151,7 @@
                             <div class="lateralExpandMenu">
                                 <b> Ajustes </b>
                                 <div class="line"></div>
-                                <a href="<?php echo e(route('setting.setMainView')); ?>"><li> Vista principal </li></a>
+                                <a href="<?php echo e(route('setting.mainView')); ?>"><li> Vista principal </li></a>
                                 <a href="<?php echo e(route('marker.admin')); ?>"><li>Marcadores</li></a>
                             </div>
                         </div>
@@ -179,7 +175,6 @@
                                 element = $(".lateralMenuLink[href|='<?php echo e(route('search.index')); ?>']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/setting") || window.location.href.includes("/marker")){
                                 element = $(".lateralMenuLink[selector|=settings]").parents(".lateralMenuElement");
-                                console.log(element);
                             }
                             element.css("background-color", "#6f7e96")
 

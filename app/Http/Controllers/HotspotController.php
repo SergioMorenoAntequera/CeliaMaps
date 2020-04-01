@@ -104,7 +104,11 @@ class HotspotController extends Controller
      */
     public function gallery(){
         $image = Image::all();
-        return view('hotspot.gallery', array('images'=>$image));
+        $hotspot = Hotspot::all();
+        $map = Map::all();
+        return view('hotspot.gallery', ['images'=>$image, 
+                                        'hotspots'=>$hotspot,
+                                        'maps'=>$map]);
     }
 
     /**
