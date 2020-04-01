@@ -87,6 +87,36 @@ class HotspotController extends Controller
         return redirect()->route('hotspot.index');
     }
 
+    public function storeAjax(Request $r){
+        $r->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'images' => 'required'
+        ]);
+
+        $hotspot = new Hotspot($r->all());
+        $hotspot->save();
+
+        if(count($r->images) > 0){
+            foreach ($r->images as $requestImage) {
+                $requestImage->move('img/hotspots/', $requestImage->getClientOriginalName());
+                $image = new Image();
+                $image->title = $r->titleImage;
+                $image->description = $r->descriptionImage;
+                $image->file_name = $requestImage->getClientOriginalName();
+                $image->file_path = 'img/hotspots/';
+                $image->hotspot_id = $hotspot->id;
+                $image->save();
+            }
+        }
+
+        $hotspot->images;
+
+        return response()->json([
+            'hotspot' => $hotspot
+        ]);
+    }
+
     /**
      * Method that shows the form to edit an already existing registry
      *
@@ -117,6 +147,24 @@ class HotspotController extends Controller
         return redirect()->route('hotspot.index');
     }
 
+    public function updateAjax(Request $r){
+        $r->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'images' => 'required'
+        ]);
+        
+        $hotspot = Hotspot::find($id);
+        $hotspot->fill($r->all());
+        $hotspot->save();
+        
+        // Tener en cuenta imágenes
+
+        return response()->json([
+            'hotspot' => $hotspot
+        ]);
+    }
+
     /**
      * Method that deleets an specific registry inside out database
      * depending on a id that we will introduce by url
@@ -132,8 +180,9 @@ class HotspotController extends Controller
 
     public function deleteAjax(Request $r, $id){
 
-
         Hotspot::destroy($r->id);
+
+        // Tener en cuenta imágenes
 
         return response()->json([
             'delete' => true,
