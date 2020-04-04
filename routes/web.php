@@ -81,3 +81,4 @@ Route::get('install/migration', 'InstallController@migration')->name('install.mi
 Route::post('install/storeUser', 'InstallController@storeUser')->name('install.storeUser');
 Route::post('install/createFile', 'InstallController@createFile')->name('install.createFile');
 Route::get('install/createUser', 'InstallController@createUser')->name('install.createUser');
+Route::get('install/erase', 'InstallController@erase')->name('install.erase');

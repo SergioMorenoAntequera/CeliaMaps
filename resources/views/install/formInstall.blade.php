@@ -76,7 +76,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="passdb">DB_PASSWORD</label>
-                        <input type="text" class="form-control" name="passdb" id="passdb" required>
+                        <input type="text" class="form-control" name="passdb" id="passdb">
                     </div>
                 </div>
             </div>

@@ -37,7 +37,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="password">CONTRASEÑA USUARIO</label>
-                        <input type="password" class="form-control" name="password" id="password" required>
+                        <input type="password" class="form-control" name="password" id="password" autocomplete="off" required>
                     </div>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="password2">CONFIRMAR CONTRASEÑA</label>
-                        <input type="password" class="form-control" name="password2" id="password2" required>
+                        <input type="password" class="form-control" name="password2" id="password2" autocomplete="off" required>
                     </div>
                 </div>
             </div>
