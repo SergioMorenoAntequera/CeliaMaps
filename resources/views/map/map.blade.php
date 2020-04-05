@@ -335,16 +335,18 @@
                 // Enable hotspots
                 if($("#ballHotspots img").css("opacity") != 1)
                     $("#ballHotspots").click();
-                // Hotspot
+                // Hotspot data
+                $("#hp-gallery").show();
                 $("#hp-title").text(selection.title);
                 $("#hp-img").attr("src", selection.images[0].file_path + "/" + selection.images[0].file_name);
                 $("#hp-description").text(selection.description);
 
             }else{ 
-                // Street
+                // Enable streets
                 if($("#ballShowStreets img").css("opacity") != 1)
                     $("#ballShowStreets").click();
-                    
+                // Streets data
+                $("#hp-gallery").hide();
                 $("#hp-img").attr("src", "");
                 $("#hp-title").text(selection.fullName);
                 let content = "";
