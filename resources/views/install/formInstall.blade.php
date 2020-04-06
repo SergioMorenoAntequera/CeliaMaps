@@ -84,7 +84,7 @@
 
             <div class="col">
                 <div class="form-group">
-                    <button type="submit" id="crearEnv" class="btn btn-success">Enviar</button>
+                    <button type="submit" id="crearEnv" class="btn btn-success">Siguiente</button>
                 </div>
             </div>
 

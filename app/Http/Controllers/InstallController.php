@@ -111,6 +111,8 @@ class InstallController extends Controller
 
         rename(".env", "../.env");
 
+        //Artisan::call('key:generate');
+
         return redirect()->route('install.migration');
     }
 
@@ -128,12 +130,10 @@ class InstallController extends Controller
     public function storeUser(Request $r){
 
         $user = new User();
-        /*
+
             $r->validate([
                 'password'=>'confirmed',
             ]);
-                */
-
 
         $user->name = $r->name;
         $user->email = $r->email;
@@ -146,15 +146,14 @@ class InstallController extends Controller
         //return redirect()->route('user.index');
     }
     public function erase(){
-        //PARA BORRAR EL CONTROLADOR Y LAS VISTAS
-        $controlador = '../app/Http/Controllers/InstallController.php';
+        // BORRAR LAS VISTAS
         $vistas = "../resources/views/install";
         foreach(glob($vistas . "/*") as $file){
             unlink($file);
           }
           rmdir($vistas);
 
-        //PARA MODIFICAR web.php
+        // MODIFICAR web.php
         //metemos en un array las líneas que queremos reemplazar
         $textoquesebusca = array("Route::get('install', 'InstallController@index')->name('install.index');",
         "Route::get('install/migration', 'InstallController@migration')->name('install.migration');",
@@ -162,15 +161,18 @@ class InstallController extends Controller
         "Route::post('install/createFile', 'InstallController@createFile')->name('install.createFile');",
         "Route::get('install/createUser', 'InstallController@createUser')->name('install.createUser');",
         "Route::get('install/erase', 'InstallController@erase')->name('install.erase');");
-
+        // guardamos en $web la ruta hacia el archivo web.php
         $web = '../routes/web.php';
         // la variable $data se llena con el contenido del archivo web.php
         $data = file_get_contents($web);
-        // en $datos nuevos hacemos el cambio, se reemplazan las líneas de $textoquesebusca por espacios en blanco
+        // en $datosnuevos hacemos el cambio, se reemplazan las líneas de $textoquesebusca por espacios en blanco
         $datosnuevos = str_replace($textoquesebusca, '', $data);
         // el archivo web.php se modifica con el nuevo contenido, con este método no es necesario abrir y cerrar archivo.
         file_put_contents($web, $datosnuevos);
         //FIN DE MODIFICAR web.php
+
+        // BORRAR CONTROLADOR
+        $controlador = '../app/Http/Controllers/InstallController.php';
         unlink($controlador);
 
         return redirect()->route('user.index');

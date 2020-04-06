@@ -44,8 +44,17 @@
             <div id="novenafila" class="row">
                 <div class="col">
                     <div class="form-group">
-                        <label for="password2">CONFIRMAR CONTRASEÑA</label>
-                        <input type="password" class="form-control" name="password2" id="password2" autocomplete="off" required>
+                        <label for="password_confirmation">CONFIRMAR CONTRASEÑA</label>
+                        <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" autocomplete="off" required>
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     </div>
                 </div>
             </div>
@@ -60,7 +69,7 @@
 
             <div class="col">
                 <div class="form-group">
-                    <button type="submit" id="crearEnv" class="btn btn-success">Enviar</button>
+                    <button type="submit" id="crearEnv" class="btn btn-success">Finalizar</button>
                 </div>
             </div>
 
