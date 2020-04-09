@@ -58,7 +58,7 @@ class InstallController extends Controller
 
         APP_NAME=CeliaMaps \n
         APP_ENV=local \n
-        APP_KEY=base64:PS7qybVslICRb5b0KcM2Voeq4ywtHb8JjKQQxcLWup8= \n
+        APP_KEY=
         APP_DEBUG=true \n
         LOG_CHANNEL=stack \n
 
@@ -143,11 +143,12 @@ class InstallController extends Controller
         $user->save();
 
         return redirect()->route('install.erase');
-        //return redirect()->route('user.index');
     }
     public function erase(){
         // BORRAR LAS VISTAS
         $vistas = "../resources/views/install";
+        // Va borrando los archivos que hay dentro de la carpeta vistas, uno por uno
+        // y al final borra la carpeta, ya vacia.
         foreach(glob($vistas . "/*") as $file){
             unlink($file);
           }
