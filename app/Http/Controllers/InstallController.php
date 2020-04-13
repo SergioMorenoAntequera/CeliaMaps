@@ -45,57 +45,60 @@ class InstallController extends Controller
         $namedb = $r->namedb;
         $userdb = $r->userdb;
         $passdb =$r->passdb;
+        $backPath = storage_path('celiamaps.sql');
 
         $env = ".env";
 
-        $texto = "APP_URL=" . $appUrl . "\n
-        DB_CONNECTION=" . $dbConnection . "\n
-        DB_HOST=" . $host . "\n
-        DB_PORT=" . $dbPort . "\n
-        DB_DATABASE=" . $namedb . "\n
-        DB_USERNAME=" . $userdb . "\n
-        DB_PASSWORD=" . $passdb . "\n
+        $texto =
+        "   APP_NAME=CeliaMaps
+        APP_ENV=local
+        APP_KEY= base64:PS7qybVslICRb5b0KcM2Voeq4ywtHb8JjKQQxcLWup8=
+        APP_DEBUG=true
+        APP_URL=" . $appUrl . "
 
-        APP_NAME=CeliaMaps \n
-        APP_ENV=local \n
-        APP_KEY=
-        APP_DEBUG=true \n
-        LOG_CHANNEL=stack \n
+        LOG_CHANNEL=stack
 
-        MYSQLDUMP_PATH=D:/laragon/bin/mysql/mysql-5.7.24-winx64/bin/mysqldump.exe \n
-        MYSQL_PATH=D:/laragon/bin/mysql/mysql-5.7.24-winx64/bin/mysql.exe \n
-        BACKUP_PATH=D:/laragon/www/CeliaMaps/storage/celiamaps.sql \n
+        DB_CONNECTION=" . $dbConnection . "
+        DB_HOST=" . $host . "
+        DB_PORT=" . $dbPort . "
+        DB_DATABASE=" . $namedb . "
+        DB_USERNAME=" . $userdb . "
+        DB_PASSWORD=" . $passdb . "
 
-        BROADCAST_DRIVER=log \n
-        CACHE_DRIVER=file \n
-        QUEUE_CONNECTION=sync \n
-        SESSION_DRIVER=file \n
-        SESSION_LIFETIME=120 \n
+        MYSQLDUMP_PATH=D:/laragon/bin/mysql/mysql-5.7.24-winx64/bin/mysqldump.exe
+        MYSQL_PATH=D:/laragon/bin/mysql/mysql-5.7.24-winx64/bin/mysql.exe
+        BACKUP_PATH=" . $backPath ."
 
-        REDIS_HOST=127.0.0.1 \n
-        REDIS_PASSWORD=null \n
-        REDIS_PORT=6379 \n
+        BROADCAST_DRIVER=log
+        CACHE_DRIVER=file
+        QUEUE_CONNECTION=sync
+        SESSION_DRIVER=file
+        SESSION_LIFETIME=120
 
-        MAIL_DRIVER=smtp \n
-        MAIL_HOST=smtp.mailtrap.io \n
-        MAIL_PORT=2525 \n
-        MAIL_USERNAME=null \n
-        MAIL_PASSWORD=null \n
-        MAIL_ENCRYPTION=null \n
+        REDIS_HOST=127.0.0.1
+        REDIS_PASSWORD=null
+        REDIS_PORT=6379
 
-        AWS_ACCESS_KEY_ID= \n
-        AWS_SECRET_ACCESS_KEY= \n
-        AWS_DEFAULT_REGION=us-east-1 \n
-        AWS_BUCKET= \n
+        MAIL_DRIVER=smtp
+        MAIL_HOST=smtp.mailtrap.io
+        MAIL_PORT=2525
+        MAIL_USERNAME=null
+        MAIL_PASSWORD=null
+        MAIL_ENCRYPTION=null
 
-        PUSHER_APP_ID= \n
-        PUSHER_APP_KEY= \n
-        PUSHER_APP_SECRET= \n
-        PUSHER_APP_CLUSTER=mt1 \n";
+        AWS_ACCESS_KEY_ID=
+        AWS_SECRET_ACCESS_KEY=
+        AWS_DEFAULT_REGION=us-east-1
+        AWS_BUCKET=
 
-        //MIX_PUSHER_APP_KEY= '${PUSHER_APP_KEY}' \n
-        //MIX_PUSHER_APP_CLUSTER='${PUSHER_APP_CLUSTER}' \n
+        PUSHER_APP_ID=
+        PUSHER_APP_KEY=
+        PUSHER_APP_SECRET=
+        PUSHER_APP_CLUSTER=mt1
 
+        MIX_PUSHER_APP_KEY=
+        MIX_PUSHER_APP_CLUSTER=
+        ";
 
         if($archivo = fopen($env,"w")){
             fwrite($archivo, $texto);
@@ -111,7 +114,7 @@ class InstallController extends Controller
 
         rename(".env", "../.env");
 
-        //Artisan::call('key:generate');
+        Artisan::call('key:generate');
 
         return redirect()->route('install.migration');
     }
