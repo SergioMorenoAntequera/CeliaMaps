@@ -52,7 +52,7 @@ class InstallController extends Controller
         $texto =
         "   APP_NAME=CeliaMaps
         APP_ENV=local
-        APP_KEY= base64:PS7qybVslICRb5b0KcM2Voeq4ywtHb8JjKQQxcLWup8=
+        APP_KEY=
         APP_DEBUG=true
         APP_URL=" . $appUrl . "
 
