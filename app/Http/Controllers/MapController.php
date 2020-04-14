@@ -495,6 +495,7 @@ class MapController extends Controller
         }
         
         return response()->json([
+            'id' => $map->id,
             'streets' => $streets->toArray(),
         ]);
     }

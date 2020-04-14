@@ -32,3 +32,13 @@
     position: absolute;
     width: 30px;
 }
+
+.editStreetsInMap {
+    display: none;
+    width: auto;
+    padding: 0px 20px;   
+}
+.editStreetsInMap p {
+    display: inline-block;
+    color: white;
+}
