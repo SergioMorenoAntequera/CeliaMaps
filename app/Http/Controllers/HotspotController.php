@@ -138,7 +138,6 @@ class HotspotController extends Controller
         $r->validate([
             'title' => 'required',
             'description' => 'required',
-            'images' => 'required'
         ]);
         
         $hotspot = Hotspot::find($id);
@@ -181,9 +180,13 @@ class HotspotController extends Controller
     public function deleteAjax(Request $r, $id){
 
         Hotspot::destroy($r->id);
+<<<<<<< HEAD
+        
+=======
 
         // Tener en cuenta imágenes
 
+>>>>>>> ca44e79879eee4faee146d0966f47975ed507023
         return response()->json([
             'delete' => true,
         ]);
