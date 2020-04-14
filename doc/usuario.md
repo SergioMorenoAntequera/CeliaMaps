@@ -6,9 +6,11 @@ Cuando entramos en el panel de administración de usuarios, se nos muestra un li
 
 Las opciones aquí son:
 
-1. **Añadir usuario.**
+1. **Añadir usuario.** 
 
     En la parte inferior derecha de la pantalla principal (donde vemos el listado de usuarios) se puede observar un botón con foma de cruz blanca sobre fondo verde, haga click en él para añadir un nuevo usuario. Se abrirá una pantalla con un formulario de registro en el que introducir los datos solicitados.
+
+     ![imagen no soportada](media/usuarios/usuarioBotonAñadir.png "Botón añadir usuario")
 
     ![imagen no soportada](media/usuarios/usuariosFormularioInsercion.png "Formulario de inserción de usuarios")
 
