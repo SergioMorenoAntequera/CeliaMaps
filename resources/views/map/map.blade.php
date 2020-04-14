@@ -55,22 +55,22 @@
         </div>
         <div id="ballStreets" class="ball noselect">
             <div class="ballContent">   
-                <img style="width: 70%;position: absolute; top: 15%; left: 15%" class="noselect" src="{{url('img/icons/search.svg')}}" title="Buscador">
+                <img style="width: 70%;position: absolute; top: 10%; left: 10%" class="noselect" src="{{url('img/icons/search.svg')}}" title="Buscador">
             </div>
         </div>
         <div id="ballMaps" class="ball noselect">
             <div class="ballContent">
-                <img style="width: 90%;position: absolute; top: 5%; left: 5%" class="noselect" src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
+                <img style="width: 90%;position: absolute;" class="noselect" src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
             </div>
         </div>
         <div id="ballHotspots" class="ball noselect">
             <div class="ballContent">
-                <img style="opacity: 0.2" class="noselect" src="{{url('img/icons/tlMenuToken.png')}}" title="Puntos de interés">
+                <img style="opacity: 0.2; position: absolute; bottom: 6%; right: 6%;" class="noselect" src="{{url('img/icons/tlMenuToken.png')}}" title="Puntos de interés">
             </div>
         </div>
         <div id="ballShowStreets" class="ball noselect">
             <div class="ballContent">
-                <img style="width: 80%; position: absolute; top: 10%; left: 10%; opacity: 0.2;" class="noselect" src="{{url('img/icons/tlMenuStreet.png')}}" title="Calles">
+                <img style="width: 80%; position: absolute; top: 2%; right: 13%; opacity: 0.2;" class="noselect" src="{{url('img/icons/tlMenuStreet.png')}}" title="Calles">
             </div>
         </div>
 
@@ -335,16 +335,18 @@
                 // Enable hotspots
                 if($("#ballHotspots img").css("opacity") != 1)
                     $("#ballHotspots").click();
-                // Hotspot
+                // Hotspot data
+                $("#hp-gallery").show();
                 $("#hp-title").text(selection.title);
                 $("#hp-img").attr("src", selection.images[0].file_path + "/" + selection.images[0].file_name);
                 $("#hp-description").text(selection.description);
 
             }else{ 
-                // Street
+                // Enable streets
                 if($("#ballShowStreets img").css("opacity") != 1)
                     $("#ballShowStreets").click();
-                    
+                // Streets data
+                $("#hp-gallery").hide();
                 $("#hp-img").attr("src", "");
                 $("#hp-title").text(selection.fullName);
                 let content = "";

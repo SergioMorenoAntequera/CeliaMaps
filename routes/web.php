@@ -75,3 +75,10 @@ Route::get('marker/update', 'MarkerController@update')->name('marker.update');
 Route::get('setting/mainView', 'SettingsController@mainView')->name('setting.mainView');
 Route::get('setting/saveMainView', 'SettingsController@saveMainView')->name('setting.saveMainView');
 Route::get('setting', 'SettingsController@index')->name('setting.index');
+// INSTALL /////////////////////////////////////////////////////////////////////////////////////////
+Route::get('install', 'InstallController@index')->name('install.index');
+Route::get('install/migration', 'InstallController@migration')->name('install.migration');
+Route::post('install/storeUser', 'InstallController@storeUser')->name('install.storeUser');
+Route::post('install/createFile', 'InstallController@createFile')->name('install.createFile');
+Route::get('install/createUser', 'InstallController@createUser')->name('install.createUser');
+Route::get('install/erase', 'InstallController@erase')->name('install.erase');

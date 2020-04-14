@@ -7,6 +7,11 @@ use App\Setting;
 
 class SettingsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');     
+    }
     //
     ///////////////////////////////////////////////////////////////////////////////////////////
     // SET THE MAIN VIEW OF THE GLOBAL MAP ////////////////////////////////////////////////////
