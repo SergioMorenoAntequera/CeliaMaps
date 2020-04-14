@@ -41,8 +41,7 @@ Route::resource('street', 'StreetController');
 // POINTS /////////////////////////////////////////////////////////////////////////////////////
 Route::resource('point', 'PointController');
 // IMAGES /////////////////////////////////////////////////////////////////////////////////////
-Route::get('image/create', 'ImageController@create')->name('image.create');
-Route::get('image/store', 'ImageController@store')->name('image.store');
+Route::resource('image', 'ImageController');
 // HOTSPOT /////////////////////////////////////////////////////////////////////////////////////
 Route::get('hotspot/gallery', 'HotspotController@gallery')->name('hotspot.gallery');
 Route::delete('hotspot/deleteAjax/{id}', 'HotspotController@deleteAjax')->name('hotspot.deleteAjax');

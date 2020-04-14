@@ -108,7 +108,6 @@ class HotspotController extends Controller
         $r->validate([
             'title' => 'required',
             'description' => 'required',
-            'images' => 'required'
         ]);
         
         $hotspot = Hotspot::find($id);
@@ -134,7 +133,7 @@ class HotspotController extends Controller
 
 
         Hotspot::destroy($r->id);
-
+        
         return response()->json([
             'delete' => true,
         ]);

@@ -49,7 +49,7 @@
                 </div>
                 
                 <!-- Boton para Borrar  -->
-                <form method="POST" action="{{route('hotspot.deleteAjax', $image->id)}}">
+                <form method="POST" action="{{route('image.edit', $image->id)}}">
                     @csrf
                     @method("DELETE")
 
@@ -66,7 +66,7 @@
                             </div>
 
                             <div class="modal-body">
-                                <p>¿Seguro que quieres borrar el hotspot {{$image->title}}?</p>
+                                <p>¿Seguro que quieres borrar la imagen {{$image->title}}?</p>
                                 <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
                                 <button iddb="{{$image->id}}" type="button" class="btn btn-danger deleteConfirm" data-dismiss="modal">
                                     Eliminar
@@ -78,7 +78,7 @@
                 <!-- FINAL modal para borrar -->
 
                 <!-- Boton para modificar -->
-                <a href="{{route('hotspot.edit', $image->id)}}">
+                <a href="#" id="editImage">
                     <div class="cornerButton" style="right: 50px">
                         <img class="center" src="{{url("img/icons/edit.svg")}}" alt=""> 
                     </div>
@@ -141,7 +141,7 @@
                             @endforeach
                         </div>
                         <!-- Hidden -->
-                        <div class="form-group images-fields" id="filePathUpdate">
+                        <div class="form-group" id="filePathUpdate">
                             <input type="hidden" name="filePath" value="/img/hotspots/" disabled>
                         </div>
                         <div>
@@ -229,7 +229,40 @@
                 $('#modalImage').modal('show');
             });
 
-            
+            // Edit an image
+            $("#editImage").on("click", function(){
+                // Edit form attributes
+                $("#modal-form").attr("action", "{{route('image.store')}}/"+image.id);
+                $("input[name='_method']").val("PUT");
+                // Fill inputs fields
+                $("input[name='title']").val(image.title);
+                $("input[name='description']").val(image.description);
+                
+
+                // Fill hidden values
+                $(".modal-body #id").val(image.id);
+                $("#modal-title").text("Editar hotspot");
+                // Show and enable buttons and also fill value with hotspot id
+                $("#btn-remove").prop("disabled", false);
+                $("#btn-remove").prop("value", image.id);
+                $("#btn-remove").css("display", "initial");
+                // Modal display
+                $('#modalImage').modal('show');
+
+                // Delete image button
+                $("#btn-remove").on("click", function(){
+                    $("#modal-form").attr("action", "{{route('image.store')}}/"+this.value);
+                    $("input[name='_method']").val("DELETE");
+                    $('#modal').modal('hide');
+                    $('#confirmModal').modal('show');
+                    $("#btn-confirm").click(function(){
+                        $("#modal-form").submit();
+                    });
+                    $("#btn-cancel").click(function(){
+                        $('#confirmModal').modal('hide');
+                    });
+                });
+            });            
         });
     </script>
     
