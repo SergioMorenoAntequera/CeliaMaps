@@ -42,6 +42,8 @@ En cualquier caso, todo lo que se escriba en el cuadro de escritura permanecerá
 
 La ubicación del informe redactado, se encuentra, por defecto, bajo la imagen del mapa, pero se puede mover y colocar sobre el mapa, basta con hacer click en el recuadro con borde verde bajo el mapa y arrastrar hacia arriba. Se incluye video demostrativo.
 
+[ver video](media/informes/informeVideo.mp4)
+
 ![imagen no soportada](media/informes/informeVistaSobreImagen.png "Cuadro de escritura del informe")
 
 ### IMPRESIÓN DE INFORMES
@@ -52,7 +54,7 @@ Para imprimir la vista, basta con hacer click en ***generar informe***, podrá e
 
 
 
-[ver video](media/informes/informeVideo.mp4)
+
 
 
 
