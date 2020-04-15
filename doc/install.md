@@ -1,5 +1,5 @@
 ## INSTALACIÓN DE LA APLICACIÓN CELIAMAPS
-\(pendiente de solucionar appkey\)
+\(pendiente de acabarlo bien\)
 
 ### REQUISITOS DE INSTALACIÓN
 
@@ -7,10 +7,6 @@
 
 1. Clonar el repositorio a un directorio de su servidor.
 2. Cambiar el nombre del archivo ***.env.example*** por ***.env*** \(se encuentra en el directorio raiz\).
-3. Acceda al directorio donde ha clonado el repositorio desde la consola de comandos y ejecute el siguiente comando
-~~~
-php artisan key:generate
-~~~
 3. Crear una base de datos vacia en el servidor.
 4. Escribir en la barra de direcciones de su navegador
 ~~~

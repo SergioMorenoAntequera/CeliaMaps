@@ -35,7 +35,6 @@ class InstallController extends Controller
         }
     }
 
-
     public function createFile(Request $r){
 
         $host = $r->host;
@@ -46,13 +45,16 @@ class InstallController extends Controller
         $userdb = $r->userdb;
         $passdb =$r->passdb;
         $backPath = storage_path('celiamaps.sql');
+        //Ahora se genera la APP_KEY
+        $rand = random_bytes(32);
+        $encode = base64_encode($rand);
 
         $env = ".env";
 
         $texto =
         "   APP_NAME=CeliaMaps
         APP_ENV=local
-        APP_KEY=
+        APP_KEY=base64:" . $encode . "
         APP_DEBUG=true
         APP_URL=" . $appUrl . "
 
@@ -113,8 +115,6 @@ class InstallController extends Controller
         $new = "/.env";
 
         rename(".env", "../.env");
-
-        Artisan::call('key:generate');
 
         return redirect()->route('install.migration');
     }
