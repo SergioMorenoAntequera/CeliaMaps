@@ -1,8 +1,15 @@
-
 $(document).ready(function(){
+
     $("#fullScreenMenu").click(function(){ 
-        //Tiene tanto rollo para que funcione en todos los navegadores
+        
+        // Full screen button image
         var img = $(this).children("img");
+        // Actual image path
+        let url = img.attr("src");
+        // Path without filename and file extension
+        url = url.substring(0, url.length - 14);
+
+        //Tiene tanto rollo para que funcione en todos los navegadores
         var isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
             (document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
             (document.mozFullScreenElement && document.mozFullScreenElement !== null) ||
@@ -20,10 +27,8 @@ $(document).ready(function(){
                 docElm.msRequestFullscreen();
             }
             
-            var url = window.location.href;
-            url = url.substr(0, url.indexOf("/", 8));
-            console.log(url);
-            img.attr("src", url+"/img/icons/fsMinimize.png");
+            // Change button image
+            img.attr("src", url+"fsMinimize.png");
             
         } else {
             if (document.exitFullscreen) {
@@ -36,9 +41,8 @@ $(document).ready(function(){
                 document.msExitFullscreen();
             }
             
-            var url = window.location.href;
-            url = url.substr(0, url.indexOf("/", 8));
-            img.attr("src", url+"/img/icons/fsMaximize.png");
+            // Change button image
+            img.attr("src", url+"fsMaximize.png");
         }
     });
 });
