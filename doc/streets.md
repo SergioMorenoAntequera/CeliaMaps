@@ -29,14 +29,26 @@ Una vez completado el formulario guardaremos la vía y nos aparecerá un nuevo m
 
 Como explicamos en el apartado anterior, al añadir una vía aparece un nuevo marcador azul para esta en el mapa. Para editar o eliminar una vía existente hacemos tenemos que hacer click sobre el marcador de la vía deseada y se nos desplegarán las siguientes tres opciones alrededor del marcador elegido.
 
-### ![Botón de administración](media/streets/delete_button.png) Eliminar
+### ![Botón de eliminación](media/streets/delete_button.png) Eliminar
 
 El botón con icono de goma de borrar nos permite eliminar la vía seleccionada de la base de datos de forma definitiva después de una confirmación. 
 
-### ![Botón de administración](media/streets/update_button.png) Modificar vía
+### ![Botón de actualización](media/streets/update_button.png) Modificar vía
 
 El botón con icono de lápiz nos permite modificar los datos de la vía seleccionada mediante el mismo formulario que usamos en el apartado anterior para añadir una vía nueva. En este caso el formulario tendrá todos los campos rellenos con los datos de la vía que vamos a modificar.
 
-### ![Botón de administración](media/streets/relocate_button.png) Reposicionar vía
+### ![Botón de posición](media/streets/relocate_button.png) Reposicionar vía
 
 El botón con icono de flechas nos permite cambiar la posición de una vía. Para ello, serán deshabilitados los demás marcadores dejando sólo disponible el marcador con el que estamos trabajando para que el usuario lo arrastre hasta la nueva posición. Una vez arrastrado a la nueva posición, los demás marcadores volverán a ser habilitados y automáticamente será guardado el cambio de posición.
+
+## Demostración
+
+En la siguiente vídeo demostración vamos a poner en práctica las herramientas disponibles para la gestión de vías de la aplicación. Después del vídeo se explican los pasos seguidos para una correcta comprensión del vídeo.
+
+[Click aquí para visualizar el vídeo](https://youtu.be/trkaASqwKr4)
+
+En primer lugar crearemos una vía nueva con su nombre en la actualidad sin añadirla a ningún mapa.
+A continuación editaremos la vía creada para añadirla a los mapas disponibles y sobreescribir el nombre actual de la vía en los mapas anteriores con el nombre que tuvo dicha vía anteriormente.
+Ahora cambiaremos la ubicación de la calle para que el marcador se ajuste de forma adecuada en todos los mapas.
+Por último, eliminaremos la vía creada.
+
