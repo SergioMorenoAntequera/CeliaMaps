@@ -294,7 +294,7 @@
                         </div>
                         <!-- Street maps -->
                         <div class="form-group mb-0">
-                            <b> <label> Mapas que la contienen </label> <span class="text-danger">*</span> </b>
+                            <b> <label> Mapas que la contienen </label></b>
                             @foreach ($maps as $map)
                                 <p>
                                     @isset($map->tlCornerLatitude)
@@ -436,17 +436,7 @@
                 streetsJSON.forEach(street => {
                     // Save actual street
                     street.fullName = street.typeName + " " + street.name;
-                    streets.push(street);
-                    // Duplicate object for older streets
-                    let alternativeStreet = {...street};
-                    alternativeStreet.maps.forEach(mapStreet => {
-                        if(mapStreet.pivot.alternative_name !== null){
-                            alternativeStreet.name = mapStreet.pivot.alternative_name;
-                            alternativeStreet.fullName = alternativeStreet.typeName + " " + alternativeStreet.name;
-                            alternativeStreet.deprecated = true;
-                            streets.push(alternativeStreet);
-                        }
-                    });
+                    addStreetToArray(street);
                 });
                 console.log(streets);
                 // Write saved streets
@@ -491,11 +481,16 @@
             //-------------------------------------------------------------}}
             //EDIT BUTTON
             $(".option[action='Edit']").on("click", function(e){
+                // first is an aux var to get first id coincidence
+                // because deprecated streets will cause multiple
+                // coincidences and the first one will be actual data
+                let first = true;
                 streets.forEach(street => {
-                    if(street.id == activeMarker.id){
+                    if(first && street.id == activeMarker.id){
                         hideMenu();
                         cpuHide();
                         showEditForm(street);
+                        first = false;
                     }
                 });
             });
@@ -547,21 +542,17 @@
             // REMOVE BUTTON
             $(".option[action='Remove']").on("click", function(){
                 hideMenu();
-                // $("#modal-form").attr("action", "{{route('street.store')}}/"+this.value);
-                // $("input[name='_method']").val("DELETE");
                 $('#modal').modal('hide');
                 $('#confirmModal').modal('show');
                 cpuHide();
             });
             // REMOVE BUTTON CANCEL
             $("#btn-cancel").click(function(){
-                // $('#modal').modal('show');
                 $('#confirmModal').modal('hide');
                 cpuShowText("Borrado de calle cancelado");
             });
             // REMOVE BUTTON CONFIRM
             $("#btn-confirm").click(function(){
-                // $("#modal-form").submit();
                 deleteAjax(activeMarker.id);
             });
 
@@ -714,15 +705,6 @@
                     activeMarker = e.target;
                     // When click does not come from dragg event
                     if(!dragging){
-                        // Search for selected street
-                        let street;
-                        for (let i = 0; i < streets.length; i++) {
-                            if(streets[i].id == this.id)
-                                street = streets[i]; // Streets of array with selected street comparison
-                        }
-                        // Edit modal trigger with selected street
-
-                        // showEditForm(street);
                         showMenu(e, "edit");
                         cpuShowText("Selecciona una opción");
                     }else{
@@ -742,12 +724,6 @@
                     clusterMarkers.addLayer(e.target);
                     // Enable markers group again
                     map.addLayer(clusterMarkers);
-
-                    // Fill new position values
-                    $("#modal-lat").val(e.target._latlng.lat);
-                    $("#modal-lng").val(e.target._latlng.lng);
-
-                    // let auxStreet = getFormData();
 
                     updatePositionAjax(e.target.id, e.target._latlng.lat, e.target._latlng.lng);
                     dragging = false;
@@ -776,8 +752,9 @@
                     data: street,
                     success: function(data) {
                         let ajaxStreet = formatStreetObject(data);
-                        streets.push(ajaxStreet);
-
+                        
+                        addStreetToArray(ajaxStreet);
+                        
                         // CREATE A MARKER
                         var ajaxStreetMarker = L.marker(
                             [ajaxStreet.lat, ajaxStreet.lng], 
@@ -814,12 +791,23 @@
                     success: function(data) {
                         let ajaxStreetUpdated = formatStreetObject(data);
 
-                        // Update the street objects
-                        for (let i = 0; i < streets.length; i++) {
-                            if(streets[i].id == ajaxStreetUpdated.id) {
-                                streets[i] = ajaxStreetUpdated;
-                            }
-                        }
+                        // Look for streets to be updated
+                        let streetsToUpdate = new Array();
+                        streets.forEach(street => {
+                            if(street.id == ajaxStreetUpdated.id){
+                                streetsToUpdate.push(street);
+                            }                        
+                        });
+
+                        // Removes streets to be updated 
+                        // First street to remove from array
+                        let index = streets.indexOf(streetsToUpdate[0]);
+                        // Removes as much as streets to delete length
+                        streets.splice(index, streetsToUpdate.length);
+                        markersList.splice(index, streetsToUpdate.length);
+
+                        // Add updated streets to the array
+                        addStreetToArray(ajaxStreetUpdated);
 
                         //Update the street markers
                         markersList.forEach(marker => {
@@ -853,21 +841,23 @@
                 url:"{{route('street.destroyAjax')}}",
                 data: {"id": streetID},
                 success: function(data){
-                    // Find the deleted street here
-                    let deletedStreet;
 
+                    let streetsToDelete = new Array();
                     streets.forEach(street => {
                         if(street.id == streetID){
-                            deletedStreet = street;
-                            let index = streets.indexOf(deletedStreet);
-                            streets.splice(index, 1);
-                            markersList.splice(index, 1);
-                            
-                            clusterMarkers.removeLayer(activeMarker);
-                            map.removeLayer(activeMarker);
-                            cpuShowText("Calle borrada con exito");
-                        }
+                            streetsToDelete.push(street);
+                        }                        
                     });
+
+                    // First street to remove from array
+                    let index = streets.indexOf(streetsToDelete[0]);
+                    // Removes as much as streets to delete length
+                    streets.splice(index, streetsToDelete.length);
+                    markersList.splice(index, streetsToDelete.length);
+                    
+                    clusterMarkers.removeLayer(activeMarker);
+                    map.removeLayer(activeMarker);
+                    cpuShowText("Calle borrada con exito");
                 },
               })  
             };
@@ -882,16 +872,31 @@
                     if(id == layer.id)
                         map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 18);
                 });
-                /*
-                $('#streetsFound').empty();
-                // Build of marker variable name
-                let markerVarName = "marker"+this.id;
-                // Get marker js object
-                let leafletMarker = eval(markerVarName);
-                // Set view over street
-                map.setView([leafletMarker.getLatLng().lat, leafletMarker.getLatLng().lng], 99);
-                */
             });
+
+            // Add a street and likely deprecated streets to global streets array
+            function addStreetToArray(street){
+                // Add actual street
+                streets.push(street);
+                // Check for deprecated street names in maps relationship
+                if (street.maps.length > 0){
+                    // Foreach street in map 
+                    for (let i = 0; i < street.maps.length; i++) {
+                        // Check alternatives street names in maps                            
+                        if(street.maps[i].pivot.alternative_name !== null){
+                            // New street object
+                            let alternativeStreet = {...street};
+                            // Update new object data
+                            alternativeStreet.name = street.maps[i].pivot.alternative_name;
+                            alternativeStreet.fullName = alternativeStreet.typeName + " " + alternativeStreet.name;
+                            // Deprecated attribute
+                            alternativeStreet.deprecated = true;
+                            // Save deprecated street into array
+                            streets.push(alternativeStreet);
+                        }
+                    }
+                }
+            }
         });
     </script>
     <script src="{{url('js/cPopUp.js')}}"></script>
