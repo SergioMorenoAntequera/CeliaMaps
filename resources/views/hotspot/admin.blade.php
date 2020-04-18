@@ -296,6 +296,21 @@
                             <b> <label> Descripcion de la imagen </label> <span class="text-danger">*</span> </b>
                             <input required type="text" class="form-control" name="descriptionImage">
                         </div>
+                        <!-- Images maps -->
+                        <div class="form-group mb-0">
+                            <b> <label> Mapas que la contienen </label></b>
+                            @foreach ($maps as $map)
+                                <p>
+                                    @isset($map->tlCornerLatitude)
+                                        <input id="checkbox_map{{$map->id}}" class="checkbox-text" type="checkbox" name="maps_id[]" value="{{$map->id}}" checked>
+                                        <span class="text-dark checkbox-text">{{$map->title}} ({{$map->city}} - {{$map->date}})</span>
+                                    
+                                        <input id="input_map{{$map->id}}" class="form-control" type="text" name="maps_name[]" value="{{$map->title}}" placeholder="Sobreescribir el nombre de la vía en el mapa {{$map->title}}">
+                                    @endisset
+                                </p>
+                            @endforeach
+                            <b><label id="maps-error" class='text-danger mt-3 inputs-errors'> </label></b>
+                        </div>
                         <!-- Hotspot points -->
                         <div>
                             <input type="hidden" id="modal-lat" name="lat">
@@ -304,14 +319,13 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        {{-- <button id="btn-remove" value="" type="button" class="btn btn-danger">Eliminar</button>
-                        <button id="btn-position" value="" type="button" class="btn text-white btn-warning mr-auto">Cambiar posición</button> --}}
                         <button id="btn-submit" type="submit" class="btn btn-success">Guardar</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
     <!-- Modal to confirm -->
     <div id="confirmModal" class="modal fade text-dark" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -406,5 +420,254 @@
     </script>
     
     {{-- HOTSPOT MANAGEMENT --}}
+    <script>
+        var activeLayer;
+        var userBusy = false;
+        var currentAction = "none";
 
-    
+        $(function(){
+            // Setting up the map
+            var clusterMarkers = L.markerClusterGroup();
+            var markersList = new Array();
+            var activeMarker;
+            var dragging = false;
+            var action = "";
+            var markerImage = L.icon({
+                iconUrl: "{{url('img/icons/token-selected.svg')}}",
+                iconSize:     [30, 90],
+                iconAnchor:   [15,60],
+            });
+
+            // Check saved hotspots
+            @isset($hotspots)
+                // Hotspots php array conversion to js array
+                let hotspotsJSON = @json($hotspots);
+                hotspotsJSON.forEach(hotspot => {
+                    // Save actual hotspot
+                    addHotspotToArray(hotspot);
+                });
+
+                console.log(hotspots);
+                // Write saved hotspots
+                @foreach ($hotspots as $hotspot)
+                    // Creating a Marker
+                    var marker{{$hotspot->id}} = L.marker([{{$hotspot->lat}}, {{$hotspot->lng}}], {icon: markerImage, alt:"{{$hotspot->id}}", draggable:false});
+                    marker{{$hotspot->id}}.id = {{$hotspot->id}};
+                    // Adding marker to the markers list
+                    markersList.push(marker{{$hotspot->id}});
+                    // Adding marker to the map
+                    clusterMarkers.addLayer(marker{{$hotspot->id}});
+                @endforeach
+                map.addLayer(clusterMarkers);
+            @endisset
+
+            // Leaflet map click handler
+            map.on('click', function(e) {
+                // Create modal trigger with lat/lng coordinates
+                if(!dragging) {
+                    hideMenu();  
+                    cpuHide();  
+                    showCreateForm(e.latlng.lat, e.latlng.lng);
+                } else
+                    dragging = false;
+            });
+            // Leaflet map click handler
+            map.on('move', function(e) {
+                // Create modal trigger with lat/lng coordinates
+                hideMenu();
+                cpuHide();
+            });
+ 
+            // ADD MARKER EVENTS TO A ALL MARKERS
+            clusterMarkers.eachLayer(function(marker) {
+                addMarkerEvents(marker);
+            });
+        });
+
+        // CMenu components controller
+
+        // Edit button
+        $(".option[action='Edit']").on("click", function(e){
+            let first = true;
+            hotspots.forEach(hotspot => {
+                if(first && hotspot.id == activeMarker.id){
+                    hideMenu();
+                    cpuHide();
+                    showEditForm(hotspot);
+                    first = false;
+                }
+            });
+        });
+
+        // Save button
+        $("#btn-submit").on("click", function(e){
+            e.preventDefault();
+            
+            // AJAX CREATE AND UPDATE
+            switch(action){
+                case "create": {
+                    // We get the info from the form
+                    let newHotspot = getFormData();
+                    storeAjax(newHotspot);
+                } break;
+                case "update": {
+                    // We get the info from the form
+                    let updatedHotspot = getFormData();
+                    updateAjax(updatedHotspot);
+                } break;
+                default:{
+                    alert("Que?");
+                }
+            }
+        });
+
+        // Drag button
+        $(".option[action='Drag']").on("click", function(){
+            // Turn dragging variable to true to disable marker click handle
+            hideMenu();
+            dragging = true;
+
+            // Detach current marker from the group
+            clusterMarkers.removeLayer(activeMarker);
+            // Disable markers group
+            map.removeLayer(clusterMarkers);
+            // Attach current marker directly to the map
+            activeMarker.addTo(map);
+            // Enable marker dragging mode
+
+            activeMarker.dragging.enable();
+            // Hide edition modal
+            $('#modal').modal('hide');
+            cpuShowText("Arrastra el punto a su nueva posición");
+
+            // From here we jump to addMarkerEvents().dragend
+        });
+
+        // Remove button
+        $(".option[action='Remove']").on("click", function(){
+            hideMenu();
+            $('#modal').modal('hide');
+            $('#confirmModal').modal('show');
+            cpuHide();
+        });
+
+        // Remove button cancel 
+        $("#btn-cancel").click(function(){
+            $('#confirmModal').modal('hide');
+            cpuShowText("Borrado de hotspot cancelado");
+        });
+
+        // Remove button confirm
+        $("#btn-confirm").click(function(){
+            deleteAjax(activeMarker.id);
+        });
+
+        // clean search field on map click 
+        map.on("click", function(){
+            $('#streetsFound').empty();
+        });
+
+        // AUXILIAR METHODS
+
+        // Prepares and shows the form
+        function showCreateForm(lat, lng) {
+            action = "create";
+            // Create form attributes
+            $("#modal-form").attr("action", "{{route('hotspot.store')}}");
+            $("input[name='_method']").val("POST");
+            // Clean fields
+            $("select[name='']");
+
+
+
+
+
+
+            // Clear maps alternatives names fields
+            let mapsList = $("input[name='maps_name[]']");
+            for (let i = 0; i < mapsList.length; i++) {
+                mapsList[i].value = "";
+                $(mapsList[i]).show();
+                $(mapsList[i]).prop("disabled", false);
+                $("#checkbox_map"+mapsList[i].id.substring(9)).prop("checked", true);
+            }
+            // Fill position values
+            $("#modal-lat").val(lat);
+            $("#modal-lng").val(lng);
+            // Modal display
+            $("#modal-title").text("Nueva vía");
+            $("#btn-remove").prop("disabled", true);
+            $("#btn-remove").css("display", "none");
+            $("#btn-position").prop("disabled", true);
+            $("#btn-position").css("display", "none");
+            $(".inputs-errors").html("");
+            $('#modal').modal('show');
+        };
+
+        function showEditForm(hotspot) {
+            action = "update";
+            // Edit form attributes
+            $("#modal-form").attr("action", "{{route('hotspot.store')}}/"+hotspot.id);
+            $("input[name='_method']").val("PUT");
+            $(".inputs-errors").html("");
+            // Fill inputs fields
+            
+
+
+
+            // Fill hidden values
+            console.log(activeMarker);
+            $("#modal-lat").val(activeMarker._latlng.lat);
+            $("#modal-lng").val(activeMarker._latlng.lng);
+            $(".modal-body #id").val(hotspot.id);
+
+            // Clear maps
+            let mapsList = $("input[name='maps_name[]']");
+            for (let i = 0; i < mapsList.length; i++) {
+                mapsList[i].value = "";
+                $(mapsList[i]).hide();
+                $(mapsList[i]).prop("disabled", true);
+                $("#checkbox_map"+mapsList[i].id.substring(9)).prop("checked", false);
+            }
+
+            $("#modal-title").text("Editar Hotspot");
+            // Show and enable buttons and also fill value with street id
+            $("#btn-remove").prop("disabled", false);
+            $("#btn-remove").prop("value", street.id);
+            $("#btn-remove").css("display", "initial");
+            $("#btn-position").prop("disabled", false);
+            $("#btn-position").prop("value", street.id);
+            $("#btn-position").css("display", "initial");
+            // Modal display
+            $('#modal').modal('show');
+        };
+
+        // Get data from the form
+        function getFormData(){
+            var newHotspot = {
+                title: $("input[name='title']").val(),
+                description: $("input[name='description']").val(),
+                images: [],
+                titleImage: $("input[name='titleImage']").val(),
+                descriptionImage: $("input[name='descriptionImage']").val(),
+                maps_id: [],
+            }
+            $("input[name='images[]']").each(function(e){
+                let arrImages = $("#images[]").files;
+            });
+
+            $("input[name='maps_id[]']").each(function(e){
+                let cbMap = $(this);
+
+                if(cbMap.is(":checked")) {
+                    newHotspot.maps_id.push($(this).val());
+                }
+            });
+            newStreet.lat = $("input[name='lat']").attr("value");
+            newStreet.lng = $("input[name='lng']").attr("value");
+            newStreet.id = $("input[name='id']").attr("value");
+            
+            return newHotspot;
+        };
+
+    </script>

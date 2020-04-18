@@ -185,29 +185,41 @@
                     <!-- Hotspot title -->
                     <div class="modal-body">
                         <div class="form-group">
-                            <label class="text-dark">Titulo del Hotspot</label>
+                            <b><label class="text-dark">Titulo del Hotspot</label></b>
                             <input type="text" class="form-control" name="title">
                         </div>
                         <!-- Hotspot description -->
                         <div class="form-group">
-                            <label class="text-dark">Descripcion del Hotspot</label>
+                            <b><label class="text-dark">Descripcion del Hotspot</label></b>
                             <input type="text" class="form-control" name="description">
                         </div>
                         <!-- Hotspot images -->
                         <div class="form-group images-fields" id="imagesUpload">
-                            <label class="text-dark">Imagenes del Hotspot</label><br>
+                            <b><label class="text-dark">Imagenes del Hotspot</label><br></b>
                             <input type="file" name="images[]" class="fileToUpload" multiple>
                         </div>
                         <div class="form-group images-fields" id="filePathUpdate">
                             <input type="hidden" name="filePath" value="/img/hotspots/" disabled>
                         </div>
                         <div class="form-group images-fields">
-                            <label class="text-dark">Titulo de la imagen</label>
+                            <b><label class="text-dark">Titulo de la imagen</label></b>
                             <input type="text" class="form-control" name="titleImage">
                         </div>
                         <div class="form-group images-fields">
-                            <label class="text-dark">Descripcion de la imagen</label>
+                            <b><label class="text-dark">Descripcion de la imagen</label></b>
                             <input type="text" class="form-control" name="descriptionImage">
+                        </div>
+                        <!-- Images relationships Maps -->
+                        <div class="form-group mb-0">
+                            <b><label> Mapas que contienen la imagen</label></b>
+                            @foreach ($maps as $map)
+                                <p>
+                                    @isset($map->tlCornerLatitude)
+                                        <input id="checkbox_map{{$map->id}}" class="checkbox-text" type="checkbox" name="maps_id[]" value="{{$map->id}}" checked>
+                                        <span class="text-dark checkbox-text">{{$map->title}} ({{$map->city}} - {{$map->date}})</span>
+                                    @endisset
+                                </p>
+                            @endforeach
                         </div>
                         <!-- Hotspot points -->
                         <div>
