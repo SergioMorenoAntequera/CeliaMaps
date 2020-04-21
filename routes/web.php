@@ -43,6 +43,7 @@ Route::resource('point', 'PointController');
 // IMAGES /////////////////////////////////////////////////////////////////////////////////////
 Route::resource('image', 'ImageController');
 // HOTSPOT /////////////////////////////////////////////////////////////////////////////////////
+Route::get('hotspot/admin', 'HotspotController@admin')->name('hotspot.admin');
 Route::get('hotspot/gallery', 'HotspotController@gallery')->name('hotspot.gallery');
 Route::delete('hotspot/deleteAjax/{id}', 'HotspotController@deleteAjax')->name('hotspot.deleteAjax');
 Route::get('hotspot/getAllAjax', 'HotspotController@getAllAjax')->name('hotspot.getAjax');

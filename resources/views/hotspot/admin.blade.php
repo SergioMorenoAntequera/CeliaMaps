@@ -363,7 +363,7 @@
             // maxZoom: 2, //Dont touch, max zoom 
             zoomControl: false,
         });
-        map.setView([36.844092, -2.457840], 14);
+        map.setView([mainPoint.lat, mainPoint.lng], mainPoint.zoom);
 
         //Global maps from the one we will be able to pick one
         var mapTiles = [
@@ -653,6 +653,12 @@
                 maps_id: [],
             }
             $("input[name='images[]']").each(function(e){
+
+
+                // upload Image file using AJAX
+
+
+
                 let arrImages = $("#images[]").files;
             });
 
@@ -663,11 +669,32 @@
                     newHotspot.maps_id.push($(this).val());
                 }
             });
-            newStreet.lat = $("input[name='lat']").attr("value");
-            newStreet.lng = $("input[name='lng']").attr("value");
-            newStreet.id = $("input[name='id']").attr("value");
+            newHotspot.lat = $("input[name='lat']").attr("value");
+            newHotspot.lng = $("input[name='lng']").attr("value");
+            newHotspot.id = $("input[name='id']").attr("value");
             
             return newHotspot;
+        };
+
+        function formatHotspotsObject(data){
+            //El formato que hay que copiar
+
+
+
+
+
+
+            // Objeto Street recuperado
+            let formatedHotspot = data.hotspot;
+
+            // Comletamos la información
+            formatedHotspot.type_id = parseInt(formatedHotspot.type_id);
+            // Puntos
+            formatedHotspot.points = data.points;
+            // Mapas con los pivots
+            formatedHotspot.maps = data.maps;
+
+            return formatedHotspot;
         };
 
     </script>

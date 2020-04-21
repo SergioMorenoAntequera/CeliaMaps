@@ -7,6 +7,7 @@ use App\Hotspot;
 use Illuminate\Http\Request;
 use App\Image;
 use App\Map;
+use DB;
 
 class HotspotController extends Controller
 {
@@ -52,6 +53,19 @@ class HotspotController extends Controller
                     'maps'=>$map, 
                     'images'=>$image, 
                     'mainPoint'=>Map::getMainPoint()]);
+    }
+
+    public function admin() {
+        $data['maps'] = Map::all();
+        $data['hotspots'] = Hotspot::all();
+        $data['images'] = Image::all();
+        
+        foreach ($data['hotspots'] as $hotspot) {
+            $hotspot->lat = $hotspot->lat; 
+            $hotspot->lng = $hotspot->lng;
+        }
+
+        return view("hotspot.admin", $data);
     }
 
     /**
