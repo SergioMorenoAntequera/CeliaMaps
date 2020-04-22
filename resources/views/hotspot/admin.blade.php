@@ -1,4 +1,3 @@
- 
 @extends('layouts.master')
 
 @section('title', 'Celia Maps')
@@ -39,24 +38,33 @@
     trought the map -->
     <div id="draggableArea">
 
+        {{-- To get the main point from the settings database --}}
+        <script> var mainPoint = @json($mainPoint); </script>
         {{-- Mapa --}}
         <div id="map"></div>
+
+        <div id="cPopUp" style=" z-index: 6">
+            <div class="cornerButton"> X </div>
+            <span class="text"> 
+                Haz click en el mapa para añadir hotspots <br> o click en uno de ellos para modificarlo.
+            </span>
+        </div>
         
         {{-----------------------------------------------------------}}
         {{-- MENU DE ARRIBA A LA IZQUIERDA Y LAS VENTANAS FLOTANTE --}}
         {{-----------------------------------------------------------}}
         {{-- CONTROLADOR DEL MENÚ --}}
-        <div class="ballMenu">
+        <div class="ballMenu" style="z-index:2">
             <div class="ballMenuContent">
                 <img class="noselect" src="{{url('img/icons/menu.png')}}" alt="">
             </div>
         </div>
-        <div id="ballMaps" class="ball noselect">
+        <div id="ballMaps" class="ball noselect" style="z-index:1">
             <div class="ballContent">
                 <img class="noselect" src="{{url('img/icons/tlMenuMap.png')}}" title="Mapas">
             </div>
         </div>
-        <div id="ballStreets" class="ball noselect">
+        <div id="ballStreets" class="ball noselect" style="z-index:1">
             <div class="ballContent">   
                  <img style="width: 70%;position: absolute; top: 15%; left: 15%" class="noselect" src="{{url('img/icons/search.svg')}}" title="Buscador">
              </div>
@@ -66,7 +74,7 @@
         {{-- Todos los menús que podemos poner --}}
 
         {{-- Menú de los mapas --}}
-        <div id="mapsMenu" style="max-height: 300px; font-family: Arial, Helvetica, sans-serif" class="menu noselect">
+        <div id="mapsMenu" style="max-height: 300px; font-family: Arial, Helvetica, sans-serif z-index:0" class="menu noselect">
                 <!-- Todo el menú -->
                 <div class="closeMenuButton">
                     <i class="fa fa-times"></i>
@@ -135,7 +143,7 @@
         </div>
 
         {{-- Menú del callejero --}}
-        <div id="streetsMenu" class="menu noselect">
+        <div id="streetsMenu" class="menu noselect" style="z-index:0">
             {{-- Cruz para cerrar el menú --}}
             <div class="closeMenuButton">
                 <i class="fa fa-times"></i>
@@ -238,7 +246,7 @@
         {{-------------------------------------------------------------}}
         {{-- BOTTOM RIGHT MENU SO WE CAN DISPLAY S WE CAN FULLSCREEN --}}
         {{-------------------------------------------------------------}}
-        <div id="fullScreenMenu">
+        <div id="fullScreenMenu" style="width:44px;height:44px">
             <img src="{{url('/img/icons/fsMaximize.png')}}" alt="">
         </div>
 
