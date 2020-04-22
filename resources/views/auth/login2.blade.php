@@ -9,7 +9,7 @@
 
 <div class="container">
 
-    <div class="wholePanel" style="height:50%">
+    <div class="wholePanel" style="min-height:50%">
         <div class="leftPanel widht:40%">
             <div class="content">
                 <img src="{{url('/img/icons/lock.svg')}}" height="50%" alt="" class="img-fluid">
