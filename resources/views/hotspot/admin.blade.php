@@ -405,7 +405,7 @@
                     //We take the opacity to 0 so they are hidding now
                     img.setOpacity(0);
                 }
-            }); 
+            });
 
             // Small arrow to allow us to hide the menu at the bottom left
             $('#mapsShow').click(function(){
@@ -584,13 +584,10 @@
             $("#modal-form").attr("action", "{{route('hotspot.store')}}");
             $("input[name='_method']").val("POST");
             // Clean fields
-            $("select[name='']");
-
-
-
-
-
-
+            $("input[name='title']").val("");
+            $("input[name='description']").val("");
+            $("input[name='titleImage']").val("");
+            $("input[name='descriptionImage']").val("");
             // Clear maps alternatives names fields
             let mapsList = $("input[name='maps_name[]']");
             for (let i = 0; i < mapsList.length; i++) {
@@ -619,10 +616,10 @@
             $("input[name='_method']").val("PUT");
             $(".inputs-errors").html("");
             // Fill inputs fields
-            
-
-
-
+            $("input[name='title']").val(hotspot.title);
+            $("input[name='description']").val(hotspot.description);
+            $("input[name='titleImage']").val(hotspot.titleImage);
+            $("input[name='descriptionImage']").val(hotspot.descriptionImage);
             // Fill hidden values
             console.log(activeMarker);
             $("#modal-lat").val(activeMarker._latlng.lat);
@@ -668,8 +665,9 @@
 
 
                 let arrImages = $("#images[]").files;
-            });
+                console.log(arrImages);
 
+            });
             $("input[name='maps_id[]']").each(function(e){
                 let cbMap = $(this);
 
@@ -677,6 +675,7 @@
                     newHotspot.maps_id.push($(this).val());
                 }
             });
+            
             newHotspot.lat = $("input[name='lat']").attr("value");
             newHotspot.lng = $("input[name='lng']").attr("value");
             newHotspot.id = $("input[name='id']").attr("value");
@@ -684,25 +683,5 @@
             return newHotspot;
         };
 
-        function formatHotspotsObject(data){
-            //El formato que hay que copiar
-
-
-
-
-
-
-            // Objeto Street recuperado
-            let formatedHotspot = data.hotspot;
-
-            // Comletamos la información
-            formatedHotspot.type_id = parseInt(formatedHotspot.type_id);
-            // Puntos
-            formatedHotspot.points = data.points;
-            // Mapas con los pivots
-            formatedHotspot.maps = data.maps;
-
-            return formatedHotspot;
-        };
-
     </script>
+@endsection
