@@ -67,7 +67,9 @@ class UserController extends Controller
         $user->level = $r->level;
 
         $user->save();
+        $response=['status'=>true];
 
+        //return Response()->json($response);
         return Response()->json(['success'=>'registrado con exito']);
 
         //return redirect()->route("user.index");

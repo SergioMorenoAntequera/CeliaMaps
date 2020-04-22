@@ -44,7 +44,7 @@
 
                                 <div class="modal-body">
                                     <p>¿Seguro que quiere borrar el usuario {{$user->name}}?</p>
-                                    <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-outline-success" data-dismiss="modal" autofocus>Cancelar</button>
                                     <button iddb="{{$user->id}}" type="button" class="btn btn-success deleteConfirm" data-dismiss="modal">
                                         Eliminar
                                     </button>

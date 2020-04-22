@@ -134,6 +134,8 @@ trait AuthenticatesUsers
     {
         throw ValidationException::withMessages([
             $this->username() => [trans('auth.failed')],
+            //AQUI INCLUYO EL ERROR PARA LA CONTRASEÑA 16/04/2020
+            //$this->pass() => [trans('auth.pass')],
         ]);
     }
 
@@ -145,6 +147,10 @@ trait AuthenticatesUsers
     public function username()
     {
         return 'email';
+    }
+    //CREO LA FUNCIÓN PASS PARA EL ERROR EN LA CONTRASEÑA DEL LOGIN 16/04/2020
+    public function pass(){
+        return 'password';
     }
 
     /**

@@ -30,8 +30,8 @@ class LoginController extends Controller
      // POR AHORA EL LOGIN REDIRECIONA A MAP.INDEX YA VEREMOS DONDE VA FINALMENTE
     protected $redirectTo = 'user';
 
-    // CON ESTA VARIABLE REDIRECCIONAMOS EL LOGOUT A LA PÁGINA PRINCIPAL 
-    protected $redirectAfterLogout = '/'; 
+    // CON ESTA VARIABLE REDIRECCIONAMOS EL LOGOUT A LA PÁGINA PRINCIPAL
+    protected $redirectAfterLogout = '/';
 
     /**
      * Create a new controller instance.
@@ -43,7 +43,7 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
     public function showLoginForm(){
-        return view('auth/login2');
+        return view('auth/login');
     }
-   
+
 }

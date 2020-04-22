@@ -124,11 +124,11 @@
                     </div>
                     <!-- FIN DE MODAL PARA INCLUIR OBSERVACIONES -->
 
-                    <!-- AQUÍ PONGO EL BOTÓN DE PDF -->
+                    <!-- AQUÍ PONGO EL BOTÓN DE GENERAR INFORME -->
                     <div class="row col-2 float-right">
                         <button id="btn-pdf" type="button" class="btn btn-success">Generar Informe</button>
                     </div>
-                    <!-- FIN DE BOTÓN DE PDF -->
+                    <!-- FIN DE BOTÓN DE GENERAR INFORME -->
 
                     <!-- SE AÑADE EL BOTÓN "X" PARA SALIR DEL INFORME -->
                     <!-- CONTROLAMOS CON LA VARIABLE FLASH 'frontend' SI EL USUARIO VIENE DE FRONT O BACK PARA EL ENLACE -->
@@ -149,9 +149,6 @@
                          <!-- DIV QUE PUEDE CONTENER EL INFORME DE OBSERVACIONES ///////////////////// -->
 
                         <div id="informeObservacionesDropable" ></div>
-
-
-
 
                     <!-- DIV QUE CONTIENE EL MAPA CON LA SITUACIÓN DE LA CALLE BUSCADA ///////////////////// -->
                     <div id="map" style="width:100%;height: 480px;"></div>
