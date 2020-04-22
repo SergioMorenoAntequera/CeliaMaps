@@ -14,8 +14,8 @@ return [
     */
 
     //'failed' => 'These credentials do not match our records.',
-    'failed' => 'Este usuario o contraseña no coincide con nuestros registros.',
-    //'pass'=> 'La contraseña no coincide con el usuario.',
+    'failed' => 'Usuario o contraseña erroneos, vuelva a introducir datos.',
+    'pass'=> 'La contraseña no coincide con el usuario.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
 ];
