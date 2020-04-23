@@ -490,304 +490,401 @@
             clusterMarkers.eachLayer(function(marker) {
                 addMarkerEvents(marker);
             });
-        });
 
-        // CMenu components controller
+            // CMenu components controller
 
-        // Edit button
-        $(".option[action='Edit']").on("click", function(e){
-            let first = true;
-            hotspots.forEach(hotspot => {
-                if(first && hotspot.id == activeMarker.id){
-                    hideMenu();
-                    cpuHide();
-                    showEditForm(hotspot);
-                    first = false;
-                }
-            });
-        });
-
-        // Save button
-        $("#btn-submit").on("click", function(e){
-            e.preventDefault();
-            
-            // AJAX CREATE AND UPDATE
-            switch(action){
-                case "create": {
-                    // We get the info from the form
-                    let newHotspot = getFormData();
-                    storeAjax(newHotspot);
-                } break;
-                case "update": {
-                    // We get the info from the form
-                    let updatedHotspot = getFormData();
-                    updateAjax(updatedHotspot);
-                } break;
-                default:{
-                    alert("Que?");
-                }
-            }
-        });
-
-        // Drag button
-        $(".option[action='Drag']").on("click", function(){
-            // Turn dragging variable to true to disable marker click handle
-            hideMenu();
-            dragging = true;
-
-            // Detach current marker from the group
-            clusterMarkers.removeLayer(activeMarker);
-            // Disable markers group
-            map.removeLayer(clusterMarkers);
-            // Attach current marker directly to the map
-            activeMarker.addTo(map);
-            // Enable marker dragging mode
-
-            activeMarker.dragging.enable();
-            // Hide edition modal
-            $('#modal').modal('hide');
-            cpuShowText("Arrastra el punto a su nueva posición");
-
-            // From here we jump to addMarkerEvents().dragend
-        });
-
-        // Remove button
-        $(".option[action='Remove']").on("click", function(){
-            hideMenu();
-            $('#modal').modal('hide');
-            $('#confirmModal').modal('show');
-            cpuHide();
-        });
-
-        // Remove button cancel 
-        $("#btn-cancel").click(function(){
-            $('#confirmModal').modal('hide');
-            cpuShowText("Borrado de hotspot cancelado");
-        });
-
-        // Remove button confirm
-        $("#btn-confirm").click(function(){
-            deleteAjax(activeMarker.id);
-        });
-
-        // clean search field on map click 
-        map.on("click", function(){
-            $('#streetsFound').empty();
-        });
-
-        // AUXILIAR METHODS
-
-        // Prepares and shows the form
-        function showCreateForm(lat, lng) {
-            action = "create";
-            // Create form attributes
-            $("#modal-form").attr("action", "{{route('hotspot.store')}}");
-            $("input[name='_method']").val("POST");
-            // Clean fields
-            $("input[name='title']").val("");
-            $("input[name='description']").val("");
-            $("input[name='titleImage']").val("");
-            $("input[name='descriptionImage']").val("");
-            // Clear maps alternatives names fields
-            let mapsList = $("input[name='maps_name[]']");
-            for (let i = 0; i < mapsList.length; i++) {
-                mapsList[i].value = "";
-                $(mapsList[i]).show();
-                $(mapsList[i]).prop("disabled", false);
-                $("#checkbox_map"+mapsList[i].id.substring(9)).prop("checked", true);
-            }
-            // Fill position values
-            $("#modal-lat").val(lat);
-            $("#modal-lng").val(lng);
-            // Modal display
-            $("#modal-title").text("Nueva vía");
-            $("#btn-remove").prop("disabled", true);
-            $("#btn-remove").css("display", "none");
-            $("#btn-position").prop("disabled", true);
-            $("#btn-position").css("display", "none");
-            $(".inputs-errors").html("");
-            $('#modal').modal('show');
-        };
-
-        function showEditForm(hotspot) {
-            action = "update";
-            // Edit form attributes
-            $("#modal-form").attr("action", "{{route('hotspot.store')}}/"+hotspot.id);
-            $("input[name='_method']").val("PUT");
-            $(".inputs-errors").html("");
-            // Fill inputs fields
-            $("input[name='title']").val(hotspot.title);
-            $("input[name='description']").val(hotspot.description);
-            $("input[name='titleImage']").val(hotspot.titleImage);
-            $("input[name='descriptionImage']").val(hotspot.descriptionImage);
-            // Fill hidden values
-            console.log(activeMarker);
-            $("#modal-lat").val(activeMarker._latlng.lat);
-            $("#modal-lng").val(activeMarker._latlng.lng);
-            $(".modal-body #id").val(hotspot.id);
-
-            // Clear maps
-            let mapsList = $("input[name='maps_name[]']");
-            for (let i = 0; i < mapsList.length; i++) {
-                mapsList[i].value = "";
-                $(mapsList[i]).hide();
-                $(mapsList[i]).prop("disabled", true);
-                $("#checkbox_map"+mapsList[i].id.substring(9)).prop("checked", false);
-            }
-
-            $("#modal-title").text("Editar Hotspot");
-            // Show and enable buttons and also fill value with street id
-            $("#btn-remove").prop("disabled", false);
-            $("#btn-remove").prop("value", street.id);
-            $("#btn-remove").css("display", "initial");
-            $("#btn-position").prop("disabled", false);
-            $("#btn-position").prop("value", street.id);
-            $("#btn-position").css("display", "initial");
-            // Modal display
-            $('#modal').modal('show');
-        };
-
-        // Get data from the form
-        function getFormData(){
-            var newHotspot = {
-                title: $("input[name='title']").val(),
-                description: $("input[name='description']").val(),
-                images: [],
-                titleImage: $("input[name='titleImage']").val(),
-                descriptionImage: $("input[name='descriptionImage']").val(),
-                maps_id: [],
-            }
-            $("input[name='images[]']").each(function(e){
-
-
-                // upload Image file using AJAX
-
-
-
-                let arrImages = $("#images[]").files;
-                console.log(arrImages);
-
-            });
-            $("input[name='maps_id[]']").each(function(e){
-                let cbMap = $(this);
-
-                if(cbMap.is(":checked")) {
-                    newHotspot.maps_id.push($(this).val());
-                }
-            });
-            
-            newHotspot.lat = $("input[name='lat']").attr("value");
-            newHotspot.lng = $("input[name='lng']").attr("value");
-            newHotspot.id = $("input[name='id']").attr("value");
-            
-            return newHotspot;
-        };
-
-        // FORMAT THE DATA SO WE CAN USE IT
-        function formatHotspotObject(data){
-            //El formato que hay que copiar
-            // Objeto Hotspot recuperado
-            let formatedHotspot = data.hotspot;
-            // Mapas con los pivots
-            formatedHotspot.maps = data.maps;
-
-            return formatedHotspot;
-        };
-
-        // ADD MARKER EVENTS TO A GIVEN MARKER
-        function addMarkerEvents(marker){
-            // CLICK
-            marker.on('click', function(e){
-                activeMarker = e.target;
-                // When click does not come from dragg event
-                if(!dragging){
-                    showMenu(e, "edit");
-                    cpuShowText("Selecciona una opción");
-                }else{
-                    // After drag click will be fired and here break dragging mode
-                    dragging = false;
-                }
+            // Edit button
+            $(".option[action='Edit']").on("click", function(e){
+                let first = true;
+                hotspots.forEach(hotspot => {
+                    if(first && hotspot.id == activeMarker.id){
+                        hideMenu();
+                        cpuHide();
+                        showEditForm(hotspot);
+                        first = false;
+                    }
+                });
             });
 
-            // FINISH DRAG (MARKER MOVED)
-            marker.on('dragend', function(e){
-                // Disable dragging mode
-                e.target.dragging.disable();
-
-                // Attach current marker to the layer
-                map.removeLayer(e.target);
-                clusterMarkers.addLayer(e.target);
-                // Enable markers group again
-                map.addLayer(clusterMarkers);
-
-                updatePositionAjax(e.target.id, e.target._latlng.lat, e.target._latlng.lng);
-                dragging = false;
-            });
-        }
-
-        // DETECS AND SHOWS AJAX ERRORS
-        function showValidationErrors(data){
-            if( data.status === 422 ) {
-                let errors = data.responseJSON.errors;
+            // Save button
+            $("#btn-submit").on("click", function(e){
+                e.preventDefault();
                 
-                $('#maps-error').empty();
-                if(errors["title"] !== undefined) {
-                    $('#maps-error').append("Nombre de hotspot requerido <br>")
+                // AJAX CREATE AND UPDATE
+                switch(action){
+                    case "create": {
+                        // We get the info from the form
+                        let newHotspot = getFormData();
+                        storeAjax(newHotspot);
+                    } break;
+                    case "update": {
+                        // We get the info from the form
+                        let updatedHotspot = getFormData();
+                        updateAjax(updatedHotspot);
+                    } break;
+                    default:{
+                        alert("Que?");
+                    }
                 }
-                if(errors["description"] !== undefined) {
-                    $('#maps-error').append("Descripcion de hotspot requerida <br> ")
-                }
-                if(errors["images[]"] !== undefined) {
-                    $('#maps-error').append("Imagen de hotspot requerida <br> ")
-                }
-                if(errors["titleImage"] !== undefined) {
-                    $('#maps-error').append("Titulo de la imagen requerido <br> ")
-                }
-                if(errors["descriptionImage"] !== undefined) {
-                    $('#maps-error').append("Descripcion de la imagen requerida <br> ")
-                } 
-            }
-        };
-
-        // AJAX METHODS
-        function storeAjax(street){
-            $.ajax({
-                url:"{{route('hotspot.storeAjax')}}",
-                data: hotspot,
-                success: function(data) {
-                    let ajaxHotspot = formatHotspotObject(data);
-                    
-                    addHotspotToArray(ajaxHotspot);
-                    
-                    // CREATE A MARKER
-                    var ajaxHotspotMarker = L.marker(
-                        [ajaxHotspot.lat, ajaxHotspot.lng], 
-                        {
-                            icon: markerImage, 
-                            alt:ajaxHotspot.id, 
-                            id: ajaxHotspot.id,
-                            draggable:false,
-                        }
-                    );
-                    ajaxHotspotMarker.id = ajaxHotspot.id;
-                    
-                    // ADD IT TO THE MAP
-                    markersList.push(ajaxHotspotMarker);
-                    clusterMarkers.addLayer(ajaxHotspotMarker);
-                    
-                    // ADD THE EVENTS
-                    addMarkerEvents(ajaxHotspotMarker);
-
-                    // HIDE THE FORM
-                    $("button[class='close']").click();
-                    cpuShowText("Hotspot creado con exito");
-                },
-                error: function(data) {
-                    // Se ha producido un error de validación
-                    showValidationErrors(data);
-                },
             });
-        };
+
+            // Drag button
+            $(".option[action='Drag']").on("click", function(){
+                // Turn dragging variable to true to disable marker click handle
+                hideMenu();
+                dragging = true;
+
+                // Detach current marker from the group
+                clusterMarkers.removeLayer(activeMarker);
+                // Disable markers group
+                map.removeLayer(clusterMarkers);
+                // Attach current marker directly to the map
+                activeMarker.addTo(map);
+                // Enable marker dragging mode
+
+                activeMarker.dragging.enable();
+                // Hide edition modal
+                $('#modal').modal('hide');
+                cpuShowText("Arrastra el punto a su nueva posición");
+
+                // From here we jump to addMarkerEvents().dragend
+            });
+
+            // Remove button
+            $(".option[action='Remove']").on("click", function(){
+                hideMenu();
+                $('#modal').modal('hide');
+                $('#confirmModal').modal('show');
+                cpuHide();
+            });
+
+            // Remove button cancel 
+            $("#btn-cancel").click(function(){
+                $('#confirmModal').modal('hide');
+                cpuShowText("Borrado de hotspot cancelado");
+            });
+
+            // Remove button confirm
+            $("#btn-confirm").click(function(){
+                deleteAjax(activeMarker.id);
+            });
+
+            // clean search field on map click 
+            map.on("click", function(){
+                $('#streetsFound').empty();
+            });
+
+            // AUXILIAR METHODS
+
+            // Prepares and shows the form
+            function showCreateForm(lat, lng) {
+                action = "create";
+                // Create form attributes
+                $("#modal-form").attr("action", "{{route('hotspot.store')}}");
+                $("input[name='_method']").val("POST");
+                // Clean fields
+                $("input[name='title']").val("");
+                $("input[name='description']").val("");
+                $("input[name='titleImage']").val("");
+                $("input[name='descriptionImage']").val("");
+                // Clear maps alternatives names fields
+                let mapsList = $("input[name='maps_name[]']");
+                for (let i = 0; i < mapsList.length; i++) {
+                    mapsList[i].value = "";
+                    $(mapsList[i]).show();
+                    $(mapsList[i]).prop("disabled", false);
+                    $("#checkbox_map"+mapsList[i].id.substring(9)).prop("checked", true);
+                }
+                // Fill position values
+                $("#modal-lat").val(lat);
+                $("#modal-lng").val(lng);
+                // Modal display
+                $("#modal-title").text("Nueva vía");
+                $("#btn-remove").prop("disabled", true);
+                $("#btn-remove").css("display", "none");
+                $("#btn-position").prop("disabled", true);
+                $("#btn-position").css("display", "none");
+                $(".inputs-errors").html("");
+                $('#modal').modal('show');
+            };
+
+            function showEditForm(hotspot) {
+                action = "update";
+                // Edit form attributes
+                $("#modal-form").attr("action", "{{route('hotspot.store')}}/"+hotspot.id);
+                $("input[name='_method']").val("PUT");
+                $(".inputs-errors").html("");
+                // Fill inputs fields
+                $("input[name='title']").val(hotspot.title);
+                $("input[name='description']").val(hotspot.description);
+                $("input[name='titleImage']").val(hotspot.titleImage);
+                $("input[name='descriptionImage']").val(hotspot.descriptionImage);
+                // Fill hidden values
+                console.log(activeMarker);
+                $("#modal-lat").val(activeMarker._latlng.lat);
+                $("#modal-lng").val(activeMarker._latlng.lng);
+                $(".modal-body #id").val(hotspot.id);
+
+                // Clear maps
+                let mapsList = $("input[name='maps_name[]']");
+                for (let i = 0; i < mapsList.length; i++) {
+                    mapsList[i].value = "";
+                    $(mapsList[i]).hide();
+                    $(mapsList[i]).prop("disabled", true);
+                    $("#checkbox_map"+mapsList[i].id.substring(9)).prop("checked", false);
+                }
+
+                $("#modal-title").text("Editar Hotspot");
+                // Show and enable buttons and also fill value with street id
+                $("#btn-remove").prop("disabled", false);
+                $("#btn-remove").prop("value", street.id);
+                $("#btn-remove").css("display", "initial");
+                $("#btn-position").prop("disabled", false);
+                $("#btn-position").prop("value", street.id);
+                $("#btn-position").css("display", "initial");
+                // Modal display
+                $('#modal').modal('show');
+            };
+
+            // Get data from the form
+            function getFormData(){
+                var newHotspot = {
+                    title: $("input[name='title']").val(),
+                    description: $("input[name='description']").val(),
+                    images: [],
+                    titleImage: $("input[name='titleImage']").val(),
+                    descriptionImage: $("input[name='descriptionImage']").val(),
+                    maps_id: [],
+                }
+                $("input[name='images[]']").each(function(e){
+
+
+                    // upload Image file using AJAX
+
+
+
+                    let arrImages = $("#images[]").files;
+                    console.log(arrImages);
+
+                });
+                $("input[name='maps_id[]']").each(function(e){
+                    let cbMap = $(this);
+
+                    if(cbMap.is(":checked")) {
+                        newHotspot.maps_id.push($(this).val());
+                    }
+                });
+                
+                newHotspot.lat = $("input[name='lat']").attr("value");
+                newHotspot.lng = $("input[name='lng']").attr("value");
+                newHotspot.id = $("input[name='id']").attr("value");
+                
+                return newHotspot;
+            };
+
+            // FORMAT THE DATA SO WE CAN USE IT
+            function formatHotspotObject(data){
+                //El formato que hay que copiar
+                // Objeto Hotspot recuperado
+                let formatedHotspot = data.hotspot;
+                // Mapas con los pivots
+                formatedHotspot.maps = data.maps;
+
+                return formatedHotspot;
+            };
+
+            // ADD MARKER EVENTS TO A GIVEN MARKER
+            function addMarkerEvents(marker){
+                // CLICK
+                marker.on('click', function(e){
+                    activeMarker = e.target;
+                    // When click does not come from dragg event
+                    if(!dragging){
+                        showMenu(e, "edit");
+                        cpuShowText("Selecciona una opción");
+                    }else{
+                        // After drag click will be fired and here break dragging mode
+                        dragging = false;
+                    }
+                });
+
+                // FINISH DRAG (MARKER MOVED)
+                marker.on('dragend', function(e){
+                    // Disable dragging mode
+                    e.target.dragging.disable();
+
+                    // Attach current marker to the layer
+                    map.removeLayer(e.target);
+                    clusterMarkers.addLayer(e.target);
+                    // Enable markers group again
+                    map.addLayer(clusterMarkers);
+
+                    updatePositionAjax(e.target.id, e.target._latlng.lat, e.target._latlng.lng);
+                    dragging = false;
+                });
+            }
+
+            // DETECS AND SHOWS AJAX ERRORS
+            function showValidationErrors(data){
+                if( data.status === 422 ) {
+                    let errors = data.responseJSON.errors;
+                    
+                    $('#maps-error').empty();
+                    if(errors["title"] !== undefined) {
+                        $('#maps-error').append("Nombre de hotspot requerido <br>")
+                    }
+                    if(errors["description"] !== undefined) {
+                        $('#maps-error').append("Descripcion de hotspot requerida <br> ")
+                    }
+                    if(errors["images[]"] !== undefined) {
+                        $('#maps-error').append("Imagen de hotspot requerida <br> ")
+                    }
+                    if(errors["titleImage"] !== undefined) {
+                        $('#maps-error').append("Titulo de la imagen requerido <br> ")
+                    }
+                    if(errors["descriptionImage"] !== undefined) {
+                        $('#maps-error').append("Descripcion de la imagen requerida <br> ")
+                    } 
+                }
+            };
+
+            // AJAX METHODS
+            function storeAjax(street){
+                $.ajax({
+                    url:"{{route('hotspot.storeAjax')}}",
+                    data: hotspot,
+                    success: function(data) {
+                        let ajaxHotspot = formatHotspotObject(data);
+                        
+                        addHotspotToArray(ajaxHotspot);
+                        
+                        // CREATE A MARKER
+                        var ajaxHotspotMarker = L.marker(
+                            [ajaxHotspot.lat, ajaxHotspot.lng], 
+                            {
+                                icon: markerImage, 
+                                alt:ajaxHotspot.id, 
+                                id: ajaxHotspot.id,
+                                draggable:false,
+                            }
+                        );
+                        ajaxHotspotMarker.id = ajaxHotspot.id;
+                        
+                        // ADD IT TO THE MAP
+                        markersList.push(ajaxHotspotMarker);
+                        clusterMarkers.addLayer(ajaxHotspotMarker);
+                        
+                        // ADD THE EVENTS
+                        addMarkerEvents(ajaxHotspotMarker);
+
+                        // HIDE THE FORM
+                        $("button[class='close']").click();
+                        cpuShowText("Hotspot creado con exito");
+                    },
+                    error: function(data) {
+                        // Se ha producido un error de validación
+                        showValidationErrors(data);
+                    },
+                });
+            };
+
+            function updateAjax(street){
+                $.ajax({
+                    url:"{{route('hotspot.updateAjax')}}",
+                    data: hotspot,
+                    success: function(data) {
+                        let ajaxHotspotUpdated = formatHotspotObject(data);
+
+                        // Look for hotspots to be updated
+                        let hotspotsToUpdate = new Array();
+                        hotspots.forEach(hotspot => {
+                            if(hotspot.id == ajaxHotspotUpdated.id){
+                                hotspotsToUpdate.push(hotspot);
+                            }                        
+                        });
+
+                        let index = hotspots.indexOf(hotspotsToUpdate[0]);
+                        // Removes as much as hotspots to delete length
+                        hotspots.splice(index, hotspotsToUpdate.length);
+                        markersList.splice(index, hotspotsToUpdate.length);
+
+                        // Add updated hotspots to the array
+                        addHotspotsToArray(ajaxHotspotsUpdated);
+
+                        //Update the hotspot markers
+                        markersList.forEach(marker => {
+                            if(marker.id == ajaxStreetUpdated.id){
+                                marker._latlng = {lat:ajaxStreetUpdated.lat, lng:ajaxStreetUpdated.lng};
+                            }
+                        });
+                        
+                        // HIDE THE FORM
+                        $("button[class='close']").click();
+                        cpuShowText("Hotspot actualizado con exito");
+                    },
+                    error: function(data) {
+                        // Se ha producido un error de validación
+                        showValidationErrors(data);
+                    },
+                });
+            };
+
+            function updatePositionAjax(id, lat, lng){
+                $.ajax({
+                    url:"{{route('hotspot.updatePositionAjax')}}",
+                    data: {"id":id, "lat":lat, "lng":lng},
+                    success: function(data) {
+                        cpuShowText("Posición actualizada con exito");
+                    },
+                });
+                
+            }
+
+            function deleteAjax(streetID){
+                $.ajax({
+                    url:"{{route('hotspot.destroyAjax')}}",
+                    data: {"id": hotspotID},
+                    success: function(data){
+
+                        let hotspotsToDelete = new Array();
+                        hotspots.forEach(hotspot => {
+                            if(hotspot.id == hotspotID){
+                                hotspotsToDelete.push(hotspot);
+                            }                        
+                        });
+
+                        // First hotspot to remove from array
+                        let index = hotspots.indexOf(hotspotsToDelete[0]);
+                        // Removes as much as hotspots to delete length
+                        hotspots.splice(index, hotspotsToDelete.length);
+                        markersList.splice(index, hotspotsToDelete.length);
+                        
+                        clusterMarkers.removeLayer(activeMarker);
+                        map.removeLayer(activeMarker);
+                        cpuShowText("Hotspot borrado con exito");
+                    },
+                })  
+            };
+
+            // HOTSPOT FOUND IN SEARCH BAR
+            $(document).on("click","div.hotspot",function(){
+                console.log(this);
+                $('#streetsFound').empty();
+                let id = this.id;
+                clusterMarkers.eachLayer(function(layer){
+                    if(id == layer.id)
+                        map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 18);
+                });
+            });
+
+            // Add a street and likely deprecated streets to global streets array
+            function addHotspotToArray(hotspot){
+                // Add actual street
+                hotspots.push(hotspot);
+            }
+        });
 
     </script>
+    <script src="{{url('js/cPopUp.js')}}"></script>
+    <script src="{{url('js/cMenu.js')}}"></script>
 @endsection

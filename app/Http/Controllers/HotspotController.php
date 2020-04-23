@@ -28,16 +28,19 @@ class HotspotController extends Controller
         return view('hotspot.index', ['hotspots'=>$hotspot]);
     }
 
-    /**
-     * Method that shows a specific register o our
-     * database depending on it's ID
-     *
-     * @param id
-     * @return View
-     */
-    public function show($id){
-        $hotspot = Hotspot::find($id);
-        return view('hotspot.show', ['hotspot'=>$hotspot]);
+    public function admin() {
+        $data['maps'] = Map::all();
+        $data['hotspots'] = Hotspot::all();
+        $data['images'] = Image::all();
+        $data['mainPoint'] = Point::getMainPoint();
+
+        
+        foreach ($data['hotspots'] as $hotspot) {
+            $hotspot->lat = $hotspot->lat; 
+            $hotspot->lng = $hotspot->lng;
+        }
+
+        return view("hotspot.admin", $data);
     }
 
     /**
@@ -56,20 +59,6 @@ class HotspotController extends Controller
                     'mainPoint'=>Map::getMainPoint()]);
     }
 
-    public function admin() {
-        $data['maps'] = Map::all();
-        $data['hotspots'] = Hotspot::all();
-        $data['images'] = Image::all();
-        $data['mainPoint'] = Point::getMainPoint();
-
-        
-        foreach ($data['hotspots'] as $hotspot) {
-            $hotspot->lat = $hotspot->lat; 
-            $hotspot->lng = $hotspot->lng;
-        }
-
-        return view("hotspot.admin", $data);
-    }
 
     /**
      * Method that recieves information in a Request object from the,
@@ -108,7 +97,8 @@ class HotspotController extends Controller
         $r->validate([
             'title' => 'required',
             'description' => 'required',
-            'images' => 'required'
+            'titleImage' => 'required',
+            'descriptionImage' => 'required'
         ]);
 
         $hotspot = new Hotspot($r->all());
@@ -126,6 +116,16 @@ class HotspotController extends Controller
                 $image->save();
             }
         }
+
+        // MAPAS 
+
+
+
+
+
+
+
+
 
         $hotspot->images;
 
@@ -240,56 +240,5 @@ class HotspotController extends Controller
             'imagesFound' => $imagesFound,
         ]);
     }
-
-    // AJAX METHODS
-    /* 
-    public function storeAjax(Request $r){
-        // Server side validation
-        $r->validate([
-            'title'=>'required',
-            'description'=>'required',
-            'titleImage'=>'required',
-            'descriptionImage'=>'required'
-        ]);
-
-        $hotspot = new Hotspot($r->all());
-        $hotspot->save();
-
-        $mapsAsigned = Array();
-        if(!is_null($r->maps_id) > 0){
-            for ($i=0; $i < count($r->maps_id); $i++) { 
-                $mapStreet = new MapStreet();
-                $mapStreet->street_id = $street->id;
-                $mapStreet->map_id = $r->maps_id[$i];
-                $mapStreet->alternative_name = $r->maps_name[$i];
-                $mapStreet->save();
-
-                $mapAsigned = Map::find($mapStreet->map_id);
-                $mapAsigned->pivot = $mapStreet;
-                array_push($mapsAsigned, $mapAsigned);
-            }
-        }
-        foreach ($mapsAsigned as $mapAsigned) {
-            $pivot = DB::table('maps_streets')
-                    ->where('map_id', $mapAsigned->id)
-                    ->where('street_id', $street->id)
-                    ->first();
-            $mapAsigned->pivot = $pivot;
-            // $pivot = MapStreet::where('map_id', $mapAsigned->id)->get();
-        }
-        
-        $point = Point::Create(["lat" => $r->lat, "lng" => $r->lng]);
-        $street->points()->attach($point->id);
-        $street->lat = $r->lat;
-        $street->lng = $r->lng;
-        $street->type()->associate($r->type_id);
-        $street->typeName = $street->type->name;
-        $street->fullName = $street->typeName . " " . $street->name;
-        return response()->json([
-            'street' => $street,
-            'points' => $point,
-            'maps' => $mapsAsigned,
-        ]);
-    }
-    */
+    
 }
