@@ -683,5 +683,111 @@
             return newHotspot;
         };
 
+        // FORMAT THE DATA SO WE CAN USE IT
+        function formatHotspotObject(data){
+            //El formato que hay que copiar
+            // Objeto Hotspot recuperado
+            let formatedHotspot = data.hotspot;
+            // Mapas con los pivots
+            formatedHotspot.maps = data.maps;
+
+            return formatedHotspot;
+        };
+
+        // ADD MARKER EVENTS TO A GIVEN MARKER
+        function addMarkerEvents(marker){
+            // CLICK
+            marker.on('click', function(e){
+                activeMarker = e.target;
+                // When click does not come from dragg event
+                if(!dragging){
+                    showMenu(e, "edit");
+                    cpuShowText("Selecciona una opción");
+                }else{
+                    // After drag click will be fired and here break dragging mode
+                    dragging = false;
+                }
+            });
+
+            // FINISH DRAG (MARKER MOVED)
+            marker.on('dragend', function(e){
+                // Disable dragging mode
+                e.target.dragging.disable();
+
+                // Attach current marker to the layer
+                map.removeLayer(e.target);
+                clusterMarkers.addLayer(e.target);
+                // Enable markers group again
+                map.addLayer(clusterMarkers);
+
+                updatePositionAjax(e.target.id, e.target._latlng.lat, e.target._latlng.lng);
+                dragging = false;
+            });
+        }
+
+        // DETECS AND SHOWS AJAX ERRORS
+        function showValidationErrors(data){
+            if( data.status === 422 ) {
+                let errors = data.responseJSON.errors;
+                
+                $('#maps-error').empty();
+                if(errors["title"] !== undefined) {
+                    $('#maps-error').append("Nombre de hotspot requerido <br>")
+                }
+                if(errors["description"] !== undefined) {
+                    $('#maps-error').append("Descripcion de hotspot requerida <br> ")
+                }
+                if(errors["images[]"] !== undefined) {
+                    $('#maps-error').append("Imagen de hotspot requerida <br> ")
+                }
+                if(errors["titleImage"] !== undefined) {
+                    $('#maps-error').append("Titulo de la imagen requerido <br> ")
+                }
+                if(errors["descriptionImage"] !== undefined) {
+                    $('#maps-error').append("Descripcion de la imagen requerida <br> ")
+                } 
+            }
+        };
+
+        // AJAX METHODS
+        function storeAjax(street){
+            $.ajax({
+                url:"{{route('hotspot.storeAjax')}}",
+                data: hotspot,
+                success: function(data) {
+                    let ajaxHotspot = formatHotspotObject(data);
+                    
+                    addHotspotToArray(ajaxHotspot);
+                    
+                    // CREATE A MARKER
+                    var ajaxHotspotMarker = L.marker(
+                        [ajaxHotspot.lat, ajaxHotspot.lng], 
+                        {
+                            icon: markerImage, 
+                            alt:ajaxHotspot.id, 
+                            id: ajaxHotspot.id,
+                            draggable:false,
+                        }
+                    );
+                    ajaxHotspotMarker.id = ajaxHotspot.id;
+                    
+                    // ADD IT TO THE MAP
+                    markersList.push(ajaxHotspotMarker);
+                    clusterMarkers.addLayer(ajaxHotspotMarker);
+                    
+                    // ADD THE EVENTS
+                    addMarkerEvents(ajaxHotspotMarker);
+
+                    // HIDE THE FORM
+                    $("button[class='close']").click();
+                    cpuShowText("Hotspot creado con exito");
+                },
+                error: function(data) {
+                    // Se ha producido un error de validación
+                    showValidationErrors(data);
+                },
+            });
+        };
+
     </script>
 @endsection

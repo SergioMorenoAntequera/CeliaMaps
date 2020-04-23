@@ -50,7 +50,7 @@ class HotspotController extends Controller
         $map = Map::all();
         $image = Image::all();
         //dd($hotspots[0]->images[1]->file_name);
-        return view('hotspot.admin', ['hotspots'=>$hotspots, 
+        return view('hotspot.test', ['hotspots'=>$hotspots, 
                     'maps'=>$map, 
                     'images'=>$image, 
                     'mainPoint'=>Map::getMainPoint()]);
@@ -240,4 +240,56 @@ class HotspotController extends Controller
             'imagesFound' => $imagesFound,
         ]);
     }
+
+    // AJAX METHODS
+    /* 
+    public function storeAjax(Request $r){
+        // Server side validation
+        $r->validate([
+            'title'=>'required',
+            'description'=>'required',
+            'titleImage'=>'required',
+            'descriptionImage'=>'required'
+        ]);
+
+        $hotspot = new Hotspot($r->all());
+        $hotspot->save();
+
+        $mapsAsigned = Array();
+        if(!is_null($r->maps_id) > 0){
+            for ($i=0; $i < count($r->maps_id); $i++) { 
+                $mapStreet = new MapStreet();
+                $mapStreet->street_id = $street->id;
+                $mapStreet->map_id = $r->maps_id[$i];
+                $mapStreet->alternative_name = $r->maps_name[$i];
+                $mapStreet->save();
+
+                $mapAsigned = Map::find($mapStreet->map_id);
+                $mapAsigned->pivot = $mapStreet;
+                array_push($mapsAsigned, $mapAsigned);
+            }
+        }
+        foreach ($mapsAsigned as $mapAsigned) {
+            $pivot = DB::table('maps_streets')
+                    ->where('map_id', $mapAsigned->id)
+                    ->where('street_id', $street->id)
+                    ->first();
+            $mapAsigned->pivot = $pivot;
+            // $pivot = MapStreet::where('map_id', $mapAsigned->id)->get();
+        }
+        
+        $point = Point::Create(["lat" => $r->lat, "lng" => $r->lng]);
+        $street->points()->attach($point->id);
+        $street->lat = $r->lat;
+        $street->lng = $r->lng;
+        $street->type()->associate($r->type_id);
+        $street->typeName = $street->type->name;
+        $street->fullName = $street->typeName . " " . $street->name;
+        return response()->json([
+            'street' => $street,
+            'points' => $point,
+            'maps' => $mapsAsigned,
+        ]);
+    }
+    */
 }
