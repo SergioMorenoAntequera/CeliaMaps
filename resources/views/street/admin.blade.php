@@ -211,7 +211,7 @@
                             if(street.fullName.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
                                 // Deprecated street will appear in italic font
                                 if(street.deprecated == true)
-                                    $('#streetsFound').append("<div id='"+ street.id +"' style='font-style:italic;opacity:0.8' class='street'> <img style='width:5%;' src='{{url('img/icons/tokenSelected.svg')}}'>"+ street.fullName + "</div>");
+                                    $('#streetsFound').append("<div id='"+ street.id +"' class='deprecated street'> <img style='width:5%;' src='{{url('img/icons/tokenSelected.svg')}}'>"+ street.fullName + "</div>");
                                 else
                                     $('#streetsFound').append("<div id='"+ street.id +"' class='street'> <img style='width:5%;' src='{{url('img/icons/tokenSelected.svg')}}'>"+ street.fullName + "</div>");
                                 if(++c == 5){
@@ -702,6 +702,9 @@
             function addMarkerEvents(marker){
                 // CLICK
                 marker.on('click', function(e){
+                    // Clean streets from searcher module
+                    $('#streetsFound').empty();
+                    
                     activeMarker = e.target;
                     // When click does not come from dragg event
                     if(!dragging){
@@ -887,6 +890,7 @@
                             // New street object
                             let alternativeStreet = {...street};
                             // Update new object data
+                            alternativeStreet.actualName = alternativeStreet.fullName;
                             alternativeStreet.name = street.maps[i].pivot.alternative_name;
                             alternativeStreet.fullName = alternativeStreet.typeName + " " + alternativeStreet.name;
                             // Deprecated attribute

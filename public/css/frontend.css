@@ -259,6 +259,10 @@ html, body {
     cursor: pointer;
 }
 
+.deprecated{
+    font-style:italic;
+    opacity:0.8;
+}
 
 
 /*/////////////////////////////////////////////////////////////////////*/

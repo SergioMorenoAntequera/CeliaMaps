@@ -319,10 +319,22 @@
                     return;
                 }
             });
+            console.log(this)
+
+            
+            // Check deprecated street attribute of searched streets to filter by name and deprecated state
             streets.forEach(street => {
-                if($(this).text().trim() == street.fullName){
-                    selection = street;
-                    return;
+                if(street.deprecated){
+                    // Must have deprecated class (different style in search module)
+                    if($(this).hasClass('deprecated') && $(this).text().trim() == street.fullName){
+                        selection = street;
+                        return;
+                    }
+                }else{
+                    if(!$(this).hasClass('deprecated') && $(this).text().trim() == street.fullName){
+                        selection = street;
+                        return;
+                    }
                 }
             });
 
@@ -348,7 +360,11 @@
                 // Streets data
                 $("#hp-gallery").hide();
                 $("#hp-img").attr("src", "");
-                $("#hp-title").text(selection.fullName);
+                // Filter by deprecated state to show actual or original name
+                if(selection.deprecated)
+                    $("#hp-title").text(selection.actualName);
+                else
+                    $("#hp-title").text(selection.fullName);
                 let content = "";
                 if(selection.maps.length > 1)
                     content = "<br>Existe en los mapas:<br><br>";
@@ -380,25 +396,33 @@
             var jsHotspots = @json($hotspots)
         @endisset
 
-        // Luis David
+        
         @isset($streets)
             // Streets php array conversion to js json
-            //hotspots = @json($hotspots);
             streetsJSON = @json($streets);
             streetsJSON.forEach(street => {
                 // Save actual street
                 street.fullName = street.typeName + " " + street.name;
                 streets.push(street);
-                // Duplicate object for older streets
-                let alternativeStreet = {...street};
-                alternativeStreet.maps.forEach(mapStreet => {
-                    if(mapStreet.pivot.alternative_name !== null){
-                        alternativeStreet.name = mapStreet.pivot.alternative_name;
-                        alternativeStreet.fullName = alternativeStreet.typeName + " " + alternativeStreet.name;
-                        alternativeStreet.deprecated = true;
-                        streets.push(alternativeStreet);
+                // Check for deprecated street names in maps relationship
+                if (street.maps.length > 0){
+                    // Foreach street in map 
+                    for (let i = 0; i < street.maps.length; i++) {
+                        // Check alternatives street names in maps                            
+                        if(street.maps[i].pivot.alternative_name !== null){
+                            // New street object
+                            let alternativeStreet = {...street};
+                            // Update new object data
+                            alternativeStreet.actualName = alternativeStreet.fullName;
+                            alternativeStreet.name = street.maps[i].pivot.alternative_name;
+                            alternativeStreet.fullName = alternativeStreet.typeName + " " + alternativeStreet.name;
+                            // Deprecated attribute
+                            alternativeStreet.deprecated = true;
+                            // Save deprecated street into array
+                            streets.push(alternativeStreet);
+                        }
                     }
-                });
+                }
             });
             
             let clusterMarkers = L.markerClusterGroup();
@@ -408,7 +432,8 @@
                     var marker = L.marker([street.lat, street.lng],{icon: markerStreet, alt: street.id, draggable:false});
                     marker.street = street;
                     marker.on('click', function(e){
-                        console.log(this);
+                        // Clean streets from searcher module
+                        $('#streetsFound').empty();
                         map.setView([this.street.lat, parseFloat(this.street.lng) + 0.00041], 18);
                         // Modal data
                         $("#hp-img").attr("src", "");
@@ -474,7 +499,7 @@
                 if(street.fullName.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
                     // Deprecated street will appear in italic font
                     if(street.deprecated == true)
-                        $('#streetsFound').append("<div id='"+ street.id +"' style='font-style:italic;opacity:0.8' class='street'> <img style='width:5%;' src='{{url('img/icons/tokenSelected.svg')}}'>"+ street.fullName + "</div>");
+                        $('#streetsFound').append("<div id='"+ street.id +"' class='deprecated street'> <img style='width:5%;' src='{{url('img/icons/tokenSelected.svg')}}'>"+ street.fullName + "</div>");
                     else
                         $('#streetsFound').append("<div id='"+ street.id +"' class='street'> <img style='width:5%;' src='{{url('img/icons/tokenSelected.svg')}}'>"+ street.fullName + "</div>");
                 }
