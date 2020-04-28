@@ -240,8 +240,23 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
     <!-- Optional views scripts -->
+    
     <?php echo $__env->yieldContent('scripts'); ?>
 
+    <!-- Check authentication -->
+    
+    <?php if(isset($guest)): ?>
+        <?php if($guest): ?>
+            <script>
+                $("#leftNavBar").hide();
+                $("#rightContent").css("margin-left","0");
+                $("#rightContent").css("width","100%");
+            </script>
+        <?php endif; ?>
+    <?php endif; ?>
+
+    
 </html>
 <?php /**PATH /home/vagrant/code/maps/resources/views/layouts/master.blade.php ENDPATH**/ ?>

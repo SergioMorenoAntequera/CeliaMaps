@@ -17,7 +17,7 @@ class SearchController extends Controller
 
     public function __construct()
     {
-        $this->middleware("auth");
+        $this->middleware("auth")->except("inform");
     }
 
     // MUESTRA EL LISTADO DE LAS CALLES CON EL BUSCADOR ///////////////////////////
@@ -58,6 +58,11 @@ class SearchController extends Controller
         $map = Map::all();      
         // Mantenemos la variable flash para guardar el último sitio visitado (frontend)
         $request->session()->reflash();
-        return view('search/informe', array('street' => $street, 'street_type' => $street_type, 'map' => $map, 'map_street'=>$map_street));
+        // Controlamos el acceso de usuarios invitados
+        $guest = true;
+        if($request->user()){
+            $guest = false;
+        }
+        return view('search/informe', array('street' => $street, 'street_type' => $street_type, 'map' => $map, 'map_street' => $map_street, 'guest' => $guest));
     }
 }
