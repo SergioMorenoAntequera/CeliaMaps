@@ -102,23 +102,23 @@ button {
     -moz-transition:    0.08s ease-in;
     -webkit-transition: 0.08s ease-in;
   }
-  .fill:hover {
-    color: whitesmoke;
-  }
-  .fill:before {
-    content: "";
-    position: absolute;
-    background: #1c3668;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: 100%;
-    z-index: -1;
-    -webkit-transition: top 0.09s ease-in;
-  }
-  .fill:hover:before {
-    top: 0;
-  }
+.fill:hover {
+color: whitesmoke;
+}
+.fill:before {
+content: "";
+position: absolute;
+background: #1c3668;
+bottom: 0;
+left: 0;
+right: 0;
+top: 100%;
+z-index: -1;
+-webkit-transition: top 0.09s ease-in;
+}
+.fill:hover:before {
+top: 0;
+}
 
 /* Menu este de abajo  */
 #bottom {

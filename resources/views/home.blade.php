@@ -7,11 +7,18 @@
     <title>Celia Maps</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{url('/css/home.css')}}">
+    <style>
+        #title { color: {{ $homeSettings->homeColor }}; }
+        #subTitle { color: {{ $homeSettings->homeColor }}; }
+        #bottomElements { color: {{ $homeSettings->homeColor }}; }
+        button {color: {{ $homeSettings->homeColor }}; border-color: {{ $homeSettings->homeColor }} }
+        .fill:before {background-color: {{ $homeSettings->homeColor }}; };
+    </style>
 </head>
 <body>
     <div class="container-fluid bg-primary text-center">
 
-        <img id="background" src="{{url('img/resources/background.jpeg')}}" alt="">
+        <img id="background" src="{{url('img/resources/'. $homeSettings->homeBackground .'')}}" alt="">
 
         <div id="pageCenter">
             <div id="pageContent" class="noselect">
@@ -22,7 +29,7 @@
                     CELIA MAPS
                 </div>
                 <div id="subTitle" style="opacity: 0">
-                    Paseo por Almería a través del tiempo
+                    {{ $homeSettings->homeDescription }}
                 </div>
                 <button id="startButton" class="fill" style="opacity:0"  onclick="location.href = (location.href.replace('/home', ''))">
                     COMENZAR

@@ -53,7 +53,14 @@ class SettingsTableSeeder extends Seeder
         DB::table('settings')->insert([    
             //La id no se pone porque se autoincrementa sola
             'name' => "homeBackground",
-            'value' => "URL DE LA IMAGEN",
+            'value' => "background.jpeg",
+            'created_at' => date('Y-m-d H-m-s'),
+            'updated_at' => date('Y-m-d H-m-s'),
+        ]);
+        DB::table('settings')->insert([    
+            //La id no se pone porque se autoincrementa sola
+            'name' => "homeColor",
+            'value' => "#1c3668",
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
@@ -64,7 +71,6 @@ class SettingsTableSeeder extends Seeder
             'created_at' => date('Y-m-d H-m-s'),
             'updated_at' => date('Y-m-d H-m-s'),
         ]);
-        
         DB::table('settings')->insert([    
             //La id no se pone porque se autoincrementa sola
             'name' => "keywords",

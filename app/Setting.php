@@ -15,4 +15,12 @@ class Setting extends Model
         $mainPoint->zoom = Setting::where("name", "=", "mainPointZoom")->first()->value;
         return $mainPoint;
     }
+
+    public static function getHomeOptions(){
+        $mainPoint = (object) array();
+        $mainPoint->homeDescription = Setting::where("name", "=", "homeSubtitle")->first()->value;
+        $mainPoint->homeBackground = Setting::where("name", "=", "homeBackground")->first()->value;
+        $mainPoint->homeColor = Setting::where("name", "=", "homeColor")->first()->value;
+        return $mainPoint;
+    }
 }
