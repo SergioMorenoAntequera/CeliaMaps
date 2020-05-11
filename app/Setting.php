@@ -17,10 +17,18 @@ class Setting extends Model
     }
 
     public static function getHomeOptions(){
-        $mainPoint = (object) array();
-        $mainPoint->homeDescription = Setting::where("name", "=", "homeSubtitle")->first()->value;
-        $mainPoint->homeBackground = Setting::where("name", "=", "homeBackground")->first()->value;
-        $mainPoint->homeColor = Setting::where("name", "=", "homeColor")->first()->value;
-        return $mainPoint;
+        $homeInfo = (object) array();
+        $homeInfo->homeDescription = Setting::where("name", "=", "homeSubtitle")->first()->value;
+        $homeInfo->homeBackground = Setting::where("name", "=", "homeBackground")->first()->value;
+        $homeInfo->homeColor = Setting::where("name", "=", "homeColor")->first()->value;
+        return $homeInfo;
+    }
+
+    public static function getMetaData() {
+        $metaData = (object) array();
+        $metaData->pageTitle = Setting::where("name", "=", "pageTitle")->first()->value;
+        $metaData->description = Setting::where("name", "=", "description")->first()->value;
+        $metaData->keywords = Setting::where("name", "=", "keywords")->first()->value;
+        return $metaData;
     }
 }
