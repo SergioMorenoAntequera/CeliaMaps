@@ -79,6 +79,7 @@ Route::get('marker/update', 'MarkerController@update')->name('marker.update');
 // SETTINGS ////////////////////////////////////////////////////////////////////////////////////////
 Route::get('setting/mainView', 'SettingsController@mainView')->name('setting.mainView');
 Route::get('setting/saveMainView', 'SettingsController@saveMainView')->name('setting.saveMainView');
+Route::get('setting/homeInfo', 'SettingsController@homeInfo')->name('setting.home');
 Route::get('setting', 'SettingsController@index')->name('setting.index');
 // INSTALL /////////////////////////////////////////////////////////////////////////////////////////
 Route::get('install', 'InstallController@index')->name('install.index');

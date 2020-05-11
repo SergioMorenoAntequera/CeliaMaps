@@ -14,7 +14,7 @@ class SettingsController extends Controller
     }
     //
     ///////////////////////////////////////////////////////////////////////////////////////////
-    // SET THE MAIN VIEW OF THE GLOBAL MAP ////////////////////////////////////////////////////
+    // INDEX //////////////////////////////////////////////////////////////////////////////////
     /**
      * Method that gets the info from the database
      * 
@@ -49,5 +49,20 @@ class SettingsController extends Controller
         $zoom = Setting::where("name", "=", "mainPointZoom")->first();
         $zoom->value = $r->zoom;
         $zoom->update();
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    // OPTIONS TO CHANGE THE INFO AT HOME /////////////////////////////////////////////////////
+    /**
+     * Method that gets the info from the database
+     * 
+     * @param id
+     * @return View
+     */
+    public function homeInfo() {
+        // $data['homeInfo'] = Setting::getHomeInfo();
+        // return view('setting.setMainView', $data);
+        return view('setting.home');
     }
 }

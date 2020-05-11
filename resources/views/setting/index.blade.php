@@ -17,6 +17,15 @@
                 <div class="row text-center text-white">
                     {{-- Vista principal  --}}
                     <div class="col-6 p-1">
+                        <a href="{{route('setting.home')}}" class="text-decoration-none">
+                        <div class="backupBox p-1 h-100">
+                            <h1> Datos Home </h1>
+                            <p> Selecciona los datos que quieres que se vean en la palla de home. </p>
+                        </div>
+                        </a>
+                    </div>
+                    {{-- Vista principal  --}}
+                    <div class="col-6 p-1">
                         <a href="{{route('setting.mainView')}}" class="text-decoration-none">
                         <div class="backupBox p-1 h-100">
                             <h1> Vista principal </h1>
@@ -40,4 +49,6 @@
 @endsection
 
 @section('scripts')
+
+
 @endsection
