@@ -25,15 +25,15 @@
                             <h2 class="text-success"> Metadata </h2>
                             <div class="form-group">
                                 <label >Titulo de la página </label>
-                                <input type="text" name="metadataTitle" class="form-control" value="{{ $metadata->pageTitle }}">
+                                <input type="text" name="pageTitle" class="form-control" value="{{ $metadata->pageTitle }}">
                             </div>
                             <div class="form-group">
                                 <label>Descripción de la página</label>
-                                <textarea name="metadataDescription" class="form-control">{{ $metadata->description }}</textarea>
+                                <textarea name="description" class="form-control">{{ $metadata->description }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label>Palabras clave de la pagina</label>
-                                <textarea name="metadataKeywords" class="form-control">{{ $metadata->keywords }}</textarea>
+                                <textarea name="keywords" class="form-control">{{ $metadata->keywords }}</textarea>
                                 <small>Separe las palabras con comas</small>
                             </div>
 
@@ -67,26 +67,25 @@
         e.preventDefault();
 
         let formData = getformData();
+        let url = "{{route('setting.updateHome')}}";
+        
         console.log(formData);
 
-        fetch('{{route('setting.updateHome')}}', {
-            method: 'POST',
-            body: formData
-        })
-        .then(function(response) {
-            // return response.json();
-        })
-        .then(function(myJson) {
-            // console.log(myJson);
+        $.ajax({
+            url: url,
+            method: "POST",
+            data: {'_token': $('input[name=_token]').val(), data: formData},
+            success: function(data) {
+                alert("Información actualizada con exito");
+            },
         });
     });
 
     function getformData() {
-
         const fields = document.querySelectorAll(".form-group > input, .form-group > textarea ");
-        let formData = new FormData();
+        let formData = [];
         fields.forEach(field => {
-            formData.append(field.name, field.value);
+            formData.push({name: field.name, value: field.value});
         });
         return formData;
     }

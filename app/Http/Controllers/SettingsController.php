@@ -67,8 +67,32 @@ class SettingsController extends Controller
         // return view('setting.setMainView', $data);
         return view('setting.homeInfo', $data);
     }
+    
     public function updateHomeInfo(Request $r) {
-        $settings = Setting::all();
-        dd($settings);
+        // dd($r);
+        $request = $r->data;
+        $options = ["pageTitle", "description", "keywords", "homeSubtitle", "homeColor"];
+        for ($i=0; $i < sizeof($options); $i++) { 
+            $oneSetting = Setting::where("name", "=", $options[$i])->first();
+            $oneSetting->value = $request[$i]['value'];
+            $oneSetting->update();
+        }
+
+
+        // foreach ($request as $option) {
+        //     if($option["name"] == "homeBackground"){
+        //         if($option["name"]->hasFile('homeBackground')){
+        //             $oneSetting = Setting::where("name", "=", "homeBackground")->first();
+        //             $file = $option->file('miniature');
+        //             dd($file);
+        //             // $file->move(public_path("/img/miniatures/"), getClientOriginalName());
+        //             // $map->miniature = getClientOriginalName();
+        //         } else {
+        //             return;
+        //         }        
+        //     } else {
+        //         continue;
+        //     }
+        // }
     }
 }
