@@ -19,8 +19,11 @@
                     <div class="col-6 p-1">
                         <a href="{{route('setting.home')}}" class="text-decoration-none">
                         <div class="backupBox p-1 h-100">
-                            <h1> Datos Home </h1>
-                            <p> Selecciona los datos que quieres que se vean en la palla de home. </p>
+                            <h1> General </h1>
+                            <ul class="list-unstyled mx-2">
+                                <li>Datos pantalla home</li>
+                                <li>Titulo, descripción y keywords</li>
+                            </ul>
                         </div>
                         </a>
                     </div>

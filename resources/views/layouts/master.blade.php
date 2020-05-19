@@ -157,6 +157,7 @@
                             <div class="lateralExpandMenu">
                                 <b> Ajustes </b>
                                 <div class="line"></div>
+                                <a href="{{route('setting.home')}}"><li> General </li></a>
                                 <a href="{{route('setting.mainView')}}"><li> Vista principal </li></a>
                                 <a href="{{route('marker.admin')}}"><li>Marcadores</li></a>
                             </div>

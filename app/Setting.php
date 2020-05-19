@@ -15,6 +15,7 @@ class Setting extends Model
         $mainPoint->zoom = Setting::where("name", "=", "mainPointZoom")->first()->value;
         return $mainPoint;
     }
+    
 
     public static function getHomeOptions(){
         $homeInfo = (object) array();
@@ -22,6 +23,9 @@ class Setting extends Model
         $homeInfo->homeBackground = Setting::where("name", "=", "homeBackground")->first()->value;
         $homeInfo->homeColor = Setting::where("name", "=", "homeColor")->first()->value;
         return $homeInfo;
+    }
+    public static function  setHomeOptions() {
+        
     }
 
     public static function getMetaData() {

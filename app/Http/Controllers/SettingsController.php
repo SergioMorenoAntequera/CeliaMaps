@@ -61,8 +61,14 @@ class SettingsController extends Controller
      * @return View
      */
     public function homeInfo() {
-        // $data['homeInfo'] = Setting::getHomeInfo();
+        $data['homeInfo'] = Setting::getHomeOptions();
+        $data['metadata'] = Setting::getMetaData();
+       
         // return view('setting.setMainView', $data);
-        return view('setting.homeInfo');
+        return view('setting.homeInfo', $data);
+    }
+    public function updateHomeInfo(Request $r) {
+        $settings = Setting::all();
+        dd($settings);
     }
 }
