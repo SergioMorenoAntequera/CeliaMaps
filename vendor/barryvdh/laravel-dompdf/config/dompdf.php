@@ -198,8 +198,7 @@ return array(
          *
          * @var bool
          */
-        //CAMBIADO
-        "enable_php" => true,
+        "enable_php" => false,
 
         /**
          * Enable inline Javascript
@@ -238,8 +237,7 @@ return array(
         /**
          * Use the more-than-experimental HTML5 Lib parser
          */
-        //CAMBIADO
-        "enable_html5_parser" => true,
+        "enable_html5_parser" => false,
     ),
 
 

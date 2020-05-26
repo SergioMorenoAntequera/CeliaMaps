@@ -6,7 +6,7 @@ use Aws\Result;
 use Aws\S3\Exception\DeleteMultipleObjectsException;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\Exception\S3MultipartUploadException;
-use Aws\S3\S3Client;
+use Aws\S3\S3ClientInterface;
 use League\Flysystem\Adapter\AbstractAdapter;
 use League\Flysystem\Adapter\CanOverwriteFiles;
 use League\Flysystem\AdapterInterface;
@@ -59,7 +59,7 @@ class AwsS3Adapter extends AbstractAdapter implements CanOverwriteFiles
     ];
 
     /**
-     * @var S3Client
+     * @var S3ClientInterface
      */
     protected $s3Client;
 
@@ -76,12 +76,12 @@ class AwsS3Adapter extends AbstractAdapter implements CanOverwriteFiles
     /**
      * Constructor.
      *
-     * @param S3Client $client
+     * @param S3ClientInterface $client
      * @param string   $bucket
      * @param string   $prefix
      * @param array    $options
      */
-    public function __construct(S3Client $client, $bucket, $prefix = '', array $options = [])
+    public function __construct(S3ClientInterface $client, $bucket, $prefix = '', array $options = [])
     {
         $this->s3Client = $client;
         $this->bucket = $bucket;
@@ -112,7 +112,7 @@ class AwsS3Adapter extends AbstractAdapter implements CanOverwriteFiles
     /**
      * Get the S3Client instance.
      *
-     * @return S3Client
+     * @return S3ClientInterface
      */
     public function getClient()
     {
@@ -458,7 +458,7 @@ class AwsS3Adapter extends AbstractAdapter implements CanOverwriteFiles
     /**
      * Read an object and normalize the response.
      *
-     * @param $path
+     * @param string $path
      *
      * @return array|bool
      */
@@ -580,9 +580,9 @@ class AwsS3Adapter extends AbstractAdapter implements CanOverwriteFiles
     /**
      * Upload an object.
      *
-     * @param        $path
-     * @param        $body
-     * @param Config $config
+     * @param string          $path
+     * @param string|resource $body
+     * @param Config          $config
      *
      * @return array|bool
      */
@@ -619,6 +619,7 @@ class AwsS3Adapter extends AbstractAdapter implements CanOverwriteFiles
      * Check if the path contains only directories
      *
      * @param string $path
+     *
      * @return bool
      */
     private function isOnlyDir($path)
@@ -693,7 +694,7 @@ class AwsS3Adapter extends AbstractAdapter implements CanOverwriteFiles
     }
 
     /**
-     * @param $location
+     * @param string $location
      *
      * @return bool
      */

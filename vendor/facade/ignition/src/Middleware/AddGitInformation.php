@@ -22,27 +22,27 @@ class AddGitInformation
 
     public function hash(): ?string
     {
-        return "";// $this->command("git log --pretty=format:'%H' -n 1");
+        return $this->command("git log --pretty=format:'%H' -n 1");
     }
 
     public function message(): ?string
     {
-        return "";// $this->command("git log --pretty=format:'%s' -n 1");
+        return $this->command("git log --pretty=format:'%s' -n 1");
     }
 
     public function tag(): ?string
     {
-        return "";// $this->command('git describe --tags --abbrev=0');
+        return $this->command('git describe --tags --abbrev=0');
     }
 
     public function remote(): ?string
     {
-        return "";// $this->command('git config --get remote.origin.url');
+        return $this->command('git config --get remote.origin.url');
     }
 
     public function isClean(): bool
     {
-        return "";// empty($this->command('git status -s'));
+        return empty($this->command('git status -s'));
     }
 
     protected function command($command)
