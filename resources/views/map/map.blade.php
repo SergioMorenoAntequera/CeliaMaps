@@ -321,6 +321,7 @@
             jsHotspots.forEach(hotspot => {
                 if($(this).text().trim() == hotspot.title){
                     selection = hotspot;
+                    selection.fullName = selection.title;
                     return;
                 }
             });
@@ -342,7 +343,9 @@
                     }
                 }
             });
-
+            
+            // Fill search field with clicked result
+            $("#streetsInput").val(selection.fullName);
             // Clear search field
             $('#streetsFound').empty();
             // Zoom to selection position
@@ -375,12 +378,16 @@
                     content = "<br>Existe en los mapas:<br><br>";
                 else
                     content = "<br>Existe en el mapa:<br><br>";
-                selection.maps.forEach(map => {
-                    content += map.title;
-                    if(map.pivot.alternative_name !== null)
-                        content += " con el nombre <em>" + map.pivot.alternative_name + "</em>";
-                    content += "<br><br>";
-                });
+                if(selection.maps.length == 0){
+                    content = "<br>No pertenece a ningún mapa:<br><br>";
+                }else{
+                    selection.maps.forEach(map => {
+                        content += "<b>" + map.title + "</b>";
+                        if(map.pivot.alternative_name !== null)
+                            content += " con el nombre <em>" + selection.typeName + " " + map.pivot.alternative_name + "</em>";
+                        content += "<br>";
+                    });
+                }
                 content += "<br><a style='color:black' href={{url('search/inform')}}/" + selection.id + ">Imprimir</a><br><br>";
                 $("#hp-description").html(content);
 
@@ -448,13 +455,17 @@
                             content = "<br>Existe en los mapas:<br><br>";
                         else
                             content = "<br>Existe en el mapa:<br><br>";
-                        this.street.maps.forEach(map => {
-                            content += "<b>" + map.title + "</b>";
-                            if(map.pivot.alternative_name !== null)
-                                content += " con el nombre <em>" + map.pivot.alternative_name + "</em>";
-                            content += "<br>";
-                        });
-                        content += "<br><a style='color:black' href={{url('search/inform')}}/" + this.street.id + ">Imprimir</a><br><br>";
+                        if(selection.maps.length == 0){
+                            content = "<br>No pertenece a ningún mapa:<br><br>";
+                        }else{
+                            selection.maps.forEach(map => {
+                                content += "<b>" + map.title + "</b>";
+                                if(map.pivot.alternative_name !== null)
+                                    content += " con el nombre <em>" + selection.typeName + " " + map.pivot.alternative_name + "</em>";
+                                content += "<br>";
+                            });
+                        }
+                        content += "<br><a style='color:black' href={{url('search/inform')}}/" + selection.id + ">Imprimir</a><br><br>";
                         $("#hp-description").html(content);
                         // Display modal
                         $("#hotspotMenu").fadeIn(200);
@@ -490,7 +501,7 @@
 
         // We hide everything when we unfocus
         $("#streetsInput").on("focusout", function(e){
-            // $('#streetsFound').empty();
+            //$('#streetsFound').empty();
         });
 
         // Auxiliar function
@@ -510,7 +521,9 @@
                 }
             });
         }
-
+        map.on("move", function(){
+            $('#streetsFound').empty();
+        })
         map.on("click", function(){
             $('#streetsFound').empty();
         });
