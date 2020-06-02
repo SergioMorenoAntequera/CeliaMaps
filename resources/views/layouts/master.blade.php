@@ -182,8 +182,6 @@
                                 element = $(".lateralMenuLink[href|='{{route('backup.index')}}']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/search")){
                                 element = $(".lateralMenuLink[href|='{{route('search.index')}}']").parents(".lateralMenuElement");
-                            } else if(window.location.href.includes("/organization")){
-                                element = $(".lateralMenuLink[href|='{{route('organization.index')}}']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/setting") || window.location.href.includes("/marker")){
                                 element = $(".lateralMenuLink[selector|=settings]").parents(".lateralMenuElement");
                             }
