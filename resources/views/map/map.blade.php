@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {{--
     <title>{{ $metaData->pageTitle }}</title>
     <meta name="description" content=" {{ $metaData->description }} ">
     <meta name="keywords" content=" {{ $metaData->keywords }} ">
-
+    --}}
+    <title>Celia Maps</title>
     <link rel="icon" type="image/png" href="{{url('img/icons/icon.png')}}" sizes="64x64">
     <!-- LEAFLET -->
     <script src="{{url('js/Leaflet/leaflet.js')}}"></script>
