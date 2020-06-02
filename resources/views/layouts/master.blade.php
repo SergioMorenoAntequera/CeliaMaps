@@ -146,7 +146,6 @@
                                 <b> Informes </b>
                                 <div class="line"></div>
                                 <a href="{{route('search.index')}}"><li>Generar informe</li></a>
-                                <a href="{{route('organization.index')}}"><li>Administrar cabeceras</li></a>
                             </div>
                         </div>
 
