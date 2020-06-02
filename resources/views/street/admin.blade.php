@@ -869,11 +869,14 @@
             // STREET FOUND IN SEARCH BAR
             $(document).on("click","div.street",function(){
                 console.log(this);
+                // Fill search field with clicked result
+                $("#streetsInput").val($(this).text().substr(1));
+                // Clear results list
                 $('#streetsFound').empty();
                 let id = this.id;
                 clusterMarkers.eachLayer(function(layer){
                     if(id == layer.id)
-                        map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 18);
+                        map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
                 });
             });
 
@@ -901,6 +904,10 @@
                     }
                 }
             }
+            
+            map.on("move", function(){
+                $("#streetsFound").empty();
+            })
         });
     </script>
     <script src="{{url('js/cPopUp.js')}}"></script>
