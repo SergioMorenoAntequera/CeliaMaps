@@ -128,7 +128,7 @@
                             <div class="lateralExpandMenu">
                                 <b> Backup </b>
                                 <div class="line"></div>
-                                <a href="{{route('backup.index')}}"><li>Índice</li></a>
+                                <a href="{{route('backup.index')}}"><li>Guardar/Restaurar</li></a>
                                 {{--<a href="{{route('backup.restoreDir')}}"><li>imagen</li></a>
                                  <a href="{{route('backup.index')}}"><li>Guardar</li></a>
                                 <a href="{{route('backup.index')}}"><li>Restaurar</li></a> --}}
@@ -190,13 +190,13 @@
                             $(".lateralMenuElement").hover(function(e){
                                 var top = $(this).position().top;
                                 var expandMenu = $(this).children(".lateralExpandMenu");
-                                
+
                                 //La parida esta es para que salga centrada
                                 expandMenu.css("top", top - expandMenu.height()/2 + $(this).height()/2);
                                 expandMenu.show();
                                 //Animaction
                                 // expandMenu.animate({"left": "100%"}, 150);
-                                
+
                             }, function(e){
                                 var expandMenu = $(this).children(".lateralExpandMenu");
                                 // expandMenu.animate({"left": "-200px"}, 150);
@@ -251,13 +251,13 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    
+
     <!-- Optional views scripts -->
-    
+
     @yield('scripts')
 
     <!-- Check authentication -->
-    
+
     @isset($guest)
         @if($guest)
             <script>
@@ -268,5 +268,5 @@
         @endif
     @endisset
 
-    
+
 </html>
