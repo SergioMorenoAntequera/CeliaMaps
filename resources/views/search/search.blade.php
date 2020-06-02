@@ -21,7 +21,7 @@
 
                         <div id="buscadorVia" class="container align-center"  width="25%">
                         <form class="form-inline float-right">
-                            <input type="text" id="cajaTexto" class="form-control" placeholder="Nombre Vía" onfocus="this.placeholder=''" onblur="this.placeholder='Nombre Vía'">
+                            <input type="text" id="cajaTexto" class="form-control" placeholder="Nombre Vía">
                             <img  id="lupa" src="{{url('/img/icons/lupa-blanca.png')}}" width="15%" alt="" class="img-fluid pt-1">
                         </form>
                         <!--

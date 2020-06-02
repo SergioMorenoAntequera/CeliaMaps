@@ -31,6 +31,9 @@ Route::resource('map', 'MapController');
 // USER /////////////////////////////////////////////////////////////////////////////////////
 Route::resource('user', 'UserController');
 Route::delete('user/deleteAjax/{id}', 'UserController@deleteAjax')->name('user.deleteAjax');
+// ONGANIZATIONS ////////////////////////////////////////////////////////////////////////////
+//Route::resource('organization', 'OrganizationController');
+//Route::delete('organization/deleteAjax/{id}', 'OrganizationController@deleteAjax')->name('organization.deleteAjax');
 // STREETS /////////////////////////////////////////////////////////////////////////////////////
 Route::get('street/admin', 'StreetController@admin')->name('street.admin');
 Route::get('street/storeAjax', 'StreetController@storeAjax')->name('street.storeAjax');
@@ -67,6 +70,8 @@ Route::post('search', 'SearchController@search')->name('search.search');
 Route::get('search/download/{id}', 'SearchController@download')->name('search.download');
 Route::get('search/inform/{id}', 'SearchController@inform')->name('search.inform');
 Route::get('search/show/{id}', 'SearchController@show')->name('search.show');
+Route::get('search/hotspot/{id}', 'SearchController@hotspot')->name('search.hotspot');
+Route::post('search/searchHotspot', 'SearchController@searchHotspot')->name('search.searchHotspot');
 // PDF /////////////////////////////////////////////////////////////////////////////////////////////
 //Route::get('pdf/ver', 'PdfController@ver')->name('pdf.ver');
 //Route::get('pdf/download', 'PdfController@download')->name('pdf.download');

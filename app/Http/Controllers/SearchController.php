@@ -9,8 +9,10 @@ use App\Map;
 use App\StreetType;
 use App\Point;
 use App\MapStreet;
+use App\Hotspot;
+use App\Image;
 use DB;
-use PDF;
+
 
 class SearchController extends Controller
 {
@@ -20,14 +22,18 @@ class SearchController extends Controller
         $this->middleware("auth")->except("inform");
     }
 
-    // MUESTRA EL LISTADO DE LAS CALLES CON EL BUSCADOR ///////////////////////////
+    // MUESTRA EL LISTADO DE LAS CALLES Y LOS PUNTOS DE INTERÉS CON EL BUSCADOR ///////////////////////////
     public function index() {
-        $streets = Street::all();
+        $streets = Street::all()->sortBy('name');
         $maps = Map::all();
-        $types = StreetType::all()->sortBy('name');
-        return view('search/searchStreet', ['streets' => $streets, 'maps' => $maps, 'types' => $types]);
+        $types = StreetType::all();
+        $hotspots = Hotspot::all()->sortBy('title');
+
+        //return view('search/searchStreet', ['streets' => $streets, 'maps' => $maps, 'types' => $types]);
+
+        return view('search/searchAll', ['streets' => $streets, 'maps' => $maps, 'types' => $types, 'hotspots' => $hotspots]);
     }
-    // PARA QUE FUNCIONE EL BUSCADOR //////////////////////////////////////////////
+    // PARA QUE FUNCIONE EL BUSCADOR DE LAS CALLES //////////////////////////////////////////////
     public function search(Request $request)
     {
         $data = $request->text; // lo que escribimos en la caja de texto de la vista
@@ -39,6 +45,18 @@ class SearchController extends Controller
             ->where('streets.name', 'like', '%' . $data . '%')
             ->orWhere('maps_streets.alternative_name', 'like', '%' . $data . '%')->distinct()->take(10)->get();
         return response()->json($data);
+    }
+    // PARA QUE FUNCIONE EL BUSCADOR DE LOS PUNTOS DE INTERÉS ///////////////////////////////////
+    public function searchHotspot(Request $request)
+    {
+        $data = $request->text; // la variable $data contendrá lo que se ha introducido en la caja de texto de la vista
+        $data = DB::table('hotspots') // equivale a select * from
+            ->join('images', 'hotspots.id', '=', 'images.hotspot_id')
+            //->join('maps', 'images.map_id', '=', 'maps.id')
+            //->select('hotspots.id','hotspots.title', 'hotspots.description', 'images.id as id_image', 'images.title as title_image', 'images.description as description_image', 'images.file_name', 'maps.id as map_id')
+            ->select('hotspots.id','hotspots.title', 'images.id as id_image', 'images.title as title_image')
+            ->where('hotspots.title', 'like', '%' . $data . '%')->distinct()->take(10)->get();
+            return response()->json($data);
     }
     // MUESTRA LA VISTA PREVIA DEL PDF, ES SÓLO PARA PROBARLO /////////////////////////
     public function show($id){
@@ -52,10 +70,10 @@ class SearchController extends Controller
     // MUESTRA LA VISTA DE LA CALLE SELECCIONADA //////////////////////////////////////
     public function inform($id, Request $request)
     {
-        $street = Street::find($id);        
-        $street_type = StreetType::all(); 
-        $map_street = MapStreet::all();      
-        $map = Map::all();      
+        $street = Street::find($id);
+        $street_type = StreetType::all();
+        $map_street = MapStreet::all();
+        $map = Map::all();
         // Mantenemos la variable flash para guardar el último sitio visitado (frontend)
         $request->session()->reflash();
         // Controlamos el acceso de usuarios invitados
@@ -63,6 +81,18 @@ class SearchController extends Controller
         if($request->user()){
             $guest = false;
         }
+
         return view('search/informe', array('street' => $street, 'street_type' => $street_type, 'map' => $map, 'map_street' => $map_street, 'guest' => $guest));
+    }
+
+    // MUESTRA LA VISTA DEL PUNTO DE INTERÉS SELECCIONADO
+    public function hotspot($id){
+        $hotspot = Hotspot::find($id);
+        $image = Image::all();
+        $map = Map::all();
+        //return view('search/informeHotspot', array('hotspot' => $hotspot, 'image' => $image, 'map' => $map));
+
+        return view('search/informeHotspot', array('hotspot' => $hotspot, 'image' => $image));
+
     }
 }
