@@ -24,7 +24,8 @@
     <script src="{{url('/js/Leaflet/pluginClusteringMarkers/leaflet.markercluster.js')}}"></script>
     <link rel="stylesheet" href="{{url('/js/Leaflet/pluginClusteringMarkers/MarkerCluster.css')}}">
     <link rel="stylesheet" href="{{url('/js/Leaflet/pluginClusteringMarkers/MarkerCluster.Default.css')}}">
-    
+    <!-- Plugin smooth marker bouncing -->
+    <script type="text/javascript" src="{{url('/js/Leaflet/leaflet.smoothmarkerbouncing.js')}}"></script>
     <!-- JQUERY -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -313,7 +314,7 @@
             iconSize:     [40, 100],
             iconAnchor:   [15,60],
         });
-
+        var hpMarkers = [];
         var selection;
         // Barra de busqueda y como nos mueve al punto en el que se encuentre el 
         // hotspot o la calle en la que se pinche
@@ -360,6 +361,13 @@
                 $("#hp-title").text(selection.title);
                 $("#hp-img").attr("src", selection.images[0].file_path + "/" + selection.images[0].file_name);
                 $("#hp-description").text(selection.description);
+                // Animate active marker
+                hpMarkers.forEach(function(hpMarker){
+                    if(hpMarker.hotspotInfo.id == selection.id){
+                        L.Marker.stopAllBouncingMarkers();
+                        hpMarker.bounce();
+                    }
+                });
 
             }else{ 
                 // Enable streets
@@ -390,10 +398,18 @@
                 }
                 content += "<br><a style='color:black' href={{url('search/inform')}}/" + selection.id + ">Imprimir</a><br><br>";
                 $("#hp-description").html(content);
-
+                
+                // Animate active marker
+                clusterMarkers.eachLayer(function(marker){
+                    if(marker.street.id == selection.id){
+                        L.Marker.stopAllBouncingMarkers();
+                        marker.bounce();
+                    }
+                });
             }
             // Show street modal
             $("#hotspotMenu").fadeIn(200);
+            
         });
     </script>
 
@@ -449,26 +465,29 @@
                         map.setView([this.street.lat, parseFloat(this.street.lng) + 0.00041], 19);
                         // Modal data
                         $("#hp-img").attr("src", "");
+                        $("#hp-gallery").hide();
                         $("#hp-title").text(this.street.fullName);
                         let content = "";
                         if(this.street.maps.length > 1)
                             content = "<br>Existe en los mapas:<br><br>";
                         else
                             content = "<br>Existe en el mapa:<br><br>";
-                        if(selection.maps.length == 0){
+                        if(this.street.maps.length == 0){
                             content = "<br>No pertenece a ningún mapa:<br><br>";
                         }else{
-                            selection.maps.forEach(map => {
+                            this.street.maps.forEach(map => {
                                 content += "<b>" + map.title + "</b>";
                                 if(map.pivot.alternative_name !== null)
-                                    content += " con el nombre <em>" + selection.typeName + " " + map.pivot.alternative_name + "</em>";
+                                    content += " con el nombre <em>" + this.street.typeName + " " + map.pivot.alternative_name + "</em>";
                                 content += "<br>";
                             });
                         }
-                        content += "<br><a style='color:black' href={{url('search/inform')}}/" + selection.id + ">Imprimir</a><br><br>";
+                        content += "<br><a style='color:black' href={{url('search/inform')}}/" + this.street.id + ">Imprimir</a><br><br>";
                         $("#hp-description").html(content);
                         // Display modal
                         $("#hotspotMenu").fadeIn(200);
+                        // Start animation
+                        this.bounce()
                     });
                     clusterMarkers.addLayer(marker);
                 }
@@ -526,6 +545,9 @@
         })
         map.on("click", function(){
             $('#streetsFound').empty();
+        });
+        $("#hotspotMenu .closeMenuButton").on("click", function(){
+            L.Marker.stopAllBouncingMarkers();
         });
         map.removeLayer(clusterMarkers);
     </script>

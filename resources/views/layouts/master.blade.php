@@ -4,11 +4,11 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         {{--
-	<title>{{ $metaData->pageTitle }}</title>
+	    <title>{{ $metaData->pageTitle }}</title>
         <meta name="description" content=" {{ $metaData->description }} ">
         <meta name="keywords" content=" {{ $metaData->keywords }} ">
-	--}}
-	<title>@yield('title')</title>
+	    --}}
+	    <title>@yield('title')</title>
         <!-- General CDNs -->
         <link rel="icon" type="image/png" href="{{url('/img/icons/icon.png')}}" sizes="64x64">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" integrity="sha384-SI27wrMjH3ZZ89r4o+fGIJtnzkAnFs3E4qz9DIYioCQ5l9Rd/7UAa8DHcaL8jkWt" crossorigin="anonymous">
@@ -251,6 +251,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="{{url('/js/Leaflet/leaflet.smoothmarkerbouncing.js')}}"></script>
 
     <!-- Optional views scripts -->
 

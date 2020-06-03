@@ -23,7 +23,9 @@ $(document).ready(function(){
     });
 
     // Variable para controlar los marcadores cuando están activos
-    var hpMarkers = [];
+    
+    //var hpMarkers = []; La declaramos en map.blade.php para tener alcance fuera de este fichero
+
     $('.ball').on("click", function(){
         swapOpacity($(this).find("img"));
 
@@ -46,15 +48,20 @@ $(document).ready(function(){
                             map.setView([hpData.lat, parseFloat(hpData.lng) + 0.00041], 18);
                             // Se completa la información de la ventana
                             $("#hp-title").text(hpData.title);
+                            $("#hp-gallery").show();
                             $("#hp-img").attr("src", hpData.images[0].file_path + "/" + hpData.images[0].file_name);
                             $("#hp-description").text(hpData.description);
                             // Aparece la ventana
                             $("#hotspotMenu").fadeIn(200);
+                            // Start animation
+                            L.Marker.stopAllBouncingMarkers();
+                            this.bounce();
                         }
                     );
                     marker = $.extend(marker, {"hotspotInfo": hp});
                     hpMarkers.push(marker);
                     marker.addTo(map);
+                    console.log(hpMarkers);
                 });
             } else {
                 // If it's not 1 it means tht we have to hide them

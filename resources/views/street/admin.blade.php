@@ -333,7 +333,7 @@
                 </div>
 
                 <div class="modal-body">
-                    <p>¿Está seguro de que desea eliminar la vía?</p>
+                    <p>¿Está seguro de que desea eliminar la vía <b id="removeStreet"></b>?</p>
                     <button id="btn-cancel" type="button" class="btn btn-success float-left" data-dismiss="modal">Cancelar</button>
                     <button id="btn-confirm" type="button" class="btn btn-danger float-right deleteConfirm" data-dismiss="modal">Eliminar</button>
                 </div>
@@ -444,6 +444,7 @@
                     // Creating a Marker
                     var marker{{$street->id}} = L.marker([{{$street->points[0]->lat}}, {{$street->points[0]->lng}}],{icon: markerImage, alt:"{{$street->id}}", draggable:false});
                     marker{{$street->id}}.id = {{$street->id}};
+                    marker{{$street->id}}.fullName = "{{$street->typeName}} {{$street->name}}";
                     // Adding marker to the markers list
                     markersList.push(marker{{$street->id}});
                     // Adding marker to the map
@@ -543,6 +544,8 @@
             $(".option[action='Remove']").on("click", function(){
                 hideMenu();
                 $('#modal').modal('hide');
+                console.log(activeMarker);
+                $("#removeStreet").text(activeMarker.fullName);
                 $('#confirmModal').modal('show');
                 cpuHide();
             });
@@ -769,6 +772,7 @@
                             }
                         );
                         ajaxStreetMarker.id = ajaxStreet.id;
+                        ajaxStreetMarker.fullName = ajaxStreet.fullName;
                         
                         // ADD IT TO THE MAP
                         markersList.push(ajaxStreetMarker);
@@ -816,6 +820,7 @@
                         markersList.forEach(marker => {
                             if(marker.id == ajaxStreetUpdated.id){
                                 marker._latlng = {lat:ajaxStreetUpdated.lat, lng:ajaxStreetUpdated.lng};
+                                marker.fullName = ajaxStreetUpdated.fullName;
                             }
                         });
                         
@@ -904,7 +909,6 @@
                     }
                 }
             }
-            
             map.on("move", function(){
                 $("#streetsFound").empty();
             })
