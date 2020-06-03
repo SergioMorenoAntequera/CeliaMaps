@@ -487,6 +487,7 @@
                         // Display modal
                         $("#hotspotMenu").fadeIn(200);
                         // Start animation
+                        L.Marker.stopAllBouncingMarkers();
                         this.bounce()
                     });
                     clusterMarkers.addLayer(marker);
