@@ -880,8 +880,10 @@
                 $('#streetsFound').empty();
                 let id = this.id;
                 clusterMarkers.eachLayer(function(layer){
-                    if(id == layer.id)
+                    if(id == layer.id){
                         map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
+                        layer.bounce(3);
+                    }
                 });
             });
 
