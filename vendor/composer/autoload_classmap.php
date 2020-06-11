@@ -26,7 +26,7 @@ return array(
     'App\\Http\\Controllers\\MarkerController' => $baseDir . '/app/Http/Controllers/MarkerController.php',
     'App\\Http\\Controllers\\PdfController' => $baseDir . '/app/Http/Controllers/PdfController.php',
     'App\\Http\\Controllers\\PointController' => $baseDir . '/app/Http/Controllers/PointController.php',
-    'App\\Http\\Controllers\\SearchController' => $baseDir . '/app/Http/Controllers/SearchController.php',
+    'App\\Http\\Controllers\\SearchController' => $baseDir . '/app/Http/Controllers/SearchControllerOriginal.php',
     'App\\Http\\Controllers\\SettingsController' => $baseDir . '/app/Http/Controllers/SettingsController.php',
     'App\\Http\\Controllers\\StreetController' => $baseDir . '/app/Http/Controllers/StreetController.php',
     'App\\Http\\Controllers\\UserController' => $baseDir . '/app/Http/Controllers/UserController.php',

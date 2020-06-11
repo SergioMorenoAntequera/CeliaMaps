@@ -71,6 +71,7 @@ class HotspotController extends Controller
         $r->validate([
             'title' => 'required',
             'description' => 'required',
+            'externalUrl' => 'url',
             'images' => 'required'
         ]);
         
@@ -97,6 +98,7 @@ class HotspotController extends Controller
         $r->validate([
             'title' => 'required',
             'description' => 'required',
+            'externalUrl' => 'url',
             'titleImage' => 'required',
             'descriptionImage' => 'required'
         ]);
@@ -155,6 +157,7 @@ class HotspotController extends Controller
         $r->validate([
             'title' => 'required',
             'description' => 'required',
+            'externalUrl' => 'url'
         ]);
         
         $hotspot = Hotspot::find($id);
@@ -167,6 +170,7 @@ class HotspotController extends Controller
         $r->validate([
             'title' => 'required',
             'description' => 'required',
+            'externalUrl' => 'url',
             'images' => 'required'
         ]);
         

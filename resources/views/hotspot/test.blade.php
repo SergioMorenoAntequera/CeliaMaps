@@ -185,28 +185,33 @@
                     <!-- Hotspot title -->
                     <div class="modal-body">
                         <div class="form-group">
-                            <b><label class="text-dark">Titulo del Hotspot</label></b>
+                            <b><label class="text-dark">Título del Hotspot</label></b>
                             <input type="text" class="form-control" name="title">
                         </div>
                         <!-- Hotspot description -->
                         <div class="form-group">
-                            <b><label class="text-dark">Descripcion del Hotspot</label></b>
+                            <b><label class="text-dark">Descripción del Hotspot</label></b>
                             <input type="text" class="form-control" name="description">
+                        </div>
+                        <!-- Hotspot external url -->
+                        <div class="form-group">
+                            <b><label class="text-dark">Enlace externo del Hotspot</label></b>
+                            <input type="url" class="form-control" name="externalUrl">
                         </div>
                         <!-- Hotspot images -->
                         <div class="form-group images-fields" id="imagesUpload">
-                            <b><label class="text-dark">Imagenes del Hotspot</label><br></b>
+                            <b><label class="text-dark">Imágenes del Hotspot</label><br></b>
                             <input type="file" name="images[]" class="fileToUpload" multiple>
                         </div>
                         <div class="form-group images-fields" id="filePathUpdate">
                             <input type="hidden" name="filePath" value="/img/hotspots/" disabled>
                         </div>
                         <div class="form-group images-fields">
-                            <b><label class="text-dark">Titulo de la imagen</label></b>
+                            <b><label class="text-dark">Título de la imagen</label></b>
                             <input type="text" class="form-control" name="titleImage">
                         </div>
                         <div class="form-group images-fields">
-                            <b><label class="text-dark">Descripcion de la imagen</label></b>
+                            <b><label class="text-dark">Descripción de la imagen</label></b>
                             <input type="text" class="form-control" name="descriptionImage">
                         </div>
                         <!-- Images relationships Maps -->
@@ -419,6 +424,7 @@
                 // Clear fields
                 $("input[name='title']").val("");
                 $("input[name='description']").val("");
+                $("input[name='externalUrl']").val("");
                 // Fill position values
                 $("#modal-lat").val(lat);
                 $("#modal-lng").val(lng);
@@ -441,6 +447,7 @@
                 // Fill inputs fields
                 $("input[name='title']").val(hotspot.title);
                 $("input[name='description']").val(hotspot.description);
+                $("input[name='externalUrl']").val(hotspot.externalUrl);
                 ///////$("input[name='description']").val(hotspot->images[]);
                 // Fill hidden values
                 $("#modal-lat").val(hotspot.lat);

@@ -358,7 +358,10 @@
                     $("#ballHotspots").click();
                 // Hotspot data
                 $("#hp-gallery").show();
-                $("#hp-title").text(selection.title);
+                if(selection.externalUrl !== null)
+                    $("#hp-title").html("<a style='color:black' target='_blank' href='" + selection.externalUrl + "'>" + selection.title + " <i class='fa fa-external-link fa-1' style='font-size:smaller'></i></a>");
+                else
+                    $("#hp-title").text(selection.title);
                 $("#hp-img").attr("src", selection.images[0].file_path + "/" + selection.images[0].file_name);
                 $("#hp-description").text(selection.description);
                 // Animate active marker
