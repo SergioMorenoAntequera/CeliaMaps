@@ -183,7 +183,7 @@ html, body {
 #mapsMenu {
     top: 113px;
     left: 5px;
-    z-index: 90;
+    z-index: 50;
 }
 #mapsTrans {
     width: 190px;
@@ -259,7 +259,8 @@ html, body {
     right: 10px;
     width: 400px;
     height: auto;
-
+    z-index: 51;
+    
     padding: 0px;
     border-radius: 10px;
 }
@@ -341,13 +342,10 @@ html, body {
     width: auto;
 }
 #tileChooser {
-
     border-radius: 10px;
-
 }
 #tileChooser > .tiles {
     display: inline;    
-    
 }
 #tileChooser > .tiles > img {
     height: 100px;
@@ -382,6 +380,20 @@ html, body {
 }
 #tilesShow > i {
     margin-top: 6px;
+}
+
+@media (max-width: 520px) {
+    #tilesMenu {
+        bottom: 210px;
+    }
+    #tileChooser > .tiles {
+        display: block;
+    }
+    #tilesShow {
+        left: 0px;
+        bottom: 0px;
+        width: 60px;
+    }
 }
 
 /*/////////////////////////////////////////////////////////////////////*/

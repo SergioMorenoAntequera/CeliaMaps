@@ -16,15 +16,23 @@ $(document).ready(function(){
         if(icono.hasClass("fa-chevron-down")){
             icono.removeClass("fa-chevron-down");
             icono.addClass("fa-chevron-up");
+            
             $(this).parent().animate({
                 bottom: "-100px",
             }, 300);
         } else {
             icono.removeClass("fa-chevron-up");
             icono.addClass("fa-chevron-down");
-            $(this).parent().animate({
-                bottom: "15px",
-            }, 300);
+            
+            if(window.innerWidth <= 520 ) {
+                $(this).parent().animate({
+                    bottom: "210px",
+                }, 300);
+            } else {
+                $(this).parent().animate({
+                    bottom: "15px",
+                }, 300);
+            }
         }
     });
 });
