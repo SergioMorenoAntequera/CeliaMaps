@@ -45,7 +45,13 @@ $(document).ready(function(){
                             var hpData = e.target.hotspotInfo;
                             selection = hpData;
                             // Centramos la vista en el hotspot
-                            map.setView([hpData.lat, parseFloat(hpData.lng) + 0.00041], 19);
+                            if(window.innerWidth <= 520) {
+                                map.setView([parseFloat(hpData.lat) + 0.00045, hpData.lng], 19);
+                            } else {
+                                map.setView([hpData.lat, parseFloat(hpData.lng) + 0.00041], 19);
+                            }
+
+                            
                             // Se completa la información de la ventana
                             if(hpData.externalUrl !== null)
                                 $("#hp-title").html("<a style='color:black' target='_blank' href='" + hpData.externalUrl + "'>" + hpData.title + " <i class='fa fa-external-link' style='font-size:smaller'></i></a>");
