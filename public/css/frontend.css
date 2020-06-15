@@ -105,6 +105,27 @@ html, body {
     width: 100%;
 }
 
+@media (max-width: 520px) {
+    .ball {
+        left: 50%;
+        transform: translate(-50%);
+        top: initial;
+        bottom: 0px;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .ball > .ballContent {
+        left: initial;
+        width: 70%;
+        height: 70%;
+        left: 2px;
+        top: 2px;
+    }
+}
+
 /*/////////////////////////////////////////////////////////////////////*/
 /*////////////////// TODOS LOS MENUS FLOTANTES ////////////////////////*/
 /*///////////////////////// CONTENDOR DE MENUS ////////////////////////*/

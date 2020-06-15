@@ -153,6 +153,8 @@ $(document).ready(function(){
     //////////////////////////////////////////////////////////////////////////////////////////
 
     // CAMBIAR ENTRE ENSEÑAR LAS BOLAS O NO //////////////////////////////////////////////////
+    var ballInitialPosition = jQuery(document.querySelector(".ball")).position();
+
     function toggleBalls(){
         var BallMenu = $(".ballMenu");
         var balls = BallMenu.siblings(".ball");
@@ -174,17 +176,31 @@ $(document).ready(function(){
         } else if(balls.length == 4){
             balls.each(function(index){
                 var ball = jQuery(balls[index]);
-                if(ball.css('top') == "0px"){
-                    var lefts = new Array("120px", "98px", "57px", "5px");
-                    var tops = new Array("5px", "57px", "98px", "120px");
+
+                // Breakpoint  para hacer que las bolas reacciones distinto en 520px
+                if(window.innerWidth <= 520 ) {
+                    if(ball.css('bottom') == "0px"){
+                        var bottoms = new Array("100px", "180px", "260px", "340px");
+                    } else {
+                        var bottoms = new Array("0px", "0px", "0px", "0px");
+                    }
+                    ball.animate({
+                        bottom: bottoms[index],
+                    }, 200);
+                    
                 } else {
-                    var lefts = new Array("0px", "0px", "0px", "0px");
-                    var tops = new Array("0px", "0px", "0px", "0px");
+                    if(ball.css('top') == "0px"){
+                        var lefts = new Array("120px", "98px", "57px", "5px");
+                        var tops = new Array("5px", "57px", "98px", "120px");
+                    } else {
+                        var lefts = new Array("0px", "0px", "0px", "0px");
+                        var tops = new Array("0px", "0px", "0px", "0px");
+                    }
+                    ball.animate({
+                        left: lefts[index],
+                        top: tops[index],
+                    }, 200);
                 }
-                ball.animate({
-                    left: lefts[index],
-                    top: tops[index],
-                }, 200);
             });
         }
     }
