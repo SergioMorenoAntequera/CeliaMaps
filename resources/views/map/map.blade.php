@@ -350,9 +350,8 @@
             // Clear search field
             $('#streetsFound').empty();
             // Zoom to selection position
-            // map.setView([selection.lat, parseFloat(selection.lng) + 0.00041], 19);
             if(window.innerWidth <= 520) {
-                map.setView([parseFloat(selection.lat) + 0.00045, selection.lng], 19);
+                map.setView([parseFloat(selection.lat) + 0.00039, selection.lng], 19);
             } else {
                 map.setView([selection.lat, parseFloat(selection.lng) + 0.00041], 19);
             }
@@ -471,9 +470,8 @@
                     marker.on('click', function(e){
                         // Clean streets from searcher module
                         $('#streetsFound').empty();
-                        // map.setView([this.street.lat, parseFloat(this.street.lng) + 0.00041], 19);
                         if(window.innerWidth <= 520) {
-                            map.setView([parseFloat(street.lat) + 0.00045, street.lng], 19);
+                            map.setView([parseFloat(street.lat) + 0.00039, street.lng], 19);
                         } else {
                             map.setView([street.lat, parseFloat(street.lng) + 0.00041], 19);
                         }

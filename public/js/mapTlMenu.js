@@ -46,7 +46,7 @@ $(document).ready(function(){
                             selection = hpData;
                             // Centramos la vista en el hotspot
                             if(window.innerWidth <= 520) {
-                                map.setView([parseFloat(hpData.lat) + 0.00045, hpData.lng], 19);
+                                map.setView([parseFloat(hpData.lat) + 0.00039, hpData.lng], 19);
                             } else {
                                 map.setView([hpData.lat, parseFloat(hpData.lng) + 0.00041], 19);
                             }
@@ -108,7 +108,9 @@ $(document).ready(function(){
         }
     });
     
-    $(".menu").draggable();
+    if(window.innerWidth > 510) {
+        $(".menu").draggable();
+    }
 
 
     $('.closeMenuButton').on("click", function(){

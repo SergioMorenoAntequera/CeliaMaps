@@ -230,7 +230,8 @@ html, body {
 }
 #hotspotMenu > .content {
     position: relative;
-    max-height: 438px;
+    /* max-height: 438px; */
+    height: 100%;
     overflow-y: auto;
     border-radius: 10px;
 }
@@ -248,6 +249,7 @@ html, body {
         left: 50%;
         transform: translate(-50%);
         width: 95%;
+        height: 60%;
         margin: 0px;
     }
 }
@@ -477,6 +479,7 @@ html, body {
     height: 3%;
     right: 2%;
     top: 2%;
+    z-index: 20;
     cursor: pointer;
 }
 #carousel .content .upperPart .arrow {
@@ -523,12 +526,35 @@ html, body {
     opacity: 0.5;
     cursor: pointer;
     margin: 0px 5px;
+    transition: .3s;
 }
 #carousel .content .lowerPart .images img:hover {
     opacity: 1;
 }
 #carousel .content .lowerPart .images img.selected {
     opacity: 1;
+}
+
+@media (max-width: 520px){
+    #carousel {
+        width: 100%;
+        height: 100%;
+        border-radius: 0px;
+        padding: 0px;
+    }
+    #carousel .content .upperPart .bigImg {
+       max-width: 90%; 
+    }
+
+    #carousel .content .lowerPart {
+        border-radius: 0px;
+        padding: 10px;
+    }
+    #carousel .content .lowerPart .images {
+        display: flex;
+        overflow-x: auto;
+    }
+    
 }
 
 /*/////////////////////////////////////////////////////////////////////*/
