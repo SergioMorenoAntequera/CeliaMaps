@@ -47,8 +47,8 @@ html, body {
     background-color: #FFFFFF;
     cursor: pointer;
 }
+
 .ballMenu > .ballMenuContent {
-    float: left;
     position: relative;
     width: 60px;
     height: 60px;
@@ -58,6 +58,21 @@ html, body {
 .ballMenu > .ballMenuContent > img{
     width: 100%;
     
+}
+
+@media (max-width: 520px) {
+    .ballMenu {
+        bottom: -120px ;
+        top: initial;
+        left: 50%;
+        transform: translate(-50%);
+    }
+    .ballMenu > .ballMenuContent {
+        left: initial;
+        top: 13px;
+        left: 50%;
+        transform: translate(-50%);
+    }
 }
 
 /*** BOLAS SECUNDARIAS ****/
