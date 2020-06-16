@@ -183,7 +183,7 @@ html, body {
 #mapsMenu {
     top: 113px;
     left: 5px;
-    z-index: 50;
+    z-index: 1;
 }
 #mapsTrans {
     width: 190px;
