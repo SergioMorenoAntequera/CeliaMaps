@@ -85,7 +85,7 @@
                                 <div class="line"></div>
                                 <a href="{{route('hotspot.index')}}"><li>Índice</li></a>
                                 <a href="{{route('hotspot.create')}}"><li>Administrar</li></a>
-                                <a href="{{route('hotspot.gallery')}}"><li>Galeria de Imagenes</li></a>
+                                <a href="{{route('gallery.index')}}"><li>Galeria de Imagenes</li></a>
                                 {{-- <a href="{{route('hotspot.index')}}"><li>Modificar</li></a>
                                 <a href="{{route('hotspot.index')}}"><li>Elminar</li></a> --}}
                             </div>
@@ -172,7 +172,7 @@
                                 element = $(".lateralMenuLink[href|='{{route('map.index')}}']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/street")){
                                 element = $(".lateralMenuLink[href|='{{route('street.index')}}']").parents(".lateralMenuElement");
-                            } else if(window.location.href.includes("/hotspot")){
+                            } else if(window.location.href.includes("/hotspot") || window.location.href.includes("/gallery")){
                                 element = $(".lateralMenuLink[href|='{{route('hotspot.index')}}']").parents(".lateralMenuElement");
                             } else if(window.location.href.includes("/user")){
                                 element = $(".lateralMenuLink[href|='{{route('user.index')}}']").parents(".lateralMenuElement");

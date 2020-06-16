@@ -50,12 +50,16 @@ Route::get('hotspot/admin', 'HotspotController@admin')->name('hotspot.admin');
 Route::get('hotspot/storeAjax', 'HotspotController@storeAjax')->name('hotspot.storeAjax');
 Route::get('hotspot/updateAjax', 'HotspotController@updateAjax')->name('hotspot.updateAjax');
 Route::get('hotspot/updatePositionAjax', 'HotspotController@updatePositionAjax')->name('hotspot.updatePositionAjax');
-Route::get('hotspot/gallery', 'HotspotController@gallery')->name('hotspot.gallery');
+// Route::get('hotspot/gallery', 'HotspotController@gallery')->name('hotspot.gallery');
 Route::delete('hotspot/deleteAjax/{id}', 'HotspotController@deleteAjax')->name('hotspot.deleteAjax');
 Route::get('hotspot/getAllAjax', 'HotspotController@getAllAjax')->name('hotspot.getAjax');
 Route::get('hotspot/searchAjax', 'HotspotController@searchAjax')->name('hotspot.search');
 Route::get('hotspot/destroyAjax', 'HotspotController@destroyAjax')->name('hotspot.destroyAjax');
 Route::resource('hotspot', 'HotspotController');
+
+// GALLERY ///////////////////////////////////////////////////////////////////////////////////////
+Route::get('/gallery', 'ImageController@index')->name('gallery.index');
+
 // AUTH ///////////////////////////////////////////////////////////////////////////////////////
 Auth::routes();
 Auth::routes(['register' => false]);
