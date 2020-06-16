@@ -58,7 +58,8 @@ Route::get('hotspot/destroyAjax', 'HotspotController@destroyAjax')->name('hotspo
 Route::resource('hotspot', 'HotspotController');
 
 // GALLERY ///////////////////////////////////////////////////////////////////////////////////////
-Route::get('/gallery', 'ImageController@index')->name('gallery.index');
+Route::get('gallery', 'ImageController@index')->name('gallery.index');
+Route::get('gallery/destroyAjax', 'ImageController@destroyAjax')->name('gallery.destroyAjax');
 
 // AUTH ///////////////////////////////////////////////////////////////////////////////////////
 Auth::routes();

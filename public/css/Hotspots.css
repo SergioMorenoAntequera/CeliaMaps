@@ -113,6 +113,9 @@ body, html {
     top: 5em;
     left: 0;
 }
+.selected{color: white;}
+.hotspotInList {transition: .1s;}
+.hotspotInList:hover{color: white; font-weight: bold; cursor: pointer;} 
 
 /*********************************************************************************/
 /* LEFT PANEL ********************************************************************/

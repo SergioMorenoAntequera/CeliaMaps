@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Image;
 use App\Map;
@@ -97,6 +98,14 @@ class ImageController extends Controller
         File::delete(public_path('img/hotspots/'.$image->file_name));
         $image->delete();
         return redirect()->route('hotspot.gallery');
+    }
+
+    public function destroyAjax(Request $r) {
+
+        $image = Image::find($r->id);
+        Storage::delete(public_path() . $image->file_path . $image->file_name);
+        $image->delete();
+        
     }
 
 }
