@@ -230,7 +230,7 @@ html, body {
 }
 #hotspotMenu > .content {
     position: relative;
-    /* max-height: 438px; */
+    max-height: 438px;
     height: 100%;
     overflow-y: auto;
     border-radius: 10px;
