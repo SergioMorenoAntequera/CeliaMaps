@@ -17,7 +17,6 @@ class ImageController extends Controller
     }
     public function index() {
         $data["hotspots"] = Hotspot::all();
-        // $data["maps"] = Map::all();
         $data["images"] = Image::all();
         return view("hotspot.gallerynew", $data);
     }

@@ -7,14 +7,20 @@
     <div class="container text-center mt-2">
         <div class="wholePanel mb-5" style="">
             
-            <div class="leftPanel" id="mapsList"  style="height: ;">
+            <div class="leftPanel" id="hpList"  style="">
                 <div class="content text-left px-5" style="font-size: 18px; font-weight: normal">
                     <p style="font-size: 30px"><b> Galería de imágenes </b></p>
                     <p class="hotspotInList selected"> Todos </p>
                     @foreach ($hotspots as $hp)
                         <p class="hotspotInList"> {{$hp->title}} </p>
                     @endforeach
+
+                    <div id="drop-area">
+                        <p>Arrastra aquí tus imágenes para subirlas</p><i class="fa fa-upload" aria-hidden="true"></i>
+                    </div>
                 </div>
+
+                
             </div>
 
             <div class="rightPanel">
@@ -31,7 +37,7 @@
                 {{-- Grid de imágenes --}}
                 <div id="images-grid">
                     @foreach ($images as $image)
-                        <div class="grid-element">
+                        <div class="grid-element" data-id="{{$image->id}}">
                             <img src="{{url($image->file_path."/".$image->file_name)}}" alt="{{$image->title}}">
                             <div class="overlay">
                                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
