@@ -37,10 +37,10 @@
                 </div>
                 
                 {{-- Grid de imágenes --}}
-                <div style="display: none" id="grid-element-template" class="grid-element" data-id="">
+                <div style="display: none" id="grid-element-template" class="grid-element"  data-id="">
                     <img src="" alt="">
                     <div class="overlay">
-                        <svg class="img-show" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        <svg class="img-show" data-toggle="modal" data-target="#showModal" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                             viewBox="0 0 511.999 511.999" style="enable-background:new 0 0 511.999 511.999;" xml:space="preserve">
                             <g>
                             <g>
@@ -69,7 +69,7 @@
                         <div class="grid-element" data-id="{{$image->id}}">
                             <img src="{{url($image->file_path."/".$image->file_name)}}" alt="{{$image->title}}">
                             <div class="overlay">
-                                <svg class="img-show" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                <svg class="img-show" data-toggle="modal" data-target="#showModal"  version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                     viewBox="0 0 511.999 511.999" style="enable-background:new 0 0 511.999 511.999;" xml:space="preserve">
                                     <g>
                                     <g>
@@ -104,7 +104,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Imagen</h5>
+                <h5 class="modal-title">Eliminar Imagen</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -115,6 +115,29 @@
                 <div class="modal-footer">
                 <button type="button" class="btn btn-success float-left" data-dismiss="modal"> Cancelar </button>
                 <button id="deleteConfirm" type="button" class="btn btn-danger"> Eliminar </button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                
+                <div class="modal-body text-left">
+                    <div class="left-img">
+                        <img src="" alt="Imagen seleccionada">
+                    </div>
+                    <div class="right-info">
+                        <h2> Titulo de la imagen </h2>
+                        <p> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id eum, possimus odio aut rerum minus earum fuga nisi, ipsam nemo maxime quam enim velit rem aspernatur eveniet veritatis libero ullam.</p>
+                    </div>
+                </div>
+                <div  class="cornerButton" style="right:-1em" data-dismiss="modal">
+                    <i  class="fa fa-times fa-lg" aria-hidden="true"></i>
+                </div>
+                <div class="cornerButton editImage" style="right:2em">
+                    <img src="{{url('img/icons/edit.svg')}}" alt="as">
                 </div>
             </div>
             </div>
@@ -138,6 +161,35 @@
                 // Images php array conversion to js
                 let images = @json($images);
             @endisset
+
+
+            // SEE IMAGE
+            $(".img-show").on("click", function(){
+                // The modal appear by bootstrap magic, here we only update texts and images
+                let imgSelectedID = $(this).parents(".grid-element").data("id");
+                let imgSelected;
+                images.forEach(image => {
+                    if(image.id == imgSelectedID){
+                        imgSelected = image;
+                        return false;
+                    }
+                });
+
+                $("#showModal .right-info h2").text(imgSelected.title);
+                if(imgSelected.description == ""){
+                    $("#showModal .right-info p").addClass("text-danger").text("Esta imagen no cuenta con una descripción");
+                } else {
+                    $("#showModal .right-info p").removeClass("text-danger").text(imgSelected.description);
+                }
+                $("#showModal .left-img img").attr("src", "{{url('')}}/" + imgSelected.file_path + "/" + imgSelected.file_name);
+
+                console.log($("#showModal .left-img img").attr("src"));
+                
+                // $("#showModal .modal-content .modal-body").data("id", imgIDToDelete);
+            });
+
+            // MODIFY IMAGE INFO
+
 
             let imgIDToDelete;
             // DELETE IMAGE
@@ -238,7 +290,6 @@
                 $("#btn-remove").css("display", "none");
                 $('#modalImage').modal('show');
             });
-
             // Edit an image
             $("#editImage").on("click", function(){
                 // Edit form attributes
@@ -273,13 +324,6 @@
                     });
                 });
             });
-
-
-
-
-
-            
-            
         });
     </script>
     

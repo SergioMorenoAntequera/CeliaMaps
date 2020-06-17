@@ -118,6 +118,42 @@ body, html {
 .hotspotInList:hover{color: white; font-weight: bold; cursor: pointer;} 
 
 /*********************************************************************************/
+/* MODAL SHOW ********************************************************************/
+#showModal .modal-dialog {
+    max-width: 85% !important;
+}
+#showModal .modal-dialog .modal-content {
+    background-color: unset;
+}
+#showModal .modal-dialog .modal-body {
+    display: grid;
+    height: 35em;
+    grid-template-columns: 3fr 1fr;
+    padding: 0;
+}
+#showModal .modal-dialog .modal-body .left-img {
+    background-color: rgba(0,0,0,0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#showModal .modal-dialog .modal-body .left-img img {
+    max-width: 90%;
+    max-height: 90%;
+}
+#showModal .modal-dialog .modal-body .right-info {
+    background-color: rgb(243, 243, 243);
+    padding: 2em 1em;
+}
+#showModal .cornerButton {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/*********************************************************************************/
 /* LEFT PANEL ********************************************************************/
 #drop-area {
     margin-top: 5em;
