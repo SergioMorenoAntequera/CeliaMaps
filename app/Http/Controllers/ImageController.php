@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Image;
@@ -89,23 +90,30 @@ class ImageController extends Controller
      * @param id
      * @return View
      */
-    public function destroy($id){
-        $hotspot = Hotspot::find($id);
-        $hotspot->delete();
-        return redirect()->route('hotspot.index');
+    // public function destroy($id){
+    //     $hotspot = Hotspot::find($id);
+    //     $hotspot->delete();
+    //     return redirect()->route('hotspot.index');
 
-        $image = Image::find($id);
-        File::delete(public_path('img/hotspots/'.$image->file_name));
-        $image->delete();
-        return redirect()->route('hotspot.gallery');
+    //     $image = Image::find($id);
+    //     File::delete(public_path('img/hotspots/'.$image->file_name));
+    //     $image->delete();
+    //     return redirect()->route('hotspot.gallery');
+    // }
+
+    public function getImagesOfHotspot(Request $r){
+        if($r->hotspot == "Todos"){
+            return response()->json(Image::all());
+        }
+        $hpToShow = DB::table('hotspots')->where('title', '=', $r->hotspot)->first();
+        $images = DB::table('images')->where('hotspot_id', '=', $hpToShow->id)->get();
+        return response()->json($images);
     }
 
     public function destroyAjax(Request $r) {
-
         $image = Image::find($r->id);
         Storage::delete(public_path() . $image->file_path . $image->file_name);
         $image->delete();
-        
     }
 
 }

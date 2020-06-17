@@ -59,6 +59,7 @@ Route::resource('hotspot', 'HotspotController');
 
 // GALLERY ///////////////////////////////////////////////////////////////////////////////////////
 Route::get('gallery', 'ImageController@index')->name('gallery.index');
+Route::get('gallery/imagesOfHotspot', 'ImageController@getImagesOfHotspot')->name('gallery.gioh');
 Route::get('gallery/destroyAjax', 'ImageController@destroyAjax')->name('gallery.destroyAjax');
 
 // AUTH ///////////////////////////////////////////////////////////////////////////////////////

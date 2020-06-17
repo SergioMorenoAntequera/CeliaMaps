@@ -165,7 +165,6 @@ body, html {
 #images-grid .grid-element {
     position: relative;
 }
-
 #images-grid .grid-element .overlay {
     position: absolute;
     top: 0px; left: 0px; right: 0px;
@@ -195,13 +194,11 @@ body, html {
     fill: #31A48A;
     stroke: #31A48A;
 }
-
 #images-grid .grid-element img {
     width: 100%;
     height: 150px;
     cursor: pointer;
 }
-
 #images-grid .grid-element p {
     font-weight: 500;
     position: relative;
