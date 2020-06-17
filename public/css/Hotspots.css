@@ -145,6 +145,9 @@ body, html {
     background-color: rgb(243, 243, 243);
     padding: 2em 1em;
 }
+#showModal .modal-dialog .modal-body .right-info h2 {
+    font-weight: bold;
+}
 #showModal .cornerButton {
     color: white;
     display: flex;

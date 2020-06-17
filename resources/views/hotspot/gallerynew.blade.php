@@ -130,9 +130,14 @@
                     </div>
                     <div class="right-info">
                         <h2> Titulo de la imagen </h2>
-                        <p> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id eum, possimus odio aut rerum minus earum fuga nisi, ipsam nemo maxime quam enim velit rem aspernatur eveniet veritatis libero ullam.</p>
+                        <h3>Descripción</h3>
+                        <p class="description"> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id eum, possimus odio aut rerum minus earum fuga nisi, ipsam nemo maxime quam enim velit rem aspernatur eveniet veritatis libero ullam.</p>
+                        <br>
+                        <h3> Hotspot asociado </h3>
+                        <p class="hotspot"> Mi casa </p>
                     </div>
                 </div>
+
                 <div  class="cornerButton" style="right:-1em" data-dismiss="modal">
                     <i  class="fa fa-times fa-lg" aria-hidden="true"></i>
                 </div>
@@ -161,7 +166,10 @@
                 // Images php array conversion to js
                 let images = @json($images);
             @endisset
-
+            @isset($hotspots)
+                // Images php array conversion to js
+                let hotspots = @json($hotspots);
+            @endisset
 
             // SEE IMAGE
             $(".img-show").on("click", function(){
@@ -177,13 +185,28 @@
 
                 $("#showModal .right-info h2").text(imgSelected.title);
                 if(imgSelected.description == ""){
-                    $("#showModal .right-info p").addClass("text-danger").text("Esta imagen no cuenta con una descripción");
+                    $("#showModal .right-info .description").addClass("text-danger").text("Esta imagen no cuenta con una descripción");
                 } else {
-                    $("#showModal .right-info p").removeClass("text-danger").text(imgSelected.description);
+                    $("#showModal .right-info .description").removeClass("text-danger").text(imgSelected.description);
                 }
                 $("#showModal .left-img img").attr("src", "{{url('')}}/" + imgSelected.file_path + "/" + imgSelected.file_name);
 
-                console.log($("#showModal .left-img img").attr("src"));
+
+                hotspots.forEach(hp => {
+                    if(hp.id == imgSelected.hotspot_id){
+                        $("#showModal .right-info .hotspot").text(hp.title);
+                        return false;
+                    }
+                });
+                
+                // $.ajax({
+                //     url: "{{route('gallery.ghoi')}}",
+                //     data: {"id":imgSelectedID}
+                // }).done(function(data) {
+                //     hotspots = data.hotspots;
+                //     $("#showModal .left-img img .hotspot").text(data.selectedHotspot);
+                // });
+
                 
                 // $("#showModal .modal-content .modal-body").data("id", imgIDToDelete);
             });
