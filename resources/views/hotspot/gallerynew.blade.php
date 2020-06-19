@@ -36,7 +36,7 @@
                     <input id="searchBar" class="form-control my-0 py-1" type="text" placeholder="Search" aria-label="Search">
                 </div>
                 
-                {{-- Grid de imágenes --}}
+                {{-- TEMPLATE --}}
                 <div style="display: none" id="grid-element-template" class="grid-element"  data-id="">
                     <img src="" alt="">
                     <div class="overlay">
@@ -63,7 +63,7 @@
                     </div>
                     <p class="hp-title">  </p>
                 </div>
-
+                {{-- Grid de imágenes --}}
                 <div id="images-grid">
                     @foreach ($images as $image)
                         <div class="grid-element" data-id="{{$image->id}}">
@@ -146,7 +146,7 @@
                         <h3> Hotspot asociado </h3>
                         <p class="hotspot"> Mi casa </p>
                         <div class="hotspots-form form-group d-none">
-                            <select class="form-control">
+                            <select class="form-control" name="hotspot">
                                 @foreach ($hotspots as $hp)
                                     <option> {{$hp->title}} </option>
                                 @endforeach
@@ -195,7 +195,7 @@
             // SEE IMAGE
             $(".img-show").on("click", function(){
                 // The modal appear by bootstrap magic, here we only update texts and images
-                updateModalInfo($(this));
+                updateModalInfo($(this).parents(".grid-element").data("id"));
                 showInfo();
             });
 
@@ -203,24 +203,28 @@
             $(".img-edit").on("click", function(){
                 // The modal appear by bootstrap magic, here we only update texts and images
                 if(!$(this).hasClass("editImage")) 
-                    updateModalInfo($(this));
+                    updateModalInfo($(this).parents(".grid-element").data("id"));
                 showEdit()
             });
 
             $(".cornerSwap").on("click", function(){
                 if($(this).hasClass("cornerEdit")){
                     $(this).removeClass("cornerEdit").addClass("cornerShow");
+                    $(".cornerSwap").removeClass("cornerEdit").addClass("cornerShow");
                     showEdit();
+
                 } else {
                     $(this).removeClass("cornerShow").addClass("cornerEdit");
+                    $(".cornerSwap").removeClass("cornerShow").addClass("cornerEdit");
                     showInfo();
                 }
             });
 
+            let imgSelectedID
+            let imgSelected;
 
-            function updateModalInfo(icon) {
-                let imgSelectedID = icon.parents(".grid-element").data("id");
-                let imgSelected;
+            function updateModalInfo(id) {
+                imgSelectedID = id;
                 images.forEach(image => {
                     if(image.id == imgSelectedID){
                         imgSelected = image;
@@ -228,11 +232,15 @@
                     }
                 });
 
+                console.log($("#showModal .right-info .title-form input").val())
+                console.log(imgSelected)
                 $("#showModal .right-info .title").text(imgSelected.title);
-                $("#showModal .right-info .title-form input").attr("value", imgSelected.title);
+                $("#showModal .right-info .title-form input").val(imgSelected.title);
 
-                if(imgSelected.description == ""){
+
+                if(imgSelected.description == "" || imgSelected.description == null){
                     $("#showModal .right-info .description").addClass("text-danger").text("Esta imagen no cuenta con una descripción");
+                    $("#showModal .right-info .description-form input").val(imgSelected.description);
                     $("#showModal .right-info .description-form input").attr("placeholder", "Introduce una descripción para la imagen");
                 } else {
                     $("#showModal .right-info .description").removeClass("text-danger").text(imgSelected.description);
@@ -254,13 +262,7 @@
                     }
                 });
 
-                if(!icon.hasClass("img-show")){
-                    $(".cornerSwap").removeClass("cornerEdit").addClass("cornerShow");
-                    showEdit();
-                } else {
-                    $(".cornerSwap").removeClass("cornerShow").addClass("cornerEdit");
-                    showInfo();
-                }
+                
             }
             function showInfo() {
                 $("#showModal .title").removeClass("d-none");
@@ -287,6 +289,37 @@
                 $("#showModal .submit-edit").removeClass("d-none");
             }
 
+
+            // EDIT IMG 
+            $(".submit-edit").on("click", function(){
+                //Prepare data
+                let data = {
+                    "id": imgSelectedID,
+                    "title" : $(".form-control[name=imgTitle]").val().trim(),
+                    "description" : $(".form-control[name=imgDescription]").val().trim(),
+                    "hpTitle" : $(".form-control[name=hotspot]").val().trim(),
+                }
+                //Ajax
+                $.ajax({
+                    url: "{{route('gallery.updateAjax')}}",
+                    data: data,
+                    success: function(data){
+                        alert("Imagen actualizada con exito");
+                        for (let i = 0; i < images.length; i++) {
+                            if(images[i].id == data.id){
+                                images[i] = data;
+                                updateModalInfo(images[i].id);
+                                break;
+                            }
+                        }
+                        $(".grid-element").each(function(){
+                            if($(this).data("id") == data.id){
+                                $(this).children(".hp-title").text(data.title);
+                            }
+                        })
+                    }
+                })
+            })
 
             let imgIDToDelete;
             // DELETE IMAGE
