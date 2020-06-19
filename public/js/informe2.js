@@ -48,13 +48,35 @@ $(document).ready(function() {
 
     fechactual = ("Almería, " + dia + " de " + mes + " de " + anio);
     firma = "Fdo.: ";
-
-    //console.log($('#encabezadoDraggable').text());
     console.log('pero esto funciona o no??');
+    console.log(fechactual);
+
+      var padre = document.getElementById('textoInforme');
+      var hijo = document.getElementById('firmado');
+
+     // $("@page").prepend("#cabecera");
+     var cabecera = $('#cabecera').text();
+     console.log('@page');
+/*
+      $('#probando').on('click', function(){
+        var cook = getCookie("cookie1Probando");
+        if (cook != "") {
+          alert("Welcome again " + cook);
+        } else {
+           cook = prompt("Please enter your name:","");
+           if (cook != "" && cook != null) {
+             setCookie("cookie1Probando", cook, 30);
+           }
+        }
+      });
+*/
+
     $('#mostrarocultar').hide();
     $('#volveramostrar').hide();
     $('#ocultarmapa').hide();
     $('#mostrarmapa').hide();
+
+    //$("textarea").autoResize();
 
     $('#aplicar').on("click", function (){
 
@@ -65,12 +87,24 @@ $(document).ready(function() {
         $('#ocultarmapa').show();
         $('#mostrarmapa').show();
 
-        parrafo = document.getElementById('observaciones').value;
+
+
         al_idrisi = document.getElementById('funcionarioa').value;
         document.getElementById('fechaInforme').innerHTML = ' ' + fechactual;
-        document.getElementById('contenido').innerHTML = ' ' + parrafo;
-        document.getElementById('nombreFuncionarioa').innerHTML = ' ' + firma +  al_idrisi;
+        //document.getElementById('contenido').innerHTML = ' ' + parrafo;
+        document.getElementById('firmado').innerHTML = ' ' + firma +  al_idrisi;
+
+
     });
+
+    $('#textoMapas').on("click", function(){
+        $('.intro1').remove();
+    });
+    $('#textoInforme').on("click", function(){
+        $('.intro2').remove();
+        document.getElementById('fechaInforme').innerHTML = ' ' + fechactual;
+    });
+/*
 
     $('#mostrarocultar').on("click", function(){
         $('#encabezadoDraggable').hide();
@@ -117,10 +151,13 @@ $(document).ready(function() {
         $('#imagencabecera').empty();
      });
 
-
+*/
     $("#btn-pdf").on("click", function(){
 
         $("#btn-pdf").hide();
+        $('.intro1').hide();
+        $('.intro2').hide();
+
         $("#botonObservaciones").hide();
         $("#botonCabecera").hide();
         $("#mostrarocultar").hide();
@@ -133,6 +170,9 @@ $(document).ready(function() {
         $('#informeObservacionesDraggable').removeClass("border border-success rounded");
         window.print();
         $("#btn-pdf").show();
+        $('.intro1').show();
+        $('.intro2').show();
+
         $("#botonObservaciones").show();
         $("#botonCabecera").show();
         $("#mostrarocultar").show();
@@ -146,11 +186,11 @@ $(document).ready(function() {
         //$('#informeObservacionesDraggable').addClass("border border-success rounded");
     });
     /*
-    $("#informeObservacionesDraggable").draggable({
+    $("#botonArrastre").draggable({
         cursor: 'move',
-        containment: "#ordenado", scroll: false
+        //containment: "#informeObservacionesDraggable", scroll: false
       });
-      */
+
     $("#encabezadoDraggable").draggable({
         cursor: 'move',
         //containment:  "#informeObservacionesDraggable", scroll: false
@@ -168,25 +208,40 @@ $(document).ready(function() {
         cursor: 'move',
         //containment: "#informeObservacionesDraggable", scroll: false
       });
-      $("#botonArrastre").draggable({
+
+       $("#informeObservacionesDraggable").draggable({
         cursor: 'move',
-        //containment: "#informeObservacionesDraggable", scroll: false
+        containment: "#ordenado", scroll: false
       });
-      /*
+
+      $("#textoDesplazable").draggable({
+        cursor: 'move',
+        //containment: "#contenidoDragable", scroll: false
+      });
+   *//*
       $("#map").draggable({
         //disabled: true
         cursor: 'move',
-        //containment: "#informeObservacionesDraggable", scroll: false
+        //containment: "#contenidoDragable", scroll: false
       });
 
-      */
-      $( function() {
-        $( "#ordenado" ).sortable();
-        $( "#ordenado" ).disableSelection();
+
+      $(function() {
+        $( "#contenidoSortable" ).sortable();
+        $( "#contenidoSortable" ).disableSelection();
       } );
+
 
       // para la galeria de los puntos de interés
 
+      $(function(){
+          $('#textoInforme').draggable({
+              handle: "#textoDragable"
+          });
+
+
+      });
+*/
 
 
 });

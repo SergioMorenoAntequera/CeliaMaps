@@ -2,7 +2,7 @@
 
 @section('title', 'Celia Maps')
 
-@section('content')	
+@section('content')
 
     {{-- SEARCH BAR --}}
     <div class="input-group md-form form-sm form-1 pl-0" style="margin: 15px; width: auto;">
@@ -15,17 +15,17 @@
     </div>
 
     {{-- IMAGES --}}
-    
+
     <div id="allElements" style="display: flex; flex-wrap: wrap;">
         @foreach ($images as $image)
             <a class="element col-md-4" name="{{$image->id}}" style="margin: 15px 0; padding: 0 15px; flex: 0 0 33.333333%; max-width: 455px; position: relative; overflow: hidden; height: 325px" href="#" data-toggle="light-box" data-gallery="gallery">
-                <img class="rounded" style="height: 100%" src="{{url('img/hotspots/', $image->file_name)}}"> <br>
+                <img class="rounded" style="height: 100%" title="{{$image->title}}" alt="{{$image->title}}" src="{{url('img/hotspots/', $image->file_name)}}"> <br>
             </a>
         @endforeach
     </div>
 
     {{-- MODAL CARROUSEL --}}
-    
+
     <div id="ekkoLightbox-893" class="ekko-lightbox modal fade text-dark" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document" style="flex: 1 1 1px; max-width: 70%;">
             <div class="modal-content">
@@ -46,14 +46,14 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Boton para Borrar  -->
                 <form method="POST" action="{{route('image.edit', $image->id)}}">
                     @csrf
                     @method("DELETE")
 
                     <div data-toggle="modal" data-target="#ModalCenter{{$image->id}}" class="deleteCornerButton cornerButton">
-                        <img class="center" src="{{url("img/icons/delete.svg")}}" alt=""> 
+                        <img class="center" src="{{url("img/icons/delete.svg")}}" alt="">
                     </div>
                 </form>
                 <div id="ModalCenter{{$image->id}}" class="modal fade text-dark" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -79,7 +79,7 @@
                 <!-- Boton para modificar -->
                 <a href="#" id="editImage">
                     <div class="cornerButton" style="right: 50px">
-                        <img class="center" src="{{url("img/icons/edit.svg")}}" alt=""> 
+                        <img class="center" src="{{url("img/icons/edit.svg")}}" alt="">
                     </div>
                 </a>
 
@@ -172,7 +172,7 @@
                 let images = @json($images);
                 console.log(images);
             @endisset
-            
+
             let image;
             let host = "{{url('')}}";
             let index = 0;
@@ -180,12 +180,12 @@
                 for (let i = 0; i < images.length; i++) {
                     if(images[i].id == this.name){
                         image = images[i];
-                        index = i;       
+                        index = i;
                     }
                 }
-                
+
                 $("#previewImage").attr("src", host+"/img/hotspots/"+image.file_name);
-                
+
                 $('#ekkoLightbox-893').modal('show');
             });
             $("#anterior").on("click", function(e){
@@ -196,7 +196,7 @@
                 }
 
                 image = images[index];
-                
+
                 $("#previewImage").attr("src", host+"/img/hotspots/"+image.file_name);
             });
             $("#siguiente").on("click", function(e){
@@ -205,9 +205,9 @@
                 else{
                     index++;
                 }
-                
+
                 image = images[index];
-                
+
                 $("#previewImage").attr("src", host+"/img/hotspots/"+image.file_name);
             });
 
@@ -236,7 +236,7 @@
                 // Fill inputs fields
                 $("input[name='title']").val(image.title);
                 $("input[name='description']").val(image.description);
-                
+
 
                 // Fill hidden values
                 $(".modal-body #id").val(image.id);
@@ -261,19 +261,19 @@
                         $('#confirmModal').modal('hide');
                     });
                 });
-            });            
+            });
         });
     </script>
-    
+
     {{-- CODIGO BARRA DE BUSQUEDA CON AJAX    --}}
     <script>
         $(document).ready(function(){
-            // Cogemos la ruta por si me lo levo a un archivo externo 
+            // Cogemos la ruta por si me lo levo a un archivo externo
             var searchAjax = "{{route('hotspot.search')}}"
-            
+
             $("#searchBar").keyup(function(){
                 text = $(this).val();
-                
+
                 $.ajax({
                     url: searchAjax,
                     data: {"text":text},
@@ -284,7 +284,7 @@
                         list.children().each(function(e){
                             var imgID = $(this).attr("name");
                             var found = false;
-                            
+
                             imgsFound.forEach( imgFound => {
                                 if(imgFound.id == imgID){
                                     found = true;
