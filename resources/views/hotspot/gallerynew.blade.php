@@ -2,8 +2,12 @@
 
 @section('title', 'Celia Maps')
 
-@section('content')	
+@section('cdn')
+    <link rel="stylesheet" href="{{url('js/dropzone/dropzone.min.css')}}">
+    <link rel="stylesheet" href="{{url('js/dropzone/basic.min.css')}}">
+@endsection
 
+@section('content')	
     <div class="container text-center mt-2">
         <div class="wholePanel mb-5" style="">
             
@@ -16,10 +20,12 @@
                             <p class="hotspotInList"> {{$hp->title}} </p>
                         @endforeach
                     </div>
+                    
 
-                    <div id="drop-area">
-                        <p>Arrastra aquí tus imágenes para subirlas</p><i class="fa fa-upload" aria-hidden="true"></i>
-                    </div>
+                    <form action="/file-upload"
+                        class="dropzone"
+                        id="drop-area">
+                    </form>
                 </div>
 
                 
@@ -180,6 +186,26 @@
 @endsection
 
 @section('scripts')
+
+    <script src="{{'js/dropzon
+    
+    
+    e/dropzone.min.js'}}"></script>
+    {{-- <script src="{{'js/dropzone/dropzone-amd-module.min.js'}}"></script> --}}
+
+    <script>
+        Dropzone.options.myAwesomeDropzone = {
+        paramName: "file", // The name that will be used to transfer the file
+            
+        // maxFilesize: 2, // MB
+        accept: function(file, done) {
+            if (file.name == "justinbieber.jpg") {
+            done("Naha, you don't.");
+            }
+            else { done(); }
+        }
+        };
+    </script>
 
     <script>
         $(function(){

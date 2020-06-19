@@ -167,11 +167,12 @@ body, html {
     justify-content: center;
     padding: 1em;
     border-radius: 10px;
+    background-color: transparent;
+    
 }
-#drop-area > p {
+#drop-area button {
     margin: 0px;
     text-align: center;
-    
 }
 
 /*********************************************************************************/
