@@ -58,7 +58,7 @@
                             s30.287-67.516,67.516-67.516s67.516,30.287,67.516,67.516S293.227,323.516,255.997,323.516z"/>
                             </g>
                             </g></svg> 
-                        <svg class="img-edit" id="Capa_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g><path d="m384.721 0-323.626 323.627-61.095 188.373 188.374-61.094 323.626-323.627zm84.853 127.279-42.427 42.427-84.853-84.853 42.426-42.427zm-388.611 232.331 71.427 71.428-32.036 10.39-49.782-49.782zm14.501-27.925 225.617-225.618 31.82 31.82-225.618 225.617zm53.032 53.032 225.618-225.619 31.82 31.82-225.618 225.619zm-88.313 38.965 28.136 28.136-41.642 13.505z"/></g></svg>
+                        <svg class="img-edit" data-toggle="modal" data-target="#showModal" id="Capa_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g><path d="m384.721 0-323.626 323.627-61.095 188.373 188.374-61.094 323.626-323.627zm84.853 127.279-42.427 42.427-84.853-84.853 42.426-42.427zm-388.611 232.331 71.427 71.428-32.036 10.39-49.782-49.782zm14.501-27.925 225.617-225.618 31.82 31.82-225.618 225.617zm53.032 53.032 225.618-225.619 31.82 31.82-225.618 225.619zm-88.313 38.965 28.136 28.136-41.642 13.505z"/></g></svg>
                         <svg class="img-delete" data-toggle="modal" data-target="#deleteModal" viewBox="-47 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="m416.875 114.441406-11.304688-33.886718c-4.304687-12.90625-16.339843-21.578126-29.941406-21.578126h-95.011718v-30.933593c0-15.460938-12.570313-28.042969-28.027344-28.042969h-87.007813c-15.453125 0-28.027343 12.582031-28.027343 28.042969v30.933593h-95.007813c-13.605469 0-25.640625 8.671876-29.945313 21.578126l-11.304687 33.886718c-2.574219 7.714844-1.2695312 16.257813 3.484375 22.855469 4.753906 6.597656 12.445312 10.539063 20.578125 10.539063h11.816406l26.007813 321.605468c1.933594 23.863282 22.183594 42.558594 46.109375 42.558594h204.863281c23.921875 0 44.175781-18.695312 46.105469-42.5625l26.007812-321.601562h6.542969c8.132812 0 15.824219-3.941407 20.578125-10.535157 4.753906-6.597656 6.058594-15.144531 3.484375-22.859375zm-249.320312-84.441406h83.0625v28.976562h-83.0625zm162.804687 437.019531c-.679687 8.402344-7.796875 14.980469-16.203125 14.980469h-204.863281c-8.40625 0-15.523438-6.578125-16.203125-14.980469l-25.816406-319.183593h288.898437zm-298.566406-349.183593 9.269531-27.789063c.210938-.640625.808594-1.070313 1.484375-1.070313h333.082031c.675782 0 1.269532.429688 1.484375 1.070313l9.269531 27.789063zm0 0"/><path d="m282.515625 465.957031c.265625.015625.527344.019531.792969.019531 7.925781 0 14.550781-6.210937 14.964844-14.21875l14.085937-270.398437c.429687-8.273437-5.929687-15.332031-14.199219-15.761719-8.292968-.441406-15.328125 5.925782-15.761718 14.199219l-14.082032 270.398437c-.429687 8.273438 5.925782 15.332032 14.199219 15.761719zm0 0"/><path d="m120.566406 451.792969c.4375 7.996093 7.054688 14.183593 14.964844 14.183593.273438 0 .554688-.007812.832031-.023437 8.269531-.449219 14.609375-7.519531 14.160157-15.792969l-14.753907-270.398437c-.449219-8.273438-7.519531-14.613281-15.792969-14.160157-8.269531.449219-14.609374 7.519532-14.160156 15.792969zm0 0"/><path d="m209.253906 465.976562c8.285156 0 15-6.714843 15-15v-270.398437c0-8.285156-6.714844-15-15-15s-15 6.714844-15 15v270.398437c0 8.285157 6.714844 15 15 15zm0 0"/></svg>
                     </div>
                     <p class="hp-title">  </p>
@@ -87,7 +87,7 @@
                                     s30.287-67.516,67.516-67.516s67.516,30.287,67.516,67.516S293.227,323.516,255.997,323.516z"/>
                                     </g>
                                     </g></svg> 
-                                <svg class="img-edit" id="Capa_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g><path d="m384.721 0-323.626 323.627-61.095 188.373 188.374-61.094 323.626-323.627zm84.853 127.279-42.427 42.427-84.853-84.853 42.426-42.427zm-388.611 232.331 71.427 71.428-32.036 10.39-49.782-49.782zm14.501-27.925 225.617-225.618 31.82 31.82-225.618 225.617zm53.032 53.032 225.618-225.619 31.82 31.82-225.618 225.619zm-88.313 38.965 28.136 28.136-41.642 13.505z"/></g></svg>
+                                <svg class="img-edit" data-toggle="modal" data-target="#showModal" id="Capa_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g><path d="m384.721 0-323.626 323.627-61.095 188.373 188.374-61.094 323.626-323.627zm84.853 127.279-42.427 42.427-84.853-84.853 42.426-42.427zm-388.611 232.331 71.427 71.428-32.036 10.39-49.782-49.782zm14.501-27.925 225.617-225.618 31.82 31.82-225.618 225.617zm53.032 53.032 225.618-225.619 31.82 31.82-225.618 225.619zm-88.313 38.965 28.136 28.136-41.642 13.505z"/></g></svg>
                                 <svg class="img-delete" data-toggle="modal" data-target="#deleteModal" viewBox="-47 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="m416.875 114.441406-11.304688-33.886718c-4.304687-12.90625-16.339843-21.578126-29.941406-21.578126h-95.011718v-30.933593c0-15.460938-12.570313-28.042969-28.027344-28.042969h-87.007813c-15.453125 0-28.027343 12.582031-28.027343 28.042969v30.933593h-95.007813c-13.605469 0-25.640625 8.671876-29.945313 21.578126l-11.304687 33.886718c-2.574219 7.714844-1.2695312 16.257813 3.484375 22.855469 4.753906 6.597656 12.445312 10.539063 20.578125 10.539063h11.816406l26.007813 321.605468c1.933594 23.863282 22.183594 42.558594 46.109375 42.558594h204.863281c23.921875 0 44.175781-18.695312 46.105469-42.5625l26.007812-321.601562h6.542969c8.132812 0 15.824219-3.941407 20.578125-10.535157 4.753906-6.597656 6.058594-15.144531 3.484375-22.859375zm-249.320312-84.441406h83.0625v28.976562h-83.0625zm162.804687 437.019531c-.679687 8.402344-7.796875 14.980469-16.203125 14.980469h-204.863281c-8.40625 0-15.523438-6.578125-16.203125-14.980469l-25.816406-319.183593h288.898437zm-298.566406-349.183593 9.269531-27.789063c.210938-.640625.808594-1.070313 1.484375-1.070313h333.082031c.675782 0 1.269532.429688 1.484375 1.070313l9.269531 27.789063zm0 0"/><path d="m282.515625 465.957031c.265625.015625.527344.019531.792969.019531 7.925781 0 14.550781-6.210937 14.964844-14.21875l14.085937-270.398437c.429687-8.273437-5.929687-15.332031-14.199219-15.761719-8.292968-.441406-15.328125 5.925782-15.761718 14.199219l-14.082032 270.398437c-.429687 8.273438 5.925782 15.332032 14.199219 15.761719zm0 0"/><path d="m120.566406 451.792969c.4375 7.996093 7.054688 14.183593 14.964844 14.183593.273438 0 .554688-.007812.832031-.023437 8.269531-.449219 14.609375-7.519531 14.160157-15.792969l-14.753907-270.398437c-.449219-8.273438-7.519531-14.613281-15.792969-14.160157-8.269531.449219-14.609374 7.519532-14.160156 15.792969zm0 0"/><path d="m209.253906 465.976562c8.285156 0 15-6.714843 15-15v-270.398437c0-8.285156-6.714844-15-15-15s-15 6.714844-15 15v270.398437c0 8.285157 6.714844 15 15 15zm0 0"/></svg>
                             </div>
                             <p class="hp-title"> {{$image->title}} </p>
@@ -129,19 +129,40 @@
                         <img src="" alt="Imagen seleccionada">
                     </div>
                     <div class="right-info">
-                        <h2> Titulo de la imagen </h2>
+                        <h2 class="title"> Titulo de la imagen </h2>
+                        <div class="title-form form-group d-none">
+                            <h3>Título</h3>
+                            <input type="text" class="form-control" id="titulo" name="imgTitle" placeholder="">
+                        </div>
+                        <br>
+
                         <h3>Descripción</h3>
                         <p class="description"> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id eum, possimus odio aut rerum minus earum fuga nisi, ipsam nemo maxime quam enim velit rem aspernatur eveniet veritatis libero ullam.</p>
+                        <div class="description-form form-group d-none">
+                            <input type="text" class="form-control" name="imgDescription" placeholder="Introduce una descripción para la imagen">
+                        </div>
                         <br>
+
                         <h3> Hotspot asociado </h3>
                         <p class="hotspot"> Mi casa </p>
+                        <div class="hotspots-form form-group d-none">
+                            <select class="form-control">
+                                @foreach ($hotspots as $hp)
+                                    <option> {{$hp->title}} </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <button type="button" class="submit-edit btn btn-success d-none">
+                            Confirmar
+                        </button>
                     </div>
                 </div>
 
                 <div  class="cornerButton" style="right:-1em" data-dismiss="modal">
                     <i  class="fa fa-times fa-lg" aria-hidden="true"></i>
                 </div>
-                <div class="cornerButton editImage" style="right:2em">
+                <div class="cornerButton cornerSwap cornerEdit" style="right:2em">
                     <img src="{{url('img/icons/edit.svg')}}" alt="as">
                 </div>
             </div>
@@ -174,7 +195,31 @@
             // SEE IMAGE
             $(".img-show").on("click", function(){
                 // The modal appear by bootstrap magic, here we only update texts and images
-                let imgSelectedID = $(this).parents(".grid-element").data("id");
+                updateModalInfo($(this));
+                showInfo();
+            });
+
+            // MODIFY IMAGE INFO
+            $(".img-edit").on("click", function(){
+                // The modal appear by bootstrap magic, here we only update texts and images
+                if(!$(this).hasClass("editImage")) 
+                    updateModalInfo($(this));
+                showEdit()
+            });
+
+            $(".cornerSwap").on("click", function(){
+                if($(this).hasClass("cornerEdit")){
+                    $(this).removeClass("cornerEdit").addClass("cornerShow");
+                    showEdit();
+                } else {
+                    $(this).removeClass("cornerShow").addClass("cornerEdit");
+                    showInfo();
+                }
+            });
+
+
+            function updateModalInfo(icon) {
+                let imgSelectedID = icon.parents(".grid-element").data("id");
                 let imgSelected;
                 images.forEach(image => {
                     if(image.id == imgSelectedID){
@@ -183,11 +228,15 @@
                     }
                 });
 
-                $("#showModal .right-info h2").text(imgSelected.title);
+                $("#showModal .right-info .title").text(imgSelected.title);
+                $("#showModal .right-info .title-form input").attr("value", imgSelected.title);
+
                 if(imgSelected.description == ""){
                     $("#showModal .right-info .description").addClass("text-danger").text("Esta imagen no cuenta con una descripción");
+                    $("#showModal .right-info .description-form input").attr("placeholder", "Introduce una descripción para la imagen");
                 } else {
                     $("#showModal .right-info .description").removeClass("text-danger").text(imgSelected.description);
+                    $("#showModal .right-info .description-form input").attr("value", imgSelected.description);
                 }
                 $("#showModal .left-img img").attr("src", "{{url('')}}/" + imgSelected.file_path + "/" + imgSelected.file_name);
 
@@ -195,23 +244,48 @@
                 hotspots.forEach(hp => {
                     if(hp.id == imgSelected.hotspot_id){
                         $("#showModal .right-info .hotspot").text(hp.title);
+                        $("#showModal .right-info .hotspots-form option").each(function(){
+                            if($(this).text().trim() == hp.title) {
+                                $(this).attr("selected", true);
+                                return false;
+                            }
+                        });
                         return false;
                     }
                 });
-                
-                // $.ajax({
-                //     url: "{{route('gallery.ghoi')}}",
-                //     data: {"id":imgSelectedID}
-                // }).done(function(data) {
-                //     hotspots = data.hotspots;
-                //     $("#showModal .left-img img .hotspot").text(data.selectedHotspot);
-                // });
 
-                
-                // $("#showModal .modal-content .modal-body").data("id", imgIDToDelete);
-            });
+                if(!icon.hasClass("img-show")){
+                    $(".cornerSwap").removeClass("cornerEdit").addClass("cornerShow");
+                    showEdit();
+                } else {
+                    $(".cornerSwap").removeClass("cornerShow").addClass("cornerEdit");
+                    showInfo();
+                }
+            }
+            function showInfo() {
+                $("#showModal .title").removeClass("d-none");
+                $("#showModal .description").removeClass("d-none");
+                $("#showModal .hotspot").removeClass("d-none");
+                $("#showModal .cornerButton img").attr(
+                    "src", $("#showModal .cornerButton img").attr("src").replace("eye.svg", "edit.svg"));
 
-            // MODIFY IMAGE INFO
+                $("#showModal .title-form").addClass("d-none");
+                $("#showModal .description-form").addClass("d-none");
+                $("#showModal .hotspots-form").addClass("d-none");
+                $("#showModal .submit-edit").addClass("d-none");
+            }
+            function showEdit() {
+                $("#showModal .title").addClass("d-none");
+                $("#showModal .description").addClass("d-none");
+                $("#showModal .hotspot").addClass("d-none");
+                $("#showModal .cornerButton img").attr(
+                    "src", $("#showModal .cornerButton img").attr("src").replace("edit.svg", "eye.svg"));
+
+                $("#showModal .title-form").removeClass("d-none");
+                $("#showModal .description-form").removeClass("d-none");
+                $("#showModal .hotspots-form").removeClass("d-none");
+                $("#showModal .submit-edit").removeClass("d-none");
+            }
 
 
             let imgIDToDelete;
@@ -294,9 +368,7 @@
                 });
             });
 
-            
-            
-            
+
             // Upload a new image
             $("#addImage").on("click", function(){
                 // Create form attrubutes
