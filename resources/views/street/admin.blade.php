@@ -445,6 +445,7 @@
                     var marker{{$street->id}} = L.marker([{{$street->points[0]->lat}}, {{$street->points[0]->lng}}],{icon: markerImage, alt:"{{$street->id}}", draggable:false});
                     marker{{$street->id}}.id = {{$street->id}};
                     marker{{$street->id}}.fullName = "{{$street->typeName}} {{$street->name}}";
+                    addPopupToMarker(marker{{$street->id}});
                     // Adding marker to the markers list
                     markersList.push(marker{{$street->id}});
                     // Adding marker to the map
@@ -773,7 +774,8 @@
                         );
                         ajaxStreetMarker.id = ajaxStreet.id;
                         ajaxStreetMarker.fullName = ajaxStreet.fullName;
-                        
+                        addPopupToMarker(ajaxStreetMarker);
+
                         // ADD IT TO THE MAP
                         markersList.push(ajaxStreetMarker);
                         clusterMarkers.addLayer(ajaxStreetMarker);
@@ -821,6 +823,7 @@
                             if(marker.id == ajaxStreetUpdated.id){
                                 marker._latlng = {lat:ajaxStreetUpdated.lat, lng:ajaxStreetUpdated.lng};
                                 marker.fullName = ajaxStreetUpdated.fullName;
+                                marker.setPopupContent(marker.fullName);
                             }
                         });
                         
@@ -914,6 +917,17 @@
             map.on("move", function(){
                 $("#streetsFound").empty();
             })
+
+            // Genereic function to add popup and popup events to marker
+            function addPopupToMarker(marker) {
+                marker.bindPopup(marker.fullName, {offset: [1, -20], closeButton: false});
+                marker.on("mouseover", function(){
+                    marker.openPopup();
+                });
+                marker.on("mouseout", function(){
+                    marker.closePopup();
+                });
+            }
         });
     </script>
     <script src="{{url('js/cPopUp.js')}}"></script>
