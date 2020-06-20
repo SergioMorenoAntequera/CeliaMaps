@@ -130,7 +130,7 @@ class ImageController extends Controller
     public function uploadImg(Request $r){
 
         $r->validate([
-            'title' => 'required|unique:images',
+            'title' => 'required',
             'description' => 'required',
             'img' => 'required|image',
         ]);
@@ -139,16 +139,23 @@ class ImageController extends Controller
         $image->title = $r->title;
         $image->description = $r->description;
         $image->hotspot_id = $r->hotspot_id;
-        
-        $newID = DB::table('images')->latest('id')->first()->id + 1;
+        $image->map_id = -1;
+
+        $image->file_name = "notyet";
+        $image->file_path = "/img/hotspots";
+
+        $image->save();
+
+        $newID = DB::table('images')->latest('id')->first()->id;
+        $image->id = $newID;
 
         $file = $r->file('img');
         $file->move(public_path("/img/hotspots/"), $newID.$file->getClientOriginalName());
         $image->file_name = $newID.$file->getClientOriginalName();
-        $image->file_path = "/img/hotspots";
 
-        $image->save();
-        return redirect(route("gallery.index"));        
+        $image->update();
+
+        return response()->json($image);   
     }
 
 }
