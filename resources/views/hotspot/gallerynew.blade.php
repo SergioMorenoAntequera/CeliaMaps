@@ -177,33 +177,33 @@
                 
                 <div class="modal-body text-left">
 
-                    <form method="post" enctype="multipart/form-data" id="addForm">
+                    <form method="post" action="{{route('gallery.uploadImg')}}" enctype="multipart/form-data" id="addForm">
                         @csrf
 
                         <h3>Titulo</h3>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="newImgDescription" placeholder="Titulo de la imagen">
+                            <input type="text" class="form-control" name="title" placeholder="Titulo de la imagen">
                         </div>
                         <br>
 
                         <h3>Descipción</h3>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="newImgDescription" placeholder="Descipción">
+                            <input type="text" class="form-control" name="description" placeholder="Descipción">
                         </div>
                         <br>
 
                         <h3> Hotspot asociado </h3>
                         <div class="hotspots-form form-group">
-                            <select class="form-control" name="hotspot">
+                            <select class="form-control" name="hotspot_id">
                                 @foreach ($hotspots as $hp)
-                                    <option> {{$hp->title}} </option>
+                                    <option value="{{$hp->id}}"> {{$hp->title}} </option>
                                 @endforeach
                             </select>
                         </div>
 
                         <h3> Archivo </h3>
                         <div class="hotspots-form form-group">
-                            <input type="file" name="newImgFile">
+                            <input type="file" name="img">
                         </div>
 
                         <input type="submit" class="submit-add btn btn-success" value="Confirmar">
@@ -352,11 +352,11 @@
                 $("#showModal .submit-edit").removeClass("d-none");
             }
 
-            //ADD IMG
-            $("#addForm").on("submit", function(e){
-                e.preventDefault();
-                alert("PRA");
-            })
+            // //ADD IMG
+            // $("#addForm").on("submit", function(e){
+            //     // e.preventDefault();
+            //     // alert("PRA");
+            // })
 
             // EDIT IMG 
             $(".submit-edit").on("click", function(){
