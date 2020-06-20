@@ -538,9 +538,11 @@
                     success: function(data){
                         var imgsFound = data.imagesFound;
 
-                        var list = $("#allElements");
+                        
+                        var list = $("#images-grid");
                         list.children().each(function(e){
-                            var imgID = $(this).attr("name");
+                            // console.log($(this));
+                            var imgID = $(this).data("id");
                             var found = false;
                             
                             imgsFound.forEach( imgFound => {
