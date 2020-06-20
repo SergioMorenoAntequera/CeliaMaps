@@ -79,6 +79,14 @@
                 theme : 'material-green'
             });
 
+            // EDITOR PARA LA CABECERA /////////////////////
+            $('#headEditable').jqxEditor({
+                height: 255,
+                width: '100%',
+                theme : 'material-green',
+                //tools: 'bold italic underline | format font size | color background | left center right | outdent indent | ul ol | link'
+            });
+
             // AQUÍ OBTENEMOS EL CONTENIDO DEL EDITOR Y LO COLOCAMOS DONDE QUEREMOS /////////////////////////////////////////////////////
             /*
             var cabecera = $('#situacionMapa').val();
@@ -98,17 +106,19 @@
         <div class="wholePanel">
             <div class="rightPanel" style="width:100%;">
                 <div id="cabecera" class="d-flex flex-row ml-5 mt-5">
-                    <img src="{{url('img/organizations/ayto-marca-institucional-color-RGB.png')}}" alt="Logo ayto" style="width: 12%">
-                    <ul class="list-unstyled align-self-end pl-4">
+                    <img src="{{url('img/organizations/ayto-marca-institucional-color-RGB.png')}}" alt="Logo ayto" style="width: 10%">
+                    <ul id="headEditable" class="list-unstyled align-self-end pl-4" contenteditable="true" style="width: 70%;">
+                    <h6>
                     <li id="linea1"><b>EXCMO. AYUNTAMIENTO DE ALMERÍA</b></li>
                     <li id="linea2">AREA DE CULTURA Y EDUCACIÓN</li>
                     <li id="linea3"><b>SECCIÓN ARCHIVO Y BIBLIOTECAS</b></li>
                     <li id="linea4"><b>ARCHIVO MUNICIPAL</b></li>
+                    </h6>
                     </ul>
                 </div>
                 <div id="texto">
                     <button id="btn-pdf" type="button" class="btn btn-success mr-5 btn-sm float-right">Guardar/Imprimir</button>
-                    <button id="probando" type="button" class="btn btn-success mr-5 btn-sm float-right">probando</button>
+                    <!-- <button id="probando" type="button" class="btn btn-success mr-5 btn-sm float-right">probando</button> -->
                     <div id="nombreVia" class="mt-3">
                         <h2 class="text-center text-success display-4"> {{$street->type->name}} {{$street->name}}</h2>
                     </div>

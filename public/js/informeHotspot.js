@@ -1,27 +1,4 @@
-
 $(document).ready(function() {
-
-     // AL CARGAR LA PÁGINA COMPROBAMOS SI EXISTE LA COOKIE DE LA AYUDA O SU VALOR
-
-     control = Cookies.get('contextHelp');
-     console.log(control);
-     if(control != "false" || control == null){
-        $('#cPopUp').css('display','inline-block');
-     }
-
-     // PARA QUE LA AYUDA SE OCULTE CON EL BOTÓN "X"
-     var cpuX = $("#cPopUp .cornerButton");
-     cpuX.click(function(e){
-        $('#cPopUp').hide();
-    });
-
-    // AL HACER CLICK EN "NO VOLVER A MOSTRAR" CREAMOS LA COOKIE CON VALOR FALSE
-    // Y ESCONDEMOS LA AYUDA
-    $('#noVolverAMostrar').on("click", function(){
-        Cookies.set('contextHelp', 'false');
-        $('#cPopUp').hide();
-    });
-
 
     hoy = new Date();
     dia = hoy.getDate();
@@ -70,26 +47,13 @@ $(document).ready(function() {
 
     fechactual = ("Almería, " + dia + " de " + mes + " de " + anio);
     firma = "Fdo.: ";
+
+    //console.log($('#encabezadoDraggable').text());
     console.log('pero esto funciona o no??');
-    console.log(fechactual);
-
-
-/*
-      $('#probando').on('click', function(){
-        var cook = getCookie("cookie1Probando");
-        if (cook != "") {
-          alert("Welcome again " + cook);
-        } else {
-           cook = prompt("Please enter your name:","");
-           if (cook != "" && cook != null) {
-             setCookie("cookie1Probando", cook, 30);
-           }
-        }
-      });
-*/
-
-
-
+    $('#mostrarocultar').hide();
+    $('#volveramostrar').hide();
+    $('#ocultarmapa').hide();
+    $('#mostrarmapa').hide();
 
     $('#aplicar').on("click", function (){
 
@@ -100,33 +64,30 @@ $(document).ready(function() {
         $('#ocultarmapa').show();
         $('#mostrarmapa').show();
 
-
-
+        parrafo = document.getElementById('observaciones').value;
         al_idrisi = document.getElementById('funcionarioa').value;
         document.getElementById('fechaInforme').innerHTML = ' ' + fechactual;
-        //document.getElementById('contenido').innerHTML = ' ' + parrafo;
-        document.getElementById('firmado').innerHTML = ' ' + firma +  al_idrisi;
-
-
+        document.getElementById('contenido').innerHTML = ' ' + parrafo;
+        document.getElementById('nombreFuncionarioa').innerHTML = ' ' + firma +  al_idrisi;
     });
 
-    $('#textoMapas').on("click", function(){
-        $('.intro1').remove();
+    $('#mostrarocultar').on("click", function(){
+        $('#encabezadoDraggable').hide();
+        console.log('ha llegado al click de mostrar ocultar');
     });
-    $('#textoInforme').on("click", function(){
-        $('.intro2').remove();
-        document.getElementById('fechaInforme').innerHTML = ' ' + fechactual;
+    $('#volveramostrar').on("click", function(){
+        $('#encabezadoDraggable').show();
+        console.log('ha llegado al click de mostrar ocultar');
+    });
+    $('#ocultarmapa').on("click", function(){
+        $('#map').hide();
+        console.log('ha llegado al click de mostrar ocultar');
+    });
+    $('#mostrarmapa').on("click", function(){
+        $('#map').show();
+        console.log('ha llegado al click de mostrar ocultar');
     });
 
-
-/*
-        if (control == true) {
-        $("#instructions").fadeOut();
-        } else if (control == undefined) {
-        Cookies.set('viewed', true);
-        }
-*/
-    /*
     $("#descartar").on("click", function(){
         $('#encabezado').empty();
         $('#contenido').empty();
@@ -155,13 +116,10 @@ $(document).ready(function() {
         $('#imagencabecera').empty();
      });
 
-*/
+
     $("#btn-pdf").on("click", function(){
 
         $("#btn-pdf").hide();
-        $('.intro1').hide();
-        $('.intro2').hide();
-
         $("#botonObservaciones").hide();
         $("#botonCabecera").hide();
         $("#mostrarocultar").hide();
@@ -174,9 +132,6 @@ $(document).ready(function() {
         $('#informeObservacionesDraggable').removeClass("border border-success rounded");
         window.print();
         $("#btn-pdf").show();
-        $('.intro1').show();
-        $('.intro2').show();
-
         $("#botonObservaciones").show();
         $("#botonCabecera").show();
         $("#mostrarocultar").show();
@@ -189,12 +144,12 @@ $(document).ready(function() {
         //$("#botonArrastre").show();
         //$('#informeObservacionesDraggable').addClass("border border-success rounded");
     });
-
-    $("#botonArrastre").draggable({
+    /*
+    $("#informeObservacionesDraggable").draggable({
         cursor: 'move',
-        //containment: "#informeObservacionesDraggable", scroll: false
+        containment: "#ordenado", scroll: false
       });
-
+      */
     $("#encabezadoDraggable").draggable({
         cursor: 'move',
         //containment:  "#informeObservacionesDraggable", scroll: false
@@ -212,39 +167,25 @@ $(document).ready(function() {
         cursor: 'move',
         //containment: "#informeObservacionesDraggable", scroll: false
       });
-
-       $("#informeObservacionesDraggable").draggable({
+      $("#botonArrastre").draggable({
         cursor: 'move',
-        containment: "#ordenado", scroll: false
+        //containment: "#informeObservacionesDraggable", scroll: false
       });
-
-      $("#textoDesplazable").draggable({
-        cursor: 'move',
-        //containment: "#contenidoDragable", scroll: false
-      });
-
+      /*
       $("#map").draggable({
         //disabled: true
         cursor: 'move',
-        //containment: "#contenidoDragable", scroll: false
+        //containment: "#informeObservacionesDraggable", scroll: false
       });
 
-
-      $(function() {
-        $( "#contenidoSortable" ).sortable();
-        $( "#contenidoSortable" ).disableSelection();
+      */
+      $( function() {
+        $( "#ordenado" ).sortable();
+        $( "#ordenado" ).disableSelection();
       } );
-
 
       // para la galeria de los puntos de interés
 
-      $(function(){
-          $('#textoInforme').draggable({
-              handle: "#textoDragable"
-          });
-
-
-      });
 
 
 });

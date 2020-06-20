@@ -39,11 +39,17 @@
 
                 <!-- PANEL DERECHO //////////////////////////////////////////// -->
                 <div class="rightPanel" style="width:100%;">
-                    <div id="cabecera" class="d-flex flex-row">
-
-                        <div id="imagencabecera">
-                            <img src="{{url('img/organizations/ayuntamiento-de-almeria.jpg')}}" alt="" style="width: 35%">
-                        </div>
+                    <div id="cabecera" class="d-flex flex-row ml-5 mt-5">
+                        <img src="{{url('img/organizations/ayto-marca-institucional-color-RGB.png')}}" alt="Logo ayto" style="width: 10%">
+                        <ul id="headEditable" class="list-unstyled align-self-end pl-4">
+                        <h6>
+                        <li id="linea1"><b>EXCMO. AYUNTAMIENTO DE ALMERÍA</b></li>
+                        <li id="linea2">AREA DE CULTURA Y EDUCACIÓN</li>
+                        <li id="linea3"><b>SECCIÓN ARCHIVO Y BIBLIOTECAS</b></li>
+                        <li id="linea4"><b>ARCHIVO MUNICIPAL</b></li>
+                        </h6>
+                        </ul>
+                    </div>
 
                    <!-- <div id="titulos" class="d-flex flex-column align-self-center" >
                     <p id="linea1">EXCMO. AYUNTAMIENTO DE ALMERÍA</p>
@@ -53,10 +59,10 @@
                     </div>
                 -->
 
-                    </div>
+
                     <div id="contenidoHotspot">
                     <div id="nombreHotspot" class="mt-3 py-5">
-                        <h2  class="text-center display-3">{{$hotspot->title }}</h2>
+                        <h2 class="text-center text-success display-4">{{$hotspot->title }}</h2>
                     </div>
 
                     <div id="descripcion" class="text-justify mx-5">
@@ -198,5 +204,5 @@
 @section('scripts')
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="{{url('/js/informe.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/informeHotspot.js')}}"></script>
 @endsection
