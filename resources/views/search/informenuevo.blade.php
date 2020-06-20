@@ -244,10 +244,11 @@
                 map = L.map('map', {
                 minZoom: 10,  //Dont touch, recommended
                 zoomControl: false,
+                attributionControl: false
             });
             /* LATITUD Y LONGITUD */
             map.setView([{{$street->points[0]->lat}}, {{$street->points[0]->lng}}], 17);
-            let mapTile = L.tileLayer.wms('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            let mapTile = L.tileLayer.wms('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png', {
                 maxZoom: 19, //Dont touch, max zoom
             });
             map.addLayer(mapTile);
