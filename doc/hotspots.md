@@ -5,6 +5,7 @@ Para acceder a la gestión de hotspots en nuestra aplicación web lo haremos des
 En esta sección podremos realizar las siguientes acciones:
 - Añadir un nuevo hotspot.
 - Modificar un hotspot que ya existe.
+- Edición de imagenes de un hotspot.
 - Eliminar un hotspot.
 
 Nuevo hotspot
@@ -30,3 +31,24 @@ Pinchamos sobre el marcador del hotspot que queremos modificar y en los campos q
 Reposicionar hotspot
 --------------------------
 Pinchamos sobre el marcador del hotspot al que queremos cambiar la posición y en el formulario que se nos abre hay un botón que dice Cambiar posición, cuando lo pinchamos se nos cerrará el formulario y podremos arrastrar el marcador hasta la nueva posición. Una vez arrastrado se nos volverá a abrir el formulario para guardar los cambios. Cuando le damos al botón de Guardar será guardado el cambio de posición.
+
+Gestión de imagenes asociadas a un hotspot
+==========================
+Para acceder a la gestión de las imagenes de un hotspot en nuestra aplicación web lo haremos desde el tercer botón del menú lateral de navegación, en la sección Galería de Imagenes.
+
+En esta sección podremos realizar las siguientes acciones:
+- Añadir una o varias imagenes a un hotspot ya creado.
+- Modificar el titulo o la descripcion de una imagen asociada a un hotspot.
+- Eliminar una imagen asociada a un hotspot.
+
+Nueva imagen
+--------------------------
+Pinchamos sobre el botón de más que está situado abajo a la derecha de la página web, nos abrirá un formulario el cual tendremos que rellenar con los datos de la imagen o imagenes que vayamos a subir.
+
+Editar imagen
+--------------------------
+Para editar una imagen ya subida deberemos arrastrar el ratón sobre la imagen y pinchar sobre el icono del lápiz, se nos abrirá un formulario relleno con los datos que tiene ahora mismo esa imagen, los cuales podremos modificar.
+
+Eliminar imagen
+--------------------------
+Para eliminar una imagen deberemos arrastrar el ratón sobre la imagen y pinchar en el icono de la papelera, nos abre un menú de confirmación para saber si estamos seguros de que queremos borrar esa imagen, si queremos borrarla solo hace falta darle al botón de Eliminar.
