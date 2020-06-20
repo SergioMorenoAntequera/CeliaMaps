@@ -52,7 +52,7 @@
                             <div class="lateralExpandMenu">
                                 <b> Mapas </b>
                                 <div class="line"></div>
-                                <a href="{{route('map.index')}}"><li>Indice</li></a>
+                                <a href="{{route('map.index')}}"><li>Índice</li></a>
                                 <a href="{{route('map.create')}}"><li>Insertar</li></a>
                                 {{-- <a href="{{route('marker.admin')}}"><li>Marcadores</li></a> --}}
                             </div>
@@ -252,19 +252,5 @@
 
     @yield('scripts')
 
-    <!-- Check authentication -->
-{{-- 
-    
-    @isset($guest)
-    @if($guest)
-    <script>
-        $("#leftNavBar").hide();
-        $("#rightContent").css("margin-left","0");
-        $("#rightContent").css("width","100%");
-    </script>
-    @endif
-    @endisset
-    
-    --}}
 
 </html>

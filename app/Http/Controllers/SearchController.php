@@ -71,14 +71,9 @@ class SearchController extends Controller
 
         // Mantenemos la variable flash para guardar el último sitio visitado (frontend)
         $request->session()->reflash();
-        // Controlamos el acceso de usuarios invitados
-        $guest = true;
-        if($request->user()){
-            $guest = false;
-        }
 
-        //return view('search/informe', array('street' => $street, 'street_type' => $street_type, 'map' => $map, 'map_street' => $map_street, 'guest' => $guest));
-        return view('search/informenuevo', array('street' => $street, 'street_type' => $street_type, 'map' => $map, 'map_street' => $map_street, 'guest' => $guest));
+        //return view('search/informe', array('street' => $street, 'street_type' => $street_type, 'map' => $map, 'map_street' => $map_street));
+        return view('search/informenuevo', array('street' => $street, 'street_type' => $street_type, 'map' => $map, 'map_street' => $map_street));
     }
 
     // MUESTRA LA VISTA DEL PUNTO DE INTERÉS SELECCIONADO
