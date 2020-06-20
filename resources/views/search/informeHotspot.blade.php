@@ -146,7 +146,7 @@
 
                             @foreach ($hotspot->images as $image)
                             <a class="element col-md-4" name="{{$image->id}}" style="margin: 15px 0; padding: 0 15px; flex: 0 0 33.333333%; max-width: 455px; position: relative; overflow: hidden; height: 325px" href="#" data-toggle="light-box" data-gallery="gallery">
-                                <img class="rounded" style="height: 100%" src="{{url('img/hotspots/', $image->file_name)}}" alt="{{$image->title}}" title="{{$image->title}}"> <br>
+                                <img class="rounded" style="height: 100%" src="{{url('img/hotspots/', $image->file_name)}}" alt="{{$image->title}}" title="{{$image->description}}"> <br>
                             </a>
                             @endforeach
 
