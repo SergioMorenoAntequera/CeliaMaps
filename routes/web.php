@@ -59,6 +59,7 @@ Route::get('gallery', 'ImageController@index')->name('gallery.index');
 Route::get('gallery/imagesOfHotspot', 'ImageController@getImagesOfHotspot')->name('gallery.gioh');
 Route::get('gallery/updateAjax', 'ImageController@updateAjax')->name('gallery.updateAjax');
 Route::get('gallery/destroyAjax', 'ImageController@destroyAjax')->name('gallery.destroyAjax');
+Route::post('gallery/uploadImg', 'ImageController@uploadImg')->name('gallery.uploadImg');
 
 // AUTH ///////////////////////////////////////////////////////////////////////////////////////
 Auth::routes();

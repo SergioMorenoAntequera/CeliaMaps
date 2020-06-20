@@ -148,7 +148,7 @@ body, html {
 #showModal .modal-dialog .modal-body .right-info h2 {
     font-weight: bold;
 }
-#showModal .cornerButton {
+.modal .cornerButton {
     color: white;
     display: flex;
     align-items: center;
@@ -161,18 +161,22 @@ body, html {
 #drop-area {
     margin-top: 5em;
     border: dashed  2px white;
-    height: 100px;
+    /* height: 150px; */
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 1em;
     border-radius: 10px;
-    background-color: transparent;
+    background-color: #3ab398;
+    color: white;
     
 }
 #drop-area button {
     margin: 0px;
     text-align: center;
+}
+.dz-error-message span {
+    color: white;
 }
 
 /*********************************************************************************/

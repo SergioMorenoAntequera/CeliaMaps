@@ -127,4 +127,8 @@ class ImageController extends Controller
         $image->delete();
     }
 
+    public function uploadImg(Request $r){
+        // dd("dentro");
+    }
+
 }

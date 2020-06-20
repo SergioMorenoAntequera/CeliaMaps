@@ -3,12 +3,17 @@
 @section('title', 'Celia Maps')
 
 @section('cdn')
-    <link rel="stylesheet" href="{{url('js/dropzone/dropzone.min.css')}}">
-    <link rel="stylesheet" href="{{url('js/dropzone/basic.min.css')}}">
+    {{-- <link rel="stylesheet" href="{{url('js/dropzone/dropzone.min.css')}}">
+    <link rel="stylesheet" href="{{url('js/dropzone/basic.min.css')}}"> --}}
 @endsection
 
 @section('content')	
     <div class="container text-center mt-2">
+        
+        {{-- <form action="{{route('gallery.uploadImg')}}"
+            class="dropzone"
+            id="drop-area">
+        </form> --}}
         <div class="wholePanel mb-5" style="">
             
             <div class="leftPanel" id="hpList"  style="">
@@ -20,15 +25,7 @@
                             <p class="hotspotInList"> {{$hp->title}} </p>
                         @endforeach
                     </div>
-                    
-
-                    <form action="/file-upload"
-                        class="dropzone"
-                        id="drop-area">
-                    </form>
                 </div>
-
-                
             </div>
 
             <div class="rightPanel">
@@ -41,7 +38,6 @@
                     </div>
                     <input id="searchBar" class="form-control my-0 py-1" type="text" placeholder="Search" aria-label="Search">
                 </div>
-                
                 {{-- TEMPLATE --}}
                 <div style="display: none" id="grid-element-template" class="grid-element"  data-id="">
                     <img src="" alt="">
@@ -175,37 +171,78 @@
             </div>
         </div>
 
+        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                
+                <div class="modal-body text-left">
+
+                    <form method="post" enctype="multipart/form-data" id="addForm">
+                        @csrf
+
+                        <h3>Titulo</h3>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="newImgDescription" placeholder="Titulo de la imagen">
+                        </div>
+                        <br>
+
+                        <h3>Descipción</h3>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="newImgDescription" placeholder="Descipción">
+                        </div>
+                        <br>
+
+                        <h3> Hotspot asociado </h3>
+                        <div class="hotspots-form form-group">
+                            <select class="form-control" name="hotspot">
+                                @foreach ($hotspots as $hp)
+                                    <option> {{$hp->title}} </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <h3> Archivo </h3>
+                        <div class="hotspots-form form-group">
+                            <input type="file" name="newImgFile">
+                        </div>
+
+                        <input type="submit" class="submit-add btn btn-success" value="Confirmar">
+                        
+                    </form>
+                </div>
+
+                <div  class="cornerButton" style="right:-1em" data-dismiss="modal">
+                    <i  class="fa fa-times fa-lg" aria-hidden="true"></i>
+                </div>
+            </div>
+            </div>
+        </div>
     </div>
 
 
-    <a href="#" id="addImage">
-        <div id="addButton">
-            <img class="center" src="{{url("img/icons/plus.svg")}}">
-        </div>
-    </a>
+    {{-- <a href="#" id="addImage"> --}}
+    <div id="addButton" data-toggle="modal" data-target="#addModal">
+        <img class="center" src="{{url("img/icons/plus.svg")}}">
+    </div>
+    {{-- </a> --}}
 @endsection
 
 @section('scripts')
 
-    <script src="{{'js/dropzon
-    
-    
-    e/dropzone.min.js'}}"></script>
+    {{-- <script src="{{'js/dropzone/dropzone.min.js'}}"></script> --}}
     {{-- <script src="{{'js/dropzone/dropzone-amd-module.min.js'}}"></script> --}}
-
-    <script>
-        Dropzone.options.myAwesomeDropzone = {
-        paramName: "file", // The name that will be used to transfer the file
-            
-        // maxFilesize: 2, // MB
-        accept: function(file, done) {
-            if (file.name == "justinbieber.jpg") {
-            done("Naha, you don't.");
+    {{-- <script>
+        $("#drop-area").dropzone({
+            url: "/profile/update-photo",
+            addRemoveLinks : true,
+            maxFilesize: 5,
+            dictDefaultMessage: '<span class="text-center"><span class="font-lg visible-xs-block visible-sm-block visible-lg-block"><span class="font-lg"><i class="fa fa-caret-right text-danger"></i> Drop files <span class="font-xs">to upload</span></span><span>&nbsp&nbsp<h4 class="display-inline"> (Or Click)</h4></span>',
+            dictResponseError: 'Error uploading file!',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="token"]').attr('content')
             }
-            else { done(); }
-        }
-        };
-    </script>
+        });
+    </script> --}}
 
     <script>
         $(function(){
@@ -315,6 +352,11 @@
                 $("#showModal .submit-edit").removeClass("d-none");
             }
 
+            //ADD IMG
+            $("#addForm").on("submit", function(e){
+                e.preventDefault();
+                alert("PRA");
+            })
 
             // EDIT IMG 
             $(".submit-edit").on("click", function(){
