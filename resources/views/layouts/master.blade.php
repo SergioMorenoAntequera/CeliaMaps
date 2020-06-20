@@ -66,7 +66,7 @@
                             </li>
                             </a>
                             <div class="lateralExpandMenu">
-                                <b> Calles </b>
+                                <b> Vías </b>
                                 <div class="line"></div>
                                 <a href="{{route('street.index')}}"><li>Índice</li></a>
                                 <a href="{{route('street.admin')}}"><li>Administrar</li></a>
@@ -87,7 +87,7 @@
                                 <div class="line"></div>
                                 <a href="{{route('hotspot.index')}}"><li>Índice</li></a>
                                 <a href="{{route('hotspot.create')}}"><li>Administrar</li></a>
-                                <a href="{{route('gallery.index')}}"><li>Galeria de Imagenes</li></a>
+                                <a href="{{route('gallery.index')}}"><li>Galería de Imagenes</li></a>
                                 {{-- <a href="{{route('hotspot.index')}}"><li>Modificar</li></a>
                                 <a href="{{route('hotspot.index')}}"><li>Elminar</li></a> --}}
                             </div>
@@ -101,19 +101,9 @@
                             </li>
                             </a>
                             <div class="lateralExpandMenu">
-                                <b> Users </b>
+                                <b> Usuarios </b>
                                 <div class="line"></div>
-                                
-                                     <!-- INCLUYO AQUÍ LA RUTA DEL LOGOUT DE LARAVEL PARA QUE NO PASE POR LA PÁGINA OFICIAL,
-                                    SINO QUE VAYA DIRECTAMENTE A LA PÁGINA PRINCIPAL -->
-                                    <a href=""
-                                    onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();"><li>Logout</li></a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
-
-                                <a href="{{route('user.index')}}"><li>Indice</li></a>
+                                <a href="{{route('user.index')}}"><li>Índice</li></a>
                                 <a href="{{route('user.create')}}"><li>Insertar</li></a>
                             </div>
                         </div>
@@ -126,9 +116,9 @@
                             </li>
                             </a>
                             <div class="lateralExpandMenu">
-                                <b> Backup </b>
+                                <b> Copias de seguridad </b>
                                 <div class="line"></div>
-                                <a href="{{route('backup.index')}}"><li>Guardar/Restaurar</li></a>
+                                <a href="{{route('backup.index')}}"><li>Guardar y restaurar</li></a>
                                 {{--<a href="{{route('backup.restoreDir')}}"><li>imagen</li></a>
                                  <a href="{{route('backup.index')}}"><li>Guardar</li></a>
                                 <a href="{{route('backup.index')}}"><li>Restaurar</li></a> --}}
@@ -224,11 +214,16 @@
                             });
                         });
                     </script>
-                    <a href="{{route('home')}}">
+
+                    <a href="" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                         <div style="position: absolute; bottom: 0px" class="lateralMenuImg">
                             <img src="{{url('img/icons/turnOff.svg')}}" class="img-fluid">
                         </div>
                     </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+
 
                 </div>
                 @endauth
