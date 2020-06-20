@@ -30,6 +30,7 @@
         <div class="container-fluid">
             <div style="height: 100%" class="row">
                 {{-- Columna de la izquierda --}}
+                @auth
                 <div id="leftNavBar">
                     <ul id=lateralMenu class="list-unstyled">
                         {{-- Icono Celia  --}}
@@ -102,7 +103,7 @@
                             <div class="lateralExpandMenu">
                                 <b> Users </b>
                                 <div class="line"></div>
-                                @auth
+                                
                                      <!-- INCLUYO AQUÍ LA RUTA DEL LOGOUT DE LARAVEL PARA QUE NO PASE POR LA PÁGINA OFICIAL,
                                     SINO QUE VAYA DIRECTAMENTE A LA PÁGINA PRINCIPAL -->
                                     <a href=""
@@ -111,9 +112,7 @@
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     @csrf
                                 </form>
-                                @else
-                                    {{-- <a href="{{route('login')}}"><li>Login</li></a>                                 --}}
-                                @endauth
+
                                 <a href="{{route('user.index')}}"><li>Indice</li></a>
                                 <a href="{{route('user.create')}}"><li>Insertar</li></a>
                             </div>
@@ -232,9 +231,9 @@
                     </a>
 
                 </div>
-
+                @endauth
                 {{-- Columna de la derecha con el contenido --}}
-                <div id="rightContent">
+                <div id="rightContent" @guest class="fullPage" @endguest>
                     @yield('content')
                     <!-- Footer -->
                     <footer>
@@ -259,16 +258,18 @@
     @yield('scripts')
 
     <!-- Check authentication -->
-
+{{-- 
+    
     @isset($guest)
-        @if($guest)
-            <script>
-                $("#leftNavBar").hide();
-                $("#rightContent").css("margin-left","0");
-                $("#rightContent").css("width","100%");
-            </script>
-        @endif
+    @if($guest)
+    <script>
+        $("#leftNavBar").hide();
+        $("#rightContent").css("margin-left","0");
+        $("#rightContent").css("width","100%");
+    </script>
+    @endif
     @endisset
-
+    
+    --}}
 
 </html>

@@ -54,6 +54,7 @@ html body{
     width: 90%;
     height: 1px;
     left: 5%;
+    margin: 5px 0;
 }
 .lateralExpandMenu a{
     text-decoration: none;
@@ -335,4 +336,11 @@ los formularios y seguramente algo más, pa quién lo quiera */
     height: 25px;
     top: -15px;
     color:white;
+}
+
+/* Clase para las vistas de backend públicas, sin barra lateral */
+
+.fullPage{
+    width: 100%!important;
+    margin-left: 0!important;
 }
