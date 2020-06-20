@@ -7,11 +7,12 @@ use Illuminate\Http\Request;
 use App\Street;
 use App\Map;
 use App\StreetType;
-use App\Point;
+//use App\User;
 use App\MapStreet;
 use App\Hotspot;
 use App\Image;
 use DB;
+use Cookie;
 
 
 class SearchController extends Controller
@@ -58,14 +59,6 @@ class SearchController extends Controller
             ->where('hotspots.title', 'like', '%' . $data . '%')->distinct()->take(10)->get();
             return response()->json($data);
     }
-    // MUESTRA LA VISTA PREVIA DEL PDF, ES SÓLO PARA PROBARLO /////////////////////////
-    public function show($id){
-
-        $street = Street::find($id);
-        $street_type = StreetType::all();
-        $map = Map::all();
-        return view('search/informeImprimir', array('street' => $street, 'street_type' => $street_type, 'map' => $map));
-    }
 
     // MUESTRA LA VISTA DE LA CALLE SELECCIONADA //////////////////////////////////////
     public function inform($id, Request $request)
@@ -74,6 +67,8 @@ class SearchController extends Controller
         $street_type = StreetType::all();
         $map_street = MapStreet::all();
         $map = Map::all();
+
+
         // Mantenemos la variable flash para guardar el último sitio visitado (frontend)
         $request->session()->reflash();
         // Controlamos el acceso de usuarios invitados
@@ -82,7 +77,8 @@ class SearchController extends Controller
             $guest = false;
         }
 
-        return view('search/informe', array('street' => $street, 'street_type' => $street_type, 'map' => $map, 'map_street' => $map_street, 'guest' => $guest));
+        //return view('search/informe', array('street' => $street, 'street_type' => $street_type, 'map' => $map, 'map_street' => $map_street, 'guest' => $guest));
+        return view('search/informenuevo', array('street' => $street, 'street_type' => $street_type, 'map' => $map, 'map_street' => $map_street, 'guest' => $guest));
     }
 
     // MUESTRA LA VISTA DEL PUNTO DE INTERÉS SELECCIONADO
@@ -95,4 +91,21 @@ class SearchController extends Controller
         return view('search/informeHotspot', array('hotspot' => $hotspot, 'image' => $image));
 
     }
+
+     /*Creamos la cookie para mostrar o no la ayuda contextual
+    public function hideHelp(Request $request)
+    {
+        Cookie::queue(Cookie::make('cookieNuevaProbando', 2));
+
+    }
+
+    // MUESTRA LA VISTA PREVIA DEL PDF, ES SÓLO PARA PROBARLO /////////////////////////
+    public function show($id){
+
+        $street = Street::find($id);
+        $street_type = StreetType::all();
+        $map = Map::all();
+        return view('search/informeImprimir', array('street' => $street, 'street_type' => $street_type, 'map' => $map));
+    }
+    */
 }

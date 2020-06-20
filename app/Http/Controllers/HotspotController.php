@@ -34,9 +34,9 @@ class HotspotController extends Controller
         $data['images'] = Image::all();
         $data['mainPoint'] = Point::getMainPoint();
 
-        
+
         foreach ($data['hotspots'] as $hotspot) {
-            $hotspot->lat = $hotspot->lat; 
+            $hotspot->lat = $hotspot->lat;
             $hotspot->lng = $hotspot->lng;
         }
 
@@ -53,9 +53,9 @@ class HotspotController extends Controller
         $map = Map::all();
         $image = Image::all();
         //dd($hotspots[0]->images[1]->file_name);
-        return view('hotspot.test', ['hotspots'=>$hotspots, 
-                    'maps'=>$map, 
-                    'images'=>$image, 
+        return view('hotspot.test', ['hotspots'=>$hotspots,
+                    'maps'=>$map,
+                    'images'=>$image,
                     'mainPoint'=>Map::getMainPoint()]);
     }
 
@@ -75,7 +75,7 @@ class HotspotController extends Controller
             'externalUrl' => 'nullable|url',
             'images' => 'required'
         ]);
-        
+
         $hotspot = new Hotspot($r->all());
         $hotspot->save();
 
@@ -120,7 +120,7 @@ class HotspotController extends Controller
             }
         }
 
-        // MAPAS 
+        // MAPAS
 
 
 
@@ -160,7 +160,7 @@ class HotspotController extends Controller
             'description' => 'required',
             'externalUrl' => 'nullable|url'
         ]);
-        
+
         $hotspot = Hotspot::find($id);
         $hotspot->fill($r->all());
         $hotspot->save();
@@ -174,11 +174,11 @@ class HotspotController extends Controller
             'externalUrl' => 'url',
             'images' => 'required'
         ]);
-        
+
         $hotspot = Hotspot::find($id);
         $hotspot->fill($r->all());
         $hotspot->save();
-        
+
         // Tener en cuenta imágenes
 
         return response()->json([
@@ -227,17 +227,17 @@ class HotspotController extends Controller
 
     /**
      *  Method that shows the gallery, Hotspots Images
-     * 
+     *
      *  @return View
      */
     public function gallery(){
-        $image = Image::all();
+        $image = Image::all()->sortBy('title');
         $hotspot = Hotspot::all();
         $map = Map::all();
-        return view('hotspot.gallery', ['images'=>$image, 
+        return view('hotspot.gallery', ['images'=>$image,
                                         'hotspots'=>$hotspot,
                                         'maps'=>$map]);
-    }   
+    }
 
     public function searchAjax(Request $r){
         $imagesFound = Image::where('title', 'LIKE', '%'.$r->text.'%')->get();
@@ -245,5 +245,5 @@ class HotspotController extends Controller
             'imagesFound' => $imagesFound,
         ]);
     }
-    
+
 }

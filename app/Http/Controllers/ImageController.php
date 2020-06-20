@@ -110,10 +110,45 @@ class ImageController extends Controller
         return response()->json($images);
     }
 
+    public function updateAjax(Request $r){
+        $imgToChange = Image::find($r->id);
+        $imgToChange->title = $r->title;
+        $imgToChange->description = $r->description;
+
+        $hp = DB::table("hotspots")->where("title", "=", $r->hpTitle)->first();
+        $imgToChange->hotspot_id = $hp->id;
+        $imgToChange->update();
+        return response()->json($imgToChange);
+    }
+
     public function destroyAjax(Request $r) {
         $image = Image::find($r->id);
         Storage::delete(public_path() . $image->file_path . $image->file_name);
         $image->delete();
+    }
+
+    public function uploadImg(Request $r){
+
+        $r->validate([
+            'title' => 'required|unique:images',
+            'description' => 'required',
+            'img' => 'required|image',
+        ]);
+
+        $image = new Image();
+        $image->title = $r->title;
+        $image->description = $r->description;
+        $image->hotspot_id = $r->hotspot_id;
+        
+        $newID = DB::table('images')->latest('id')->first()->id + 1;
+
+        $file = $r->file('img');
+        $file->move(public_path("/img/hotspots/"), $newID.$file->getClientOriginalName());
+        $image->file_name = $newID.$file->getClientOriginalName();
+        $image->file_path = "/img/hotspots";
+
+        $image->save();
+        return redirect(route("gallery.index"));        
     }
 
 }
