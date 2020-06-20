@@ -304,7 +304,8 @@
             </div>
             {{-- Boton para ir al menu de admin --}}
             <div id="admin">
-                <a href="{{route('login')}}">
+                
+                <a href="@guest {{route('login')}} @else {{route('map.index')}} @endguest">
                     <img src="{{url('img/icons/admin.png')}}" alt="">
                 </a>
             </div>
