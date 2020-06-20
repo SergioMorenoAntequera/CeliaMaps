@@ -68,10 +68,11 @@ class HotspotController extends Controller
      * @return View
      */
     public function store(Request $r){
+        
         $r->validate([
             'title' => 'required',
             'description' => 'required',
-            'externalUrl' => 'url',
+            'externalUrl' => 'nullable|url',
             'images' => 'required'
         ]);
         
@@ -157,7 +158,7 @@ class HotspotController extends Controller
         $r->validate([
             'title' => 'required',
             'description' => 'required',
-            'externalUrl' => 'url'
+            'externalUrl' => 'nullable|url'
         ]);
         
         $hotspot = Hotspot::find($id);
