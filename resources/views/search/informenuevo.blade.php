@@ -126,7 +126,7 @@
 
                     <!-- AQUÍ VA EL TEXTO CON LOS MAPAS EN LOS QUE APARECE LA CALLE EN CUESTIÓN -->
                     <div id="textoMapas" contenteditable="true">
-                        <p id="introduccionMapa" class="font-weight-light mx-5"><span class="intro1"><b class="text-success">Click sobre el texto</b> para modificarlo.</span></p><br>
+                        <p id="introduccionMapa" class="font-weight-light mx-5 font-italic"><span class="intro1"><b class="text-success">Click sobre el texto</b> para modificarlo.</span></p><br>
                         @isset($street)
                             <div id="textoIntroduccion" class="mx-5">
                                 <h5>Se encuentra
@@ -170,7 +170,7 @@
                     <div id="textoInforme" contenteditable="true" class="mx-5 text-justify">
 
                         <p id="introduccionInforme" class="">
-                            <span class="intro2 font-weight-light"> <br>
+                            <span class="intro2 font-weight-light font-italic"> <br>
                                 <b class="text-success">Click aquí </b> para redactar su informe.
                             </span>
                         </p>
@@ -185,9 +185,9 @@
                     </div>
 
 
-                <div id="cPopUp" style="display: none;">
+                <div id="cPopUp" style="display: none; left: 60%">
                     <div class="cornerButton"> X </div>
-                    <div class="textContent" style="position: sticky; text-align: justify;">
+                    <div class="textContent" style="position: sticky; text-align: justify; font-size: 13px;">
                         <p>
                         El documento de informe se divide en dos zonas editables, una sobre la imagen del mapa y
                         la otra bajo ella.
@@ -195,18 +195,18 @@
                         a los que pertenece y detalla si en ellos ha tenido otros nombres. Este texto es editable,
                         es decir, puede ser modificado o borrado o añadir más texto si lo desea, para ello sólo
                         tiene que hacer click con el botón izquierdo del ratón en la zona indicada en color verde y
-                        ya podrá comenzar la edición.<br>
-                        <b class="text-success">"Click sobre el texto</b> para modificarlo."<br>
-                        En la zona editable bajo el mapa también basta con hacer click con el botón izquierdo del ratón
-                        en la zona indicada en color verde para poder comenzar a escribir.<br>
-                        <b class="text-success">"Click aquí </b> para redactar su informe."
-
-                        </p>
+                        ya podrá comenzar la edición.</p>
+                        <p id="enlace1" class="font-italic mt-0" style=" background-color: white; box-shadow: 10px 10px 5px rgba(56, 193, 114, 0.25); width:350px; border-radius: 12px; cursor: hand;"><b class="text-success">"Click sobre el texto</b> para modificarlo."</p>
+                        <p>En la zona editable bajo el mapa también basta con hacer click con el botón izquierdo del ratón
+                        en la zona indicada en color verde para poder comenzar a escribir.</p>
+                        <div class="d-flex flex-row mt-0">
+                        <p id="enlace2" class="font-italic" style=" background-color: white; box-shadow: 10px 10px 5px rgba(56, 193, 114, 0.25); width:350px; border-radius: 12px; cursor: hand;"><b class="text-success">"Click aquí</b> para redactar su informe."</p>
+                        <div>
+                            <button id="noVolverAMostrar" type="button" class="btn btn-success btn-sm rounded-pill ml-5">Eliminar ayuda permanentemente</button>
+                        </div>
                     </div>
-                    <br>
-                    <div>
-                    <button id="noVolverAMostrar" type="button" class="btn btn-success btn-sm rounded-pill">Eliminar ayuda permanentemente</button>
-                </div>
+                    </div>
+
                 </div>
 
                 <!-- <p id="pie">este es el pie de página</p> -->

@@ -118,6 +118,14 @@ $(document).ready(function() {
         document.getElementById('fechaInforme').innerHTML = ' ' + fechactual;
     });
 
+    $('#enlace1').on('click', function(){
+        $('#textoMapas').focus();
+        $('.intro1').remove();
+    });
+    $('#enlace2').on('click', function(){
+        $('#textoInforme').focus();
+        $('.intro2').remove();
+    });
 
 /*
         if (control == true) {
