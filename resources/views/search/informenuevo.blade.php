@@ -16,6 +16,9 @@
         crossorigin=""></script>
 
 
+
+
+
     <style type="text/css" media="print">
     /*para que al imprimir no aparezcan el encabezado y pie que viene por defecto en window.print()
     y muestra el título de la página y la dirección web se ponen los márgenes a cero*/
@@ -155,13 +158,13 @@
                 </div>
 
                     <div id="textoInforme" contenteditable="true" class="mx-5 text-justify">
-                        <p id="introduccionInforme" class="font-weight-light">
-                            <span class="intro2">
-                            <br>
-                                <b class="text-success">Click aquí </b> para redactar su informe.
 
+                        <p id="introduccionInforme" class="">
+                            <span class="intro2 font-weight-light"> <br>
+                                <b class="text-success">Click aquí </b> para redactar su informe.
                             </span>
                         </p>
+
                         <div>
                             <br>
                             <br>
@@ -172,17 +175,28 @@
                     </div>
 
 
-                <div id="cPopUp">
+                <div id="cPopUp" style="display: none;">
                     <div class="cornerButton"> X </div>
-                    <div class="textContent" style="position: sticky;">
-                        Aquí puede editar el texto que aparece por defecto. <br>
-                        Puede modificarlo o borrarlo, si lo desea. <br>
-                        Sólo hay que hacer click sobre él.
+                    <div class="textContent" style="position: sticky; text-align: justify;">
+                        <p>
+                        El documento de informe se divide en dos zonas editables, una sobre la imagen del mapa y
+                        la otra bajo ella.
+                        En la zona superior aparece un texto impreso por defecto, en él situa la vía en los mapas
+                        a los que pertenece y detalla si en ellos ha tenido otros nombres. Este texto es editable,
+                        es decir, puede ser modificado o borrado o añadir más texto si lo desea, para ello sólo
+                        tiene que hacer click con el botón izquierdo del ratón en la zona indicada en color verde y
+                        ya podrá comenzar la edición.<br>
+                        <b class="text-success">"Click sobre el texto</b> para modificarlo."<br>
+                        En la zona editable bajo el mapa también basta con hacer click con el botón izquierdo del ratón
+                        en la zona indicada en color verde para poder comenzar a escribir.<br>
+                        <b class="text-success">"Click aquí </b> para redactar su informe."
+
+                        </p>
                     </div>
                     <br>
-
+                    <div>
                     <button id="noVolverAMostrar" type="button" class="btn btn-success btn-sm rounded-pill">Eliminar ayuda permanentemente</button>
-
+                </div>
                 </div>
 
                 <!-- <p id="pie">este es el pie de página</p> -->
@@ -202,14 +216,17 @@
         </div>
     </div>
 
+
+
 @endsection
 
 @section('scripts')
 
-    <!-- LINK A JQUERY UI PARA EL DRAG AND DROP -->
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="{{url('/js/informe2.js')}}"></script>
-    <script type="text/javascript" src="{{url('/js/cPopUp.js')}}"></script>
+        <!-- LINK A JQUERY UI PARA EL DRAG AND DROP -->
+     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+     <script type="text/javascript" src="{{url('/js/informe2.js')}}"></script>
+     <!-- {{--<script type="text/javascript" src="{{url('/js/cPopUp.js')}}"></script>--}} -->
+     <script type="text/javascript" src="{{url('/js/js.cookie.js')}}"></script>
 
 
             <!--SCRIPT QUE NOS MUESTRA LA SITUACIÓN DE LA CALLE EN EL MAPA ////////////////////// -->

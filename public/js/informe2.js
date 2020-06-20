@@ -1,6 +1,28 @@
 
 $(document).ready(function() {
 
+     // AL CARGAR LA PÁGINA COMPROBAMOS SI EXISTE LA COOKIE DE LA AYUDA O SU VALOR
+
+     control = Cookies.get('contextHelp');
+     console.log(control);
+     if(control != "false" || control == null){
+        $('#cPopUp').css('display','inline-block');
+     }
+
+     // PARA QUE LA AYUDA SE OCULTE CON EL BOTÓN "X"
+     var cpuX = $("#cPopUp .cornerButton");
+     cpuX.click(function(e){
+        $('#cPopUp').hide();
+    });
+
+    // AL HACER CLICK EN "NO VOLVER A MOSTRAR" CREAMOS LA COOKIE CON VALOR FALSE
+    // Y ESCONDEMOS LA AYUDA
+    $('#noVolverAMostrar').on("click", function(){
+        Cookies.set('contextHelp', 'false');
+        $('#cPopUp').hide();
+    });
+
+
     hoy = new Date();
     dia = hoy.getDate();
     mes = '';
@@ -51,12 +73,7 @@ $(document).ready(function() {
     console.log('pero esto funciona o no??');
     console.log(fechactual);
 
-      var padre = document.getElementById('textoInforme');
-      var hijo = document.getElementById('firmado');
 
-     // $("@page").prepend("#cabecera");
-     var cabecera = $('#cabecera').text();
-     console.log('@page');
 /*
       $('#probando').on('click', function(){
         var cook = getCookie("cookie1Probando");
@@ -71,12 +88,8 @@ $(document).ready(function() {
       });
 */
 
-    $('#mostrarocultar').hide();
-    $('#volveramostrar').hide();
-    $('#ocultarmapa').hide();
-    $('#mostrarmapa').hide();
 
-    //$("textarea").autoResize();
+
 
     $('#aplicar').on("click", function (){
 
@@ -104,25 +117,16 @@ $(document).ready(function() {
         $('.intro2').remove();
         document.getElementById('fechaInforme').innerHTML = ' ' + fechactual;
     });
+
+
 /*
-
-    $('#mostrarocultar').on("click", function(){
-        $('#encabezadoDraggable').hide();
-        console.log('ha llegado al click de mostrar ocultar');
-    });
-    $('#volveramostrar').on("click", function(){
-        $('#encabezadoDraggable').show();
-        console.log('ha llegado al click de mostrar ocultar');
-    });
-    $('#ocultarmapa').on("click", function(){
-        $('#map').hide();
-        console.log('ha llegado al click de mostrar ocultar');
-    });
-    $('#mostrarmapa').on("click", function(){
-        $('#map').show();
-        console.log('ha llegado al click de mostrar ocultar');
-    });
-
+        if (control == true) {
+        $("#instructions").fadeOut();
+        } else if (control == undefined) {
+        Cookies.set('viewed', true);
+        }
+*/
+    /*
     $("#descartar").on("click", function(){
         $('#encabezado').empty();
         $('#contenido').empty();
