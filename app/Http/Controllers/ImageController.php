@@ -12,14 +12,14 @@ use App\Hotspot;
 
 class ImageController extends Controller
 {
-    
+
     public function __construct()
     {
-        
+
     }
     public function index() {
-        $data["hotspots"] = Hotspot::all();
-        $data["images"] = Image::all();
+        $data["hotspots"] = Hotspot::all()->sortBy('title');
+        $data["images"] = Image::all()->sortBy('title');
         return view("hotspot.gallerynew", $data);
     }
 
@@ -155,7 +155,7 @@ class ImageController extends Controller
 
         $image->update();
 
-        return response()->json($image);   
+        return response()->json($image);
     }
 
 }
