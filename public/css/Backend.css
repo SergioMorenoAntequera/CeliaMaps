@@ -17,21 +17,21 @@ html body{
 #rightContent {
     width: 96%;
     margin-left: 4%;
-    
+
     background-color: #efefef;
 }
 .lateralMenuImg {
     width: 100%;
     min-height: 45px;
-    
-    padding: 20% 0; 
+
+    padding: 20% 0;
     /* background-color: #253238; */
 }
 .lateralMenuImg:hover {
     background-color: #6f7e96;
 }
 .lateralMenuImg img {
-    
+
     padding-left: 25%;
     width: 75%;
 }
@@ -143,7 +143,7 @@ los formularios y seguramente algo más, pa quién lo quiera */
     top: 50%; left: 50%;
     transform: translate(-50%,-50%);
     text-align: center;
-    
+
     font-size: 40px;
     font-weight: bold;
 }
@@ -196,8 +196,8 @@ los formularios y seguramente algo más, pa quién lo quiera */
 
     cursor: pointer;
     border-radius: 50%;
-    
-    -webkit-box-shadow: 5px 5px 5px 5px rgba(0,0,0,0); 
+
+    -webkit-box-shadow: 5px 5px 5px 5px rgba(0,0,0,0);
     box-shadow: 5px 5px 20px 5px rgba(0,0,0,0.33);
     background: rgba(37,143,117,1);
     background: -moz-linear-gradient(-45deg, rgba(37,143,117,1) 0%, rgba(58,179,153,1) 100%);
@@ -217,7 +217,7 @@ los formularios y seguramente algo más, pa quién lo quiera */
     text-decoration: none;
     cursor: pointer;
     border-radius: 20px;
-    -webkit-box-shadow: 5px 5px 5px 5px rgba(0,0,0,0); 
+    -webkit-box-shadow: 5px 5px 5px 5px rgba(0,0,0,0);
     box-shadow: 5px 5px 20px 5px rgba(0,0,0,0.33);
     background: rgba(37,143,117,1);
     background: -moz-linear-gradient(-45deg, rgba(37,143,117,1) 0%, rgba(58,179,153,1) 100%);
@@ -270,7 +270,7 @@ los formularios y seguramente algo más, pa quién lo quiera */
     cursor: pointer;
     background-color:#FFFFFF;
     border: solid 1px #E0E0E0;
-    -webkit-box-shadow: 0px 0px 50px -15px #000000; 
+    -webkit-box-shadow: 0px 0px 50px -15px #000000;
     box-shadow: 0px 0px 50px -15px #000000;
 }
 .cMenu > .csMenu > .option > img{position: relative; width: 60%; height: 60%; top: 20%; left: 20%;}
@@ -311,7 +311,7 @@ los formularios y seguramente algo más, pa quién lo quiera */
     #rightContent{
         width: 100%!important;
         margin-left: 0!important;
-    } 
+    }
 }
 
 #cPopUp{
@@ -329,7 +329,7 @@ los formularios y seguramente algo más, pa quién lo quiera */
     border-style: solid 2px #E0E0E0;
     padding: 5px 10px;
     box-shadow: 0px 10px 13px -7px #000000;
-} 
+}
 #cPopUp .cornerButton {
     cursor: pointer;
     width: 25px;
@@ -343,4 +343,28 @@ los formularios y seguramente algo más, pa quién lo quiera */
 .fullPage{
     width: 100%!important;
     margin-left: 0!important;
+}
+
+#cPopUp1{
+    position: fixed;
+    top: 30px;
+
+    left: 50%;
+    transform: translate(-50%);
+    display: inline-block;
+
+    text-align: center;
+    font-weight: bold;
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    border-style: solid 2px #E0E0E0;
+    padding: 5px 10px;
+    box-shadow: 0px 10px 13px -7px #000000;
+}
+#cPopUp1 .cornerButton {
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    top: -15px;
+    color:white;
 }

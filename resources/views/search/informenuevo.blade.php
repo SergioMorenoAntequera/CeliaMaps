@@ -122,7 +122,22 @@
                     <div id="nombreVia" class="mt-3">
                         <h2 class="text-center text-success display-4"> {{$street->type->name}} {{$street->name}}</h2>
                     </div>
-
+                    <!-- TEXTO DE AYUDA CONTEXTUAL -->
+                    <div id="cPopUp" class="number1" style="transform:translate(20%); display: none; position: static;">
+                        <div class="cornerButton"> X </div>
+                        <div class="textContent" style="text-align: justify; font-size: 13px;">
+                            <p>
+                            Este texto es editable, es decir, puede ser modificado o borrado o añadir más texto si lo desea, para ello sólo <br>
+                            tiene que hacer click en la zona indicada en color verde y
+                            podrá comenzar la edición.</p>
+                            <div class="d-flex flex-row mt-0">
+                                <p id="enlace1" class="font-italic" style=" background-color: white; box-shadow: 10px 10px 5px rgba(56, 193, 114, 0.25); width:300px; border-radius: 12px; cursor: pointer;"><b class="text-success">"Click sobre el texto</b> para modificarlo."</p>
+                                <div>
+                                    <button id="noVolverAMostrar" type="button" class="btn btn-success btn-sm rounded-pill ml-5">Eliminar ayuda permanentemente</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- AQUÍ VA EL TEXTO CON LOS MAPAS EN LOS QUE APARECE LA CALLE EN CUESTIÓN -->
                     <div id="textoMapas" contenteditable="true">
@@ -164,17 +179,29 @@
                     <!-- DIV QUE CONTIENE EL MAPA CON LA SITUACIÓN DE LA CALLE BUSCADA ///////////////////// -->
                     <div id="map" style="width:90%;height: 225px;" class="mx-5 my-1"></div>
                     <br><br>
+
+                     <!-- TEXTO DE AYUDA CONTEXTUAL -->
+                     <div id="cPopUp1" class="number2" style="transform:translate(15%); display: none; position: static;">
+                        <div class="cornerButton"> X </div>
+                        <div class="textContent" style="text-align: justify; font-size: 13px;">
+                            <p>En la zona editable bajo el mapa también basta con hacer click
+                               en la zona indicada en color verde para poder comenzar a escribir.</p>
+                            <div class="d-flex flex-row mt-0" style="z-index: 3;">
+                                <p id="enlace2" class="font-italic" style=" background-color: white; box-shadow: 10px 10px 5px rgba(56, 193, 114, 0.25); width:275px; border-radius: 12px; cursor: pointer;"><b class="text-success">"Click aquí</b> para redactar su informe."</p>
+                                <div>
+                                    <button id="noVolverAMostrar1" type="button" class="btn btn-success btn-sm rounded-pill ml-5">Eliminar ayuda permanentemente</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- AQUÍ VA EL TEXTO CON EL INFORME QUE REDACTAMOS -->
-                </div>
-
                     <div id="textoInforme" contenteditable="true" class="mx-5 text-justify">
-
                         <p id="introduccionInforme" class="">
                             <span class="intro2 font-weight-light font-italic"> <br>
                                 <b class="text-success">Click aquí </b> para redactar su informe.
                             </span>
                         </p>
-
                         <div>
                             <br>
                             <br>
@@ -183,32 +210,6 @@
                             <div id="firmado" class="col-4 offset-8"></div>
                         </div>
                     </div>
-
-
-                <div id="cPopUp" style="display: none; left: 60%">
-                    <div class="cornerButton"> X </div>
-                    <div class="textContent" style="position: sticky; text-align: justify; font-size: 13px;">
-                        <p>
-                        El documento de informe se divide en dos zonas editables, una sobre la imagen del mapa y
-                        la otra bajo ella.
-                        En la zona superior aparece un texto impreso por defecto, en él situa la vía en los mapas
-                        a los que pertenece y detalla si en ellos ha tenido otros nombres. Este texto es editable,
-                        es decir, puede ser modificado o borrado o añadir más texto si lo desea, para ello sólo
-                        tiene que hacer click con el botón izquierdo del ratón en la zona indicada en color verde y
-                        ya podrá comenzar la edición.</p>
-                        <p id="enlace1" class="font-italic mt-0" style=" background-color: white; box-shadow: 10px 10px 5px rgba(56, 193, 114, 0.25); width:350px; border-radius: 12px; cursor: hand;"><b class="text-success">"Click sobre el texto</b> para modificarlo."</p>
-                        <p>En la zona editable bajo el mapa también basta con hacer click con el botón izquierdo del ratón
-                        en la zona indicada en color verde para poder comenzar a escribir.</p>
-                        <div class="d-flex flex-row mt-0">
-                        <p id="enlace2" class="font-italic" style=" background-color: white; box-shadow: 10px 10px 5px rgba(56, 193, 114, 0.25); width:350px; border-radius: 12px; cursor: hand;"><b class="text-success">"Click aquí</b> para redactar su informe."</p>
-                        <div>
-                            <button id="noVolverAMostrar" type="button" class="btn btn-success btn-sm rounded-pill ml-5">Eliminar ayuda permanentemente</button>
-                        </div>
-                    </div>
-                    </div>
-
-                </div>
-
                 <!-- <p id="pie">este es el pie de página</p> -->
 
                 <!-- LOS BOTONES -->
@@ -234,7 +235,7 @@
 
         <!-- LINK A JQUERY UI PARA EL DRAG AND DROP -->
      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-     <script type="text/javascript" src="{{url('/js/informe2.js')}}"></script>
+     <script type="text/javascript" src="{{url('/js/informe.js')}}"></script>
      <!-- {{--<script type="text/javascript" src="{{url('/js/cPopUp.js')}}"></script>--}} -->
      <script type="text/javascript" src="{{url('/js/js.cookie.js')}}"></script>
 

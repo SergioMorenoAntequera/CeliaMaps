@@ -26,6 +26,9 @@ Al hacer click sobre el enlace resultado de la búsqueda, pasará a la vista del
 
 ### REDACCIÓN DE INFORMES
 
+El documento de informe se divide en dos zonas editables, una sobre la imagen del mapa y la otra bajo ella.
+En la zona superior aparece un texto impreso por defecto, en él situa la vía en los a los que pertenece y detalla si en ellos ha tenido otros nombres. Este texto es editable, es decir, puede ser modificado o borrado o añadir más texto si lo desea, para ello sólo tiene que hacer click con el botón izquierdo del ratón en la zona indicada en color verde y ya podrá comenzar la edición.
+
 Para redactar un informe en la vista debe hacer click en el botón ***observaciones***, aparecerá un cuadro con unas breves instrucciones (cuadro de escritura) y en el que escribirá el nombre de la persona que firma y debajo el apartado en el que puede redactar el informe completo.
 
 ![imagen no soportada](media/informes/informeVistaCuadrotexto.png "Cuadro de escritura del informe")
