@@ -23,7 +23,7 @@ class HotspotController extends Controller
      * @return View
      */
     public function index(){
-        $hotspot = Hotspot::all();
+        $hotspot = Hotspot::all()->sortBy('title');
         //d($hotspot[0]->images[0]);
         return view('hotspot.index', ['hotspots'=>$hotspot]);
     }
@@ -68,7 +68,7 @@ class HotspotController extends Controller
      * @return View
      */
     public function store(Request $r){
-        
+
         $r->validate([
             'title' => 'required',
             'description' => 'required',
