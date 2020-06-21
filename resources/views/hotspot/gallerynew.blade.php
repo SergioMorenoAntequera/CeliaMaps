@@ -255,9 +255,10 @@
 
     <script>
         $(function(){
+            var images;
             @isset($images)
                 // Images php array conversion to js
-                var images = @json($images);
+                images = @json($images);
             @endisset
             @isset($hotspots)
                 // Images php array conversion to js
@@ -297,12 +298,13 @@
 
             function updateModalInfo(id) {
                 imgSelectedID = id;
-                images.forEach(image => {
-                    if(image.id == imgSelectedID){
-                        imgSelected = image;
-                        return false;
+
+                for(let i = 0; Object.keys(images).length; i++){
+					if(images[i].id == imgSelectedID){
+                        imgSelected = images[i];
+                        break;
                     }
-                });
+				}
 
                 $("#showModal .right-info .title").text(imgSelected.title);
                 $("#showModal .right-info .title-form input").val(imgSelected.title);
