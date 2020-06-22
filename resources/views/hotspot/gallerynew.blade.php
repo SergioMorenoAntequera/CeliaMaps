@@ -321,18 +321,30 @@
                 $("#showModal .left-img img").attr("src", "{{url('')}}/" + imgSelected.file_path + "/" + imgSelected.file_name);
 
 
-                hotspots.forEach(hp => {
-                    if(hp.id == imgSelected.hotspot_id){
-                        $("#showModal .right-info .hotspot").text(hp.title);
+                for(let i = 0; Object.keys(hotspots).length; i++){
+					if(hotspots[i].id == imgSelected.hotspot_id){
+                        $("#showModal .right-info .hotspot").text(hotspots[i].title);
                         $("#showModal .right-info .hotspots-form option").each(function(){
-                            if($(this).text().trim() == hp.title) {
+                            if($(this).text().trim() == hotspots[i].title) {
                                 $(this).attr("selected", true);
                                 return false;
                             }
                         });
-                        return false;
+                        break;
                     }
-                });
+				}
+                // hotspots.forEach(hp => {
+                //     if(hp.id == imgSelected.hotspot_id){
+                //         $("#showModal .right-info .hotspot").text(hp.title);
+                //         $("#showModal .right-info .hotspots-form option").each(function(){
+                //             if($(this).text().trim() == hp.title) {
+                //                 $(this).attr("selected", true);
+                //                 return false;
+                //             }
+                //         });
+                //         return false;
+                //     }
+                // });
 
                 
             }
@@ -411,7 +423,7 @@
                     data: data,
                     success: function(data){
                         alert("Imagen actualizada con exito");
-                        for (let i = 0; i < images.length; i++) {
+                        for (let i = 0; i < Object.keys(images).length; i++) {
                             if(images[i].id == data.id){
                                 images[i] = data;
                                 updateModalInfo(images[i].id);
@@ -562,7 +574,6 @@
                         
                         var list = $("#images-grid");
                         list.children().each(function(e){
-                            // console.log($(this));
                             var imgID = $(this).data("id");
                             var found = false;
                             
