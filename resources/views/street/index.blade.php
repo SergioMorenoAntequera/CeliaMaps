@@ -24,7 +24,11 @@
                 <p><b> Calles del mapa </b></p> 
                 <div id="streetsList" style="max-height: 470px">
                     @foreach ($streets as $street)
-                        <p>{{$street->type->name}} {{$street->name}}</p>
+                        <p>{{$street->type->name}} {{$street->name}}
+                            @foreach ($street->maps as $map)
+                                <span class="float-right mx-1"> {{$map->title}} </span>
+                            @endforeach
+                        </p>
                     @endforeach
                 </div>
                 <a class="linkToEditMap" href="">
@@ -50,37 +54,49 @@
         $("#mapsList .selected").removeClass("selected");
         $(this).addClass("selected");
         $("#inherateInput").val($(this).text().trim());
-
+        
         if($(this).text().trim() != "Todos"){
             $(".editStreetsInMap").fadeIn(200);
         } else {
             $(".editStreetsInMap").fadeOut(200);
         }
+        
+        if($(this).text().trim() == "Todos"){
+            $("#streetsList").empty();
+            @foreach ($streets as $street)
+                $("#streetsList").append("<p>{{$street->type->name}} {{$street->name}}" +
+                    @foreach ($street->maps as $map)
+                        "<span class='float-right mx-1'>{{$map->title}}</span>" +
+                    @endforeach
+                "</p>");
+            @endforeach
+        }else{
+            var url = window.location.href.replace("street", "map/streets");
+            // Petición ajax para recuperar las calles de los mapas
+            $.ajax({
+                type: 'GET',
+                url: url,
+                data: {title : $(this).text()},
+    
+                success: function(data) {
+                    
+                    // Change edit map button
+                    let editMapUrl = window.location.href.replace("street", "map/"+ data.id +"/edit");
+                    $(".linkToEditMap").attr("href", editMapUrl);
+    
+                    $("#streetsList").empty();
+                    if(data.streets.length == 0){
+                        $("#streetsList").append("<p class='text-danger'> Este mapa no contiene ninguna calle que puedas heredar </p>");
+                        return;
+                    }
+                    
+                    data.streets.forEach(street => {
+                        $("#streetsList").append("<p>"+ street.type.name + " " + street.name +"</p>");
+                    });
+                },
+            });
+        }
 
-        var url = window.location.href.replace("street", "map/streets");
-        // Petición ajax para recuperar las calles de los mapas
-        $.ajax({
-            type: 'GET',
-            url: url,
-            data: {title : $(this).text()},
-
-            success: function(data) {
-                
-                // Change edit map button
-                let editMapUrl = window.location.href.replace("street", "map/"+ data.id +"/edit");
-                $(".linkToEditMap").attr("href", editMapUrl);
-
-                $("#streetsList").empty();
-                if(data.streets.length == 0){
-                    $("#streetsList").append("<p class='text-danger'> Este mapa no contiene ninguna calle que puedas heredar </p>");
-                    return;
-                }
-                
-                data.streets.forEach(street => {
-                    $("#streetsList").append("<p>"+ street.type.name + " " + street.name +"</p>");
-                });
-            },
-        });
     });
 </script>
 @endsection
