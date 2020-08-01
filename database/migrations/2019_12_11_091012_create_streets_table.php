@@ -18,7 +18,7 @@ class CreateStreetsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('type_id');
             $table->string('name', 100);
-            $table->string('other_names', 2000)->default("");
+            $table->string('other_names', 2000)->nullable()->default("");
             $table->timestamps();
         });
     }

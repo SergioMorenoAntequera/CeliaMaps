@@ -310,9 +310,12 @@
                             <p>
                                 {{-- More names  --}}
                                 {{-- <input id="otherNamesCheck" class="checkbox-text" type="checkbox" name="othersCheck" value="area"> --}}
-                                <span class="text-dark checkbox-text font-weight-bold"> Otros nombres </span>
-                                <textarea  id="input_maparea" class="form-control" name="other_names" placeholder="Escribe otros nombres que no estén ya en los mapas anteriores"></textarea>
-                                {{-- <script> $("#input_maparea").slideToggle(); </script> --}}
+                                <span class="text-dark checkbox-text font-weight-bold"> Otros nombres </span> 
+                                <span style="color: rgb(138, 138, 138)"> (Sepárelos con comas) </span>
+                                
+                                <textarea  id="input_maparea" class="form-control" name="other_names" 
+                                placeholder="Escribe otros nombres que no estén ya en los mapas anteriores">
+                                </textarea>
                             </p>
 
 
@@ -636,6 +639,7 @@
                 $("#modal-lat").val(activeMarker._latlng.lat);
                 $("#modal-lng").val(activeMarker._latlng.lng);
                 $(".modal-body #id").val(street.id);
+                $(".modal-body #input_maparea").val(street.other_names);
 
                 // Clear maps alternatives names fields
                 let mapsList = $("input[name='maps_name[]']");

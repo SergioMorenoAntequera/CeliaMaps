@@ -68,6 +68,7 @@ class StreetController extends Controller
         ]);
 
         $street = new Street($r->all());
+        $street->other_names = $r->other_names;
         $street->save();
 
         $mapsAsigned = Array();
@@ -116,6 +117,7 @@ class StreetController extends Controller
 
         $street = Street::find($r->id);
         $street->fill($r->all());
+        $street->other_names = $r->other_names;
 
         // Maps streets relationships update
         $mapsRelationship = array();
