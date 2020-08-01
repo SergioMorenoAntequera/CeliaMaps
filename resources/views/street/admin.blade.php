@@ -305,6 +305,17 @@
                                     @endisset
                                 </p>
                             @endforeach
+
+                            <br>
+                            <p>
+                                {{-- More names  --}}
+                                {{-- <input id="otherNamesCheck" class="checkbox-text" type="checkbox" name="othersCheck" value="area"> --}}
+                                <span class="text-dark checkbox-text font-weight-bold"> Otros nombres </span>
+                                <textarea  id="input_maparea" class="form-control" name="other_names" placeholder="Escribe otros nombres que no estén ya en los mapas anteriores"></textarea>
+                                {{-- <script> $("#input_maparea").slideToggle(); </script> --}}
+                            </p>
+
+
                             <b><label id="maps-error" class='text-danger mt-3 inputs-errors'> </label></b>
                         </div>
                         <!-- Street points -->
@@ -665,6 +676,7 @@
                     name: $("input[name='name']").val(),
                     maps_id: [],
                     maps_name: [],
+                    other_names: $("textarea[name='other_names']").val(),
                 }
                 $("input[name='maps_id[]']").each(function(e){
                     let cbMap = $(this);

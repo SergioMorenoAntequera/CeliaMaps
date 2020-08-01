@@ -107,7 +107,8 @@ class StreetController extends Controller
         ]);
     }
     public function updateAjax(Request $r){
-        // Server side validation
+        
+        // Server side validationç
         $r->validate([
             'type_id'=>'required',
             'name'=>'required'
@@ -115,7 +116,7 @@ class StreetController extends Controller
 
         $street = Street::find($r->id);
         $street->fill($r->all());
-        
+
         // Maps streets relationships update
         $mapsRelationship = array();
         $mapsAsigned = Array();
