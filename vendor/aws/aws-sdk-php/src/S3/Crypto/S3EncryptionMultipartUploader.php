@@ -11,10 +11,20 @@ use GuzzleHttp\Promise;
 
 /**
  * Encapsulates the execution of a multipart upload of an encrypted object to S3.
+ *
+ * Legacy implementation using older encryption workflow. Use
+ * S3EncryptionMultipartUploaderV2 if possible.
+ *
+ * @deprecated
  */
 class S3EncryptionMultipartUploader extends MultipartUploader
 {
-    use EncryptionTrait, CipherBuilderTrait, CryptoParamsTrait;
+    use CipherBuilderTrait;
+    use CryptoParamsTrait;
+    use EncryptionTrait;
+    use UserAgentTrait;
+
+    const CRYPTO_VERSION = '1';
 
     /**
      * Returns if the passed cipher name is supported for encryption by the SDK.
@@ -96,6 +106,7 @@ class S3EncryptionMultipartUploader extends MultipartUploader
         $source,
         array $config = []
     ) {
+        $this->appendUserAgent($client, 'S3CryptoV' . self::CRYPTO_VERSION);
         $this->client = $client;
         $config['params'] = [];
         if (!empty($config['bucket'])) {
