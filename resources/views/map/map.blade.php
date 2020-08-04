@@ -557,7 +557,9 @@
                 }
             });
             streets.forEach(street => {
-                if(street.fullName.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
+                // Here we handle that it looks screets by main name and other names
+                if(street.fullName.toLowerCase().includes($('#streetsInput').val().toLowerCase()) || 
+                street.other_names.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
                     // Deprecated street will appear in italic font
                     if(street.deprecated == true)
                         $('#streetsFound').append("<div id='"+ street.id +"' class='deprecated street'> <img style='width:5%;' src='{{url('img/icons/tokenSelected.svg')}}'>"+ street.fullName + "</div>");
