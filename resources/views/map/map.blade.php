@@ -326,7 +326,6 @@
                     return;
                 }
             });
-            console.log(this)
 
             
             // Check deprecated street attribute of searched streets to filter by name and deprecated state
@@ -404,6 +403,13 @@
                         content += "<br>";
                     });
                 }
+
+                // Other names
+                if(selection.other_names.trim() != "" && selection.other_names.trim() != null){
+                    content += "<b>Ha tenido otros nombres como: </b><br>";
+                    content += selection.other_names + "<br>";
+                } 
+
                 content += "<br><a style='color:black' href={{url('search/inform')}}/" + selection.id + ">Imprimir</a><br><br>";
                 $("#hp-description").html(content);
                 
@@ -494,6 +500,13 @@
                                 content += "<br>";
                             });
                         }
+
+                        // Other names
+                        if(this.street.other_names.trim() != "" && this.street.other_names.trim() != null){
+                            content += "<b>Ha tenido otros nombres como: </b><br>";
+                            content += this.street.other_names + "<br>";
+                        } 
+
                         content += "<br><a style='color:black' href={{url('search/inform')}}/" + this.street.id + ">Imprimir</a><br><br>";
                         $("#hp-description").html(content);
                         // Display modal
