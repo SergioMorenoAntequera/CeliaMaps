@@ -344,6 +344,7 @@
                                 });
                             </script>
 
+                            <br><br>
                             <b><label id="maps-error" class='text-danger mt-3 inputs-errors'> </label></b>
                         </div>
                         <!-- Street points -->
@@ -760,7 +761,22 @@
                     // console.log(other_names_forms[i]);
                     let otherName = other_names_forms[i].value.trim();
                     let otherYear = other_years_forms[i].value.trim();
-                    otherNames += otherYear + " - " +  otherName + ", ";
+                    let auxOtherNames = otherYear + " - " +  otherName + ", ";
+                    // Nothing introduced
+                    if(auxOtherNames != " - , "){
+                        // Only name
+                        if(auxOtherNames.startsWith(" - ") && !auxOtherNames.endsWith(" , ")){
+                            otherNames += "(Fecha desconocida)" + auxOtherNames;
+                        } else {
+                            if(!auxOtherNames.startsWith(" - ") && auxOtherNames.endsWith(" , ")) {
+                                alert("Si se introduce una fecha extra se tiene que poner un nombre");
+                                return null;
+                            } else {
+                                otherNames += auxOtherNames;
+                            }
+                        }
+                    }
+                    
                 }
                 newStreet.other_names = otherNames;
 
