@@ -206,7 +206,7 @@
                     // Auxiliar function
                     function lookByText(){
                         c = 0;
-                        console.log(streets);
+                        // console.log(streets);
                         streets.forEach(street => {
                             if(street.fullName.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
                                 // Deprecated street will appear in italic font
@@ -307,17 +307,42 @@
                             @endforeach
 
                             <br>
-                            <p>
+                            <div id="anotherNameContainer">
                                 {{-- More names  --}}
                                 {{-- <input id="otherNamesCheck" class="checkbox-text" type="checkbox" name="othersCheck" value="area"> --}}
-                                <span class="text-dark checkbox-text font-weight-bold"> Otros nombres </span> 
-                                <span style="color: rgb(138, 138, 138)"> (Sepárelos con comas) </span>
+                                <span class="text-dark checkbox-text font-weight-bold mb-3"> Otros nombres </span> 
                                 
-                                <textarea  id="input_maparea" class="form-control" name="other_names" 
-                                placeholder="Escribe otros nombres que no estén ya en los mapas anteriores">
-                                </textarea>
-                            </p>
+                                {{-- <span style="color: rgb(138, 138, 138)"> (Sepárelos con comas) </span> --}}
+                                <div  class="otherNameForm d-flex">
+                                    {{-- Año --}}
+                                    <div class="form-group w-25 mr-1">
+                                        <input type="number" class="other-year form-control" name="others_year[]" placeholder="Año">
+                                    </div>
+                                    {{-- Nombre --}}
+                                    <div class="form-group w-75 mx-1">
+                                        <input type="text" class="other-name form-control" name="others_name[]" placeholder="Nombre">
+                                    </div>
+                                </div>
 
+                                {{-- <textarea  id="input_maparea" class="form-control" name="other_names" 
+                                placeholder="Escribe otros nombres que no estén ya en los mapas anteriores">
+                                </textarea> --}}
+                            </div>
+
+                            {{-- To add another one --}}
+                            <a href="" id="AddOtherNameForm"> Añadir otro... </a>
+                            <script>
+                                let emptyAnotherNameForm = $(".otherNameForm").clone();
+                                
+                                $("#AddOtherNameForm").on("click", function(e){
+                                    e.preventDefault();
+
+                                    $("#anotherNameContainer").append(emptyAnotherNameForm.clone());
+                                    $("#anotherNameContainer").children().last().find("input").each(function() {
+                                        $(this).val("");
+                                    });
+                                });
+                            </script>
 
                             <b><label id="maps-error" class='text-danger mt-3 inputs-errors'> </label></b>
                         </div>
@@ -452,7 +477,7 @@
                     street.fullName = street.typeName + " " + street.name;
                     addStreetToArray(street);
                 });
-                console.log(streets);
+                // console.log(streets);
                 // Write saved streets
                 @foreach ($streets as $street)
                     // Creating a Marker
@@ -559,7 +584,7 @@
             $(".option[action='Remove']").on("click", function(){
                 hideMenu();
                 $('#modal').modal('hide');
-                console.log(activeMarker);
+                // console.log(activeMarker);
                 $("#removeStreet").text(activeMarker.fullName);
                 $('#confirmModal').modal('show');
                 cpuHide();
@@ -613,6 +638,17 @@
                     $(mapsList[i]).prop("disabled", false);
                     $("#checkbox_map"+mapsList[i].id.substring(9)).prop("checked", true);
                 }
+
+                $(".otherNameForm").each(function(e){
+                    $(this).remove();                    
+                });
+                
+                $("#anotherNameContainer").append(emptyAnotherNameForm);
+                $("#anotherNameContainer").children().last().find("input").each(function() {
+                    $(this).val("");
+                });
+
+
                 // Fill position values
                 $("#modal-lat").val(lat);
                 $("#modal-lng").val(lng);
@@ -635,7 +671,7 @@
                 $("select[name='type_id']").val(street.type_id);
                 $("input[name='name']").val(street.name);
                 // Fill hidden values
-                console.log(activeMarker);
+                // console.log(activeMarker);
                 $("#modal-lat").val(activeMarker._latlng.lat);
                 $("#modal-lng").val(activeMarker._latlng.lng);
                 $(".modal-body #id").val(street.id);
@@ -649,7 +685,7 @@
                     $(mapsList[i]).prop("disabled", true);
                     $("#checkbox_map"+mapsList[i].id.substring(9)).prop("checked", false);
                 }
-                // Uncheck maps
+
                 // Fill alternatives names
                 for (let i = 0; i < street.maps.length; i++) {
                     $("#checkbox_map"+street.maps[i].id).prop("checked", true);
@@ -659,6 +695,38 @@
                         $("#input_map"+street.maps[i].id).val(street.maps[i].pivot.alternative_name);
                     }
                 }
+
+                // Fill another names
+                let otherNamesFill = street.other_names.split(",");
+                otherNamesFill.pop();
+                
+                // Remove extra containers
+                if($("#anotherNameContainer").children().length > otherNamesFill.length){
+                    $("#anotherNameContainer").children().each(function(index){
+                        if(index != 0){
+                            $(this).remove();
+                        }
+                    });
+                    $("#anotherNameContainer").append(emptyAnotherNameForm.clone());
+                }
+
+                otherNamesFill.forEach((otherNameFill, index)  => {
+                    let otherYear = otherNameFill.substring(0, otherNameFill.indexOf(" - ")).trim();
+                    let otherName = otherNameFill.substring(otherNameFill.indexOf(" - ") + 3, otherNameFill.length).trim();
+
+                    // Fill the container
+                    jQuery($(".otherNameForm")[index]).find(".other-year").val(otherYear);
+                    jQuery($(".otherNameForm")[index]).find(".other-name").val(otherName);
+
+                    // console.log($("#anotherNameContainer").children().length);
+                    // Put as many containers as we need
+                    if(otherNamesFill.length >= $("#anotherNameContainer").children().length){
+                        $("#anotherNameContainer").append(emptyAnotherNameForm.clone());
+                        $("#anotherNameContainer").children().last().find("input").each(function() {
+                            $(this).val("");
+                        });
+                    }
+                });
 
                 $("#modal-title").text("Editar vía");
                 // Show and enable buttons and also fill value with street id
@@ -675,13 +743,27 @@
             
             // GET DATA FROM THE FORM
             function getFormData(){
-                var newStreet = {
+                let newStreet = {
                     type_id: $("select[name='type_id']").val(),
                     name: $("input[name='name']").val(),
                     maps_id: [],
                     maps_name: [],
-                    other_names: $("textarea[name='other_names']").val(),
+                    other_names: "",
                 }
+                var otherNames = "";
+                //Names
+                let other_names_forms = $("input[name='others_name[]']");
+                //Years
+                let other_years_forms = $("input[name='others_year[]']");
+
+                for (let i = 0; i < other_names_forms.length; i++) {
+                    // console.log(other_names_forms[i]);
+                    let otherName = other_names_forms[i].value.trim();
+                    let otherYear = other_years_forms[i].value.trim();
+                    otherNames += otherYear + " - " +  otherName + ", ";
+                }
+                newStreet.other_names = otherNames;
+
                 $("input[name='maps_id[]']").each(function(e){
                     let cbMap = $(this);
                     let textMap = $(this).siblings("input");
@@ -695,6 +777,7 @@
                         }
                     }
                 });
+
                 newStreet.lat = $("input[name='lat']").attr("value");
                 newStreet.lng = $("input[name='lng']").attr("value");
                 newStreet.id = $("input[name='id']").attr("value");
@@ -707,6 +790,7 @@
                 // console.log(streets[0]);
 
                 // Objeto Street recuperado
+                // console.log(data.street);
                 let formatedStreet = data.street;
 
                 // Comletamos la información como la tiene Luis
@@ -734,12 +818,12 @@
                         // After drag click will be fired and here break dragging mode
                         dragging = false;
                     }
-                });
+                });marker.on
 
                 // FINISH DRAG (MARKER MOVED)
                 marker.on('dragend', function(e){
                     // Disable dragging mode
-                    console.log(e.target);
+                    // console.log(e.target);
                     e.target.dragging.disable();
 
                     // Attach current marker to the layer
@@ -775,7 +859,7 @@
                     data: street,
                     success: function(data) {
                         let ajaxStreet = formatStreetObject(data);
-                        
+
                         addStreetToArray(ajaxStreet);
                         
                         // CREATE A MARKER
@@ -892,7 +976,7 @@
             
             // STREET FOUND IN SEARCH BAR
             $(document).on("click","div.street",function(){
-                console.log(this);
+                // console.log(this);
                 // Fill search field with clicked result
                 $("#streetsInput").val($(this).text().substr(1));
                 // Clear results list

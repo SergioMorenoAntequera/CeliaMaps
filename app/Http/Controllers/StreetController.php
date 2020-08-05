@@ -69,6 +69,7 @@ class StreetController extends Controller
 
         $street = new Street($r->all());
         $street->other_names = $r->other_names;
+        // dd($r);
         $street->save();
 
         $mapsAsigned = Array();
