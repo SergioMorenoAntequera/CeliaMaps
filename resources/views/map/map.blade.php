@@ -502,9 +502,11 @@
                         }
 
                         // Other names
-                        if(this.street.other_names.trim() != "" && this.street.other_names.trim() != null){
-                            content += "<b>Ha tenido otros nombres como: </b><br>";
-                            content += this.street.other_names + "<br>";
+                        if(this.street.other_names != null){
+                            if(this.street.other_names.trim() != ""){
+                                content += "<b>Ha tenido otros nombres como: </b><br>";
+                                content += this.street.other_names + "<br>";
+                            }
                         } 
 
                         content += "<br><a style='color:black' href={{url('search/inform')}}/" + this.street.id + ">Imprimir</a><br><br>";
