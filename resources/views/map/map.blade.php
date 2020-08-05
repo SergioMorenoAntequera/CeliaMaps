@@ -330,6 +330,7 @@
             
             // Check deprecated street attribute of searched streets to filter by name and deprecated state
             streets.forEach(street => {
+                
                 if(street.deprecated){
                     // Must have deprecated class (different style in search module)
                     if($(this).hasClass('deprecated') && $(this).text().trim() == street.fullName){
@@ -337,15 +338,36 @@
                         return;
                     }
                 }else{
-                    if(!$(this).hasClass('deprecated') && $(this).text().trim() == street.fullName){
-                        selection = street;
-                        return;
+                    if(!$(this).hasClass('deprecated')){
+
+                        if(street.other_names == null){
+                            if($(this).text().trim() == street.fullName){
+                                selection = street;
+                                return;
+                            }
+                        } else {
+                            // let streetWithoutOthers = $(this).text().trim().replace(street.other_names, "");
+                            let others =  street.other_names.split(",");
+                            let whereToRemove = $(this).text();
+
+                            others.forEach(other => {
+                                other = other.trim();
+                                whereToRemove = whereToRemove.replace(other, "");
+                            });
+                            whereToRemove = whereToRemove.trim();
+                            
+                            if(street.fullName == whereToRemove){
+                                selection = street;
+                                return;
+                            }
+                        }
                     }
                 }
             });
-            
+
             // Fill search field with clicked result
             $("#streetsInput").val(selection.fullName);
+            
             // Clear search field
             $('#streetsFound').empty();
             // Zoom to selection position
@@ -375,15 +397,16 @@
                         hpMarker.bounce();
                     }
                 });
-
             }else{ 
                 // Enable streets
+                
                 if($("#ballShowStreets img").css("opacity") != 1)
                     $("#ballShowStreets").click();
                 // Streets data
                 $("#hp-gallery").hide();
                 $("#hp-img").attr("src", "");
                 // Filter by deprecated state to show actual or original name
+
                 if(selection.deprecated)
                     $("#hp-title").text(selection.actualName);
                 else
@@ -405,9 +428,13 @@
                 }
 
                 // Other names
-                if(selection.other_names.trim() != "" && selection.other_names.trim() != null){
+                if(selection.other_names != null && selection.other_names.trim() != ""){
+                    // Other names
                     content += "<b>Ha tenido otros nombres como: </b><br>";
-                    content += selection.other_names + "<br>";
+                    let othersSeparated = selection.other_names.split(",");
+                    othersSeparated.forEach(otherModal => {
+                        content += otherModal.split() + "<br>";
+                    });
                 } 
 
                 content += "<br><a style='color:black' href={{url('search/inform')}}/" + selection.id + ">Imprimir</a><br><br>";
@@ -505,7 +532,10 @@
                         if(this.street.other_names != null){
                             if(this.street.other_names.trim() != ""){
                                 content += "<b>Ha tenido otros nombres como: </b><br>";
-                                content += this.street.other_names + "<br>";
+                                let othersSeparated = this.street.other_names.split(",");
+                                othersSeparated.forEach(otherModal => {
+                                    content += otherModal.split() + "<br>";
+                                });
                             }
                         } 
 
@@ -557,19 +587,45 @@
                 if(hotspot.title.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
                     $('#streetsFound').append("<div class='hotspot street'> <img style='width:5%;' src='{{url('img/icons/token.svg')}}'>"+ hotspot.title + "</div>"); 
                 }
-            });
+            })
+
             streets.forEach(street => {
                 // Here we handle that it looks screets by main name and other names
-                if(street.fullName.toLowerCase().includes($('#streetsInput').val().toLowerCase()) || 
-                street.other_names != null && street.other_names.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
+                if(street.fullName.toLowerCase().includes($('#streetsInput').val().toLowerCase())){
                     // Deprecated street will appear in italic font
-                    if(street.deprecated == true)
+                    if(street.deprecated == true) {
                         $('#streetsFound').append("<div id='"+ street.id +"' class='deprecated street'> <img style='width:5%;' src='{{url('img/icons/tokenSelected.svg')}}'>"+ street.fullName + "</div>");
-                    else
+                    } else {
                         $('#streetsFound').append("<div id='"+ street.id +"' class='street'> <img style='width:5%;' src='{{url('img/icons/tokenSelected.svg')}}'>"+ street.fullName + "</div>");
+                        // Here we check if it finds in the title or "other_names"
+                        if(street.other_names != null) {
+                            let others =  street.other_names.split(",");
+                            let whereToAdd = $('#streetsFound').children().last();
+                            others.forEach(other => {
+                                whereToAdd.append("<br><span style='position:relative; left:1.1em; color:#5e5e5e '>" + other + "</span>");
+                            });
+                        }
+                    }
+                } else {
+
+                    // Look in the search bar for OLD NAMES
+                    if(street.other_names != null){
+                        if(street.other_names.toLowerCase().includes($('#streetsInput').val().toLowerCase())) {
+                            $('#streetsFound').append("<div id='"+ street.id +"' class='street'> <img style='width:5%;' src='{{url('img/icons/tokenSelected.svg')}}'>"+ street.fullName + "</div>");
+                            // Here we check if it finds in the title or "other_names"
+                            if(street.other_names != null) {
+                                let others =  street.other_names.split(",");
+                                let whereToAdd = $('#streetsFound').children().last();
+                                others.forEach(other => {
+                                    whereToAdd.append("<br><span style='position:relative; left:1.1em; color:#5e5e5e '> " + other + "</span>");
+                                });
+                            }
+                        }
+                    }
                 }
             });
         }
+
         map.on("move", function(){
             $('#streetsFound').empty();
         })
