@@ -296,7 +296,7 @@
                         <div class="form-group mb-0">
                             <b> <label> Mapas que la contienen </label></b>
                             @foreach ($maps as $map)
-                                <p>
+                                <p style="position: relative">
                                     @isset($map->tlCornerLatitude)
                                         <input id="checkbox_map{{$map->id}}" class="checkbox-text" type="checkbox" name="maps_id[]" value="{{$map->id}}" checked>
                                         <span class="text-dark checkbox-text">{{$map->title}} ({{$map->city}} - {{$map->date}})</span>
@@ -313,7 +313,7 @@
                                 <span class="text-dark checkbox-text font-weight-bold mb-3"> Otros nombres </span> 
                                 
                                 {{-- <span style="color: rgb(138, 138, 138)"> (Sepárelos con comas) </span> --}}
-                                <div  class="otherNameForm d-flex">
+                                <div  class="otherNameForm d-flex" style="position: relative">
                                     {{-- Año --}}
                                     <div class="form-group w-25 mr-1">
                                         <input type="number" class="other-year form-control" name="others_year[]" placeholder="Año">
@@ -321,6 +321,9 @@
                                     {{-- Nombre --}}
                                     <div class="form-group w-75 mx-1">
                                         <input type="text" class="other-name form-control" name="others_name[]" placeholder="Nombre">
+                                    </div>
+                                    <div class="cornerButton deleteOtherName" style="height: 30px; width: 30px; top: -15px"> 
+                                        <i class="fa fa-trash" aria-hidden="true"></i> 
                                     </div>
                                 </div>
 
@@ -332,6 +335,10 @@
                             {{-- To add another one --}}
                             <a href="" id="AddOtherNameForm"> Añadir otro... </a>
                             <script>
+                                $(".deleteOtherName").on("click", function(e){
+                                    $(this).parent().remove();
+                                });
+
                                 let emptyAnotherNameForm = $(".otherNameForm").clone();
                                 
                                 $("#AddOtherNameForm").on("click", function(e){
@@ -341,7 +348,12 @@
                                     $("#anotherNameContainer").children().last().find("input").each(function() {
                                         $(this).val("");
                                     });
+
+                                    $(".deleteOtherName").on("click", function(e){
+                                        $(this).parent().remove();
+                                    });
                                 });
+
                             </script>
 
                             <br><br>
@@ -648,6 +660,10 @@
                 $("#anotherNameContainer").children().last().find("input").each(function() {
                     $(this).val("");
                 });
+                //Delete button to eliminate
+                $(".deleteOtherName").on("click", function(e){
+                    $(this).parent().remove();
+                });
 
 
                 // Fill position values
@@ -709,6 +725,8 @@
                         }
                     });
                     $("#anotherNameContainer").append(emptyAnotherNameForm.clone());
+                    
+                    
                 }
 
                 otherNamesFill.forEach((otherNameFill, index)  => {
@@ -727,6 +745,10 @@
                             $(this).val("");
                         });
                     }
+                });
+                
+                $(".deleteOtherName").on("click", function(e){
+                    $(this).parent().remove();
                 });
 
                 $("#modal-title").text("Editar vía");
